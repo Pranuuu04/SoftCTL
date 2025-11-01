@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Scan by manifest bulk</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+   <div *ngIf="showTable && dataSource.data.length > 0">
+   <div class="table-responsive">
+      <div class="row d-flex m-0" style="justify-content: right;" >
+        <div class="form-group has-search col-sm-4">
+          <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute;
+          background: none;
+          top: -4px;
+          width: 38px;
+          height: 32px;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+            <i class="fa fa-search" style="color: white; margin-top: -24px;"></i>
+          </button>
+          <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+        </div>
+       </div>
+    </div>
+<div class="table-responsive" style="max-height: 164px;">
+<div class="mat-elevation-z8 text-nowrap">
+  <table id="myTable" mat-table [dataSource]="dataSource"  class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+   
+      <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+     
+        <ng-container matColumnDef="Manifest_no" *ngIf="this.dispatch === '0'">
+          <th mat-header-cell *matHeaderCellDef>Manifest No </th>
+          <td mat-cell *matCellDef="let element"> {{element.Manifest_no}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="manifestDt" *ngIf="this.dispatch === '0'">
+          <th mat-header-cell *matHeaderCellDef> Manifest date</th>
+          <td mat-cell *matCellDef="let element"> {{element.manifestDt | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Manifest_no"  *ngIf="this.dispatch === '1'">
+          <th mat-header-cell *matHeaderCellDef>Dispatch No </th>
+          <td mat-cell *matCellDef="let element"> {{element.Manifest_no}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="manifestDt"  *ngIf="this.dispatch === '1'">
+          <th mat-header-cell *matHeaderCellDef> Dispatch date</th>
+          <td mat-cell *matCellDef="let element"> {{element.manifestDt | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+    
+    
+        <ng-container matColumnDef="via">
+          <th mat-header-cell *matHeaderCellDef> Via </th>
+          <td mat-cell *matCellDef="let element"> {{element.via}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="mode">
+          <th mat-header-cell *matHeaderCellDef> Mode </th>
+          <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="shipment">
+          <th mat-header-cell *matHeaderCellDef> Shipt </th>
+          <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="qty">
+          <th mat-header-cell *matHeaderCellDef> Pcs</th>
+          <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Manifestwt">
+          <th mat-header-cell *matHeaderCellDef> Manifest weight </th>
+          <td mat-cell *matCellDef="let element"> {{element.Manifestwt}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="vehicle_no">
+          <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+          <td mat-cell *matCellDef="let element"> {{element.vehicle_no}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Driver_Name">
+          <th mat-header-cell *matHeaderCellDef> Driver Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.Driver_Name}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Route">
+          <th mat-header-cell *matHeaderCellDef> Route</th>
+          <td mat-cell *matCellDef="let element"> {{element.Route}} </td>
+        </ng-container>
+   
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+      (click)="toggleRowSelection(row)"
+      [class.selected-row]="selection.isSelected(row)">
+      </tr>
+
+      <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="14">No data matching the filter "{{input.value}}"</td>
+        </tr>    
+    </table>
+</div>
+</div>
+ <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+<div class="row d-flex" style="justify-content: right;">
+  <div class="col-sm-2 d-flex" style="justify-content: right;">
+    <button type="button" class=" Unload btn btn-light" (click)="onLoad()">Unload</button>
+  </div>
+</div>
+  </div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="" style="height: 200px;">
+</div>
+</div>

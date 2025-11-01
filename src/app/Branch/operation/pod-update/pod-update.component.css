@@ -1,0 +1,43 @@
+* {
+    font-size: 3px;
+    padding-top: 15px;
+    background-color: white;
+}
+
+.row {
+    margin-bottom: 6px;
+}
+
+.submitbtn button {
+    margin-right: 25px;
+}
+.modal-backdrop {
+    opacity: -0.5 !important;
+}
+
+.modal-backdrop.in {
+    opacity: 0.9;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+textarea {
+    height: 5px;
+}
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.mat-tab-body-content {
+    overflow: hidden;
+}
+::ng-deep .mat-tab-label{
+    height: 24px !important;
+}

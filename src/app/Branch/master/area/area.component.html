@@ -1,0 +1,37 @@
+ <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Zone">
+              <app-zone [zoneData]="zoneViewData"></app-zone>
+            </mat-tab>
+            <mat-tab label="Multizone">
+              <app-multizone></app-multizone>
+            </mat-tab>
+            <mat-tab label="Country">
+              <app-country [countryData]="countryViewData"></app-country>
+            </mat-tab>
+            <mat-tab label="State">
+              <app-state [stateData]="stateViewData"></app-state>
+            </mat-tab>
+            <mat-tab label="Pincode">
+              <app-pincode></app-pincode>
+            </mat-tab>
+            <mat-tab label="Destination">
+              <app-area-dest [destinationData]="destinationViewData"></app-area-dest>
+            </mat-tab>
+             <mat-tab label="Prefix">
+              <app-prefix-master [prefixData]="prefixViewData"></app-prefix-master>
+            </mat-tab>
+             <!-- <mat-tab label="Employee Mast">
+              <app-courier-boy [courierBoyData]="courierBoyViewData"></app-courier-boy>
+            </mat-tab>
+            <mat-tab label="Branch Mast">
+              <app-branch-mast [branchMastData]="branchMastViewData"></app-branch-mast>
+            </mat-tab> -->
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,70 @@
+  <form  [formGroup]="Drsentryform">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="DRSDate"><span style="color: red;">*</span>Date :</label>
+          <input type="date" class="form-control" id="DRSDate" value="{{currentDate}}"
+          [(ngModel)]="currentDate">
+      </div>
+       </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="area"><span style="color: red;">*</span>Area :</label>
+          <input type="text" placeholder="Leave a comment here" formControlName="area" class="form-control" id="area" required />
+          <div *ngFor="let validation of validationMessage.area">
+            <div class="error-message"
+              *ngIf="Drsentryform.get('area').hasError(validation.type) && (Drsentryform.get('area').dirty || Drsentryform.get('area').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="userName">Name :</label>
+          <select id="userName" class="custom-select" formControlName="userName">
+            <option value="" selected disabled>Select pickup boy</option>
+            <option value="{{item.employeeCode}}"  *ngFor="let item of nameList" >{{item.employeeName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="awbNumber"><span style="color: red;">*</span>Vehicle No. :</label>
+          <input type="text" class="form-control" id="vehicleNo" placeholder="Vechile No." formControlName="vehicleNo" aria-describedby="emailHelp">
+      </div>
+  </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="employeeMobile">Mobile No. :</label>         
+          <input type="tel" class="form-control" id="employeeMobile" placeholder="Enter Mobile No" formControlName="employeeMobile"
+          aria-describedby="emailHelp" required>
+          <div *ngFor="let validation of validationMessage.employeeMobile">
+            <div class="error-message"
+              *ngIf="Drsentryform.get('employeeMobile').hasError(validation.type) && (Drsentryform.get('employeeMobile').dirty || Drsentryform.get('employeeMobile').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="Import">Import :</label>         
+          <input type="file" #fileInput accept=".xlsx, .xls"  class="form-control pt-7" id="Import" placeholder="Enter Awb No" (change)="onFileSelected($event)" style="padding-top: 7px;">
+        </div>
+      </div>
+
+      <div class="col-sm-3 d-flex form-group" style="justify-content: space-between;" >
+        <button type="submit" class="btn btn-light other-button"  (click)="onSubmit()" [disabled]="!Drsentryform.get('area').value || !selectedFile || !Drsentryform.get('userName').value" >Submit</button>
+        <button type="button" class="btn btn-light other-button Download" (click)="generateExcel()" matTooltip="Download">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <button type="button" class="btn btn-light error" tabindex="-1" matTooltip="Error log" (click)="generateErrorLog()">
+          <mat-icon >error</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>

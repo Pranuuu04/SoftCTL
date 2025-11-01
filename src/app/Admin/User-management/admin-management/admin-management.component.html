@@ -1,0 +1,161 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2; padding-bottom: 7px;">
+      <div class="col-sm-5">
+        <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px;">Admin Management</h1>
+      </div>
+        <div class="col-sm-7 d-flex header_btn" style="justify-content: right;">
+
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" tabindex="-1"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+  <div class="row mt-3 pb-4" style="border-bottom: 1px solid #d2d2d2;"> 
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+        <input type="radio"id="Admin" name="permission" value="Admin" [(ngModel)]="userType" checked (click)="onCheckedCust()">
+        <label for="Admin" class="Admin" style="font-size: 16px;">Admin</label>
+    </div>
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+      <input type="radio" id="BranchAdmin" name="permission" value="BranchAdmin" [(ngModel)]="userType" (click)="onCheckedWithoutCust()">
+      <label for="BranchAdmin" class="BranchAdmin" style="font-size: 16px;">Branch</label>
+    </div>
+  </div>
+  
+  <div [hidden]="CustomerDisable">
+    <form [formGroup]="Adminform" (ngSubmit)="submitForm(Adminform.value)">
+      <div class="row pb-4 mt-2">
+        <div class="col-sm-6">
+          <label for="userName" class="col-form-label">User Name :</label>
+          <input type="text" id="userName" formControlName="userName" placeholder="Enter your username" class="form-control" required autocomplete="new-username" tabindex="-1">
+          <div *ngIf="Adminform.get('userName').errors?.required && Adminform.get('userName').touched" class="text-danger">User Name is required</div>
+          <div *ngIf="Adminform.get('userName').errors?.minlength && Adminform.get('userName').touched" class="text-danger">Username must be at least 3 characters long</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="passWord" class="col-form-label">Password :</label>
+          <div class="input-group">
+            <input type="{{ hidePassword ? 'password' : 'text' }}" id="passWord" formControlName="password" placeholder="Enter your password" class="form-control" required autocomplete="new-password" tabindex="-1">
+            <div class="input-group-append">
+                <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 10px; height: 27px ;border: 1px solid #d2d2d2;
+                border-radius: 0.25rem; margin-top: -1px; background: #2e3f55;" >
+                    <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #d8e0ec; font-size: 16px;"></i>
+                </button>
+            </div>
+        </div>
+             <div *ngIf="Adminform.get('password').errors?.required && Adminform.get('password').touched && !Adminform.get('password').errors?.invalidPassword" class="text-danger">Password is required</div>
+             <div *ngIf="Adminform.get('password').errors?.invalidPassword && Adminform.get('password').touched" class="text-danger">Your password must be at least 4 characters long and include at least one number and one special character ( ! @ # $ % ^ & * ).</div>
+        </div>
+      </div>
+
+      <div class="row m-0 d-flex" style="justify-content: right;">
+        <div class="col-sm-3 d-flex submit-btn" style="justify-content: right;">
+          <button type="submit" class="btn btn-light" [disabled]="Adminform.invalid" tabindex="-1" > Submit </button>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+
+    <div [hidden]="withOutCustDisable">
+      <form [formGroup]="Branchform" (ngSubmit)="submitCustForm(Branchform.value)">
+        <div class="row pb-2 mt-2">
+          <div class="col-sm-6">
+              <label for="custUsername" class="col-form-label">User Name :</label>
+              <input type="text" id="custUsername" class="form-control" formControlName="custUsername" placeholder="Enter your username" autocomplete="new-username">
+              <div *ngIf="Branchform.get('custUsername').errors?.required && Branchform.get('custUsername').touched" class="text-danger">User Name is required</div>
+              <div *ngIf="Branchform.get('custUsername').errors?.minlength && Branchform.get('custUsername').touched" class="text-danger">Username must be at least 3 characters long</div>    
+          </div>
+          <div class="col-sm-6">
+              <label for="custPassword" class="col-form-label">Password :</label>
+              <!-- <input type="password" id="custPassword" class="form-control" formControlName="custPassword" placeholder="Enter your password" autocomplete="new-password"> -->
+              <div class="input-group">
+                <input type="{{ hidePassword ? 'password' : 'text' }}" id="custPassword" class="form-control" formControlName="custPassword" placeholder="Enter your password" autocomplete="new-password">
+                <div class="input-group-append">
+                    <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 10px; height: 27px ;border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem; margin-top: -1px; background: #2e3f55;" >
+                        <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #d8e0ec; font-size: 16px;"></i>
+                    </button>
+                </div>
+            </div>
+             <div *ngIf="Branchform.get('custPassword').errors?.required && Branchform.get('custPassword').touched && !Branchform.get('custPassword').errors?.invalidPassword" class="text-danger">Password is required</div>
+             <div *ngIf="Branchform.get('custPassword').errors?.invalidPassword && Branchform.get('custPassword').touched" class="text-danger">Your password must be at least 4 characters long and include at least one number and one special character (! @ # $ % ^ & *).</div>
+
+          </div>
+      </div>
+
+      <div class="row pb-2">
+        <div class="col-sm-12">
+          <label for="selectBranch" class="col-form-label">Branch name</label>
+          <select id="selectBranch" class="custom-select" formControlName="selectBranch">
+            <option value="" selected disabled>Select Branch</option>
+            <option value="{{item.locationCode}}" *ngFor="let item of branchName">
+              {{ item.locationName }}
+            </option>
+          </select>
+          <div *ngIf="Branchform.get('selectBranch').errors?.required && Branchform.get('selectBranch').touched" class="text-danger">Branch name is required</div>
+        </div>
+      </div>
+      
+      <div class="row pb-2 mt-2">
+        <ng-container *ngFor="let section of responseData; let i = index">
+          <div class="col-sm-4" *ngIf="section.captionType === 'Menu'">
+            <section class="example-section toggle-hover">
+              <mat-radio-button [value]="section" (change)="onSectionChange($event, section.captionName)">
+                {{ section.captionName }}
+              </mat-radio-button>
+            </section>
+          </div>
+        </ng-container>
+      </div>
+      
+      <div class="card" *ngIf="selectedSection">
+        <div class="card-header">
+          <h3>{{ selectedSection.captionName }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <ng-container *ngFor="let option of responseData; let j = index">
+              <div class="col-sm-6" *ngIf="(option.captionType === 'Sub_Menu' && option.groupName === selectedSection.captionName ) ||(option.captionType === 'Child_Menu' && option.groupName === selectedSection.captionName)">
+                <span class="example-list-section">
+                  <mat-checkbox (change)="toggleOption(selectedSection, option, j)" [checked]="option.isChecked">
+                    {{ option.captionName }}
+                  </mat-checkbox>
+                  <div *ngIf="option.isChecked" class="card">
+                    <div class="card-header">
+                      <h3>{{option.captionName}}</h3>
+                    </div>
+                    <ul class="mt-2" style="list-style-type: square;">
+                      <ng-container *ngFor="let subOption of responseData; let k = index">
+                        <li *ngIf="subOption.captionType === 'Child_Menu' && subOption.groupName === option.captionName">
+                          <mat-checkbox (change)="toggleSubOption(selectedSection, option, subOption, k)" [checked]="subOption.isChecked">
+                            {{ subOption.captionName }}
+                          </mat-checkbox>
+                          <ul class="mt-1 Sub_Child" *ngIf="subOption.isChecked">
+                            <ng-container *ngFor="let subChildOption of responseData">
+                              <li *ngIf="subChildOption.captionType === 'Sub_Child' && subChildOption.groupName === subOption.captionName">
+                                <mat-checkbox [checked]="subChildOption.isChecked">
+                                  {{ subChildOption.captionName }}
+                                </mat-checkbox>
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row m-0 d-flex" style="justify-content: right;">
+        <div class="col-sm-3 d-flex submit-btn" style="justify-content: right;">
+          <button type="submit" class="btn btn-light" tabindex="-1" [disabled]="Branchform.invalid"> Submit </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+

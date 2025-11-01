@@ -1,0 +1,92 @@
+
+<header>
+  <h2>
+    Vehicle Details
+    <button class="close-button" (click)="closeForm()">✖</button>
+  </h2>
+</header>
+
+<div class="container">
+  <form [formGroup]="createditForm" (ngSubmit)="formSubmit(createditForm.value)">
+    <div class="row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Driver_Licence_No</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput"  formControlName="Driver_Licence_No"
+          placeholder="Enter Driver Licence No. "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Opening_Km</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Opening_Km" 
+          placeholder="Enter Opening Km"
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Vehicle_diesel_No</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Vehicle_diesel_No"
+          placeholder="Enter Vehicle diesel No. "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+    </div>
+    <div class="row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Vehicle_diesel_Ltrs</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Vehicle_diesel_Ltrs"
+          placeholder="Enter Vehicle diesel Ltrs "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Kata_Weight</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Kata_Weight"
+          placeholder="Enter Kata Weight "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Slip_No</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Slip_No"
+          placeholder="Enter slip No. "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+    </div>
+    <div class="row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Brocker_Name</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Brocker_Name"
+          placeholder="Enter Brocker Name "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Advance_Paid</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" formControlName="Advance_Paid"
+          placeholder="Enter Advance Paid"
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Diesel_Amount</label>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput"  formControlName="Diesel_Amount"
+          placeholder="Enter Diesel Amount "
+          style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;">
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-sm-12 text-center">
+        <div class="d-flex justify-content-center" style="margin-top: 20px;
+                    margin-left: 39px; margin-bottom: -21px; ">
+          <button type="button" class="btn btn-warning ml-2" (click)="closeForm()">Cancel</button>
+          <button type="submit" class="btn btn-info ml-2" >Save</button>
+    
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

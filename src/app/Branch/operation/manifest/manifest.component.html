@@ -1,0 +1,33 @@
+
+
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Pending Manifest">
+                        <app-pending-manifest></app-pending-manifest>
+                    </mat-tab> 
+                    <mat-tab label="Create Manifest">
+                        <app-create-manifest></app-create-manifest>
+                    </mat-tab> 
+                    <mat-tab label="View Manifest">
+                        <app-view-manifest></app-view-manifest>
+                    </mat-tab>
+                    <!-- <mat-tab label="Bulk_Import Manifest">
+                       <app-bulk-import></app-bulk-import>
+                     </mat-tab> -->
+                    <!-- <mat-tab label="Forwarding Manifest">
+                        <app-forwading-manifest></app-forwading-manifest>
+                    </mat-tab>
+                     <mat-tab label="Mannual Manifest">
+                       <app-mannual-manifest></app-mannual-manifest>
+                    </mat-tab>
+                    <mat-tab label="Bulk_Import Manifest">
+                       <app-bulk-import></app-bulk-import>
+                     </mat-tab> -->
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,308 @@
+* {
+    font-size: 14px;
+    padding-top: 1.1px;
+    color: black;
+}
+form .col-sm-1{
+    padding-right: 8px;
+}
+form{
+    margin-top: 10px;
+    margin-bottom: 0.125rem;
+}
+.form-control,
+.form-select{
+    height: 32px;
+}
+input,
+ul{
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+}
+ul{
+  height: 315px;
+  overflow-y: auto;
+}
+.form-check,::ng-deep label{
+  color: black !important;
+  font-size: 13px !important;
+}
+::ng-deep .mat-checkbox-layout {
+  margin-bottom: 0 !important;
+}
+.form-group .other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  color: white;
+  text-transform: capitalize;
+}
+.custom-select{
+    height: 32px;
+    line-height: 20px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-family: auto;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+ 
+  ::ng-deep .mat-dialog-container {
+    padding: 6px 2px !important; 
+    overflow-y: initial !important;
+    max-height: 430px !important;
+  }
+  @media  (min-width: 320px) and (max-width: 425px){
+    ::ng-deep .mat-dialog-container{
+        max-height: 431px !important;
+    }
+    .cancel{
+      margin-top: -33px;
+  }
+  }
+
+  .form-group{
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .textOnInput,
+  .textOnSelect {
+    position: relative;
+    margin-bottom: 5px; 
+    margin-top: 5px;
+  }
+  
+  .textOnInput label,
+  .textOnSelect label {
+    position: absolute;
+    top: -13px;
+    left: 10px;
+    padding: 2px;
+    z-index: 1;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .textOnInput label:after,
+  .textOnSelect label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .error-message{
+    color: red;
+    padding-left: 0;
+    margin-top: -12px;
+    padding-bottom: 6px;
+    font-size: 11px;
+  }
+
+
+
+  /* NgSelect =============================*/
+ 
+  ::ng-deep .multi-customer-select ng-select.custom-select1 .ng-value-container {
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 4px;
+    align-items: center !important; 
+  }
+  
+  ::ng-deep .multi-customer-select ng-select.custom-select1 .ng-value {
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  /* ::ng-deep .multi-customer-select ng-select.custom-select1 .ng-select-container {
+    height: 36px !important;
+    align-items: center !important;
+    padding: 0 8px;
+  } */
+  
+
+  
+  
+  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    background-color: white !important;
+    padding: 1px 8px;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  
+  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover,
+  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background-color: rgb(201, 214, 214) !important;
+  }
+  ::ng-deep .ng-dropdown-panel {
+    border: 1px solid #d2d2d2 !important;
+    border-top: none !important;
+  }
+  
+  ::ng-deep .ng-select {
+    height: 28px !important;
+  }
+  
+  ::ng-deep .ng-select .ng-arrow {
+    font-family: "icomoon" !important;
+    border-color: inherit !important;
+    border-width: 0 !important;
+    font-size: 10px;
+    color: black !important;
+    top: 0 !important;
+    left: -3px;
+    color: inherit;
+    text-align: center;
+    transform: rotate(0deg);
+    transform-origin: 8px 12px;
+    transition: transform 0.2s ease;
+    padding-right: 10px !important;
+  }
+  
+  ::ng-deep .ng-select .ng-arrow:before {
+    content: "\25BC";
+  }
+  
+  ::ng-deep .ng-select .ng-select-container .ng-value-container {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    left: 16px !important;
+  }
+  
+  .span {
+    font-size: 11px;
+    color: black;
+    font-weight: 600;
+    z-index: 1;
+    position: absolute;
+    top: -8px;
+    left: 26px;
+    background: none, transparent;
+  }
+  
+  ::ng-deep .ng-select.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    background-color: rgb(201, 214, 214) !important;
+  }
+  
+  &.ng-select-opened {
+      .ng-arrow {
+          transform: rotate(180deg);
+      }
+  }
+
+
+
+
+
+
+/* Mat Select ========================*/
+  /* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 !important;
+    padding-left: 10px !important; 
+    padding-bottom: 10px !important;
+  }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 !important;
+  }
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+  ::ng-deep .ng-dropdown-panel .scroll-host {
+      width: inherit;
+      top: -8px;
+      background: white;
+      border: 1px solid #d2d2d2;
+      color: black;
+      font-size: 12px;
+  } */
+
+  /* ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+      padding: 2px 5px;
+  } */
+
+  
+
+  /* table {
+    width: 100%;
+  }
+  th.mat-header-cell {
+    text-align: center;
+  }
+  table ,th {
+    color: black;
+  }
+  table th{ 
+    font-size: 17px;
+    font-weight: 500;
+    padding: 0 11px;
+  }
+  td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+    padding-left: 0;
+  }
+   td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding-right: 0;
+  }
+  table , td ,th {
+    border: 1px Solid #9b9898;
+  }
+  .mat-cell {
+    font-size: 13px;
+    text-align: center;
+    font-weight: 400;
+  } */
+
+  
+.custom-table th,
+.custom-table td {
+  border: 1px solid #000 !important; /* Dark border */
+  padding: 0.2rem !important;        /* Reduce height */
+  vertical-align: middle;
+  font-size: 0.85rem;
+}
+
+.custom-table input {
+  height: 20px;
+  font-size: 0.85rem;
+}
+
+label[for="Weight"] {
+  font-weight: bold;
+}
+  
+  
+.row-green {
+  background-color: #d4edda !important; 
+}
+
+.row-blue {
+  background-color: #cce5ff !important; 
+}

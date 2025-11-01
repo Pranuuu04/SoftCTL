@@ -1,0 +1,176 @@
+<!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
+    <div class="table-responsive">
+      <div class="row d-flex m-0" style="justify-content: right;" >
+        <div class="form-group has-search col-sm-4">
+          <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute;
+          background: none;
+          top: -3px;
+          width: 38px;
+          height: 30px;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+            <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -24px;"></i>
+          </button>
+          <input type="text" class="form-control" placeholder="Search Customer/Supplier/Route.."  id="Filter" #input (keyup)="applySearch($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+        </div>
+      </div>
+    </div>
+      <!-- <div class="table-responsive">
+    <div class="row d-flex m-0" style="justify-content: right;">
+      <div class="form-group has-search col-sm-3">
+        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute; top: -3px; width: 38px; height: 30px;
+          border-top-left-radius: 10px; border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px;"></i>
+        </button>
+        <input type="text" class="form-control"
+               placeholder="Search Customer/Supplier.."
+               (keyup)="applyCustomerSupplierFilter($event.target.value)"
+               style="border-radius: 11px; margin: 0px 0 0;
+               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+               height: 32px; padding-left: 48px;">
+      </div>
+
+      <div class="form-group has-search col-sm-3">
+        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute; top: -3px; width: 38px; height: 30px;
+          border-top-left-radius: 10px; border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px;"></i>
+        </button>
+        <input type="text" class="form-control"
+               placeholder="Search Route.."
+               (keyup)="applyRouteFilter($event.target.value)"
+               style="border-radius: 11px; margin: 0px 0 0;
+               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+               height: 32px; padding-left: 48px;">
+      </div>
+
+    </div>
+  </div> -->
+    <div class="table-responsive text-nowrap" style="height: 400px;">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+    
+        <!-- <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="Add"  (click)="openTripForm(element)">
+               <mat-icon style="color: #3f51b5;">add</mat-icon>
+            </button>
+          </td>
+        </ng-container> -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openTripForm(element)">
+                <mat-icon>add</mat-icon>
+                <span>Add</span>
+              </button>
+              <button mat-menu-item (click)="confirmCancelTrip(element)">
+                <mat-icon>delete</mat-icon>
+                <span>Cancel</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef> Sr.No </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ pageIndex * pageSize + i + 1 }}
+          </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Customer_Name">
+          <th mat-header-cell *matHeaderCellDef> Customer name </th>
+          <td mat-cell *matCellDef="let element"> {{ element.Customer_Name }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{ element.Date }} </td>
+        </ng-container>
+   <ng-container matColumnDef="OTA">
+        <th mat-header-cell *matHeaderCellDef> Store In </th>
+        <td mat-cell *matCellDef="let element"> {{ element.OTA }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="OTR">
+        <th mat-header-cell *matHeaderCellDef> Reporting time </th>
+        <td mat-cell *matCellDef="let element">{{element.OTR }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="LoadingIn">
+        <th mat-header-cell *matHeaderCellDef> Loading in </th>
+        <td mat-cell *matCellDef="let element"> {{ element.LoadingIn }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="LoadingOut">
+        <th mat-header-cell *matHeaderCellDef> Loading out </th>
+        <td mat-cell *matCellDef="let element"> {{ element.LoadingOut }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="DispatchTime">
+        <th mat-header-cell *matHeaderCellDef> Dispatch time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.DispatchTime }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="InTransit">
+        <th mat-header-cell *matHeaderCellDef> Transit </th>
+        <td mat-cell *matCellDef="let element"> {{ element.InTransit }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="StoreOutTime">
+        <th mat-header-cell *matHeaderCellDef> Store out </th>
+        <td mat-cell *matCellDef="let element"> {{ element.StoreOutTime }} </td>
+      </ng-container>
+      
+        <ng-container matColumnDef="Qty">
+          <th mat-header-cell *matHeaderCellDef> Qty </th>
+          <td mat-cell *matCellDef="let element"> {{ element.Qty }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Route">
+          <th mat-header-cell *matHeaderCellDef> Route </th>
+          <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="vehicleType">
+          <th mat-header-cell *matHeaderCellDef> vehicle type </th>
+          <td mat-cell *matCellDef="let element"> {{ element.vehicleType }} </td>
+        </ng-container>
+   
+        <ng-container matColumnDef="supplierName">
+          <th mat-header-cell *matHeaderCellDef> Supplier name</th>
+          <td mat-cell *matCellDef="let element">{{ element.supplierName }}</td>
+        </ng-container>
+   
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell text-center" [attr.colspan]="displayedColumns.length" style="font-weight: 600; color: #555;">
+        No trip data available
+      </td>
+    </tr>
+    </table>
+    </div>
+   <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+  <!-- </div>
+  <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="">
+  </div> -->

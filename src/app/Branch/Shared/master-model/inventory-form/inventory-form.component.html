@@ -1,0 +1,517 @@
+<div class="container" *ngIf="data.action === 'EntryAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Stock entry</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="entryForm" (ngSubmit)="formSubmitStockEntry(entryForm.value)">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="CNote">No of C.Note :</label>
+                <input class="form-control" type="text" formControlName="CNote"  placeholder="enter No of C.Note">
+            </div>
+            <div *ngFor="let validation of validationMessage.CNote">
+              <div class="error-message"
+                *ngIf="entryForm.get('CNote').hasError(validation.type) && (entryForm.get('CNote').dirty || entryForm.get('CNote').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="EntryDate">Stock date :</label>
+                <input class="form-control" type="date" formControlName="EntryDate">
+            </div>
+            <div *ngFor="let validation of validationMessage.EntryDate">
+              <div class="error-message"
+                *ngIf="entryForm.get('EntryDate').hasError(validation.type) && (entryForm.get('EntryDate').dirty || entryForm.get('EntryDate').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="EntryfromNo">From AWB No. :</label>
+                <input class="form-control" type="text" formControlName="EntryFromNo"  placeholder="enter From no.">
+            </div>
+            <div *ngFor="let validation of validationMessage.EntryFromNo">
+              <div class="error-message"
+                *ngIf="entryForm.get('EntryFromNo').hasError(validation.type) && (entryForm.get('EntryFromNo').dirty || entryForm.get('EntryFromNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="EntryToNo">To AWB No. :</label>
+                <input class="form-control" type="text"  formControlName="EntryToNo"  placeholder="enter To no." readonly>
+            </div>
+            <div *ngFor="let validation of validationMessage.EntryToNo">
+              <div class="error-message"
+                *ngIf="entryForm.get('EntryToNo').hasError(validation.type) && (entryForm.get('EntryToNo').dirty || entryForm.get('EntryToNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div *ngIf="stockEntryMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" >Submit</button>
+        </div>
+      </div>
+
+      <div *ngIf="stockEntryMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateStockEntry()" >Update</button>
+        </div>
+      </div>
+    </form>
+ </div>
+
+ <div class="container" *ngIf="data.action === 'BranchAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Stock entry ( Branch )</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form [formGroup]="branchForm" (ngSubmit)="formSubmitBranch(branchForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="BranchLoc">Location :</label>
+              <ng-select formControlName="branchLocation" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of branchList" [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.branchLocation">
+            <div class="error-message"
+              *ngIf="branchForm.get('branchLocation').hasError(validation.type) && (branchForm.get('branchLocation').dirty || branchForm.get('branchLocation').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="branchCNote">No of C.Note :</label>
+              <input class="form-control" type="text" id="branchCNote" formControlName="branchCNote" placeholder="enter No of C.Note">
+          </div>
+          <div *ngFor="let validation of validationMessage.branchCNote">
+            <div class="error-message"
+              *ngIf="branchForm.get('branchCNote').hasError(validation.type) && (branchForm.get('branchCNote').dirty || branchForm.get('branchCNote').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="branchEntryDate">Stock date :</label>
+              <input class="form-control" type="date" formControlName="branchEntryDate">
+          </div>
+          <div *ngFor="let validation of validationMessage.branchEntryDate">
+            <div class="error-message"
+              *ngIf="branchForm.get('branchEntryDate').hasError(validation.type) && (branchForm.get('branchEntryDate').dirty || branchForm.get('branchEntryDate').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="branchfromNo">From no. :</label>
+              <input class="form-control" type="text" formControlName="branchfromNo"  placeholder="enter From no.">
+          </div>
+          <div *ngFor="let validation of validationMessage.branchfromNo">
+            <div class="error-message"
+              *ngIf="branchForm.get('branchfromNo').hasError(validation.type) && (branchForm.get('branchfromNo').dirty || branchForm.get('branchfromNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="branchToNo">To no. :</label>
+              <input class="form-control" type="text" formControlName="branchToNo"  placeholder="enter To no." readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.branchToNo">
+            <div class="error-message"
+              *ngIf="branchForm.get('branchToNo').hasError(validation.type) && (branchForm.get('branchToNo').dirty || branchForm.get('branchToNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="branchMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="branchMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateBranchEntry()" >Update</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div class="container" *ngIf="data.action === 'CustAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Stock entry ( Customer )</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form [formGroup]="customerForm" (ngSubmit)="formSubmitCustomer(customerForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="custLoc">Location :</label>
+              <ng-select (change)="fetchReleventData($event)" formControlName="custLocation" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of branchList" [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.custLocation">
+            <div class="error-message"
+              *ngIf="customerForm.get('custLocation').hasError(validation.type) && (customerForm.get('custLocation').dirty || customerForm.get('custLocation').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="CustName">Customer Name :</label>
+              <ng-select formControlName="customerName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of customerList" [value]="item.customerCode" style="font-size: 14px;">{{item.customerName}} &nbsp;({{item.customerCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.customerName">
+            <div class="error-message"
+              *ngIf="customerForm.get('customerName').hasError(validation.type) && (customerForm.get('customerName').dirty || customerForm.get('customerName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="custCNote">No of C.Note :</label>
+              <input class="form-control" type="text" formControlName="custCNote" placeholder="enter No of C.Note">
+          </div>
+          <div *ngFor="let validation of validationMessage.custCNote">
+            <div class="error-message"
+              *ngIf="customerForm.get('custCNote').hasError(validation.type) && (customerForm.get('custCNote').dirty || customerForm.get('custCNote').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="custfromNo">From no. :</label>
+              <input class="form-control" type="text"  formControlName="custfromNo"  placeholder="Enter from no.">
+          </div>
+          <div *ngFor="let validation of validationMessage.custfromNo">
+            <div class="error-message"
+              *ngIf="customerForm.get('custfromNo').hasError(validation.type) && (customerForm.get('custfromNo').dirty || customerForm.get('custfromNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="custToNo">To no. :</label>
+              <input class="form-control" type="text" formControlName="custToNo" placeholder="Enter to no." readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.custToNo">
+            <div class="error-message"
+              *ngIf="customerForm.get('custToNo').hasError(validation.type) && (customerForm.get('custToNo').dirty || customerForm.get('custToNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CustIssueDate">Issue date :</label>
+              <input class="form-control" type="date" id="CustIssueDate" formControlName="CustIssueDate">
+          </div>
+          <div *ngFor="let validation of validationMessage.CustIssueDate">
+            <div class="error-message"
+              *ngIf="customerForm.get('CustIssueDate').hasError(validation.type) && (customerForm.get('CustIssueDate').dirty || customerForm.get('CustIssueDate').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="stockCustomerMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="stockCustomerMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateCustomerEntry()" >Update</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div class="container" *ngIf="data.action === 'EMPAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Stock entry ( Employee )</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form [formGroup]="employeeForm" (ngSubmit)="formSubmitEmployee(employeeForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="empLoc">Location :</label>
+              <ng-select (change)="relevantDataWithEmployee($event)" formControlName="empLocation" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of branchList" [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.empLocation">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empLocation').hasError(validation.type) && (employeeForm.get('empLocation').dirty || employeeForm.get('empLocation').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="empName">Employee Name :</label>
+              <ng-select formControlName="empName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of employeeList" [value]="item.employeeCode" style="font-size: 14px;">{{item.employeeName}} &nbsp;({{item.employeeCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.empName">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empName').hasError(validation.type) && (employeeForm.get('empName').dirty || employeeForm.get('empName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="empCNote">No of C.Note :</label>
+              <input class="form-control" type="text" formControlName="empCNote" placeholder="enter No of C.Note">
+          </div>
+          <div *ngFor="let validation of validationMessage.empCNote">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empCNote').hasError(validation.type) && (employeeForm.get('empCNote').dirty || employeeForm.get('empCNote').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="empfromNo">From no. :</label>
+              <input class="form-control" type="text"  formControlName="empfromNo"  placeholder="Enter from no.">
+          </div>
+          <div *ngFor="let validation of validationMessage.empfromNo">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empfromNo').hasError(validation.type) && (employeeForm.get('empfromNo').dirty || employeeForm.get('empfromNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="empToNo">To no. :</label>
+              <input class="form-control" type="text" formControlName="empToNo" placeholder="Enter to no." readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.empToNo">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empToNo').hasError(validation.type) && (employeeForm.get('empToNo').dirty || employeeForm.get('empToNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="empIssueDate">Issue date :</label>
+              <input class="form-control" type="date" id="empIssueDate" formControlName="empIssueDate">
+          </div>
+          <div *ngFor="let validation of validationMessage.empIssueDate">
+            <div class="error-message"
+              *ngIf="employeeForm.get('empIssueDate').hasError(validation.type) && (employeeForm.get('empIssueDate').dirty || employeeForm.get('empIssueDate').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="stockEmpMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="stockEmpMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateEmployeeEntry()" >Update</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div class="container" *ngIf="data.action === 'CancelAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Pod cancel entry</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="podForm" (ngSubmit)="formSubmitPod(podForm.value)">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="cancelAwbno"> Awb no :</label>
+                <input class="form-control" type="text" formControlName="podAwbNo"  placeholder="enter cancelAwbno">
+            </div>
+            <div *ngFor="let validation of validationMessage.podAwbNo">
+              <div class="error-message"
+                *ngIf="podForm.get('podAwbNo').hasError(validation.type) && (podForm.get('podAwbNo').dirty || podForm.get('podAwbNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="cancelDate">Cancel Date :</label>
+                <input class="form-control" type="date" formControlName="podCancelDate">
+            </div>
+            <div *ngFor="let validation of validationMessage.podCancelDate">
+              <div class="error-message"
+                *ngIf="podForm.get('podCancelDate').hasError(validation.type) && (podForm.get('podCancelDate').dirty || podForm.get('podCancelDate').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="cancelremark">Remark :</label>
+                <input class="form-control" type="text" formControlName="podRemarks"  placeholder="enter remark">
+            </div>
+            <div *ngFor="let validation of validationMessage.podRemarks">
+              <div class="error-message"
+                *ngIf="podForm.get('podRemarks').hasError(validation.type) && (podForm.get('podRemarks').dirty || podForm.get('podRemarks').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="podMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+
+      <div *ngIf="podMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updatePod()" >Update</button>
+        </div>
+      </div>
+    </form>
+  </div>

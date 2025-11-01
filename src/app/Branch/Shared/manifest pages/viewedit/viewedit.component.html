@@ -1,0 +1,243 @@
+<header>
+  <h2>Edit Manifest<button class="close-button" (click)="closeForm()">✖</button></h2>
+</header>
+
+<div class="header">
+  <div class="container" style=" padding: 16px;">
+    <form [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+        <div class="row loader">
+          <label for="inputEmail3" class="col-sm-1 col-form-label manifest">Manifest No.</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" readonly formControlName="manifestNo" style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; background-color: white; margin-left: -6px; color: black;">
+            <div *ngFor="let validation of validationMessage.manifestNo">
+              <div class="error-message" *ngIf="createForm.get('manifestNo').hasError(validation.type) && (createForm.get('manifestNo').dirty || createForm.get('manifestNo').touched)">
+              {{ validation.message}}
+              </div>
+            </div>
+          </div>
+         
+
+          <label for="inputEmail3" class="col-sm-1 col-form-label manifest">Manifest Date</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" formControlName="manifestDate" readonly style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; background-color: white; margin-left: -6px; color: black;">
+            <div *ngFor="let validation of validationMessage.manifestDate">
+              <div class="error-message" *ngIf="createForm.get('manifestDate').hasError(validation.type) && (createForm.get('manifestDate').dirty || createForm.get('manifestDate').touched)">
+              {{ validation.message}}
+              </div>
+            </div>
+          </div>
+          
+
+          <label for="inputEmail3" class="col-sm-1 col-form-label" style="margin-bottom: 20px;">From</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="viaInput" formControlName="origin" readonly style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; background-color: white; margin-left: -6px; color: black;">
+            <div *ngFor="let validation of validationMessage.origin">
+              <div class="error-message" *ngIf="createForm.get('origin').hasError(validation.type) && (createForm.get('origin').dirty || createForm.get('origin').touched)">
+              {{ validation.message}}
+              </div>
+            </div>
+          </div>
+
+          <label for="inputEmail3" class="col-sm-1 col-form-label">Desination</label>
+          <div class="col-sm-2">
+                <input list="brow" class="custom-select" formControlName="destination" style="color: black;" readonly>
+                <datalist id="inputState">
+                  <option value="Internet Explorer">
+                  <option value="Firefox">
+                  <option value="Chrome">
+                  <option value="Opera">
+                  <option value="Safari">
+                </datalist>
+            <div *ngFor="let validation of validationMessage.destination">
+              <div class="error-message" *ngIf="createForm.get('destination').hasError(validation.type) && (createForm.get('destination').dirty || createForm.get('destination').touched)">
+              {{ validation.message}}
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="row  loader">
+            <label for="inputEmail3" class="col-sm-1 col-form-label mode">Mode</label>
+            <div class="col-sm-2">
+              <!-- <input list="inputMode" class="custom-select" formControlName="mode" style="color: black;"> -->
+              <!-- <datalist id="inputMode">
+                <option *ngFor="let item of ModeName" [value]="item.Mode_name">
+                  {{ item.Mode_name }} &nbsp; ({{ item.Mode_code }})
+                </option>
+              </datalist> -->
+              <select id="inputMode" class="custom-select" formControlName="mode">
+                <option value="" selected disabled>Select Mode</option>
+                <option value="{{item.Mode_code}}"  *ngFor="let item of ModeName" >{{item.Mode_name}}</option>
+              </select>
+              <div *ngFor="let validation of validationMessage.mode">
+                <div class="error-message" *ngIf="createForm.get('mode').hasError(validation.type) && (createForm.get('mode').dirty || createForm.get('destination').touched)">
+                {{ validation.message}}
+                </div>
+              </div>
+            </div>
+            
+
+            <label for="inputEmail3"class="col-sm-1 col-form-label">Via</label>
+            <div class="col-sm-2">
+              <!-- <input list="brow" class="custom-select" formControlName="via" style="color: black;">
+                <datalist id="inputState">
+                  <option value="Internet Explorer">
+                  <option value="Firefox">
+                  <option value="Chrome">
+                  <option value="Opera">
+                  <option value="Safari">
+                </datalist> -->
+                <select id="inputState" class="custom-select" formControlName="via" style="color: black;" data-live-search="true">
+                  <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                    {{ item.destinationName }} 
+                  </option>
+                </select>
+                <div *ngFor="let validation of validationMessage.via">
+                  <div class="error-message"*ngIf="createForm.get('via').hasError(validation.type) && (createForm.get('via').dirty || createForm.get('via').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+
+            <label for="inputEmail3" class="col-sm-1 col-form-label" style="margin-top: -7px;">Vehicle Type</label>
+            <div class="col-sm-8 col-md-1">
+              <select id="inputState" class="custom-select1"  formControlName="vehicleType" style="color: black;">
+                    <option selected>Self</option>
+                    <option value="1">Hired</option>
+              </select>
+              <div *ngFor="let validation of validationMessage.vehicleType">
+                <div class="error-message" *ngIf="createForm.get('vehicleType').hasError(validation.type) && (createForm.get('vehicleType').dirty || createForm.get('vehicleType').touched)">
+                {{ validation.message}}
+                </div>
+              </div>
+            </div>
+           
+
+            <div class="col-md-1 col-sm-3" style="  display: flex; justify-content: right; width: 90px;">
+              <button type="button" class="btn1"><i class="fa fa-plus" (click)="openaddmanifest()"></i></button>
+            </div>
+
+            <label for="inputEmail3" class="col-sm-1 col-form-label">Vehicle No.</label>
+            <div class="col-sm-2">
+              <input type="text"  class="form-control" id="viaInput" placeholder="Enter vehicle no."  formControlName="vehicleNo" style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; color: black; ">
+              <div *ngFor="let validation of validationMessage.vehicleNo">
+                <div class="error-message" *ngIf="createForm.get('vehicleNo').hasError(validation.type) && (createForm.get('vehicleNo').dirty || createForm.get('vehicleNo').touched)">
+                {{ validation.message}}
+                </div>
+              </div>
+            </div>
+          </div>
+            
+
+          <div class="row add">
+            <label for="inputEmail3" class="col-sm-1 col-form-label">Driver Name</label>
+            <div class="col-sm-2">
+              <select id="driverName" class="custom-select" formControlName="driverName" style="color: black;" data-live-search="true">
+                <option *ngFor="let item of DriverName" value="{{item.driverCode}}">
+                  {{ item.driverName }} 
+                </option>
+              </select>
+                  <!-- <input list="brow" class="custom-select" formControlName="driverName" style="color: black;">
+                  <datalist id="inputState">
+                    <option value="Internet Explorer">
+                    <option value="Firefox">
+                    <option value="Chrome">
+                    <option value="Opera">
+                    <option value="Safari">
+                  </datalist> -->
+                <div *ngFor="let validation of validationMessage.driverName">
+                  <div class="error-message" *ngIf="createForm.get('driverName').hasError(validation.type) && (createForm.get('driverName').dirty || createForm.get('driverName').touched)">
+                  {{ validation.message}}
+                  </div>
+                </div>
+            </div>
+            
+            <label for="inputEmail3"class="col-sm-1 col-form-label">Driver No.</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" id="viaInput" placeholder="Enter driver no "  formControlName="driverNo" 
+              style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; margin-bottom: -10px;color: black; ">
+              <div *ngFor="let validation of validationMessage.driverNo">
+                <div class="error-message" *ngIf="createForm.get('driverNo').hasError(validation.type) && (createForm.get('driverNo').dirty || createForm.get('driverNo').touched)">
+                {{ validation.message}}
+                </div>
+              </div>
+            </div>
+           
+
+            <label for="inputEmail3" class="col-sm-1 col-form-label select">Co-loader Name</label>
+              <div class="col-sm-2">
+                <select id="ColoaderName" class="custom-select" formControlName="coloaderName">
+                  <option value="" selected disabled>Select Co-Loader Name</option>
+                  <option value="{{item.vendorCode}}"  *ngFor="let item of ColoaderName" >{{item.vendorName}}</option>
+                </select>
+              <!-- <input list="ColoaderName" (input)="updateSelectedColoaderNameCode($event.target.value)"
+              class="custom-select" formControlName="coloaderName" style="color: black;">
+              <datalist id="ColoaderName">
+                <option *ngFor="let item of ColoaderName" >
+                  {{ item.vendorName }} &nbsp; ({{ item.vendorCode }})
+                </option>
+              </datalist> -->
+              <div *ngFor="let validation of validationMessage.coloaderName">
+                <div class="error-message" *ngIf="createForm.get('coloaderName').hasError(validation.type) && (createForm.get('coloaderName').dirty || createForm.get('coloaderName').touched)">
+                {{ validation.message}}
+                </div>
+              </div>
+            </div>
+            
+
+          <div class="col-sm-1">
+            <label for="viaInput">Co-loader No.</label>
+            </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="viaInput" placeholder="Enter co-loader no."  formControlName="coloaderNo" style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;color: black; ">
+                <div *ngFor="let validation of validationMessage.coloaderNo">
+                  <div class="error-message" *ngIf="createForm.get('coloaderNo').hasError(validation.type) && (createForm.get('coloaderNo').dirty || createForm.get('coloaderNo').touched)">
+                    {{ validation.message}}
+                  </div>
+                </div>
+              </div>  
+          </div>
+
+        <div class="row loader">
+        <label for="inputEmail3" class="col-sm-1 col-form-label">Route</label>
+          <div class="col-sm-2">
+          <input list="inputRouteName" class="custom-select" formControlName="route" style="color: black;">
+          <!-- <datalist id="inputRouteName">
+            <option *ngFor="let item of inputRouteName">
+              {{ item.routeName }} &nbsp; ({{ item.routeCode }})
+            </option>
+          </datalist> -->
+          <div *ngFor="let validation of validationMessage.route">
+            <div class="error-message" *ngIf="createForm.get('route').hasError(validation.type) && (createForm.get('route').dirty || createForm.get('route').touched)">
+            {{ validation.message}}
+            </div>
+          </div>
+        </div>
+        
+
+        <label for="inputEmail3"class="col-sm-1 col-form-label ">Remark</label>
+        <div class="col-sm-2">
+        <input type="text" class="form-control" id="viaInput" placeholder="Enter remark "  formControlName="remark" style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto; margin-bottom: -10px; color: black;">
+          <div *ngFor="let validation of validationMessage.remark">
+            <div class="error-message" *ngIf="createForm.get('remark').hasError(validation.type) && (createForm.get('remark').dirty || createForm.get('remark').touched)">
+            {{ validation.message}}
+            </div>
+          </div>  
+        </div>
+       
+
+        <label for="inputEmail3" class="col-sm-1 col-form-label manifest"></label>
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-12 text-center">
+            <div class="d-flex justify-content-center" style="margin-top: -24px; margin-left: 700px;">
+              <button type="button" class="btn2  ml-2" (click)="closeForm()">Cancel</button>
+              <button type="submit" class="btn3  ml-2">Submit</button>
+            </div>
+          </div>
+        </div>
+      
+        </div>
+    </form>
+  </div>
+</div>

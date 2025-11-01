@@ -1,0 +1,163 @@
+<div class="container" *ngIf="data.action === 'itemMastAdd' || data.action === 'itemMastEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Item Master</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form  [formGroup]="itemMastForm" (ngSubmit)="formSubmitItemMast(itemMastForm.value)" >
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Code"><span style="color: red;">*</span>Code :</label>
+                <input *ngIf="data.itemMastMode !== 'edit'" class="form-control" type="text"  formControlName="code" [(ngModel)]="code"  placeholder="enter code">
+                <input *ngIf="data.itemMastMode === 'edit'" class="form-control" type="text"  formControlName="code" [(ngModel)]="code"  placeholder="enter code" readonly >
+            </div>
+            <div *ngFor="let validation of validationMessage.categoryCode">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('code').hasError(validation.type) && (itemMastForm.get('code').dirty || itemMastForm.get('code').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>Name :</label>
+                <input class="form-control" type="text" formControlName="name" [(ngModel)]="name" placeholder="enter name">
+            </div>
+            <div *ngFor="let validation of validationMessage.name">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('name').hasError(validation.type) && (itemMastForm.get('name').dirty || itemMastForm.get('name').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="textOnInput">
+            <label for="Name"><span style="color: red;">*</span>Category :</label>
+            <select class="custom-select" formControlName="category" [(ngModel)]="category"  required>
+              <option selected disabled value="">Select Category</option>
+              <option *ngFor="let item of categoryList" [value]="item.Category_Code">
+                {{ item.Category_Name }} ({{ item.Category_Code }})
+              </option>
+            </select>
+          </div>
+          <div *ngFor="let validation of validationMessage.category">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="itemMastForm.get('category')?.hasError(validation.type) && (itemMastForm.get('category')?.dirty || itemMastForm.get('category')?.touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>ItemType :</label>
+                <select class="custom-select" formControlName="itemType" [(ngModel)]="itemType" required>
+                   <option selected disabled value="">Select Item Type</option>
+                   <option value="Serial">Serial</option>
+                   <option value="WithoutSerial">Without Serial</option>
+                </select>
+            </div>
+            <div *ngFor="let validation of validationMessage.categary">
+              <div class="error-message"
+                *ngIf="itemMastForm.get('categary').hasError(validation.type) && (itemMastForm.get('categary').dirty || itemMastForm.get('categary').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Serial :</label>
+                <input class="form-control" type="text" formControlName="volume" [(ngModel)]="volume" placeholder="enter serial">
+            </div>
+            <div *ngFor="let validation of validationMessage.volume">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('volume').hasError(validation.type) && (itemMastForm.get('volume').dirty || itemMastForm.get('volume').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Mrp :</label>
+                <input class="form-control" type="text" formControlName="mrp" [(ngModel)]="mrp" placeholder="enter volume">
+            </div>
+            <div *ngFor="let validation of validationMessage.mrp">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('mrp').hasError(validation.type) && (itemMastForm.get('mrp').dirty || itemMastForm.get('mrp').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Quantity :</label>
+                <input class="form-control" type="number" formControlName="qty" [(ngModel)]="qty" placeholder="enter Qty">
+            </div>
+            <div *ngFor="let validation of validationMessage.qty">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('qty').hasError(validation.type) && (itemMastForm.get('qty').dirty || itemMastForm.get('qty').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Sr No. :</label>
+                <input class="form-control" type="number" formControlName="sNo" [(ngModel)]="sNo" placeholder="enter Sr No. ">
+            </div>
+            <div *ngFor="let validation of validationMessage.sNo">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="itemMastForm.get('sNo').hasError(validation.type) && (itemMastForm.get('sNo').dirty || itemMastForm.get('sNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div> -->
+
+      <div *ngIf="data.itemMastMode!== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" [disabled] = "itemMastForm.invalid">Submit</button>
+        </div>
+      </div>
+      <div *ngIf="data.itemMastMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" [disabled] = "itemMastForm.invalid" (click)="updateItemMast()" >Update</button>
+        </div>
+      </div>
+    </form>
+ </div>
+
+

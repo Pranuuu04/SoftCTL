@@ -1,0 +1,31 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedIndexChange)="onTabChange($event)">
+                    <mat-tab label="Warehouse">
+                      <ng-container *ngIf="activeTab === 0">
+                        <app-warehouse></app-warehouse>
+                      </ng-container>
+                    </mat-tab> 
+  
+                    <mat-tab label="Rack">
+                      <ng-container *ngIf="activeTab === 1">
+                       <app-rack></app-rack>
+                      </ng-container> 
+                   </mat-tab>
+                   <mat-tab label="Category">
+                      <ng-container *ngIf="activeTab === 2"> 
+                       <app-category></app-category>
+                      </ng-container>
+                   </mat-tab>
+                   <mat-tab label="ItemMast">
+                      <ng-container *ngIf="activeTab === 3"> 
+                       <app-item-master></app-item-master>
+                      </ng-container>
+                   </mat-tab>
+                  </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

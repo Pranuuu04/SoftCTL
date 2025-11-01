@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600; font-size: large; margin-bottom: 0;margin-top: 7px; ">Vendor</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;text-align: center;line-height: 30px;height: 30px; font-weight: 500; font-size: large; background: red;color: white;">X</button>
+      </div>
+  </div>
+
+  <form [formGroup]="bookingForm" (ngSubmit)=" formSubmit(bookingForm.value)">
+    
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span">Vendor 2</label>
+          <select id="Employee" class="custom-select" formControlName="vendor2">
+            <option selected disabled>Select Vendor2</option>
+            <option value="{{item.vendorCode}}" *ngFor="let item of vendorNames">
+              {{ item.vendorName }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Forwarding2">Forwarding No-2</label>
+              <input class="form-control" type="text" id="Forwarding2" formControlName="forwardingNo2"  placeholder="Enter Forwarding No 2">
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span">Vendor 3</label>
+          <select id="Employee" class="custom-select" formControlName="selectedVendor3" >
+            <option selected disabled>Select Vendor3</option>
+            <option value="{{item.vendorCode}}" *ngFor="let item of vendorNames">
+              {{ item.vendorName }}
+            </option>
+          </select>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Forwarding3">Forwarding 3</label>
+              <input class="form-control" type="text" id="Forwarding3" formControlName="forwardingNo3"  placeholder="Enter Forwarding No 3">
+          </div>
+      </div>
+    </div>
+
+    <div class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</div>

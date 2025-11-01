@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">GST</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+    </div>
+    <form>
+          <div class="row">
+            <div class="col-sm-8">
+                <div class="textOnInput">
+                    <label for="CGST">CGST :</label>
+                    <input class="form-control" type="number" id="CGST" formControlName="CGST" [value]="gstValue.CGSTAmt" placeholder="enter CGST charges">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="textOnInput">
+                    <label for="CGST%">Pct % :</label>
+                    <input class="form-control" type="number" id="CGST%" formControlName="CGST%" [value]="gstValue.CGST" placeholder="CGST% ">
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-8">
+                <div class="textOnInput">
+                    <label for="SGST">SGST :</label>
+                    <input class="form-control" readonly type="number" id="SGST" formControlName="SGST"  [value]="gstValue.SGSTAmt"  placeholder="enter SGST charges">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="textOnInput">
+                    <label for="SGST%">Pct % :</label>
+                    <input class="form-control" readonly type="number" id="SGST%" formControlName="SGST%"  [value]="gstValue.SGST" placeholder="SGST% ">
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-8">
+                <div class="textOnInput">
+                    <label for="IGST">IGST :</label>
+                    <input class="form-control" readonly type="number" id="IGST" formControlName="IGST" [value]="gstValue.IGSTAmt"  placeholder="enter IGST charges">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="textOnInput">
+                    <label for="IGST%">Pct % :</label>
+                    <input class="form-control" readonly type="number" id="IGST%" formControlName="IGST%" [value]="gstValue.IGST"  placeholder="IGST% ">
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-8">
+                <div class="textOnInput">
+                    <label for="GST">Total GST :</label>
+                    <input class="form-control" readonly type="number" id="GST" formControlName="GST" [value]="totalGST"  placeholder="enter GST charges">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="textOnInput">
+                    <label for="GST%">GST % :</label>
+                    <input class="form-control" readonly type="number" id="GST%" formControlName="GST%" [value]="gstValue.GSTPer" placeholder="GST% ">
+                </div>
+            </div>
+          </div>
+        
+          <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+              <button type="button" class="btn btn-light other-button" (click)="savedata()">Submit</button>
+            </div>
+         </div>
+    </form>
+ </div>

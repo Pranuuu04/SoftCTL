@@ -1,0 +1,552 @@
+<div>
+  <form [formGroup]="createForm" (ngSubmit)="generateTrip(createForm.value)">
+    <div class="row mainrow">
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="CustomerName"><span style="color: red;">*</span>Customer name :</label>
+            <!-- <select class="custom-select" formControlName="CustomerName" >
+              <option selected disabled value="">Select Customer name</option>
+              <option *ngFor="let item of CustomerList" value="{{item.customerCode}}">
+                {{ item.customerName }} 
+              </option>
+            </select> -->
+                <ng-select 
+                  class="custom-select"
+                  [items]="CustomerList"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="CustomerName"
+                  [searchable]="true"
+                  [clearable]="true">
+                </ng-select>
+            <div *ngFor="let validation of validationMessage.CustomerName">
+              <div class="error-message"
+                *ngIf="createForm.get('CustomerName').hasError(validation.type) && (createForm.get('CustomerName').dirty || createForm.get('CustomerName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+            <label for="Date"><span style="color: red;">*</span>Date :</label>
+            <input class="form-control" type="date" id="Date" formControlName="Date">
+            <div *ngFor="let validation of validationMessage.Date">
+              <div class="error-message"
+                *ngIf="createForm.get('Date').hasError(validation.type) && (createForm.get('Date').dirty || createForm.get('Date').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="supplierName">Supplier name :</label>
+          <ng-select 
+           class="custom-select"
+            [items]="supplierList"
+            bindLabel="shipperName"
+            bindValue="shipperCode"
+            formControlName="supplierName"
+            [searchable]="true"
+            [clearable]="true">
+          </ng-select>
+          <div *ngFor="let validation of validationMessage.supplierName">
+            <div class="error-message"
+              *ngIf="createForm.get('supplierName').hasError(validation.type) && (createForm.get('supplierName').dirty || createForm.get('supplierName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="Route"><span style="color: red;">*</span>Route :</label>
+              <ng-select 
+                class="custom-select"
+                [items]="inputRouteName"
+                bindLabel="routeName"
+                bindValue="routeName"
+                formControlName="Route"
+                [searchable]="true"
+                [clearable]="true">
+              </ng-select>
+            <div *ngFor="let validation of validationMessage.Route">
+              <div class="error-message"
+                *ngIf="createForm.get('Route').hasError(validation.type) && (createForm.get('Route').dirty || createForm.get('Route').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mainrow">
+       <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="originName"><span style="color: red;">*</span>originName :</label>
+          <ng-select 
+          class="custom-select"
+          [items]="originList"
+          bindLabel="destinationName"
+          bindValue="destinationCode"
+          formControlName="originName"
+          [searchable]="true"
+          [clearable]="true">
+        </ng-select>
+          <div *ngFor="let validation of validationMessage.originName">
+            <div class="error-message"
+              *ngIf="createForm.get('originName').hasError(validation.type) && (createForm.get('originName').dirty || createForm.get('originName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+       </div>
+      <div class="col-sm-3">
+        <!-- <div class="textOnSelect">
+            <label for="destination"><span style="color: red;">*</span>destination :</label>
+            <select id="destination" class="custom-select" formControlName="destination">
+              <option selected disabled value="">Select destination</option>
+              <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                {{ item.destinationName }} 
+              </option>
+            </select>
+            <div *ngFor="let validation of validationMessage.destination">
+              <div class="error-message"
+                *ngIf="createForm.get('destination').hasError(validation.type) && (createForm.get('destination').dirty || createForm.get('destination').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div> -->
+        <div class="textOnSelect">
+          <label for="destination" style="top: -10px;">Destination :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select
+              id="destination"
+              formControlName="destination"
+              multiple>
+              <mat-option *ngFor="let item of DestinationName" [value]="item.destinationName">
+                {{ item.destinationName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="Transporttype"><span style="color: red;">*</span>Transport :</label>
+          <select id="Transporttype" class="custom-select" formControlName="Transporttype">
+            <option value="Self" >Self</option>
+            <option value="Hired" selected>Hired</option>
+            <option value="Adoc">Adoc</option>
+          </select>
+          <div *ngFor="let validation of validationMessage.Transporttype">
+            <div class="error-message"
+              *ngIf="createForm.get('Transporttype').hasError(validation.type) && (createForm.get('Transporttype').dirty || createForm.get('Transporttype').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      </div>
+        <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value !== 'Adoc'">
+              <div class="textOnInput">
+                <label for="transName"><span style="color: red;">*</span>Transport name :</label>
+                 <ng-select 
+                      class="custom-select"
+                      [items]="tranportList"
+                      bindLabel="TransportName"
+                      bindValue="TransportCode"
+                      formControlName="transName"
+                      [searchable]="true"
+                      [clearable]="true"
+                      (change)="getVehicleNumbers()">
+                    </ng-select>
+              </div>
+        </div>
+         <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value === 'Adoc'">
+              <div class="textOnInput">
+                <label for="transName"><span style="color: red;">*</span>Transport name :</label>
+                <input class="form-control" type="text" id="transName" formControlName="transName"  placeholder="Enter transport name">
+              </div>
+        </div>
+    </div>
+    <div class="row mainrow">
+         <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value === 'Adoc'">
+              <div class="textOnInput">
+                <label for="VehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
+                <input class="form-control" type="text" id="VehicleNo" formControlName="VehicleNo"  placeholder="vehicle number">
+                <div *ngFor="let validation of validationMessage.VehicleNo">
+                  <div class="error-message"
+                    *ngIf="createForm.get('VehicleNo').hasError(validation.type) && (createForm.get('VehicleNo').dirty || createForm.get('VehicleNo').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value !== 'Adoc'">
+              <div class="textOnInput">
+                <label for="VehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
+                    <ng-select 
+                      class="custom-select"
+                      [items]="vehicleNumbers"
+                      bindLabel="vehicleReg"
+                      bindValue="vehicleReg"
+                      formControlName="VehicleNo"
+                      [searchable]="true"
+                      [clearable]="true"
+                      (change)="onVehicleChange($event)">
+                    </ng-select>
+              <div *ngFor="let validation of validationMessage.VehicleNo">
+                <div class="error-message"
+                  *ngIf="createForm.get('VehicleNo').hasError(validation.type) && (createForm.get('VehicleNo').dirty || createForm.get('VehicleNo').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+            </div>
+            </div>
+              <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value === 'Adoc'">
+              <div class="textOnInput">
+                <label for="VehicleType"><span style="color: red;">*</span>Vehicle Type :</label>
+                <input class="form-control" type="text" id="VehicleType" formControlName="VehicleType"  placeholder="Enter vehicle type">
+                <div *ngFor="let validation of validationMessage.VehicleType">
+                  <div class="error-message"
+                    *ngIf="createForm.get('VehicleType').hasError(validation.type) && (createForm.get('VehicleType').dirty || createForm.get('VehicleType').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+            </div>
+        <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value !== 'Adoc'">
+              <div class="textOnSelect">
+                <label for="VehicleType"><span style="color: red;">*</span>Vehicle Type :</label>
+                    <ng-select 
+                      class="custom-select"
+                      [items]="VehicleTypeList"
+                      bindLabel="VehicleType"
+                      bindValue="VehicleType"
+                      formControlName="VehicleType"
+                      [searchable]="true"
+                      [clearable]="true">
+                    </ng-select>
+                <div *ngFor="let validation of validationMessage.VehicleType">
+                  <div class="error-message"
+                    *ngIf="createForm.get('VehicleType').hasError(validation.type) && (createForm.get('VehicleType').dirty || createForm.get('VehicleType').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+              </div>
+            </div>
+    <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value === 'Adoc'">
+              <div class="textOnInput">
+                <label for="Drivername"><span style="color: red;">*</span>Driver Name :</label>
+                <input class="form-control" type="text" id="Drivername" formControlName="Drivername"  placeholder="Enter driver name">
+                <div *ngFor="let validation of validationMessage.Drivername">
+                  <div class="error-message"
+                    *ngIf="createForm.get('Drivername').hasError(validation.type) && (createForm.get('Drivername').dirty || createForm.get('Drivername').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+            </div>
+    <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value !== 'Adoc'">
+      <div class="textOnSelect">
+          <label for="Drivername"><span style="color: red;">*</span>Driver Name :</label>
+          <ng-select 
+            class="custom-select"
+            [items]="DriverName"
+            bindLabel="driverName"
+            bindValue="driverName"
+            formControlName="Drivername"
+            [searchable]="true"
+            [clearable]="true"
+            (change)="onDriverNameChange($event)">
+          </ng-select>
+          <div *ngFor="let validation of validationMessage.Drivername">
+            <div class="error-message"
+              *ngIf="createForm.get('Drivername').hasError(validation.type) && (createForm.get('Drivername').dirty || createForm.get('Drivername').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+      <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value === 'Adoc'">
+              <div class="textOnInput">
+                <label for="DriverNo"><span style="color: red;">*</span>Driver Number :</label>
+                <input class="form-control" type="text" id="DriverNo" formControlName="DriverNo"  placeholder="Enter driver number">
+                <div *ngFor="let validation of validationMessage.DriverNo">
+                  <div class="error-message"
+                    *ngIf="createForm.get('DriverNo').hasError(validation.type) && (createForm.get('DriverNo').dirty || createForm.get('DriverNo').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+            </div>
+    <div class="col-sm-3" *ngIf="createForm.get('Transporttype')?.value !== 'Adoc'">
+      <div class="textOnInput">
+          <label for="DriverNo"><span style="color: red;">*</span>Driver Number :</label>
+          <input class="form-control" type="text" id="DriverNo" formControlName="DriverNo"  placeholder="enter Driver Number">
+          <div *ngFor="let validation of validationMessage.DriverNo">
+            <div class="error-message"
+              *ngIf="createForm.get('DriverNo').hasError(validation.type) && (createForm.get('DriverNo').dirty || createForm.get('DriverNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <div class="row mainrow">
+        <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="Remark">Remark :</label>
+          <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter Remark">
+          <div *ngFor="let validation of validationMessage.Remark">
+            <div class="error-message"
+              *ngIf="createForm.get('Remark').hasError(validation.type) && (createForm.get('Remark').dirty || createForm.get('Remark').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      </div>
+      <!-- <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="OTR">OTR :</label>
+          <input class="form-control" type="time" id="OTR" formControlName="OTR"  placeholder="enter OTR">
+       </div>
+      </div> -->
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="otr" style="top: -10px;">Reporting time:</label>
+           <!-- <mat-form-field appearance="outline" class="w-100">
+             <mat-select formControlName="OTR" style="border: none; padding: 0;" >
+               <mat-option *ngFor="let time of timeSlots" [value]="time">{{ time }}</mat-option>
+             </mat-select>
+          </mat-form-field> -->
+           <!-- <mat-form-field class="no-border" appearance="outline">
+              <input matInput [ngxMatTimepicker]="picker" formControlName="OTR" style="border: none; padding: 0;" readonly/>
+              <ngx-mat-timepicker #picker [format]="24" [disableAnimation]="false"></ngx-mat-timepicker>
+          </mat-form-field> -->
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="OTR" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+          </div>
+             <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('OTR')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+            </div>
+         </div>
+       <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="loadingIn">Loading In :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="loadingIn" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('loadingIn')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+       <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="loadingOut">Loading out :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="loadingOut" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('loadingOut')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+    </div>
+    <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="DispatchTime">Dispatch time :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="DispatchTime" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('DispatchTime')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+        <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="inTransit">Transit :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="inTransit" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('inTransit')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+       <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="OTA">Store In :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="OTA" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('OTA')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+        <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="StoreOut">Store out :</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput formControlName="StoreOut" placeholder="HH:mm" maxlength="5" pattern="^([01]\d|2[0-3]):([0-5]\d)$" style="border: none; padding: 0;"/>
+          </mat-form-field>
+        </div>
+          <div class="error-message position-absolute" style="margin-top: -18px;" *ngIf="createForm.get('StoreOut')?.invalid">
+               Time Should HH:mm (00:00-23:59)
+          </div>
+      </div>
+    
+    </div>
+    <div class="row mainrow"  style="border-bottom: 1px solid #d2d2d2; margin: 10px 0;">
+         <div *ngIf="!editMode" class="col-sm-12 d-flex" style="justify-content: end;" >
+        <button type="submit" class="btn btn-light other-button">Create</button>
+      </div>
+      <div *ngIf="editMode" class="col-sm-12 d-flex" style="justify-content: end;" >
+        <button type="button" class="btn btn-light other-button" (click)="tripUpdate()">TripUpdate</button>
+      </div>
+    </div>
+  </form> 
+<div class="row mainrow">
+<div class="col-sm-12 mt-2 p-0">
+  <div *ngIf="showTable && dataSource.data.length > 0">
+    <div class="table-responsive">
+      <div class="row d-flex m-0" style="justify-content: right;" >
+        <div class="form-group has-search col-sm-3">
+          <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute;
+          background: none;
+          top: -3px;
+          width: 38px;
+          height: 30px;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+            <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
+          </button>
+          <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive text-nowrap">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+  
+          <ng-container matColumnDef="tripNo">
+            <th mat-header-cell *matHeaderCellDef> Trip No </th>
+            <td mat-cell *matCellDef="let element"> {{ element.TripNo }} </td>
+          </ng-container>
+          
+          <!-- Trip Date -->
+          <ng-container matColumnDef="tripDate">
+            <th mat-header-cell *matHeaderCellDef> Trip Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.TripDate }} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="OTR">
+            <th mat-header-cell *matHeaderCellDef> Reporting time </th>
+            <td mat-cell *matCellDef="let element"> {{ element.OTR }} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="OTA">
+            <th mat-header-cell *matHeaderCellDef> Store In </th>
+            <td mat-cell *matCellDef="let element"> {{ element.OTA }} </td>
+          </ng-container>
+      
+          <!-- Origin Name -->
+          <ng-container matColumnDef="originName">
+            <th mat-header-cell *matHeaderCellDef> Origin </th>
+            <td mat-cell *matCellDef="let element"> {{ element.OriginName }} </td>
+          </ng-container>
+          
+          <!-- Destination Name -->
+          <ng-container matColumnDef="destinationName">
+            <th mat-header-cell *matHeaderCellDef> Destination </th>
+            <td mat-cell *matCellDef="let element"> {{ element.DestinationName }} </td>
+          </ng-container>
+          
+          <!-- Driver Name -->
+          <ng-container matColumnDef="driverName">
+            <th mat-header-cell *matHeaderCellDef> Driver </th>
+            <td mat-cell *matCellDef="let element"> {{ element.DriverName }} </td>
+          </ng-container>
+          
+          <!-- Vehicle No -->
+          <ng-container matColumnDef="vehicleNo">
+            <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+            <td mat-cell *matCellDef="let element"> {{ element.VehicleNo }} </td>
+          </ng-container>
+          
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Status }} </td>
+          </ng-container>
+          
+          <!-- Trip Status -->
+          <ng-container matColumnDef="tripStatus">
+            <th mat-header-cell *matHeaderCellDef> Trip Status </th>
+            <td mat-cell *matCellDef="let element"> {{ element.TripStatus }} </td>
+          </ng-container>
+          
+          <!-- Route -->
+          <ng-container matColumnDef="route">
+            <th mat-header-cell *matHeaderCellDef> Route </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+          </ng-container>
+          
+          <!-- Remark -->
+          <ng-container matColumnDef="remark">
+            <th mat-header-cell *matHeaderCellDef> Remark </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Remark || '-' }} </td>
+          </ng-container>          
+      
+          <ng-container matColumnDef="supplierName">
+            <th mat-header-cell *matHeaderCellDef> Supplier name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.supplierName }} </td>
+          </ng-container> 
+     
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+   <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+  </div>
+  <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="">
+  </div>
+
+</div>
+</div>
+</div>
+
+   <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon style="color: blue;">add</mat-icon>
+                <span style="color: blue;">Add</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon style="color: green;">edit</mat-icon>
+                <span style="color: green;">Edit</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon style="color: red;">delete</mat-icon>
+                <span style="color: red;">Delete</span>
+              </button>
+            </mat-menu> -->
+      

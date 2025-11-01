@@ -1,0 +1,417 @@
+* {
+    font-size: 12px;
+    padding-top: 1.1px;
+    color: black;
+}
+form .col-sm-1{
+    padding-right: 8px;
+}
+form{
+    margin-top: 10px;
+    margin-bottom: 0.125rem;
+}
+.form-control,
+.form-select{
+    height: 32px;
+}
+input,
+ul{
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+}
+ul{
+  height: 315px;
+  overflow-y: auto;
+}
+.form-check,::ng-deep label{
+  color: black !important;
+  font-size: 13px !important;
+}
+::ng-deep .mat-checkbox-layout {
+  margin-bottom: 0 !important;
+}
+.form-group .other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  color: white;
+  text-transform: capitalize;
+}
+.custom-select{
+    height: 32px;
+    line-height: 20px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-family: auto;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+ 
+  ::ng-deep .mat-dialog-container {
+    padding: 6px 2px !important; 
+    overflow-y: initial !important;
+
+  }
+  @media  (min-width: 320px) and (max-width: 425px){
+    ::ng-deep .mat-dialog-container{
+        max-height: 431px !important;
+    }
+    .cancel{
+      margin-top: -33px;
+  }
+  }
+
+  .form-group{
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .textOnInput,
+  .textOnSelect {
+    position: relative;
+    margin-bottom: 15px; 
+    margin-top: 5px;
+  }
+  
+  .textOnInput label,
+  .textOnSelect label {
+    position: absolute;
+    top: -13px;
+    left: 10px;
+    padding: 2px;
+    z-index: 1;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .textOnInput label:after,
+  .textOnSelect label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .error-message{
+    color: red;
+    padding-left: 10px;
+    margin-top: -12px;
+    padding-bottom: 6px;
+  }
+  ::ng-deep .custom-snackbar {
+    color: white !important;
+    --background-color: green !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+    color: white !important;
+    background-color: red !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+  color: white;
+}
+
+
+
+* {
+  padding-top: 1.1px;
+  color: black;
+}
+.form-control,
+input{
+    border: 1px solid #d2d2d2;
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+    height: 28px;
+}
+form .col-sm-1{
+  padding-right: 8px;
+}
+.form-group{
+  margin: 0;
+  padding-bottom: 0;
+}
+.textOnInput,
+.textOnSelect {
+  position: relative;
+  margin-bottom: 15px; 
+}
+
+.textOnInput label,
+.textOnSelect label {
+  position: absolute;
+  top: -13px;
+  left: 10px;
+  padding: 2px;
+  z-index: 1;
+  margin-bottom: 0;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.textOnInput label:after,
+.textOnSelect label:after {
+  content: " ";
+  background-color: #fff;
+  width: 100%;
+  height: 13px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.textOnInput input {
+}
+.form-control {
+  box-shadow: none !important;
+}
+.right-side{
+  border-left: 1px solid  #d2d2d2;
+}
+.custom-select{
+  height: 28px;
+  padding-left: 10px;
+  padding: 0 1rem 0 10px;
+  display: flex;
+  line-height: 20px;
+  justify-content: center;
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-top: 5px; 
+  font-size: 14px;
+  font-family: auto;
+}
+.form-group .form-button{
+  width: 84px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 13px;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  background-color: #2e3f55;
+  line-height: 26px;
+  color: white;
+  text-transform: capitalize;
+  i{
+    color: #b2bcff;
+    padding-right: 5px;
+    font-size: 16px;
+  }
+}
+.form-group .form-icon{
+  width: 30px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: medium;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  line-height: 26px;
+  background-color: #2e3f55;
+  i{
+    color: white;
+  }
+}
+.form-group .other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  color: white;
+  text-transform: capitalize;
+  i{
+    color: #b2bcff;
+    padding-right: 5px;
+    font-size: 19px;
+  }
+}
+.fa-search{
+    padding: 0 2px;
+}
+.error-message{
+  color: red;
+}
+@media (min-width: 1200px){
+  .container {
+    max-width: 100%;
+    /* height: 400px; */
+}
+}
+@media (min-width: 320px) and (max-width: 425px){
+  .right-side{
+      border-bottom: 1px solid #d2d2d2;
+      border-right:0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px){
+  .textOnInput label,
+  .textOnSelect label {
+    left: 6px;
+  }
+}
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: white !important;
+  padding: 1px 8px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover,
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: rgb(201, 214, 214) !important;
+}
+::ng-deep .ng-dropdown-panel {
+  border: 1px solid #d2d2d2 !important;
+  border-top: none !important;
+}
+
+::ng-deep .ng-select {
+  height: 28px !important;
+}
+
+::ng-deep .ng-select .ng-arrow {
+  font-family: "icomoon" !important;
+  border-color: inherit !important;
+  border-width: 0 !important;
+  font-size: 10px;
+  color: black !important;
+  top: 0 !important;
+  left: -3px;
+  color: inherit;
+  text-align: center;
+  transform: rotate(0deg);
+  transform-origin: 8px 12px;
+  transition: transform 0.2s ease;
+  padding-right: 10px !important;
+}
+
+::ng-deep .ng-select .ng-arrow:before {
+  content: "\25BC";
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  left: 16px !important;
+}
+
+.span {
+  font-size: 11px;
+  color: black;
+  font-weight: 600;
+  z-index: 1;
+  position: absolute;
+  top: -8px;
+  left: 26px;
+  background: none, transparent;
+}
+
+::ng-deep .ng-select.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: rgb(201, 214, 214) !important;
+}
+/* .custom-select1 .ng-option:hover ,
+   .custom-select1 .ng-option.ng-option-marked{
+    background-color: #da3a3a; 
+    color: #000000;
+} */
+&.ng-select-opened {
+    .ng-arrow {
+        transform: rotate(180deg);
+    }
+}
+
+.custom-select1{
+  height: 28px;
+  /* padding-left: 10px; */
+  /* padding: 0 1rem 0 10px; */
+  display: flex;
+  line-height: 20px;
+  justify-content: center;
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-top: 5px; 
+  font-size: 14px;
+  font-family: auto;
+  padding-left: -7px;
+  border: none;
+}
+@media (min-width: 660px) and (max-width: 1024px){
+   .custom-select1{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  width: auto !important;
+}
+}
+
+.error-message{
+  color: red;
+  font-size: 10px;
+  padding-left: 10px;
+}
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.form-control:focus,
+::ng-deep .custom-select1:focus{
+    color: #495057 !important;
+    background-color: rgba(173, 11, 11, 0) !important;
+    border-color: #9acffa !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25) !important;
+}
+
+
+.btn-light.other-button:focus {
+  color: red;
+  background-color: yellow;
+}
+
+.custom-select1:focus{
+  color: red; 
+  background-color: yellow;
+}

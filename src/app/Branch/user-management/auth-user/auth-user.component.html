@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2; padding-bottom: 7px;">
+      <div class="col-sm-5">
+        <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px;">Authentication </h1>
+      </div>
+        <div class="col-sm-7 d-flex header_btn" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" tabindex="-1"><mat-icon>close</mat-icon></button>
+      </div>
+    </div>
+  
+   <form action="" [formGroup]="passUpdateForm" (ngSubmit)="onSubmit(passUpdateForm.value)">
+    <div class="row pb-2 mt-3">
+      <div class="col-sm-12">
+        <label for="userName" class="col-form-label">User Name :</label>
+        <input type="text" id="userName" class="form-control" [(ngModel)]="userName" value="{{userName}}" readonly tabindex="-1"> 
+      </div>
+    </div>  
+    <div class="row pb-4 mt-2">
+      <div class="col-sm-12">
+        <label for="passWord" class="col-form-label">Password :</label>
+        <div class="input-group">
+          <input type="{{hidePassword ? 'password' : 'text'}}" id="passWord" class="form-control" formControlName="password" placeholder="Enter your password"  autocomplete="new-password">
+            <div class="input-group-append">
+              <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 10px; height: 27px ;border: 1px solid #d2d2d2; border-radius: 0.25rem; margin-top: -1px; background: #2e3f55;" >
+                  <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #d8e0ec; font-size: 16px;"></i>
+              </button>
+            </div>
+        </div>
+        <div *ngIf="passUpdateForm.get('password').invalid && (passUpdateForm.get('password').dirty || passUpdateForm.get('password').touched)" class="text-danger">
+          <div *ngIf="passUpdateForm.get('password').errors.required" class="text-danger">Password is required.</div>
+          <div *ngIf="passUpdateForm.get('password').errors.invalidPassword" class="text-danger">Password must be at least 4 characters long and contain at least one number and one special character.</div>
+        </div>
+      </div>
+    </div>  
+    <div class="row m-0 d-flex" style="justify-content: right; padding-right: 0px;" >
+      <div class="col-sm-5 d-flex submit-btn" style="justify-content: right;">
+        <button type="submit" class="btn btn-light"  [disabled]="!passUpdateForm.valid"> Submit </button>
+         <!-- <button type="submit" class="btn btn-light" (click)="onSubmit()" [disabled]="!passUpdateForm.valid"> Submit </button> -->
+      </div>
+    </div>
+   </form>
+    
+  </div>

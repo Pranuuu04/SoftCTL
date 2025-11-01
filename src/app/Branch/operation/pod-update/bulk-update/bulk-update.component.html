@@ -1,0 +1,29 @@
+<div class="container">
+  <form [formGroup]="updateform">
+    <div class="row">
+      <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="order">Status :</label>
+              <select id="order" [(ngModel)]="selectedOption" class="custom-select" formControlName="order" >
+                <option selected disabled>Select location</option>
+                <option *ngFor="let option of orderOptions" [value]="option"> {{ option }} </option>
+              </select>
+          </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+            <label for="Import">Import :</label>
+            <input class="form-control" type="file" #fileInput id="Import" style="padding-left: 0px;padding-top: 8px;" accept=".xlsx, .xls" (change)="onFileSelected($event)">
+        </div>
+    </div>
+    <div class="col-sm-5 d-flex form-group">
+      <button type="submit" class="btn btn-light other-button"(click)="processExcelData()"
+    [disabled]="!updateform.get('order')?.value || uploadedData.length === 0">Submit</button>
+      <button type="button" class="btn btn-light other-button Download"  style="background-color: green;" (click)="generateExcel()" >Download</button>
+      <button type="button" class="btn btn-danger error" tabindex="-1" matTooltip="Error log" (click)="generateErrorLog()">
+        <mat-icon >error</mat-icon>
+      </button>
+    </div>
+  </div>
+  </form>
+  </div>

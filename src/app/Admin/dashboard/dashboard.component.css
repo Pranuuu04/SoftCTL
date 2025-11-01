@@ -1,0 +1,191 @@
+.example-small-box,
+.example-large-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    height: 32px;
+    width: 100px;
+    font-weight: 500;
+    font-size: larger;
+}
+
+.main-content{
+    height: 80vh;
+}
+.card-stats {
+    padding: 1px 1px !important;
+    margin-top: 20px !important;
+    height: 115px !important;
+}
+
+h1 {
+    text-align: center;
+}
+
+.mat-tab-group {
+    justify-content: center;
+    align-items: center;
+
+}
+
+::ng-deep .mat-tab-label {
+    padding: 0 0px !important;
+    min-width: 60px !important;
+    padding: 0px 13px !important;
+    font-size: 13px !important;
+    height: 26px !important;
+}
+.FrenchiseeS ::ng-deep .mat-tab-label{
+    min-width: 54px !important;
+    padding: 0px 2px !important;
+}
+.operation ::ng-deep .mat-tab-label{
+    min-width: 55px !important;
+    padding: 0px 2px !important;
+}
+
+.mat-elevation-z4 {
+    color: white;
+}
+
+.card-stats {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    height: 131px;
+    padding-top: -4px;
+}
+
+.card-stats .card-icon {
+    padding: 3px;
+}
+
+.card-stats .card-header-icon {
+    margin-top: 7px;
+}
+
+.card-stats .card-icon i {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 25px;
+}
+
+.card-stats .card-body {
+    padding: 5px 1px;
+}
+
+
+.Frenchisee .example-small-box {
+    width: 100px;
+}
+
+.Booking .example-large-box {
+    width: 600px;
+}
+
+.card-stats h4 {
+    color: black;
+    top: 37px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 3px !important;
+    font-weight: 500;
+}
+.card-stats ::ng-deep .mat-tab-label.mat-tab-label-active {
+    background: linear-gradient(60deg, #ffa726, #fb8c00) !important;
+    color: white !important;
+    border-radius: 7px !important;
+}
+.example-small-box{
+    background: rgba(214, 226, 230, 0.874);
+    color:black;
+}
+
+@media (min-width: 320px) and (max-width: 375px) {
+    .table th{
+        padding: 3px;
+    }
+    .table tbody tr td{
+        padding: 12px 4px;
+    }
+    .table-responsive{
+    padding: 0.9375rem 17px;
+    }
+}    
+
+.Shipment{
+      background-color: rgb(136, 231, 109);
+                width: 325px; 
+                height: 180px;
+
+}
+.Sales{
+    background-color: #28bbf5;
+    height: 180px;
+}
+
+@media (min-width: 320px) and (max-width: 375px) {
+    .table th{
+        padding: 3px;
+    }
+    .table tbody tr td{
+        padding: 12px 4px;
+    }
+    .table-responsive{
+    padding: 0.9375rem 17px;
+    }
+} 
+@media (min-width: 1420px) and (max-width: 1440px) {
+    .Shipment{
+        background-color: rgb(136, 231, 109);
+        width: 348px;
+        height: 180px;
+        }
+}
+@media (min-width: 1020px) and (max-width: 1024px) {
+.Shipment{
+    background-color: rgb(136, 231, 109);
+    width: 212px;
+    height: 180px;
+    }
+
+    .Sales{
+        background-color: #28bbf5;
+        height: 178px;
+    }
+}
+@media (min-width: 564px) and (max-width: 768px) {
+    .Shipment{
+        background-color: rgb(136, 231, 109);
+        width: 197px;
+        height: 180px;
+        }
+    
+        /* .Sales{
+            background-color: #28bbf5;
+            height: 178px;
+        } */
+    }
+    @media (min-width: 420px) and (max-width: 425px) {
+        .Shipment{
+          background-color: rgb(136, 231, 109);
+          width: 364px;
+          height: 180px;
+        }
+}
+@media (min-width: 370px) and (max-width: 375px) {
+    .Shipment{
+      background-color: rgb(136, 231, 109);
+      width: 313px;
+      height: 180px;
+    }
+}
+@media (min-width: 310px) and (max-width: 320px) {
+    .Shipment{
+      background-color: rgb(136, 231, 109);
+      width: 258px;
+      height: 180px;
+    }
+}
+
+

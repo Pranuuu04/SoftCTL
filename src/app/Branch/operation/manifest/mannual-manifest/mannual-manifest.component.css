@@ -1,0 +1,23 @@
+.card .card-body {
+    padding: 14px 20px 0px;
+    position: relative;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .input-row > mat-form-field, .input-row > mat-icon {
+    flex: 0 0 calc(10% - 10px); /* Adjust width of each field */
+    /* For smaller screens, adjust this further or consider media queries */
+  }
+
+  .input-row mat-icon {
+    flex: 0 0 calc(5% - 10px); /* Adjust width of icons */
+    /* For smaller screens, adjust this further or consider media queries */
+  }
+

@@ -1,0 +1,39 @@
+* {
+    font-size: 12px;
+    padding-top: 1.1px;
+    /* color: white; */
+}
+ @media  (min-width: 320px) and (max-width: 425px){
+    ::ng-deep .mat-dialog-container{
+        max-height: 431px !important;
+    }
+    .cancel{
+      margin-top: -33px;
+  }
+  }
+  .text-right button{
+    width: 37px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2; 
+    font-size: 16px;
+    /* padding-top: 1.1px; */
+    height: 27px;
+    margin: 0;
+    padding: 0;
+    /* margin-top: 10px;
+    margin-right: 7px; */
+    line-height: 25px;
+    text-transform: capitalize;
+  }
+  .text-right button:hover,
+  .text-right button:focus{
+    background-color: rgb(218, 180, 180);
+    color:  red;
+    border: 1px solid rgb(214, 134, 134);
+  }
+  /* ::ng-deep .mat-dialog-container{
+    opacity: 0.6 !important;
+    background: black !important;
+} */

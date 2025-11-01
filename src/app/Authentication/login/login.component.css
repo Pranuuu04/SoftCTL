@@ -1,0 +1,357 @@
+  .main-row {
+	max-height: 100vh;
+  }
+  .gradient-custom-2 {
+	background-color:white;
+  }
+  .right-side {
+	background-color: #f8f9fa;
+	margin: 0px;
+	padding: 0px;
+	border-left: #0e1c3c;
+  	box-shadow: 20px 25px 50px rgb(43, 51, 117);
+  }
+  .right-side .card-body{
+	height: 100vh !important;
+  }
+  .left-side {
+	flex: 1;
+	background-color: white;
+	height:100vh;
+	max-width: 100%;
+	color:black;
+	}
+	/* .upper{
+	padding: 1rem 3rem;
+	} */
+	.upper .img{
+		padding: 1rem 3rem;
+		height: 15vh;
+	}
+	.text-center p{
+		margin-bottom: 0;
+		font-weight: 500;
+	  }
+	  ::ng-deep .description {
+		display: flex !important;
+		height: 60vh !important;
+		align-items: center !important;
+		justify-content: center;
+		background-image: url('./../../../assets/images/loginBG3.png') !important;
+		background-size: cover !important;
+		background-position: center center !important;
+		position: sticky;
+	}
+	
+	::ng-deep .description::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color:rgb(255 255 255 / 66%); /* Adds a dark overlay */
+		z-index: 1; /* Ensures the overlay is above the background image */
+	}
+	.description ul{
+	  position: relative; /* Ensures the content is above the overlay */
+	  z-index: 2;
+	  line-height: 2;
+	  font-size: 15px;
+	  text-align: justify;
+	  color: black;
+	}
+	ul {
+		list-style: none; 
+		padding-left: 26px;
+	}
+	ul h4{
+		font-weight: 700;
+		font-size: 18px;
+		margin-left: -21px;
+		color: black;
+		padding-bottom: 5px;
+		border-bottom: 2px solid orange;
+		display: inline; 
+		margin-bottom: 10px;
+	}
+	.img h6{
+		margin-bottom: 0;
+		font-size: 20px;
+	}
+	li{
+		font-weight: 500;
+		/* color: black; */
+	}
+	  li i::before {
+		color: #27278b;
+		margin-left: -21px;
+	  }
+	.img2 h5{
+	  padding-right: 75px;
+	  margin-bottom: 2px;
+	}
+	.img3{
+		/* height: 136px;
+		width: 285px; */
+		height: 60px;
+		/* width: 220px; */
+		/* margin-top: 15px; */
+	}
+	.left-side h2 {
+	font-size: 28px;
+	margin-bottom: 2rem;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	}
+	.left-side p {
+	padding-left: 10px;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	}
+	.lower{
+	  padding: 5px 1rem;
+	}   
+	.lower .logo2{
+	  height: 55px;
+	  width: 300px;
+	}
+	.lower .img2{
+	text-align: end;
+	}
+	.lower p{
+	  font-size: small;
+	 
+	}   
+  .right-side h2 {
+  font-size: 24px;
+  margin-top: 20px;
+  }
+  .form-group {
+  margin-bottom: 15px;
+  }
+  .form-group label {
+  font-weight: bold;
+  }
+  .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  }
+
+  .btn-login:hover {
+  background-color: #e48455;
+  }
+  form {
+  max-width: 400px;
+  margin: 0 auto;
+  width: 85%;
+
+  }
+  
+  @media (max-width: 768px) {
+  form {
+	max-width: 100%;
+  }
+  .description ul{
+	font-size: 10px;
+  }
+  .right-side .card-body{
+	padding: 0.8rem !important;
+  }
+  }
+  .form__group {
+  margin-bottom: 1rem;
+  }
+  .form__lbl {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  }
+  .form__input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+  .form__input:focus {
+  border-color: #007bff;
+  outline: none;
+  }
+  /* #username{
+	width: 100%;
+  }
+  #password{
+	width: 85%;
+  } */
+  
+  .error-message {
+  color: red;
+  margin-top: 0.25rem;
+  }
+  .footer p{
+	padding-right: 7px;
+  }
+  @media  (min-width: 768px) and  (max-width: 1024px){
+	.img3{
+		/* height: 150px; */
+	  }
+	  ul h4{
+		font-size: 14px;
+	  }
+  }
+ 
+  @media  (min-width: 425px) and  (max-width: 560px){
+	.upper{
+	  padding: 0.5rem 1rem;
+	}
+	.img3{
+	  /* height: 230px;
+	  width: 230px; */
+	}
+	.logo2{
+	  height: 55px;
+	  width: 7rem;
+	}
+	.lower{
+	  padding: 0.5rem 1rem;
+	}
+	.lower p{
+	  font-size: xx-small;
+	}
+  }
+
+  @media  (min-width: 320px) and (max-width: 425px){
+	.upper {
+	  padding: 1rem 1rem;
+	}
+	.upper h6{
+	  font-size: x-small;
+	}
+	.img2 h5{
+		padding-right: 65px;
+	  margin-bottom: 3px;
+	  font-weight: 500;
+	  font-size: 13px;
+	}
+	.img3{
+		/* height: 130px;
+		width: 220px; */
+	  justify-content: center;
+	}
+	::ng-deep .description{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+	  text-align: center !important;
+	}
+	.lower{
+	  padding: 5px 0.5rem;
+	}
+	.lower p{
+	  font-size: 6px;
+	  padding-right: 0;
+	}
+	.description ul{
+	  font-size: 9px;
+	  text-align: justify;
+	  padding-top: 2px;
+	  padding-left: 21px;
+	}
+   ::ng-deep .logo2{
+	height: 43px !important;
+    width: 12rem !important;
+	}
+	.right-side ::ng-deep .card-body{
+		height: 52vh !important;
+	}
+  }
+  @media  (min-width: 991px) and (max-width: 1024px){
+		.description ul{
+		font-size: 10px;
+		}
+		.footer p{
+			font-size: 9px;
+		}
+		.right-side .card-body{
+		padding: 0.8rem !important;
+		}
+		.right-side {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh; 
+	}
+  }
+  @media  (min-width: 1024px) and (max-width: 1440px){
+	.lower .logo2{
+	width: 220px;
+  }
+  .footer p{
+	font-size: 13px;
+  }
+}
+  .email-link {
+	color: #007bff; 
+	text-decoration: none;
+  }
+  
+  .email-link:hover {
+	text-decoration: underline;
+  }
+  .map-link {
+	color: #007bff; 
+	text-decoration: none;
+  }
+  
+  .map-link:hover {
+	text-decoration: underline;
+  }
+  .contact-link {
+	color: #007bff; 
+	text-decoration: none;
+  }
+  
+  .contact-link:hover {
+	text-decoration: underline;
+  }
+  ::ng-deep .custom-snackbar {
+	color: #055305 !important;
+	border: 1px solid #80a580  !important;
+    background-color: #aed7ae !important;
+	margin-top: 72px !important;
+	margin-right: 66px !important;
+	font-weight: 400 !important;
+	font-size: 15px !important;
+  }
+  ::ng-deep .error-snackbar{
+	color: red !important;
+	border: 1px solid  #e39999 !important;
+	background-color: #f1d7d7 !important;
+	margin-top: 72px !important;
+	margin-right: 66px !important;
+	font-weight: 400 !important;
+	font-size: 15px !important;
+  
+  }
+  ::ng-deep .mat-simple-snackbar-action button  {
+  color: black;
+  }
+  .btn-light{
+	width: 100%;
+   border-radius: 5px;
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+    text-align: center;
+	padding: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2; 
+    text-transform: capitalize;
+	background-color: #28bbf5;
+	color: #fff;
+  }
+  .btn-light:hover,
+  .btn-light:focus{
+	background-color: #e48455;
+  }

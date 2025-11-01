@@ -1,0 +1,61 @@
+<div class="container-fluid" *ngIf="data.action === 'rackAdd' || data.action === 'rackEdit'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Rack</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form  [formGroup]="rackForm" (ngSubmit)="formSubmitRack(rackForm.value)" >
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code"><span style="color: red;">*</span>Rack Code :</label>
+              <input *ngIf="data.rackMode !== 'edit'" class="form-control" type="text"  formControlName="rackCode" [(ngModel)]="rackCode"  placeholder="enter code">
+              <input *ngIf="data.rackMode === 'edit'" class="form-control" type="text"  formControlName="rackCode" [(ngModel)]="rackCode"  placeholder="enter code" readonly >
+          </div>
+          <div *ngFor="let validation of validationMessage.rackCode">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="rackForm.get('rackCode').hasError(validation.type) && (rackForm.get('rackCode').dirty || rackForm.get('rackCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name"><span style="color: red;">*</span>Rack Name :</label>
+              <input class="form-control" type="text" formControlName="rackName" [(ngModel)]="rackName" placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.rackName">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="rackForm.get('rackName').hasError(validation.type) && (rackForm.get('rackName').dirty || rackForm.get('rackName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="data.rackMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" [disabled] = "rackForm.invalid">Submit</button>
+      </div>
+    </div>
+    <div *ngIf="data.rackMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" (click)="updateRack()" [disabled] = "rackForm.invalid" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>

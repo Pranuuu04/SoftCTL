@@ -1,0 +1,260 @@
+<div class="container">
+    <div class="row" style="width: 100%">
+      <div class="row">
+        <h4 mat-dialog-title>
+            Credit Shipper
+          <button
+            type="button"
+            class="close btn-lg mt-1"
+            aria-label="Close"
+            (click)="CloseDialog()"
+          >
+            <span
+              aria-hidden="true"
+              class="mt-2"
+              style="color: white; height: 20px !important"
+              >X</span
+            >
+          </button>
+        </h4>
+      </div>
+      <form  (ngSubmit)="submit(activeForm.value)">
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label">Pincode</label>
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="number"
+              class="form-control"
+              id="inputCity"
+              formControlName="pin"
+              placeholder="Enter Pincode"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label"
+            >Address 1</label
+          >
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="text"
+              formControlName="add1"
+              class="form-control"
+              id="inputEmail3"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label"
+            >Address 2</label
+          >
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="text"
+              formControlName="add2"
+              class="form-control"
+              id="inputEmail3"
+            />
+          </div>
+        </div>
+  
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label"> City</label>
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="text"
+              formControlName="City"
+              class="form-control"
+              id="inputEmail3"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label"
+            >Contact No.</label
+          >
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="text"
+              formControlName="ContactNo"
+              class="form-control"
+              id="inputCity"
+              placeholder="Contact No."
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                activeForm.get('ContactNo')?.touched &&
+                activeForm.get('ContactNo')?.invalid
+              "
+            >
+              <!-- <small class="text-danger" *ngIf="activeForm.get('ContactNo')?.errors?.['required']">Phone No. is required</small> -->
+              <small
+                class="text-danger"
+                *ngIf="activeForm.get('ContactNo')?.errors?.['maxlength']"
+                >The max-Length 10 characters</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="activeForm.get('ContactNo')?.errors?.['pattern']"
+                >Enter number max-Length 10</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="email"
+              formControlName="Email"
+              class="form-control"
+              id="email"
+              placeholder="abc@gmail.com"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                activeForm.get('Email')?.touched &&
+                activeForm.get('Email')?.invalid
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="activeForm.get('Email')?.errors?.['email']"
+                >Email invalid</small
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label">GST</label>
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="email"
+              formControlName="Email"
+              class="form-control"
+              placeholder="GST NO."
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                activeForm.get('Email')?.touched &&
+                activeForm.get('Email')?.invalid
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="activeForm.get('Email')?.errors?.['email']"
+                >Email invalid</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label for="inputEmail3" class="col-sm-3 col-form-label"
+            >KYC Upload</label
+          >
+          <div class="col-sm-9">
+            <input
+              style="
+                border: 1px solid #d2d2d2;
+                border-radius: 0.25rem;
+                padding-left: 10px;
+                padding-top: 10px;
+                font-family: auto;
+                margin-bottom: 0.5rem;
+              "
+              type="file"
+              class="form-control"
+              id="inputCity"
+              placeholder="Vendor"
+            />
+          </div>
+        </div>
+        <div class="row" align="end">
+          <div class="col-md-2">
+            <!-- <button class='btn btn-success' (click)="openLoginModal()">LOGIN</button> -->
+          </div>
+          <div class="col-md-8 submitbtn">
+            <button
+              type="button"
+              class="btn btn-save"
+              (click)="saveData(activeForm.value)"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              matDialogClose
+              (click)="CloseDialog()"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- consignee -->
+  

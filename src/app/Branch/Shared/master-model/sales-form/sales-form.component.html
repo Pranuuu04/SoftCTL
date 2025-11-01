@@ -1,0 +1,1331 @@
+<div style="padding: 0 13px;" *ngIf="data.action === 'ConsignorAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Consignor entry</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form [formGroup]="consignorForm">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+        <div class="row"> 
+          <!-- <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="consBranch"><span style="color: red;">* </span>Branch :</label>
+                <select  class="custom-select" formControlName="consBranch" >
+                  <option disabled value="">Select Branch</option>
+                  <option  value="{{item.locationCode}}" *ngFor="let item of branchName">
+                    {{ item.locationName }} </option>
+                </select>
+              </div>
+          </div> -->
+
+          <div class="col-sm-6">
+  <div class="textOnSelect">
+    <label for="consBranch"><span style="color: red;">* </span>Branch :</label>
+    <ng-select
+      *ngIf="userType === 'Admin'; else nonAdmin"
+      [items]="branchName"
+      bindLabel="locationName"
+      bindValue="locationCode"
+      formControlName="consBranch"
+      class="custom-select1"
+      [searchable]="true"
+    >
+    </ng-select>
+
+    <!-- Non-Admin readonly input -->
+    <ng-template #nonAdmin>
+      <input
+        type="text"
+        class="form-control mb-1"
+        [value]="sessionLocationName"
+        readonly
+      />
+      <select formControlName="consBranch" style="display: none;">
+        <option [ngValue]="sessionLocationCode"></option>
+      </select>
+    </ng-template>
+  </div>
+</div>
+
+<!-- <div class="col-sm-6">
+  <div class="textOnSelect">
+    <label for="consBranch"><span style="color: red;">* </span>Branch :</label>
+    <select
+      *ngIf="userType === 'Admin'; else nonAdmin"
+      class="custom-select"
+      formControlName="consBranch"
+    >
+      <option disabled [ngValue]="null">Select Branch</option>
+      <option *ngFor="let item of branchName" [ngValue]="item.locationCode">
+        {{ item.locationName }}
+      </option>
+    </select>
+
+    <ng-template #nonAdmin>
+      <input type="text" class="form-control mb-1" [value]="sessionLocationName" readonly />
+      <select formControlName="consBranch" style="display: none;">
+        <option [ngValue]="sessionLocationCode" ></option>
+      </select>
+    </ng-template>
+  </div>
+</div> -->
+
+          <div class="col-sm-6">
+            <div class="textOnInput">
+                <label for="ConsCode"><span style="color: red;">* </span>Code :</label>
+                <input class="form-control" type="text"  formControlName="ConsCode"  placeholder="enter Code">
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
+          
+        </div> -->
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsName"><span style="color: red;">* </span>Consignor name :</label>
+                  <input class="form-control" type="text"  formControlName="ConsName"  placeholder="enter Name">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="BillingName">Billing name :</label>
+                  <input class="form-control" type="text"  formControlName="BillingName"   placeholder="enter Billing name">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="consPerson">Contact person :</label>
+                  <input class="form-control" type="text"  formControlName="consPerson"   placeholder="enter person">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- <mat-checkbox formControlName="Gst">Gst</mat-checkbox> -->
+            <div class="textOnSelect">
+              <label for="GSTYN"><span style="color: red;">* </span>GST :</label>
+              <select  class="custom-select" formControlName="GSTYN" >
+                <option value="Yes">Yes</option>
+                <option value="No">No </option>
+              </select>
+          </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="GSTtype"><span style="color: red;">* </span>GST type :</label>
+              <select  class="custom-select" formControlName="GSTtype" >
+                <option disabled value="">GST type</option>
+                <option value="Mode">Mode</option>
+                <option value="Client">Client</option>
+              </select>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnInput">
+                <label for="consGST2">GST % :</label>
+                <input class="form-control" type="text"  formControlName="consGST2" placeholder="enter GST">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnInput">
+                <label for="consHSN">H S N no. :</label>
+                <input class="form-control" type="text"  formControlName="consHSN"  placeholder="enter HSN no.">
+            </div>
+        </div>
+        </div>
+          <div class="row">
+          <div class="col-sm-8">
+              <div class="textOnInput">
+                  <label for="consGst">GST no. :</label>
+                  <input class="form-control" type="text"  formControlName="consGst"  placeholder="enter GST no.">
+              </div>
+          </div>
+           <div class="col-sm-4 d-flex" style="justify-content: end;">
+             <button matTooltip="Gst verify" tabindex="-1" type="button" class="btn btn-success hexagon-btn pb-0" width="auto" [disabled]="isGstVerified !== true || consignorForm.get('consGst')?.value?.length !== 15" (click)="verifyGST()">
+              <i class="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+              <div class="textOnInput">
+                  <label for="PanNum">Pan number :</label>
+                  <input class="form-control" type="text"  formControlName="PanNum"  placeholder="enter Pan number">
+              </div>
+          </div>
+            <div class="col-sm-4 d-flex" style="justify-content: end;">
+             <button matTooltip="Pan verify" tabindex="-1" type="button" class="btn btn-success hexagon-btn pb-0" width="auto">
+              <i class="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsAdd1">Address1 :</label>
+                  <input class="form-control"  formControlName="ConsAdd1" placeholder="Enter address">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsAdd2">Address2 :</label>
+                  <input class="form-control"  formControlName="ConsAdd2" placeholder="Enter address">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsAdd3">Address3 :</label>
+                  <input class="form-control"  formControlName="ConsAdd3" placeholder="Enter address">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="conspin">Pincode :</label>
+                  <input class="form-control" type="text"  formControlName="conspin" placeholder="enter pin"  (change)="getPinCode($event)">
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="Origin"><span style="color: red;">* </span>Origin :</label>
+              <ng-select  class="custom-select1" bindLabel="name" bindValue="name" formControlName="Origin">
+                <ng-option *ngFor="let item of originList" [value]="item.originCode">
+                  {{item.originName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="State"><span style="color: red;">* </span>State :</label>
+              <ng-select  class="custom-select1" bindLabel="name" bindValue="name" formControlName="State">
+                <ng-option *ngFor="let item of stateList" [value]="item.stateCode">
+                  {{item.stateName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="consMob">Mobile no. :</label>
+                <input class="form-control" type="text"  formControlName="consMob"   placeholder="enter Mob">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsTel">Tel :</label>
+                  <input class="form-control" type="text"  formControlName="ConsTel"  placeholder="enter Tel">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsEmail">Email :</label>
+                  <input class="form-control" type="text"  formControlName="ConsEmail"  placeholder="enter Email">
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="ConsWeb">Web :</label>
+                  <input class="form-control" type="text"  formControlName="ConsWeb"  placeholder="enter Web">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="consClient"><span style="color: red;">* </span>Client type :</label>
+                <select  class="custom-select" formControlName="consClient" >
+                  <option value="Centralised">Centralised</option>
+                  <option value="Decentralised">Decentralised </option>
+                </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="consCash"><span style="color: red;">* </span>Cash / Credit :</label>
+                <select  class="custom-select" formControlName="consCash" >
+                  <option value="" selected disabled>Select type</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Credit">Credit</option>
+                  <option value="ToPay">ToPay</option>
+                  <option value="COD">COD</option>
+                  <option value="FOC">FOC</option>
+                  <option value="NEFT">NEFT</option>
+                  <option value="Cheque">Cheque</option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="consStatus"><span style="color: red;">* </span>Status :</label>
+                <select  class="custom-select" formControlName="consStatus" >
+                  <option value="Active">Active</option>
+                  <option value="nonActive">Non-active </option>
+                </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="consBillingType"><span style="color: red;">* </span>Billing type :</label>
+              <select  class="custom-select" formControlName="consBillingType" >
+                  <option value="" selected disabled>Select Billing</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Fortnightly">Fortnightly</option>
+                  <option value="Weekly">Weekly</option>
+                  <option value="Daily">Daily</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="consDepartment"><span style="color: red;">* </span>Department :</label>
+              <select  class="custom-select" formControlName="consDepartment" >
+                 <option value="" selected disabled>Select Branch</option>
+                  <option  value="{{item.Department_code}}" *ngFor="let item of DepartmentData">
+                    {{ item.Department_name }} </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="consOperation"><span style="color: red;">* </span>Operation :</label>
+              <select  class="custom-select" formControlName="consOperation" >
+                <option value="" selected disabled>Select Operation</option>
+                <option value="Booking">Booking</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Both">Both</option>
+              </select>
+            </div>
+          </div>
+            <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="consstock"><span style="color: red;">* </span>stock :</label>
+              <select  class="custom-select" formControlName="consstock" >
+                <option value="" selected disabled>Select stock</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+         
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+                <label for="consFuel">Fuel charges :</label>
+                <input class="form-control" type="number" min="0" formControlName="consFuel">
+            </div>
+          </div>
+          <div class="col-sm-4" style="justify-content: right; display: flex;">
+            <button 
+              type="button" 
+              class="btn btn-light check" 
+              matTooltip="label-check" 
+              [matMenuTriggerFor]="menu1" 
+              matMenuTriggerRestoreFocus="false">
+              <mat-icon>playlist_add_check</mat-icon>
+            </button>
+            <mat-menu #menu1="matMenu">
+              <ul class="big-checkbox">
+                <li *ngFor="let key of chargesValues; let i = index">
+                 <mat-checkbox
+                    [checked]="chargesState[i + 1]"
+                      (change)="toggleCharge(i + 1, $event.checked)"
+                    (click)="$event.stopPropagation()"
+                    [name]="key">
+                    {{ key }}
+                  </mat-checkbox>
+
+                </li>
+              </ul>
+            </mat-menu>
+          </div>
+          
+        </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- <div class="textOnInput"> -->
+              <!-- <label for="consFOV">FOV charges :</label> -->
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="textOnInput">
+                <label for="consFOV">FOV charges :</label>
+                <input class="form-control" type="number" min="0"  formControlName="consFOV">
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="textOnInput">
+                <label for="consFOV">FOV per :</label>
+                <input class="form-control" type="number" min="0"  formControlName="consFOVPer" placeholder="%">
+              </div>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+       <div class="row">
+        <div class="col-sm-8">
+          <div class="textOnInput">
+              <label for="consMisscell">Miscellaneous charges :</label>
+              <input class="form-control" type="number" min="0"   formControlName="consMisscell">
+          </div>
+        </div>
+        <div class="col-sm-4" style="justify-content: right; display: flex;">
+          <button type="button" class="btn btn-light check" matTooltip="label-check" [matMenuTriggerFor]="menu2"
+          matMenuTriggerRestoreFocus="false"><mat-icon>playlist_add_check</mat-icon></button>
+          <mat-menu #menu2="matMenu">
+            <ul class="big-checkbox">
+              <li *ngFor="let key of chargesValues; let i = index">
+                  <mat-checkbox
+                    [checked]="essState[i + 1]"
+                    (change)="toggleEss(i + 1, $event.checked)"
+                    (click)="$event.stopPropagation()">
+                    {{ key }}
+                  </mat-checkbox>
+              </li>
+            </ul>
+          </mat-menu>
+        </div>
+      </div>    
+      </div>
+      <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+     
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- <div class="textOnInput">
+              <label for="consDiscount">Discount :</label> -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="textOnInput">
+                  <label for="consDiscount">Discount :</label>
+                  <input class="form-control" type="number" min="0" formControlName="consDiscount" placeholder="enter Discount">
+                </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="textOnInput">
+                  <label for="discountPercent">Discount % :</label>
+                  <input class="form-control" type="number" min="0" formControlName="discountPercent" placeholder="%">
+                </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row pb-2">
+        <div class="col-sm-12 d-flex" style="justify-content: space-evenly;">
+            <!-- <mat-checkbox formControlName="SMS" (change)="onCheckboxChange('SMS')">SMS</mat-checkbox>
+            <mat-checkbox formControlName="Mail">Mail</mat-checkbox>
+            <mat-checkbox formControlName="WhatsApp" (change)="onCheckboxChange('WhatsApp')">WhatsApp</mat-checkbox> -->
+             <div class="d-flex align-items-center mb-2">
+      <mat-checkbox formControlName="SMS" (change)="onCheckboxChange('SMS')">SMS</mat-checkbox>
+      <mat-form-field *ngIf="consignorForm.get('SMS')?.value" class="ms-2" appearance="fill" style="width: 75px;">
+    <mat-select formControlName="smsOption" multiple>
+      <mat-option value="Booking">Booking</mat-option>
+      <mat-option value="DRS">DRS</mat-option>
+      <mat-option value="delivered">delivered</mat-option>
+      <mat-option value="OTP">OTP</mat-option>
+    </mat-select>
+  </mat-form-field>
+    </div>
+
+    <!-- Mail (no dropdown needed) -->
+    <mat-checkbox formControlName="Mail" class="mb-2">Mail</mat-checkbox>
+
+    <!-- WhatsApp -->
+    <div class="d-flex align-items-center mb-2">
+      <mat-checkbox formControlName="WhatsApp" (change)="onCheckboxChange('WhatsApp')">WhatsApp</mat-checkbox>
+       <mat-form-field *ngIf="consignorForm.get('WhatsApp')?.value" class="ms-2" appearance="fill" style="width: 75px;">
+    <mat-select formControlName="whatsAppOption" multiple>
+      <mat-option value="Booking">Booking</mat-option>
+      <mat-option value="DRS">DRS</mat-option>
+      <mat-option value="delivered">delivered</mat-option>
+      <mat-option value="OTP">OTP</mat-option>
+    </mat-select>
+  </mat-form-field>
+    </div>
+        </div>
+      </div>
+       <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="consOperation"><span style="color: red;">* </span>Freight amount :</label>
+              <select  class="custom-select" formControlName="FreightAmt" >
+                <option value="" selected disabled>Select Freight amount</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="Wallet"><span style="color: red;">* </span>Wallet :</label>
+              <select  class="custom-select" formControlName="Wallet" >
+              <option value="" selected disabled>Select Wallet</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      <div class="row form-group d-flex m-0 pb-3">
+        <div class="col-sm-12 d-flex" style="justify-content: space-between;" >
+          <button type="button" class="btn btn-light icon" matTooltip="E-mail" (click)="openContactDetails()"><mat-icon> email</mat-icon></button>
+          <button type="button" class="btn btn-light iconpay" matTooltip="Payment" (click)="handleConsignorClick()"><mat-icon>account_balance_wallet</mat-icon></button>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="ConsUser">User :</label>
+                  <input class="form-control" type="text"  formControlName="ConsUser"  placeholder="enter User" readonly>
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnInput">
+                <label for="ConsPassword">Password :</label>
+                <input class="form-control" type="text"  formControlName="ConsPassword"  placeholder="enter Password" readonly>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="connectingHub"><span style="color: red;">* </span>Connecting hub :</label>
+              <ng-select
+                  [items]="branchName"
+                  class="custom-select1"
+                  bindLabel="locationName"
+                  bindValue="locationCode"
+                  formControlName="connectingHub">
+                </ng-select>
+              <!-- <select  class="custom-select" formControlName="connectingHub" >
+                  <option  [ngValue]="item.locationCode" *ngFor="let item of branchName">
+                    {{ item.locationName }} </option>
+              </select> -->
+          </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnSelect">
+              <label for="CompanyName"><span style="color: red;">* </span>Company name :</label>
+               <select  class="custom-select" formControlName="CompanyName" 
+        (change)="onCompanySelect($event)">
+                 <option value="" selected disabled>Select Company</option>
+                  <option  value="{{item.CompanyCode}}" *ngFor="let item of companyList">
+                    {{ item.CompanyName }} </option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="col-sm-4" style="justify-content: right; display: flex;">
+          <button type="button" class="btn btn-light check" matTooltip="Print Details" [disabled]="!isCompanySelected"
+            [matMenuTriggerFor]="menuPrint" matMenuTriggerRestoreFocus="false">
+            <mat-icon>print</mat-icon>
+          </button>
+
+          <mat-menu #menuPrint="matMenu">
+            <ul class="big-checkbox">
+              <li *ngFor="let key of printDetailKeys">
+                <mat-checkbox
+                  [checked]="printDetailState[key]"
+                  (change)="printDetailState[key] = $event.checked"
+                  [disabled]="!isCompanySelected"
+                  (click)="$event.stopPropagation()">
+                  {{ key }}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </mat-menu>
+          </div>
+        </div>
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+          <!-- <div class="col-sm-4">
+              <button 
+              type="button" 
+              class="btn btn-light print" 
+              matTooltip="Print Details" 
+              [matMenuTriggerFor]="menu2" 
+              matMenuTriggerRestoreFocus="false">
+              <mat-icon>print</mat-icon>
+            </button>
+            <mat-menu #menu2="matMenu">
+              <ul class="big-checkbox">
+                <li *ngFor="let detail of printDetails; let i = index">
+                  <mat-checkbox
+                    [checked]="detail.selected"
+                    (change)="togglePrintDetail(i, $event.checked)"
+                    (click)="$event.stopPropagation()">
+                    {{ detail.AwbNo }} - {{ detail.Consignee }}
+                  </mat-checkbox>
+                </li>
+              </ul>
+            </mat-menu>
+          </div> -->
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button class="btn btn-light other-button" type="button" (click)="addCustomer(consignorForm.value)">{{buttonLable}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div style="padding: 0 13px;" *ngIf="data.action === 'RateAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Rate entry</h1>
+      </div>
+      <!-- <div class="col-sm-5">
+        <mat-form-field appearance="fill">
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date">
+            <input matEndDate placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div> -->
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form  [formGroup]="RateForm">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6" style="border-right: 1px solid #d2d2d2;">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="textOnInput">
+              <label for="fromDate"><span style="color: red;">* </span>From :</label>
+              <input class="form-control" type="date" formControlName="fromDate" [max]="currentDate2" id="fromDate">
+          </div> 
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnInput">
+              <label for="toDate"><span style="color: red;">* </span>To :</label>
+              <input class="form-control" type="date" formControlName="toDate" id="toDate">
+          </div>
+          </div>
+        </div>
+        <div class="row pb-1">
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="rateLocation"><span style="color: red;">*</span>Location :</label>
+              <select id="rateLocation" class="custom-select" formControlName="rateLocation">
+                <option value="" selected disabled>Select Location</option>
+                <option *ngFor="let item of LocationList" value="{{item.locationCode}}">
+                  {{item.locationName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="textOnSelect">
+                <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                  <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="rateCustomer">
+                </ng-select>
+               <!-- <select id="rateCustomer" class="custom-select" formControlName="rateCustomer">
+                <option value="" selected disabled>Select customer </option>
+                <option *ngFor="let item of customerList" [value]="item.customerCode">
+                  {{item.customerName}}
+                </option>
+              </select> -->
+
+            </div>
+        </div>
+        </div>
+        <div class="row mb-2 pb-1" style="border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-4">
+              <div class="textOnSelect">
+                <label for="RateOrigin"><span style="color: red;">*</span>Origin :</label>
+                <ng-select
+                  [items]="originList"
+                  class="custom-select1"
+                  bindLabel="originName"
+                  bindValue="originCode"
+                  formControlName="RateOrigin">
+                </ng-select>
+                <!-- <select id="RateOrigin" class="custom-select" formControlName="RateOrigin" [(ngModel)]="selectedOrigin">
+                  <option value="" selected disabled>Select origin</option>
+                  <option *ngFor="let item of originList" [value]="item.originCode">{{item.originName}} </option>
+                </select> -->
+              </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+                <label for="Zone">Zone :</label>
+                  <ng-select
+                  [items]="zoneList"
+                  class="custom-select1"
+                  bindLabel="Zone_Name"
+                  bindValue="Zone_Code"
+                  formControlName="Zone">
+                </ng-select>
+                <!-- <select id="Zone" class="custom-select" formControlName="Zone" >
+                  <option value="" selected disabled>Select Zone</option>
+                  <option *ngFor="let item of zoneList" [value]="item.Zone_Code">{{item.Zone_Name}} </option>
+                </select> -->
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+                <label for="Mode"><span style="color: red;">*</span>Mode :</label>
+                <select id="Mode" class="custom-select" formControlName="Mode" >
+                  <option value="" selected disabled>Select Mode</option>
+                  <option *ngFor="let item of modeList" [value]="item.Mode_code">{{item.Mode_name}} </option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="rateProduct"><span style="color: red;">*</span>Product name :</label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="rateProduct"
+                    multiple placeholder="Select product">
+                    <mat-option *ngFor="let product of productList" [value]="product.productCode">
+                      {{ product.productName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                   <ng-select
+                  [items]="productList"
+                  class="custom-select1"
+                  bindLabel="productName"
+                  bindValue="productCode"
+                  [multiple]="true"
+                  [formControl]="RateForm.get('rateProduct')">
+                </ng-select>
+            </div>
+          </div>
+           <div class="col-sm-6">
+    <div class="textOnSelect">
+      <label for="rateZone"><span style="color: red;">*</span>Zone name :</label>
+      <ng-select
+        [items]="zoneList"
+         class="custom-select1"
+        bindLabel="Zone_Name"
+        bindValue="Zone_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateZone')"
+        (change)="onZoneSelectionChange($event)">
+      </ng-select>
+    </div>
+  </div>
+          <!-- <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="rateZone"><span style="color: red;">*</span>Zone name :</label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  formControlName="rateZone"
+                  multiple
+                  (selectionChange)="onZoneSelectionChange($event)" placeholder="Select zone">
+                  <mat-option *ngFor="let zone of zoneList" [value]="zone.Zone_Code">
+                    {{ zone.Zone_Name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="rateCountry">Country :</label>
+              <!-- <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  formControlName="rateCountry"
+                  multiple
+                  (selectionChange)="onCountrySelectionChange($event)" placeholder="Select country">
+                  <mat-option *ngFor="let item of countryList" [value]="item.countryCode">
+                    {{ item.countryName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+               <ng-select
+        [items]="countryList"
+         class="custom-select2"
+        bindLabel="countryName"
+        bindValue="countryCode"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateCountry')"
+        (change)="onCountrySelectionChange($event)">
+      </ng-select>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+                <label for="rateState">State :</label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="rateState"
+                    multiple
+                    (selectionChange)="onStateSelectionChange($event)" placeholder="Select state">
+                    <mat-option *ngFor="let item of stateList" [value]="item.State_Code">
+                      {{ item.State_Name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                 <ng-select
+        [items]="stateList"
+         class="custom-select2"
+        bindLabel="State_Name"
+        bindValue="State_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateState')"
+        (change)="onStateSelectionChange($event)">
+      </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+           <div class="col-sm-12">
+            <div class="textOnSelect">
+                <label for="rateDestination">Destination :</label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="rateDestination" multiple placeholder="Select destination">
+                    <mat-option *ngFor="let item of destinationList" [value]="item.Destination_Code">
+                      {{ item.Destination_Name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                 <ng-select
+        [items]="destinationList"
+         class="custom-select2"
+        bindLabel="Destination_Name"
+        bindValue="Destination_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateDestination')">
+      </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-3">
+              <div class="textOnSelect">
+                  <label for="RateMode"><span style="color: red;">*</span>Rate mode :</label>
+                  <select id="RateMode" class="custom-select" formControlName="RateMode" >
+                    <option value="" selected disabled>Select Mode</option>
+                    <option value="Flat">Flat </option>
+                    <option value="Addition">Addition </option>
+                    <option value="AddOn">AddOn </option>
+                    <option value="Multiple">Multiple </option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+                <label for="RateIncrease">Increase rate % :</label>
+                <input class="form-control" type="number" min="0" id="RateIncrease" formControlName="RateIncrease" placeholder="enter Increase rate%">
+            </div>
+        </div>
+          <div class="col-sm-3">
+              <div class="textOnInput">
+                  <label for="RateMinWt">Min weight :</label>
+                  <input class="form-control" type="number" min="0" id="RateMinWt" formControlName="RateMinWt" placeholder="enter Minimum weight">
+              </div>
+          </div>
+          <div class="col-sm-3">
+              <div class="textOnInput">
+                  <label for="RateMinAmt">Min amount :</label>
+                  <input class="form-control" type="number" min="0" id="RateMinAmt" formControlName="RateMinAmt"   placeholder="enter Minimum amount">
+              </div>
+          </div>
+        </div>
+        <div class="table-responsive text-nowrap">
+          <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+            <thead style=" background-color:  #a3b8d4; color: black;">
+              <tr>
+                  <th>Addition</th>
+                  <th>Lower Wt</th>
+                  <th>Upper Wt</th>
+                  <th>Rate</th>
+                  <th>Active date</th>
+                  <th>Closing date</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+             <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
+                <td><input #additionInput formControlName="On_Addition" class="form-control" type="number" min="0" [readonly]="RateForm.get('RateMode')?.value === 'Flat'"></td>
+                <td><input formControlName="Lower_Wt" class="form-control" type="number" min="0"></td>
+                <td><input formControlName="Upper_Wt" class="form-control" type="number" min="0" ></td>
+                <td><input formControlName="Rate" class="form-control" type="number" min="0" ></td>
+                <td><input formControlName="Active_Date" class="form-control" type="date"></td>
+                <td><input formControlName="Closing_Date" class="form-control" type="date"></td>
+                <td>
+                  <button type="button" class="btn btn-light check" (click)="addRateDetail()"  [disabled]="tempRateDetailForm.invalid">
+                    <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
+                  </button>
+                </td>
+
+              </tr>
+              <tr *ngFor="let detail of rateDetailsArray.controls; let i = index" [formGroup]="detail">
+              <td>{{ detail.value.On_Addition }}</td>
+              <td>{{ detail.value.Lower_Wt }}</td>
+              <td>{{ detail.value.Upper_Wt }}</td>
+              <td>{{ detail.value.Rate }}</td>              
+              <td>{{ detail.value.Active_Date | date:'dd-MM-yyyy' }}</td>
+              <td>{{ detail.value.Closing_Date | date:'dd-MM-yyyy' }}</td>
+              <td>
+                <button type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- <tr *ngFor="let detail of rateDetailsArray.controls; let i = index">
+              <td>{{ detail.get('On_Addition')?.value }}</td>
+              <td>{{ detail.get('Lower_Wt')?.value }}</td>
+              <td>{{ detail.get('Upper_Wt')?.value }}</td>
+              <td>{{ detail.get('Rate')?.value }}</td>
+              <td>
+                <button type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+   
+    <div class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="addRate(RateForm.value)">{{ rateButton }}</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div style="padding: 0 13px;" *ngIf="data.action === 'RateAdd2'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Rate entry</h1>
+      </div>
+      <!-- <div class="col-sm-5">
+        <mat-form-field appearance="fill">
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date">
+            <input matEndDate placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div> -->
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form  [formGroup]="RateForm">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+   <div class="col-sm-6" style="border-right: 1px solid #d2d2d2;">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="textOnInput">
+              <label for="fromDate">From :</label>
+              <input class="form-control" type="date" formControlName="fromDate" [max]="currentDate2" id="fromDate">
+          </div> 
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnInput">
+              <label for="toDate">To :</label>
+              <input class="form-control" type="date" formControlName="toDate" id="toDate">
+          </div>
+          </div>
+        </div>
+        <div class="row pb-1">
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="rateLocation"><span style="color: red;">*</span>Location :</label>
+              <select id="rateLocation" class="custom-select" formControlName="rateLocation">
+                <option value="" selected disabled>Select Location</option>
+                <option *ngFor="let item of LocationList" value="{{item.locationCode}}">
+                  {{item.locationName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="textOnSelect">
+                <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                  <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="rateCustomer">
+                </ng-select>
+               <!-- <select id="rateCustomer" class="custom-select" formControlName="rateCustomer">
+                <option value="" selected disabled>Select customer </option>
+                <option *ngFor="let item of customerList" [value]="item.customerCode">
+                  {{item.customerName}}
+                </option>
+              </select> -->
+
+            </div>
+        </div>
+        </div>
+        <div class="row mb-2 pb-1" style="border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-4">
+              <div class="textOnSelect">
+                <label for="RateOrigin"><span style="color: red;">*</span>Origin :</label>
+                <ng-select
+                  [items]="originList"
+                  class="custom-select1"
+                  bindLabel="originName"
+                  bindValue="originCode"
+                  formControlName="RateOrigin">
+                </ng-select>
+                <!-- <select id="RateOrigin" class="custom-select" formControlName="RateOrigin" [(ngModel)]="selectedOrigin">
+                  <option value="" selected disabled>Select origin</option>
+                  <option *ngFor="let item of originList" [value]="item.originCode">{{item.originName}} </option>
+                </select> -->
+              </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+                <label for="Zone">Zone :</label>
+                  <ng-select
+                  [items]="zoneList"
+                  class="custom-select1"
+                  bindLabel="Zone_Name"
+                  bindValue="Zone_Code"
+                  formControlName="Zone">
+                </ng-select>
+                <!-- <select id="Zone" class="custom-select" formControlName="Zone" >
+                  <option value="" selected disabled>Select Zone</option>
+                  <option *ngFor="let item of zoneList" [value]="item.Zone_Code">{{item.Zone_Name}} </option>
+                </select> -->
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+                <label for="Mode"><span style="color: red;">*</span>Mode :</label>
+                <select id="Mode" class="custom-select" formControlName="Mode"  [(ngModel)]="selectedMode" (change)="handleModeChange(selectedMode)">
+                  <option value="" selected disabled>Select Mode</option>
+                  <option *ngFor="let item of modeList" [value]="item.Mode_code">{{item.Mode_name}} </option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="rateProduct"><span style="color: red;">*</span>Product name :</label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="rateProduct"
+                    multiple placeholder="Select product">
+                    <mat-option *ngFor="let product of productList" [value]="product.productCode">
+                      {{ product.productName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                  <ng-select
+                  [items]="productList"
+                  class="custom-select1"
+                  bindLabel="productName"
+                  bindValue="productCode"
+                  [multiple]="true"
+                  [formControl]="RateForm.get('rateProduct')">
+                </ng-select>
+            </div>
+          </div>
+           <div class="col-sm-6">
+    <div class="textOnSelect">
+      <label for="rateZone"><span style="color: red;">*</span>Zone name :</label>
+      <ng-select
+        [items]="zoneList"
+         class="custom-select1"
+        bindLabel="Zone_Name"
+        bindValue="Zone_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateZone')"
+        (change)="onZoneSelectionChange($event)">
+      </ng-select>
+    </div>
+  </div>
+          <!-- <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="rateZone"><span style="color: red;">*</span>Zone name :</label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  formControlName="rateZone"
+                  multiple
+                  (selectionChange)="onZoneSelectionChange($event)" placeholder="Select zone">
+                  <mat-option *ngFor="let zone of zoneList" [value]="zone.Zone_Code">
+                    {{ zone.Zone_Name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="rateCountry">Country :</label>
+              <!-- <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  formControlName="rateCountry"
+                  multiple
+                  (selectionChange)="onCountrySelectionChange($event)" placeholder="Select country">
+                  <mat-option *ngFor="let item of countryList" [value]="item.countryCode">
+                    {{ item.countryName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+               <ng-select
+        [items]="countryList"
+         class="custom-select2"
+        bindLabel="countryName"
+        bindValue="countryCode"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateCountry')"
+        (change)="onCountrySelectionChange($event)">
+      </ng-select>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="rateState">State :</label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="rateState"
+                    multiple
+                    (selectionChange)="onStateSelectionChange($event)" placeholder="Select state">
+                    <mat-option *ngFor="let item of stateList" [value]="item.State_Code">
+                      {{ item.State_Name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                 <ng-select
+        [items]="stateList"
+         class="custom-select2"
+        bindLabel="State_Name"
+        bindValue="State_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateState')"
+        (change)="onStateSelectionChange($event)">
+      </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+                <label for="rateDestination">Destination :</label>
+                 <ng-select
+        [items]="destinationList"
+         class="custom-select2"
+        bindLabel="Destination_Name"
+        bindValue="Destination_Code"
+        [multiple]="true"
+        [formControl]="RateForm.get('rateDestination')">
+      </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="textOnSelect">
+                <label for="rateAirline">Train/Airline Name :</label>
+               <select id="rateAirline" class="custom-select" formControlName="trainFlight" (change)="onTrainFlightSelect($event.target.value)">
+                <option *ngFor="let option of trainFlightOptions" [value]="option.code">
+                  {{ option.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="textOnSelect">
+                <label for="trainFlightNo">Train/Flight No :</label>
+                 <input class="form-control" type="text" formControlName="trainFlightNo" readonly>
+               <!-- <select id="rateFlight" class="custom-select" formControlName="Flight_No">
+                <option value="" selected disabled>Select Flight </option>
+                <option *ngFor="let item of flightList" [value]="item.Flight_Code">
+                  {{item.Flight_Name}}
+                </option>
+              </select> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+              <div class="textOnSelect">
+                  <label for="RateMode"><span style="color: red;">*</span>Rate mode :</label>
+                  <select id="RateMode" class="custom-select" formControlName="RateMode" >
+                    <!-- <option value=""  disabled>Select Mode</option> -->
+                    <option value="Flat">Flat </option>
+                    <option value="Addition">Addition </option>
+                    <option value="AddOn">AddOn </option>
+                    <option value="Multiple">Multiple </option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+                <label for="RateIncrease">Increase rate % :</label>
+                <input class="form-control" type="text" id="RateIncrease" formControlName="RateIncrease" placeholder="enter Increase rate%">
+            </div>
+        </div>
+          <div class="col-sm-3">
+              <div class="textOnInput">
+                  <label for="RateMinWt">Min weight :</label>
+                  <input class="form-control" type="text" id="RateMinWt" formControlName="RateMinWt" placeholder="enter Minimum weight">
+              </div>
+          </div>
+          <div class="col-sm-3">
+              <div class="textOnInput">
+                  <label for="RateMinAmt">Min amount :</label>
+                  <input class="form-control" type="text" id="RateMinAmt" formControlName="RateMinAmt"   placeholder="enter Minimum amount">
+              </div>
+          </div>
+        </div>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+            <thead style=" background-color:  #a3b8d4; color: black;">
+              <tr>
+                  <th>Addition</th>
+                  <th>Lower Wt</th>
+                  <th>Upper Wt</th>
+                  <th>Rate</th>
+                  <th>Active date</th>
+                  <th>Closing date</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+             <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
+                <td><input #additionInput formControlName="On_Addition" class="form-control" type="number" min="0" [readonly]="RateForm.get('RateMode')?.value === 'Flat'"></td>
+                <td><input formControlName="Lower_Wt" class="form-control" type="number" min="0"></td>
+                <td><input formControlName="Upper_Wt" class="form-control" type="number" min="0" ></td>
+                <td><input formControlName="Rate" class="form-control" type="number" min="0" ></td>
+                <td><input formControlName="Active_Date" class="form-control" type="date"></td>
+                <td><input formControlName="Closing_Date" class="form-control" type="date"></td>
+                <td>
+                  <button type="button" class="btn btn-light check" (click)="addRateDetail()"  [disabled]="tempRateDetailForm.invalid">
+                    <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
+                  </button>
+                </td>
+
+              </tr>
+              <tr *ngFor="let detail of rateDetailsArray.controls; let i = index" [formGroup]="detail">
+              <td>{{ detail.value.On_Addition }}</td>
+              <td>{{ detail.value.Lower_Wt }}</td>
+              <td>{{ detail.value.Upper_Wt }}</td>
+              <td>{{ detail.value.Rate }}</td>              
+              <td>{{ detail.value.Active_Date | date:'dd-MM-yyyy' }}</td>
+              <td>{{ detail.value.Closing_Date | date:'dd-MM-yyyy' }}</td>
+              <td>
+                <button type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- <tr *ngFor="let detail of rateDetailsArray.controls; let i = index">
+              <td>{{ detail.get('On_Addition')?.value }}</td>
+              <td>{{ detail.get('Lower_Wt')?.value }}</td>
+              <td>{{ detail.get('Upper_Wt')?.value }}</td>
+              <td>{{ detail.get('Rate')?.value }}</td>
+              <td>
+                <button type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+   
+    <div class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="addRate(RateForm.value)">{{ rateButton }}</button>
+      </div>
+    </div>
+  </form>
+  </div>

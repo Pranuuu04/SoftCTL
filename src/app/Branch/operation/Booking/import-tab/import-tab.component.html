@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2; padding-bottom: 7px;">
+    <div class="col-sm-1">
+      <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px;">Import</h1>
+    </div>
+      <div class="col-sm-11 d-flex header_btn" style="justify-content: right;">
+        <div [hidden]="CustomerDisable">
+          <button type="button" class="btn btn-success" (click)="generateExcel()" tabindex="-1" matTooltip="Download">
+            <i class="fa-solid fa-download"></i>
+          </button>
+          <button type="button" class="btn btn-danger" (click)="generateExcelCust()" tabindex="-1" matTooltip="Error log">
+            <mat-icon >error</mat-icon>
+          </button>
+        </div>
+        <div [hidden]="withOutCustDisable">
+          <button type="button" class="btn btn-success" (click)="generateExcelwithOutCustomer()" matTooltip="Download">
+            <i class="fa-solid fa-download"></i>
+          </button>
+          <button type="button" class="btn btn-danger" (click)="generateExcelWithCust()">
+            <mat-icon matTooltip="Error log">error</mat-icon>
+          </button>
+        </div>
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" tabindex="-1"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+<div class="row mt-3 pb-4" style="border-bottom: 1px solid #d2d2d2;"> 
+  <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+      <input type="radio"id="WithCust" name="print" value="WithCust" checked (click)="onCheckedCust()">
+      <label for="WithCust" class="WithCust" style="font-size: 16px;">Customer</label>
+  </div>
+  <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+    <input type="radio" id="cust" name="print" value="cust" (click)="onCheckedWithoutCust()">
+    <label for="cust" class="cust" style="font-size: 16px;">Without Customer</label>
+  </div>
+</div>
+
+<div [hidden]="CustomerDisable">
+  <div class="row pt-4 pb-4">
+    <div class="col-sm-9">
+        <label for="fAwbNo" class="col-form-label mt-2">Select excel file</label>
+        <input type="file" id="inputExcel" class="form-control" #fileInput accept=".xlsx, .xls" (change)="handleFileInput($event)">
+    </div>
+    <div class="col-sm-3" style="justify-content: right; display: flex;">
+      <button type="button" class="btn btn-light" style="margin-top: 34px;" [disabled]="!fileSelected || isDisabled"  (click)="submitcustomer()"> Submit</button>
+    </div>
+  </div>
+</div>
+
+  <div [hidden]="withOutCustDisable">
+    <div class="row pt-4">
+      <div class="col-sm-12">
+        <label for="Customer" class="col-form-label">Customer name</label>
+        <select id="Customer" class="custom-select" [(ngModel)]="selectedCustomerCode">
+          <option value="" selected disabled>Select Customer</option>
+          <option value="{{item.customerCode}}" *ngFor="let item of customerNameList">
+            {{ item.customerName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row pb-4">
+      <div class="col-sm-9">
+        <label for="fAwbNo" class="col-form-label">Import</label>
+        <input type="file" id="inputExcel" class="form-control" #fileInput accept=".xlsx, .xls" (change)="handleFileInput2($event)">
+      </div>
+      <div class="col-sm-3" style="justify-content: right; display: flex;">
+        <button type="button" class="btn btn-light" style="margin-top: 34px;" [disabled]="!fileSelected || isDisabled" (click)="submitWithoutCustomer()"> Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

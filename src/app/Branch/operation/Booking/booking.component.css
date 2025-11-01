@@ -1,0 +1,27 @@
+* {
+    font-size: 3px;
+    padding-top: 15px;
+    background-color: white;
+}
+.row {
+    margin-bottom: 6px;
+}
+.modal-backdrop {
+    opacity: -0.5 !important;
+}
+
+.modal-backdrop.in {
+    opacity: 0.9;
+}
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+::ng-deep .mat-tab-label{
+    height: 24px !important;
+}
+/* .mat-tab-group{
+    height: 500px;
+} */

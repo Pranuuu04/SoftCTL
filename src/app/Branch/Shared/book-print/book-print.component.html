@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Print </h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+  <form #bookPrintForm="ngForm">
+    <div class="row mt-3 pb-4"> 
+      <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+          <input type="radio"id="User" name="permission" value="print" [(ngModel)]="printType">
+          <label for="User" class="label" >Print</label>
+      </div>
+      <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+        <input type="radio" id="Customer" name="permission" value="multiplePrint" [(ngModel)]="printType">
+        <label for="Customer" class="label" >Multiple Print</label>
+      </div>
+    </div>
+
+      <div class="row">
+          <div class="col-sm-12">
+              <label for="AwbNo" class="col-form-label">Awb No.</label> 
+             <input type="text" name="awbNo" class="form-control" [(ngModel)]="awbNo" placeholder="Enter AWB No" />
+          </div>
+      </div>
+
+
+      <div class="row" *ngIf="printType === 'multiplePrint'" >
+        <div class="col-sm-12">
+          <label for="Employee" class="col-form-label">Print Format</label>
+          <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintTpye">
+            <option value="" disabled selected>Select Format Size</option>
+          <!-- <option value="1Format">1 Docket Print</option>
+          <option value="1Formatcopy">1 Docket Print copy</option> -->
+          <option value="1-2 Format" >1-2 Docket Print</option>
+          <option value="1-3 Format" >1-3 Docket Print</option>
+          <!-- <option value="Shipper" >Shipper / Consignee</option>
+          <option value="ShipperCopy" >Shipper Copy</option>
+          <option value="getPerformaInvoice" >Performa Invoice</option>
+          <option value="label" >Sticker Print1</option>
+          <option value="label2" >Sticker Print2</option>
+          <option value="label3" >Sticker Print3 </option> -->
+
+          </select>
+        </div>
+      </div>
+
+       <div class="row" [hidden] = "CompanyPrint !== '1'" > 
+        <div class="col-sm-12">
+          <label for="Employee" class="col-form-label">*Company Name</label>
+          <select id="companyCode" class="custom-select" [(ngModel)]="companyCode" #companyName="ngModel" required>
+            <option value="" disabled>Select Company</option>
+            <option *ngFor="let item of companyObj" [value]="item.CompanyCode" >{{item.CompanyName}}</option>
+          </select>
+        </div>
+          <div *ngIf="(isFormSubmitted || companyName?.touched) && companyName?.invalid" class="text-danger position-absolute"
+             style="font-size: 12px; margin-top: 52px; margin-left: 10px;">
+            <span *ngIf="companyName?.errors?.required">Company Name is required!</span>
+         </div>
+       </div>
+
+      <div *ngIf="printType !== 'multiplePrint'" class="row d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-info" (click)="printPDF()">Ok</button>
+          </div>
+      </div>
+
+      <div *ngIf="printType === 'multiplePrint'" class="row d-flex m-0" style="justify-content: right;" >
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-info" (click)="multiplePrintTpye === 'Shipper' || multiplePrintTpye === 'ShipperCopy' || multiplePrintTpye === 'getPerformaInvoice' ? printPDF() : searchPrintData()">Ok</button>
+        </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+<!-- <div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Print </h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+  <form>
+    <div class="row mt-3 pb-4"> 
+      <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+          <input type="radio"id="User" name="permission" value="print"  checked [(ngModel)]="printType">
+          <label for="User" class="label" >Print</label>
+      </div>
+      <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+        <input type="radio" id="Customer" name="permission" value="multiplePrint" [(ngModel)]="printType">
+        <label for="Customer" class="label" >Multiple Print</label>
+      </div>
+    </div>
+
+      <div class="row">
+          <div class="col-sm-12">
+              <label for="AwbNo" class="col-form-label">Awb No.</label> 
+              <input type="text" placeholder="AWB No" class="form-control" id="AwbNo" [(ngModel)]="awbNo" placeholder="enter Awb No"/>
+          </div>
+      </div>
+
+      <div class="row" *ngIf="printType === 'multiplePrint'" >
+        <div class="col-sm-12">
+          <label for="Employee" class="col-form-label">Print Format</label>
+          <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintTpye">
+            <option value="" disabled selected>Select Format Size</option>
+          <option value="1Format">1 Docket Print</option>
+          <option value="1Formatcopy">1 Docket Print copy</option>
+          <option value="1-2 Format" >1-2 Docket Print</option>
+          <option value="1-3 Format" >1-3 Docket Print</option>
+          <option value="Shipper" >Shipper / Consignee</option>
+          <option value="ShipperCopy" >Shipper Copy</option>
+          <option value="getPerformaInvoice" >Performa Invoice</option>
+          <option value="label" >Sticker Print1</option>
+          <option value="label2" >Sticker Print2</option>
+          <option value="label3" >Sticker Print3 </option>
+
+          </select>
+        </div>
+      </div>
+      <div *ngIf="printType !== 'multiplePrint'" class="row d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="button" class="btn btn-info" (click)="printPDF()">Ok</button>
+          </div>
+      </div>
+
+      <div *ngIf="printType === 'multiplePrint'" class="row d-flex m-0" style="justify-content: right;" >
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-info" (click)="multiplePrintTpye === 'Shipper' || multiplePrintTpye === 'ShipperCopy' || multiplePrintTpye === 'getPerformaInvoice' ? printPDF() : searchPrintData()">Ok</button>
+        </div>
+    </div>
+  </form>
+</div> -->

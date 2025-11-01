@@ -1,0 +1,56 @@
+<div class="container" style="height: 75vh;">
+    <form [formGroup]="updateform">
+      <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+            <div class="textOnSelect">
+                <label for="custName">Customer name :</label>
+                <!-- <select class="custom-select" formControlName="custName" >
+                  <option selected disabled value="">Select Customer name</option>
+                  <option *ngFor="let item of CustomerList" value="{{item.customerCode}}">
+                    {{ item.customerName }} 
+                  </option>
+                </select> -->
+                 <ng-select 
+                  class="custom-select1"
+                  [items]="CustomerList"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="custName"
+                  [searchable]="true"
+                  [clearable]="true">
+                </ng-select>
+                <div *ngIf="updateform.get('custName')?.touched && updateform.get('custName')?.invalid" class="text-danger">
+                  Customer name is required.
+                </div>        
+            </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="Date"><span style="color: red;">*</span>Date :</label>
+            <input class="form-control" type="date" id="Date" formControlName="Date">
+            <div *ngIf="updateform.get('Date')?.touched && updateform.get('Date')?.invalid" class="text-danger">
+              Date is required.
+            </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+              <label for="Import">Import :</label>
+              <input class="form-control" type="file" #fileInput id="Import" style="padding-left: 0px;padding-top: 8px;" accept=".xlsx, .xls" (change)="onFileSelected($event)">
+              <div *ngIf="!selectedFile && updateform.touched" class="text-danger">
+                File is required.
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-3 d-flex form-group" style="justify-content: end;">
+        <button type="submit" class="btn btn-light other-button" (click)="processExcelData(selectedFile)">Submit</button>
+        <button type="button" class="btn btn-success download" (click)="generateExcel()" matTooltip="Download excel">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <button type="button" class="btn btn-danger error" tabindex="-1" matTooltip="Error log" (click)="generateTripErrorLog()">
+          <mat-icon >error</mat-icon>
+        </button>
+      </div>
+    </div>
+    </form>
+    </div>

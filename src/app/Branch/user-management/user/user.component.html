@@ -1,0 +1,152 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2; padding-bottom: 7px;">
+      <div class="col-sm-5">
+        <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px;">User Management</h1>
+      </div>
+        <div class="col-sm-7 d-flex header_btn" style="justify-content: right;">
+
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" tabindex="-1"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+  <div class="row mt-3 pb-4" style="border-bottom: 1px solid #d2d2d2;"> 
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+        <input type="radio"id="User" name="permission" value="User" [(ngModel)]="userType" checked (click)="onCheckedCust()">
+        <label for="User" class="User" style="font-size: 16px;">User</label>
+    </div>
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+      <input type="radio" id="Customer" name="permission" value="Customer" [(ngModel)]="userType" (click)="onCheckedWithoutCust()">
+      <label for="Customer" class="Customer" style="font-size: 16px;">Customer</label>
+    </div>
+  </div>
+  
+  <div [hidden]="CustomerDisable">
+    <form [formGroup]="Userform" (ngSubmit)="submitForm(Userform.value)">
+      <div class="row pt-4 pb-2">
+        <div class="col-sm-10">
+          <label for="Department" class="col-form-label">Department name</label>
+          <select id="Department" formControlName="department" class="custom-select" (change)="onDepartmentChange($event)" required tabindex="-1">
+            <option disabled selected>Select Department</option>
+            <option value="{{item.Department_code}}" *ngFor="let item of DepartmentData">
+              {{ item.Department_name }}
+            </option>
+          </select>
+          <div *ngIf="Userform.get('department').errors?.required && Userform.get('department').touched" class="text-danger">Department is required</div>
+        </div>
+         <div class="col-sm-2 d-flex align-items-end" style=" justify-content: end;">
+            <button type="button"
+                    class="btn btn-outline-secondary pb-0 mb-0"
+                    style="background: #2e3f55; width: 40px; height: 30px;"
+                    (click)="openDepartmentDialog()"
+                    [disabled]="!Userform.get('department').value"
+                    matTooltip="Permission">
+              <i class="fa-solid fa-key" style="color: #d8e0ec; font-size: 16px;"></i>
+            </button>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="Employee" class="col-form-label">Employee name</label>
+          <select id="Employee" formControlName="employee" class="custom-select" required tabindex="-1">
+            <option value="" disabled selected>Select Employee</option>
+            <option value="{{item.employeeCode}}" *ngFor="let item of employeeData">
+              {{ item.employeeName }}
+            </option>
+          </select>
+          <div *ngIf="Userform.get('employee').errors?.required && Userform.get('employee').touched" class="text-danger">Employee is required</div>
+        </div>
+      </div>
+      <div class="row pb-4 mt-2">
+        <div class="col-sm-6">
+          <label for="userName" class="col-form-label">User Name :</label>
+          <input type="text" id="userName" formControlName="userName" placeholder="Enter your username" class="form-control" required autocomplete="new-username" tabindex="-1">
+          <div *ngIf="Userform.get('userName').errors?.required && Userform.get('userName').touched" class="text-danger">User Name is required</div>
+          <div *ngIf="Userform.get('userName').errors?.minlength && Userform.get('userName').touched" class="text-danger">Username must be at least 3 characters long</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="passWord" class="col-form-label">Password :</label>
+          <div class="input-group">
+              <input type="{{ hidePassword ? 'password' : 'text' }}" id="passWord" formControlName="password" placeholder="Enter your password" class="form-control" required autocomplete="new-password">
+              <div class="input-group-append">
+                  <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 10px; height: 27px ;border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem; margin-top: -1px; background: #2e3f55;" >
+                      <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #d8e0ec; font-size: 16px;"></i>
+                  </button>
+              </div>
+          </div>
+          <div *ngIf="Userform.get('password').errors?.required && Userform.get('password').touched && !Userform.get('password').errors?.invalidPassword" class="text-danger">Password is required</div>
+          <div *ngIf="Userform.get('password').errors?.invalidPassword && Userform.get('password').touched" class="text-danger">Your password must be at least 4 characters long and include at least one number and one special character ( ! @ # $ % ^ & * ).</div>
+      </div>
+      
+      </div>
+      <div class="row m-0 d-flex" style="justify-content: right;">
+        <div class="col-sm-3 d-flex submit-btn" style="justify-content: right;">
+          <button type="submit" class="btn btn-light" [disabled]="Userform.invalid" tabindex="-1" > Submit </button>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+
+    <div [hidden]="withOutCustDisable">
+      <form [formGroup]="Custform" (ngSubmit)="submitCustForm(Custform.value)">
+        <div class="row pb-2 mt-2">
+          <div class="col-sm-6">
+              <label for="custUsername" class="col-form-label">User Name :</label>
+              <input type="text" id="custUsername" class="form-control" formControlName="custUsername" placeholder="Enter your username" autocomplete="new-username">
+              <div *ngIf="Custform.get('custUsername').errors?.required && Custform.get('custUsername').touched" class="text-danger">User Name is required</div>
+              <div *ngIf="Custform.get('custUsername').errors?.minlength && Custform.get('custUsername').touched" class="text-danger">Username must be at least 3 characters long</div>    
+          </div>
+          <div class="col-sm-6">
+              <label for="custPassword" class="col-form-label">Password :</label>
+              <div class="input-group">
+                <input type="{{hidePassword ? 'password' : 'text'}}" id="custPassword" class="form-control" formControlName="custPassword" placeholder="Enter your password" autocomplete="new-password">
+                  <div class="input-group-append">
+                    <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 10px; height: 27px ;border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem; margin-top: -1px; background: #2e3f55;" >
+                        <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: #d8e0ec; font-size: 16px;"></i>
+                    </button>
+                  </div>
+              </div>
+             <div *ngIf="Custform.get('custPassword').errors?.required && Custform.get('custPassword').touched && !Custform.get('custPassword').errors?.invalidPassword" class="text-danger">Password is required</div>
+             <div *ngIf="Custform.get('custPassword').errors?.invalidPassword && Custform.get('custPassword').touched" class="text-danger">Your password must be at least 4 characters long and include at least one number and one special character (! @ # $ % ^ & *).</div>
+
+          </div>
+      </div>
+
+      <div class="row pb-2">
+        <div class="col-sm-12">
+          <label for="Customer" class="col-form-label">Customer name</label>
+          <select id="Customer" class="custom-select" formControlName="Customer">
+            <option value="" selected disabled>Select Customer</option>
+            <option value="{{item.customerCode}}" *ngFor="let item of customerName">
+              {{ item.customerName }}
+            </option>
+          </select>
+          <div *ngIf="Custform.get('Customer').errors?.required && Custform.get('Customer').touched" class="text-danger">Customer name is required</div>
+        </div>
+      </div>
+      
+      <div class="row pb-2 mt-2">
+        <ng-container *ngFor="let section of CustMenu">
+          <div class="col-sm-4">
+            <section class="example-section toggle-hover">
+              <mat-checkbox (change)="toggleCaptionName(section.caption_Name, $event.checked)">
+                {{ section.caption_Name }}
+              </mat-checkbox>
+            </section>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="row m-0 d-flex" style="justify-content: right;">
+        <div class="col-sm-3 d-flex submit-btn" style="justify-content: right;">
+          <button type="submit" class="btn btn-light" tabindex="-1" [disabled]="Custform.invalid"> Submit </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+

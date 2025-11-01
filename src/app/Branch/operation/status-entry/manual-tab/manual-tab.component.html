@@ -1,0 +1,79 @@
+<div>
+    <form [formGroup]="vendorForm" (ngSubmit)="handleFormSubmit(vendorForm.value)">
+       <div class="row  ml-0 mr-0">
+        <div class="col-md-3">
+            <div class="textOnInput">
+                <label for="awb">AWB No.</label>
+                <input formControlName="awb" type="text" class="form-control" id="awb" [(ngModel)]="AwbNo">
+            </div>
+            <input formControlName="id" type="text" class="form-control" id="id" style="display: none;">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-light other-button mt-1" style="margin-right: 37px;" [disabled]="!vendorForm.get('awb').value" (click)="getDataByAwb(vendorForm.value)">Find</button>
+        </div>
+       </div>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered table-striped" style="background-color: rgb(223, 233, 237, 0.87);">
+                <thead style="background-color: #c2c7ea; color: white;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Remark</th>
+                        <th [width]="100">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input formControlName="date" class="form-control" type="date"></td>
+                        <td><input formControlName="time" class="form-control" type="time"></td>
+                        <td>
+                            <input formControlName="from" class="form-control" readonly  value="{{originName}}" [(ngModel)]="originName"/>
+                        </td>
+                        <td>
+                            <input list="destinations" formControlName="to" class="form-control" />
+                            <datalist id="destinations">
+                                <option *ngFor="let item of DestinationName" [value]="item.destinationName"> {{ item.destinationName }}</option>
+                            </datalist>
+                        </td>
+                        <td>
+                              <input list="remark" formControlName="remark" class="form-control" />
+                            <datalist id="remark">
+                                <option *ngFor="let option of remarkOptions" [value]="option">{{ option }}</option>
+                            </datalist>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="editingIndex === null">
+                                <button type="submit" class="btn btn-light form-icon" style="background-color: blue;">
+                                    <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
+                                </button>
+                            </ng-container>
+  
+                            <ng-container *ngIf="editingIndex !== null">
+                                <button type="submit" class="btn btn-success form-icon">
+                                    <mat-icon  matTooltip="Update" style=" color: white;">update</mat-icon>
+                                </button>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let item of listData; let i = index">
+                        <td>{{ item.date | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ item.time }}</td>
+                        <td>{{ originName }}</td>
+                        <td>{{ item.to }}</td>
+                        <td>{{ item.remark }}</td>
+                        <td>
+                            <button type="button" class="btn btn-light edit" (click)="editEntry(i)">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-light delete" (click)="confirmDeleteDrs(i)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </form>
+  </div>

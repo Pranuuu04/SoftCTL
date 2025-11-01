@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; "> Delete Manifest</h1>
+    </div>
+    <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="closeForm()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+    </div>
+  </div>
+
+
+
+  <form [formGroup]="createForm">
+
+
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="radio" id="huey" name="drone" value="huey" checked (click)="onCheckedAwb()" />
+        <label for="huey">AWB No.</label>
+      </div>
+      <div class="col-sm-6">
+        <input type="radio" id="dewey" name="drone" value="dewey" (click)="onChecked()" />
+        <label for="dewey">Manifest No.</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="manifestNo" class="col-form-label">Manifest No.</label>
+        <input type="text" class="form-control" id="manifestInput" placeholder="Enter Manifest No"
+          [hidden]="!manifestDisabled" formControlName="manifestNo">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="awbNo" class="col-form-label" [hidden]="!awbDisabled">AWB No.</label>
+        <input type="text" class="form-control" id="awbInput" placeholder="Enter Awb No" [hidden]="!awbDisabled"
+          formControlName="awbNo">
+      </div>
+    </div>
+    <div class="row d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;">
+        <button type="submit" class="btn btn-info" (click)="confirmDeleteDrs()">Ok</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+

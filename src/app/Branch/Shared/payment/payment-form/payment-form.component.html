@@ -1,0 +1,527 @@
+<div style="padding: 0 13px;" *ngIf="data.action === 'CreditNoteAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Credit note</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="creditNoteForm" (ngSubmit)="SubmitCreditNote()">
+         <div class="row mainrow">
+          <!-- <div class="col-sm-4">
+          <div class="textOnInput">
+            <label for="noteNo">Note no. :</label>
+            <input class="form-control" type="text" formControlName="noteNo" placeholder="Enter note no.">
+        </div>
+        </div> -->
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label for="Date">Date :</label>
+            <input class="form-control" formControlName="Date" type="date" [value]="currentDate2" [max]="getCurrentDate()">
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnSelect">
+              <label for="Customer">Customer name :</label>
+                <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="Customer">
+                </ng-select>
+          </div>
+        </div>
+          <div class="col-sm-4">
+            <div class="textOnInput">
+              <label for="Particulars">Particulars :</label>
+              <input class="form-control" type="text" formControlName="Particulars" placeholder="Enter particulars">
+            </div>
+          </div>
+        </div>
+        <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+         
+            <div class="col-sm-4">
+            <div class="textOnInput">
+                <label for="Remark">Remark :</label>
+                <input class="form-control" type="text" formControlName="Remark" placeholder="Enter remark">
+            </div>
+            </div>
+            <div class="col-sm-4">
+            <div class="textOnInput">
+                <label for="Amount">Amount :</label>
+                <input class="form-control" type="text" formControlName="Amount" placeholder="Enter amount">
+            </div>
+            </div>
+        </div>
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button class="btn btn-light other-button" type="submit">{{ CreditNotesEdit ? 'Update' : 'Submit' }}</button>
+            </div>
+        </div>
+
+    </form>
+     <div class="row mainrow">
+      <div class="col-sm-12 pb-2">
+        <div *ngIf="showTable && dataSource.data.length > 0">
+          <div class="table-responsive text-nowrap">
+             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+            <ng-container matColumnDef="Customer_Name">
+              <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Customer_Name }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="NoteDate">
+              <th mat-header-cell *matHeaderCellDef> Note Date </th>
+              <td mat-cell *matCellDef="let element"> {{ element.NoteDate }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Particulars">
+              <th mat-header-cell *matHeaderCellDef> Particulars </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Particulars }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Remark">
+              <th mat-header-cell *matHeaderCellDef> Remark </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Remark }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Amount }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          </table>
+         </div>
+          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator> -->
+        </div>
+        <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+          <img src="./assets/images/NOdata.png" alt="" style="height: 170px;">
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div style="padding: 0 13px;" *ngIf="data.action === 'paymentEntryAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Payment entry form</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+   <form [formGroup]="paymentEntryForm" (ngSubmit)="submitPaymentEntry()">
+      <div class="row mainrow">
+        <div class="col-sm-6">
+           <div class="textOnSelect">
+                <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                  <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="Customer">
+                </ng-select>
+
+            </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="BankName">Bank name :</label>
+             <ng-select
+                  [items]="BankList"
+                  class="custom-select1"
+                  bindLabel="Bank_Name"
+                  bindValue="Bank_Name"
+                  formControlName="BankName">
+                </ng-select>
+        </div>
+        </div>
+         <div class="col-sm-3">
+              <div class="textOnSelect">
+              <label for="paymentType">Type :</label>
+              <select id="paymentType" class="custom-select" formControlName="paymentType">
+                <option value="" selected disabled>Select payment type</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit">Credit</option>
+              </select>
+          </div>
+        </div>
+      </div>
+      <div class="row mainrow">
+        <div class="col-sm-3">
+                <div class="textOnInput">
+                    <label for="receiptNo">Cheq/receipt no. :</label>
+                    <input class="form-control" type="text" formControlName="receiptNo" placeholder="Enter receipt no">
+                </div>
+            </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiptDt">Cheq/receipt date :</label>
+            <input class="form-control" type="date" formControlName="receiptDt">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiveDt">Receive date :</label>
+            <input class="form-control" type="date" formControlName="receiveDt">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiverName">Receiver name :</label>
+            <input class="form-control" type="text" formControlName="receiverName" placeholder="Enter receiver name">
+        </div>
+        </div>
+     </div>
+      <div class="row mainrow">
+          <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="Amount">Amount :</label>
+            <input class="form-control" type="text" formControlName="Amount" placeholder="Enter amount">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="TDS">TDS :</label>
+            <input class="form-control" type="text" formControlName="TDS" placeholder="Enter TDS">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="discount">Discount/Debit :</label>
+            <input class="form-control" type="text" formControlName="discount" placeholder="Enter discount/debit">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="remark">Remark :</label>
+            <input class="form-control" type="text" formControlName="remark" placeholder="Enter remark">
+        </div>
+        </div>
+      </div>
+      <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="DepositeBank">Deposite bank :</label>
+             <ng-select
+                  [items]="BankList"
+                  class="custom-select1"
+                  bindLabel="Bank_Name"
+                  bindValue="Bank_Name"
+                  formControlName="DepositeBank">
+                </ng-select>
+        </div>
+        </div>
+      </div>
+       <div class="row mainrow form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-4 d-flex" style="justify-content: right;" >
+        <button type="submit" class="btn btn-light other-button">{{ paymentEntryEdit ? 'Update' : 'Submit' }}</button>
+      </div>
+   </div>
+    
+  </form>
+    <div class="row mainrow">
+      <div class="col-sm-12 pb-2">
+        <div *ngIf="showTable && paymentEntryDataSource.data.length > 0">
+          <div class="table-responsive text-nowrap">
+              <table mat-table [dataSource]="paymentEntryDataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+                <ng-container matColumnDef="Customer_Name">
+                  <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Customer_Name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Bank_Name">
+                  <th mat-header-cell *matHeaderCellDef> Bank </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Bank_Name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CheqDt">
+                  <th mat-header-cell *matHeaderCellDef> Cheque Date </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.CheqDt }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="RecvDt">
+                  <th mat-header-cell *matHeaderCellDef> Received Date </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.RecvDt }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Amount_Type">
+                  <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Amount_Type }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ChequeNo">
+                  <th mat-header-cell *matHeaderCellDef> Receipt No </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ChequeNo }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Recv_Name">
+                  <th mat-header-cell *matHeaderCellDef> Receiver </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Recv_Name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TDS">
+                  <th mat-header-cell *matHeaderCellDef> TDS </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.TDS }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Amount">
+                  <th mat-header-cell *matHeaderCellDef> Amount </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Amount }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Debit">
+                  <th mat-header-cell *matHeaderCellDef> Discount </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Debit }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Remark">
+                  <th mat-header-cell *matHeaderCellDef> Remark </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Remark }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Deposit_Bank">
+                  <th mat-header-cell *matHeaderCellDef> Deposit Bank </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Deposit_Bank }} </td>
+                </ng-container>
+
+                 <tr mat-header-row *matHeaderRowDef="paymentEntryDisplayedColumns"></tr>
+                 <tr mat-row *matRowDef="let row; columns: paymentEntryDisplayedColumns;"></tr>
+
+              </table>
+         </div>
+        </div>
+        <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+          <img src="./assets/images/NOdata.png" alt="" style="height: 140px;">
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div style="padding: 0 13px;" *ngIf="data.action === 'WalletEntryAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; "> Wallet entry </h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="WalletEntryForm" (ngSubmit)="SubmitWalletEntry()">
+         <div class="row mainrow">
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label for="WalletDate">Date :</label>
+            <input class="form-control" formControlName="WalletDate" type="date" [(ngModel)]="currentDate" [max]="getCurrentDate()">
+        </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="textOnSelect">
+              <label for="WalletCustomer">Customer name :</label>
+                <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="WalletCustomer">
+                </ng-select>
+          </div>
+        </div>
+        </div>
+        <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+           <div class="col-sm-4">
+            <div class="textOnInput">
+                <label for="WalletAmount">Amount :</label>
+                <input class="form-control" type="text" formControlName="WalletAmount" placeholder="Enter amount">
+            </div>
+        </div>
+             <div class="col-sm-4">
+              <div class="textOnSelect">
+              <label for="paymentMode">Payment mode :</label>
+              <select id="paymentMode" class="custom-select" formControlName="paymentMode">
+                <option value="" selected disabled>Select payment mode</option>
+                <option value="cards">credit/debit cards</option>
+                <option value="digitalWallets">digital wallets</option>
+                <option value="bankTransfer">bank transfers</option>
+                <option value="Cash">Cash</option>
+              </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label for="walletRemark">Remark :</label>
+            <input class="form-control" type="text" formControlName="walletRemark">
+          </div>
+        </div>
+      </div>
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button class="btn btn-light other-button" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </form>
+  </div>
+
+
+
+  <div style="padding: 0 13px;" *ngIf="data.action === 'CashTopayEntry'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Cash Topay entry</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form action="">
+    <div class="table-responsive cashTopaytable text-nowrap">
+          <table class="table table-bordered table-striped equal-table"  style="background-color: #e2e9f1;">
+            <thead style=" background-color:  #a3b8d4; color: black;">
+
+              <tr>
+                <th style="width: 9%;">Paym Mode</th>
+                <th style="width: 11%;">TransID/UpiID</th>
+                <th style="width: 10%;">Received By</th>
+                <th style="width: 12%;">Deposit Bank</th>
+                <th style="width: 10%;">Received Date</th>
+                <th style="width: 8%;">Total Amt</th>
+                <th style="width: 10%;">Received Amt</th>
+                <th style="width: 6%;">TDS</th>
+                <th style="width: 8%;">Debit Note</th>
+                <th style="width: 9%;">Outstanding</th>
+                <th style="width: 9%;">Remark</th>
+                <th style="width: 7%;">Action</th>
+              </tr>
+
+            </thead>
+            <tbody>
+             <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
+               <!-- <td>
+                <input formControlName="SrNo" class="form-control" type="number" min="1">
+              </td> -->
+              <td>
+                <!-- <input formControlName="paymentMode" class="form-control" type="text"> -->
+                  <input list="paymentModes" formControlName="paymentMode" class="form-control">
+                  <datalist id="paymentModes">
+                     <option *ngFor="let mode of paymentModes" [value]="mode.name"></option>
+                  </datalist>
+              </td>
+              <td>
+                <input formControlName="transactionID" class="form-control" type="text">
+              </td>
+              <td>
+                <input formControlName="receivedBy" class="form-control" type="text">
+              </td>
+              <td>
+                <input list="BankList" formControlName="depositedBank" class="form-control" type="text">
+                 <datalist id="BankList" style="max-height: 150px;">
+                     <option *ngFor="let bank of bankList" [value]="bank.name"></option>
+                 </datalist>
+              </td>
+              <td>
+                <input formControlName="receivedDate" class="form-control" type="date">
+              </td>
+               <td>
+                <input formControlName="totalAmt" class="form-control" type="text" readonly>
+              </td>
+              <td>
+                <input formControlName="receivedAmt" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+              </td>
+              <td>
+                <input formControlName="TDS" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+              </td>
+              <td>
+                <input formControlName="debitNote" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+              </td>
+              <td>
+                <input formControlName="outstandingAmt" class="form-control" type="number" min="0" readonly>
+              </td>
+              <td>
+                <input formControlName="Remark" class="form-control" type="text">
+              </td>
+              <td>
+                <button type="button" class="btn btn-light check" (click)="addRateDetail()"  [disabled]="tempRateDetailForm.invalid">
+                  <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
+                </button>
+              </td>
+            </tr>
+
+              <tr *ngFor="let detail of rateDetails; let i = index">
+                <!-- <td>{{ detail.SrNo }}</td> -->
+                  <td>{{ detail.Payment_mode }}</td>
+                  <td>{{ detail.TransactionId }}</td>
+                  <td>{{ detail.Received_by }}</td>
+                  <td>{{ detail.Desposited_bank }}</td>
+                  <td>{{ detail.Received_date | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ detail.Total_amt }}</td>
+                  <td>{{ detail.Received_amt }}</td>
+                  <td>{{ detail.TDS }}</td>
+                  <td>{{ detail.Debit_note }}</td>
+                  <td>{{ detail.Outstanding }}</td>
+                  <td>{{ detail.Remark }}</td>
+                <td>
+                  <!-- <button *ngIf="i === 0" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                    <i class="fa-solid fa-trash"></i>
+                  </button> -->
+                  <button *ngIf="detail.id === latestRecordTempId" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+  </form>
+</div>

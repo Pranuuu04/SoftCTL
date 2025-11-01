@@ -1,0 +1,96 @@
+ <!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
+    <div class="table-responsive">
+        <div class="row d-flex m-0" style="justify-content: right;" >
+          <div class="form-group has-search col-sm-3">
+            <button class="btn btn-secondary" type="button" style="z-index: 1001;
+            position: absolute;
+            background: none;
+            top: -3px;
+            width: 38px;
+            height: 30px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            background-color: #2e3f55;">
+              <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -12px;"></i>
+            </button>
+            <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+          </div>
+        </div>
+      </div>
+
+    <div class="row mt-3"  style="border-bottom: 1px solid #d2d2d2; margin-left: 20px;">
+      <div class="col-sm-3" style="margin-top: -8px;">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label class="span"><span style="color: red;">*</span>Finder Type</label>
+              <ng-select [(ngModel)]="finderType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of finderTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}}</ng-option>
+            </ng-select>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="BookingWt">PinCode/AreaName/CityName</label>
+          <input class="form-control" type="text" [(ngModel)]="inputFieldsData"  placeholder="Please Enter Value">
+        </div>
+      </div>
+      <!-- <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="ManifestWeight">Manifest weight :</label>
+          <input class="form-control" type="number" id="ManifestWeight" formControlName="ManifestWeight"  placeholder="enter Manifest weight">
+        </div>
+      </div> -->
+      <div class="col-sm-3 d-flex" style="justify-content: space-between;" >
+        <button type="button" class="btn btn-light other-button" (click)="pinCodeTableData()">Search</button>
+      </div>
+    </div>
+
+    <div class="table-responsive text-nowrap">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+
+        <ng-container matColumnDef="Pincode">
+          <th mat-header-cell *matHeaderCellDef> Pincode </th>
+          <td mat-cell *matCellDef="let element">{{element.Pincode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Area_Name">
+          <th mat-header-cell *matHeaderCellDef>Area_Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.Area_Name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openDestinationForm()">
+              <mat-icon style="font-size: 18px; color: white;">add</mat-icon>
+            </button> </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon style="font-size: 18px;">more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item  (click)="openDestinationForm(element)">
+                <mat-icon style="color: green;">edit</mat-icon>
+                <span style="color: green;">Edit</span>
+              </button>
+              <button mat-menu-item  (click)="deleteDestination(element)">
+                <mat-icon style="color: red;">delete</mat-icon>
+                <span style="color: red;">Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+  </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <!-- </div>
+     <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./assets/images/NOdata.png" alt="">
+    </div> -->

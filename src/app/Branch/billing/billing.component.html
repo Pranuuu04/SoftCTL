@@ -1,0 +1,19 @@
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Unbuild" *ngIf="userType !== 'Customer'">
+                        <app-unbuild-billing></app-unbuild-billing>
+                    </mat-tab>
+                    <mat-tab label="Generate" *ngIf="userType !== 'Customer'">
+                        <app-billing-genrate></app-billing-genrate>
+                    </mat-tab> 
+                    <mat-tab label="View & print">
+                        <app-bill-print></app-bill-print>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

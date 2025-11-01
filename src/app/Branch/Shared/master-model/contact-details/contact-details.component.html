@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px; ">Person contact details</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 500; font-size: large; background: red; color: white;">X</button>
+    </div>
+  </div>
+ <form [formGroup]="contactForm" (ngSubmit)="addContact()">
+  <div class="table-responsive text-nowrap">
+    <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
+      <thead style="background-color: #b2bcff; color: white;">
+        <tr>
+          <th><span style="color: red;">*</span>Name</th>
+          <th><span style="color: red;">*</span>Phone no.</th>
+          <th><span style="color: red;">*</span>E-mail</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="form-control" formControlName="Name" /></td>
+          <td><input class="form-control" formControlName="PhoneNo" /></td>
+          <td><input class="form-control" formControlName="Email" /></td>
+          <td><button type="submit" class="btn btn-light form-icon"><i class="fa-solid fa-plus"></i></button></td>
+        </tr>
+
+        <tr *ngFor="let contact of contactList; let i = index">
+          <td>{{ contact.Person_Name }}</td>
+          <td>{{ contact.Mob_No }}</td>
+          <td>{{ contact.Email }}</td>
+          <td>
+            <button type="button" class="btn btn-light delete" (click)="removeContact(i)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;">
+      <button type="button" class="btn btn-light form-button" (click)="submitContacts()">Submit</button>
+    </div>
+  </div>
+</form>
+
+</div>
+  

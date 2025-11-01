@@ -1,0 +1,16 @@
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Stock in">
+                        <app-trans-stock-in></app-trans-stock-in>
+                    </mat-tab> 
+                    <mat-tab label="Stock out">
+                        <app-trans-stock-out></app-trans-stock-out>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

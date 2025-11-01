@@ -1,0 +1,66 @@
+input, 
+textarea{
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  font-family: auto;
+}
+
+.btn-info{
+    width: 79px;
+    height: 33px;
+    margin-top: 1px;
+    margin-left: 6px;
+    border-radius: 21px;
+    padding-bottom: 26px;
+}
+
+:host .card {
+  margin-top: 20px;
+}
+
+:host .table {
+  width: 100%;
+  margin-top: 20px;
+  border: 1px balck solid;
+  background-color: aqua;
+}
+
+:host .btn-info {
+  /* margin-top: 10px; */
+  background-color: aqua;
+}
+.btn{
+    background-color: darkorange;
+    color: white;
+    margin-top: -2px;
+}
+
+.custom-select{
+
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    margin-left: -2rem;
+    width: 14rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+  /* Additional media queries for smaller screens if needed */
+@media only screen and (max-width: 1024px) {
+  .row > div {
+    flex: 0 0 100%; /* Full width for screens up to 1024px */
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .custom-select {
+    width: 9rem !important;
+  }
+  .btn{
+    margin-left: 3rem;
+  }
+}
+.mat-paginator-range-label {
+  margin: 0 4px 0 5px;
+}

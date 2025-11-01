@@ -1,0 +1,318 @@
+<div class="logo" style="background-color: white;">
+    <img [src]="ClientLogo">
+</div>
+<div class="sidebar-wrapper" *ngIf="this.userType == 'Admin'" style="background-color: white;">
+<div *ngIf="isMobileMenu()">
+  <form class="navbar-form">
+    <span class="bmd-form-group">
+      <div class="input-group no-border">
+        <input type="text" value="" class="form-control" placeholder="Search...">
+        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </span>
+  </form>
+  <ul class="nav navbar-nav nav-mobile-menu">
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">dashboard</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Stats</span>
+              </p>
+          </a>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">notifications</i>
+              <span class="notification">5</span>
+              <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+              </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Mike John responded to your email</a>
+              <a class="dropdown-item" href="#">You have 5 new tasks</a>
+              <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+              <a class="dropdown-item" href="#">Another Notification</a>
+              <a class="dropdown-item" href="#">Another One</a>
+          </div>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">person</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Account</span>
+              </p>
+          </a>
+      </li>
+  </ul>
+</div>
+<mat-sidenav-container>
+  <mat-sidenav-content class="mat-drawer-container">    
+    <div class="content mat-elevation-z8 mat-nav">
+
+      <button mat-button class="menu-button dash" routerLink="/dashboard" [ngClass]="{ 'active-button': isRouteActive('/dashboard') }">
+        <mat-icon>dashboard</mat-icon>
+        <span>Admin Dashboard</span>
+      </button>  
+
+      <ng-container *ngFor="let menu of dynamicMenus">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="{{menu.Routing}}" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }">
+          <mat-icon>{{menu.icon}}</mat-icon>
+          <span>{{ menu.captionName }}</span>
+        </button>
+        <mat-menu #menuMenu="matMenu" class="sideMenu" >
+          <ng-container  *ngFor="let item of dynamicMenus">
+            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}" (click)="OpenAdminhModal(item)">
+              {{ item.captionName }}
+            </button>
+          </ng-container>         
+        </mat-menu>
+      </ng-container>
+      
+      <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- <mat-sidenav-container>
+  <mat-sidenav-content class="mat-drawer-container">
+    <div class="content mat-elevation-z8 mat-nav">
+      <button mat-button class="menu-button dash" routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Admin Dashboard</span>
+      </button>
+  
+      <div>
+        <button mat-button class="menu-button" [matMenuTriggerFor]="refferel3">
+          <mat-icon>person</mat-icon>
+          <span>Masters</span>
+        </button>
+      </div>
+  
+      <button mat-button class="menu-button" [matMenuTriggerFor]="refferel">
+        <mat-icon>content_paste</mat-icon>
+        <span>Operation</span>
+      </button>
+
+      <div>
+        <button mat-button class="menu-button dash" routerLink="/branch-crm">
+          <mat-icon>person</mat-icon>
+          <span>CRM</span>
+        </button>
+      </div>
+  
+      <div>
+        <button mat-button class="menu-button">
+          <mat-icon>bubble_chart</mat-icon>
+          <span>Billing</span>
+        </button>
+      </div>
+      <div>
+        <button mat-button class="menu-button" [matMenuTriggerFor]="reffere3">
+          <mat-icon>person</mat-icon>
+          <span>Users</span>
+        </button>
+        <mat-menu #reffere3="matMenu" class="sideMenu">
+          <button mat-menu-item class="sidebtn" (click)="openAdminUserModal()">
+            <span>User</span>
+          </button>
+          <button mat-menu-item class="sidebtn">
+            <span>View</span>
+          </button>
+        </mat-menu>
+        
+      </div>
+      <div>
+        <button mat-button class="menu-button"  [matMenuTriggerFor]="reffere2">
+          <mat-icon>receipt</mat-icon>
+          <span>Reports</span>
+        </button>
+      </div>
+      <div>
+        <button mat-button class="menu-button">
+          <mat-icon>unarchive</mat-icon>
+          <span>Utilities</span>
+        </button>
+  
+      </div>
+      <button mat-button class="menu-button" routerLink="/auth/login">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+</div>
+
+<!-- Branch Sidebar start -->
+
+<div class="sidebar-wrapper" *ngIf="this.userType == 'BranchAdmin' || this.userType =='User'" style="background-color: white;">
+<div *ngIf="isMobileMenu()">
+  <ul class="nav navbar-nav nav-mobile-menu">
+  <li>
+      <form class="navbar-form">
+          <div class="form-group has-search">
+            <input type="text" class="form-control" placeholder="Track here.." id="Filter" [(ngModel)]="searchValue">
+            <button class="btn btn-light drop" type="button" (click)="search(searchValue,'')">
+              <i class="fa fa-search" style="margin-top: -12px; font-size: 14px;"></i>
+            </button>
+          </div>
+        </form>
+  </li>
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">dashboard</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Stats</span>
+              </p>
+          </a>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">notifications</i>
+              <span class="notification">5</span>
+              <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+              </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Mike John responded to your email</a>
+              <a class="dropdown-item" href="#">You have 5 new tasks</a>
+              <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+              <a class="dropdown-item" href="#">Another Notification</a>
+              <a class="dropdown-item" href="#">Another One</a>
+          </div>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">person</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Account</span>
+              </p>
+          </a>
+      </li>
+  </ul>
+</div>
+<!-- main  -->
+<mat-sidenav-container>
+  <mat-sidenav-content class="mat-drawer-container">    
+    <div class="content mat-elevation-z8 mat-nav">
+
+      <button mat-button class="menu-button dash" [routerLink]="'/branch-dashboard'" [ngClass]="{ 'active-button': isRouteActive('/branch-dashboard') }">
+        <mat-icon>dashboard</mat-icon>
+        <span>Branch Dashboard</span>
+      </button>  
+
+      <ng-container *ngFor="let menu of dynamicMenus">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="menu.Routing" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }">
+          <mat-icon>{{menu.icon}}</mat-icon>
+          <span>{{ menu.captionName }}</span>
+        </button>
+        <mat-menu #menuMenu="matMenu" class="sideMenu" >
+          <ng-container  *ngFor="let item of dynamicMenus">
+            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}"  (click)="OpenBranchModal(item)">
+              {{ item.captionName }}
+            </button>
+          </ng-container>
+          <!-- <button mat-menu-item class="sidebtn" routerLink="/destination">
+            destination
+          </button> -->
+        </mat-menu>
+      </ng-container>
+      
+      <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
+<!-- Branch Sidebar end -->
+
+<!-- customer Sidebar start -->
+<div class="sidebar-wrapper" *ngIf="this.userType == 'Customer'">
+<div *ngIf="isMobileMenu()">
+  <form class="navbar-form">
+    <span class="bmd-form-group">
+      <div class="input-group no-border">
+        <input type="text" value="" class="form-control" placeholder="Search...">
+        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </span>
+  </form>
+  <ul class="nav navbar-nav nav-mobile-menu">
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">dashboard</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Stats</span>
+              </p>
+          </a>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">notifications</i>
+              <span class="notification">5</span>
+              <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+              </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Mike John responded to your email</a>
+              <a class="dropdown-item" href="#">You have 5 new tasks</a>
+              <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+              <a class="dropdown-item" href="#">Another Notification</a>
+              <a class="dropdown-item" href="#">Another One</a>
+          </div>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">
+              <i class="material-icons">person</i>
+              <p>
+                  <span class="d-lg-none d-md-block">Account</span>
+              </p>
+          </a>
+      </li>
+  </ul>
+</div>
+<mat-sidenav-container>
+  <mat-sidenav-content class="mat-drawer-container">    
+    <div class="content mat-elevation-z8 mat-nav">
+
+      <button mat-button class="menu-button dash" routerLink="/customer-dashboard" [ngClass]="{ 'active-button': isRouteActive('/customer-dashboard') }">
+        <mat-icon>dashboard</mat-icon>
+        <span>Customer Dashboard</span>
+      </button>  
+
+      <ng-container *ngFor="let menu of dynamicMenus">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="{{menu.Routing}}" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }"  (click)="OpenCustomerModal(menu)">
+          <mat-icon>{{menu.icon}}</mat-icon>
+          <span>{{ menu.captionName }}</span>
+        </button>
+        <!-- <mat-menu #menuMenu="matMenu" class="sideMenu" >
+          <ng-container  *ngFor="let item of dynamicMenus">
+            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}">
+              {{ item.captionName }}
+            </button>
+          </ng-container>         
+        </mat-menu> -->
+      </ng-container>
+      
+      <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
+<!-- customer Sidebar end -->

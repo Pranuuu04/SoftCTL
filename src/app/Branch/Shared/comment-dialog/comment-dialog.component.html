@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <h4 mat-dialog-title>Label Setup<button type="button" class="close btn-lg mt-1" aria-label="Close" (click)="CloseDialog()">
+            <span aria-hidden="true" class="mt-2" style="color: white;  height: 20px !important; padding-right: 1rem;">X</span>
+        </button></h4>
+    </div>
+    <div class="row">
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle"  (change)="toggleEDD()">EDD</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle"  (change)="toggleDepartment()" >Department</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Shipper</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Consignee</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Address</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Bill Party</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">AddBtn</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Remark</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Sr.No.</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Vendor</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Forwarding No.</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Via</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">DevlT</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Pkg Type</mat-slide-toggle></div>
+        </div>
+        <h3>Charges</h3>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle"  (change)="toggleEDD()">Discount</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggleDepartment" (change)="toggleDepartment()">Docket </mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">FOV </mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">ODA </mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Packing </mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Insaurance</mat-slide-toggle></div>
+        </div>
+        <div class="row" style="width: 100%;">
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Loading</mat-slide-toggle></div>
+            <div class="col-md-6"><mat-slide-toggle [checked]="statusToggle">Other</mat-slide-toggle></div>
+        </div>
+
+                <!-- </form> -->
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            (click)="CloseDialog()" style=" background:  #28bbf5; height: 2.5rem; color: white; padding-left: 0.25rem; padding-right: 0.25rem;
+            padding-top: 0.25rem;  width: 4.2rem; padding-top: 0.75rem; margin-top: 2rem; margin-left: 5rem; margin-right: 2rem;">Close</button>
+        <button type="button" class="btn btn-primary" style=" background:  darkorange; height: 2.5rem; color: white; padding-left: 0.25rem; padding-right: 0.25rem;
+        padding-top: 0.25rem;  width: 4.2rem; padding-top: 0.75rem; margin-top: 2rem;" (click)="submitToggleState()">Submit</button>
+    </div>
+</div>

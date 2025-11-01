@@ -1,0 +1,291 @@
+
+<div class="container" *ngIf="data.action === 'airlineAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Airline</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="airlineForm" (ngSubmit)="formSubmitairline(airlineForm.value)">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Code">Code :</label>
+                <input *ngIf="airlineMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="airlineCode" [(ngModel)]="airlineCode"  placeholder="Enter airline Code">
+                <input *ngIf="airlineMode === 'edit'" class="form-control" type="text" id="Code" formControlName="airlineCode" [(ngModel)]="airlineCode"  placeholder="Enter airline Code" readonly>
+            </div>
+            <div *ngFor="let validation of validationMessage.airlineCode">
+              <div class="error-message"
+                *ngIf="airlineForm.get('airlineCode').hasError(validation.type) && (airlineForm.get('airlineCode').dirty || airlineForm.get('airlineCode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Name :</label>
+                <input class="form-control" type="text" id="Name" formControlName="airlineName" [(ngModel)]="airlineName"  placeholder="Enter Airline Name">
+            </div>
+            <div *ngFor="let validation of validationMessage.airlineName">
+              <div class="error-message"
+                *ngIf="airlineForm.get('airlineName').hasError(validation.type) && (airlineForm.get('airlineName').dirty || airlineForm.get('airlineName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="airlineMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" >Submit</button>
+        </div>
+      </div>
+      <div *ngIf="airlineMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateAirline()" >Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="container" *ngIf="data.action === 'flightAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Flight</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="flightForm" (ngSubmit)="formSubmitflight(flightForm.value)">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Code">Code :</label>
+                <input *ngIf="flightMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="flightCode" [(ngModel)]="flightCode"  placeholder="Enter flight Code">
+                <input *ngIf="flightMode === 'edit'" class="form-control" type="text" id="Code" formControlName="flightCode" [(ngModel)]="flightCode"  placeholder="Enter flight Code" readonly>
+            </div>
+            <div *ngFor="let validation of validationMessage.flightCode">
+              <div class="error-message"
+                *ngIf="flightForm.get('flightCode').hasError(validation.type) && (flightForm.get('flightCode').dirty || flightForm.get('flightCode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Name :</label>
+                <input class="form-control" type="text" id="Name" formControlName="flightName" [(ngModel)]="flightName"  placeholder="Enter flight Name">
+            </div>
+            <div *ngFor="let validation of validationMessage.flightName">
+              <div class="error-message"
+                *ngIf="flightForm.get('flightName').hasError(validation.type) && (flightForm.get('flightName').dirty || flightForm.get('flightName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="textOnSelect">
+            <label class="span"><span style="color: red;">*</span>Airline Name</label>
+            <select [(ngModel)]="flightAirlineName" formControlName="flightAirlineName" bindLabel="name" bindValue="name" class="custom-select">
+              <option *ngFor="let item of airlineList" [value]="item.AirLine_Code" style="font-size: 14px;">{{item.AirLine_Name}} &nbsp;({{item.AirLine_Code}})</option>
+           </select>
+          </div>
+            <!-- <div class="textOnInput">
+                <label for="Name">Airline name :</label>
+                <input class="form-control" type="text" id="Name" formControlName="flightAirlineName" [(ngModel)]="flightAirlineName"  placeholder="Enter airline Name">
+            </div> -->
+            <div *ngFor="let validation of validationMessage.flightAirlineName">
+              <div class="error-message"
+                *ngIf="flightForm.get('flightAirlineName').hasError(validation.type) && (flightForm.get('flightAirlineName').dirty || flightForm.get('flightAirlineName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="flightMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" >Submit</button>
+        </div>
+      </div>
+      <div *ngIf="flightMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateFlight()" >Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  
+<div class="container" *ngIf="data.action === 'trainAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Train</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="trainForm" (ngSubmit)="formSubmittrain(trainForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code">Code :</label>
+              <input *ngIf="trainMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="trainCode" [(ngModel)]="trainCode"  placeholder="Enter train Code">
+              <input *ngIf="trainMode === 'edit'" class="form-control" type="text" id="Code" formControlName="trainCode" [(ngModel)]="trainCode"  placeholder="Enter train Code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.trainCode">
+            <div class="error-message"
+              *ngIf="trainForm.get('trainCode').hasError(validation.type) && (trainForm.get('trainCode').dirty || trainForm.get('trainCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Name :</label>
+              <input class="form-control" type="text" id="Name" formControlName="trainName" [(ngModel)]="trainName"  placeholder="Enter train Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.trainName">
+            <div class="error-message"
+              *ngIf="trainForm.get('trainName').hasError(validation.type) && (trainForm.get('trainName').dirty || trainForm.get('trainName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="trainMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="trainMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateTrain()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="container" *ngIf="data.action === 'tNumberAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Train number</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="tNumberForm" (ngSubmit)="formSubmitTNumber(tNumberForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code">Code :</label>
+              <input *ngIf="tNumberMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="tNumberCode" [(ngModel)]="tNumberCode"  placeholder="Enter train no. Code">
+              <input *ngIf="tNumberMode === 'edit'" class="form-control" type="text" id="Code" formControlName="tNumberCode" [(ngModel)]="tNumberCode"  placeholder="Enter train no. Code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.tNumberCode">
+            <div class="error-message"
+              *ngIf="tNumberForm.get('tNumberCode').hasError(validation.type) && (tNumberForm.get('tNumberCode').dirty || tNumberForm.get('tNumberCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Name :</label>
+              <input class="form-control" type="text" id="Name" formControlName="tNumberName" [(ngModel)]="tNumberName"  placeholder="Enter trainno. Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.tNumberName">
+            <div class="error-message"
+              *ngIf="tNumberForm.get('tNumberName').hasError(validation.type) && (tNumberForm.get('tNumberName').dirty || tNumberForm.get('tNumberName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Train Name</label>
+          <select [(ngModel)]="tNumberTrainName" formControlName="tNumberTrainName" bindLabel="name" bindValue="name" class="custom-select">
+            <option *ngFor="let item of trainList" [value]="item.Train_Code" style="font-size: 14px;">{{item.Train_Name}} &nbsp;({{item.Train_Code}})</option>
+         </select>
+        </div>
+          <!-- <div class="textOnInput">
+              <label for="Name">Train name :</label>
+              <input class="form-control" type="text" id="Name" formControlName="tNumberTrainName" [(ngModel)]="tNumberTrainName"  placeholder="Enter Train Name">
+          </div> -->
+          <div *ngFor="let validation of validationMessage.tNumberTrainName">
+            <div class="error-message"
+              *ngIf="tNumberForm.get('tNumberTrainName').hasError(validation.type) && (tNumberForm.get('tNumberTrainName').dirty || tNumberForm.get('tNumberTrainName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="tNumberMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="tNumberMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateTNumber()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>

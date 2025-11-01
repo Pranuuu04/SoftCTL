@@ -1,0 +1,62 @@
+<div class="container" *ngIf="data.action === 'categoryAdd' || data.action === 'categoryEdit'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Category</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form  [formGroup]="categoryForm" (ngSubmit)="formSubmitCategory(categoryForm.value)" >
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code"><span style="color: red;">*</span>Category Code :</label>
+              <input *ngIf="data.categoryMode !== 'edit'" class="form-control" type="text"  formControlName="categoryCode" [(ngModel)]="categoryCode"  placeholder="enter code">
+              <input *ngIf="data.categoryMode === 'edit'" class="form-control" type="text"  formControlName="categoryCode" [(ngModel)]="categoryCode"  placeholder="enter code" readonly >
+          </div>
+          <div *ngFor="let validation of validationMessage.categoryCode">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="categoryForm.get('categoryCode').hasError(validation.type) && (categoryForm.get('categoryCode').dirty || categoryForm.get('categoryCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name"><span style="color: red;">*</span>Category Name :</label>
+              <input class="form-control" type="text" formControlName="categoryName" [(ngModel)]="categoryName" placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.categoryName">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="categoryForm.get('categoryName').hasError(validation.type) && (categoryForm.get('categoryName').dirty || categoryForm.get('categoryName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="data.categoryMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" [disabled] = "categoryForm.invalid">Submit</button>
+      </div>
+    </div>
+    <div *ngIf="data.categoryMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" (click)="updateCategory()" [disabled] = "categoryForm.invalid">Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+

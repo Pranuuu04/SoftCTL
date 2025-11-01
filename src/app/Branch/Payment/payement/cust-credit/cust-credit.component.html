@@ -1,0 +1,78 @@
+<div style="height: 530px;  max-height: 530px;">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+      <div class="row mainrow">
+          <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="refNo">Refrance no. :</label>
+            <input class="form-control" type="text" formControlName="refNo" placeholder="Enter refrance no.">
+        </div>
+        </div>
+        <div class="col-sm-3">
+              <div class="textOnSelect">
+              <label for="paymentType">Type :</label>
+              <select id="paymentType" class="custom-select" formControlName="paymentType">
+                <option value="" selected disabled>Select payment type</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit">Credit</option>
+              </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="Customer">Customer name :</label>
+               <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="Customer">
+                </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="custName"> :</label>
+            <input class="form-control" type="text" formControlName="custName" placeholder="Enter customer">
+        </div>
+        </div>
+      </div>
+      <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiptNo">receiptNo :</label>
+            <input class="form-control" type="text" formControlName="receiptNo" placeholder="Enter remark">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiptDt">Receipt date :</label>
+            <input class="form-control" type="date" formControlName="receiptDt">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiveDate">receive date :</label>
+            <input class="form-control" type="date" formControlName="receiveDate">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="recieverName">Reciever name :</label>
+            <input class="form-control" type="text" formControlName="recieverName" placeholder="Enter reciever name">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="Amount">Amount :</label>
+            <input class="form-control" type="text" formControlName="Amount" placeholder="Enter amount">
+        </div>
+        </div>
+    </div>
+      <div class="row mainrow form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-4 d-flex" style="justify-content: right;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+   </div>
+    
+  </form>
+</div>

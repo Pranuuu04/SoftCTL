@@ -1,0 +1,19 @@
+.sidebar{
+    width: 206px;
+}
+::ng-deep .main-panel{
+    width: 85%;
+}
+@media (min-width: 991px) and (max-width: 1024px) {
+     .main-panel{
+        width: 80% !important;  
+    }
+}
+@media (min-width: 320px) and (max-width: 991px) {
+     .main-panel{
+        width: 100% !important;  
+    }
+    .sidebar{
+        width: 259px;
+    }
+}

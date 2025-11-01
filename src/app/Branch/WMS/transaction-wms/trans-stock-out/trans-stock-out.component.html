@@ -1,0 +1,348 @@
+<div>
+    <form [formGroup]="createForm" (ngSubmit)="generateStock(createForm.value)">
+      <div class="row mainrow">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="BranchName"><span style="color: red;">*</span>Branch name :</label>
+              <select class="custom-select" formControlName="BranchName" >
+                <option selected disabled value="">Select Branch name</option>
+                <option *ngFor="let item of BranchList" value="{{item.locationCode}}">
+                  {{ item.locationName }} 
+                </option>
+              </select>
+              <div *ngFor="let validation of validationMessage.BranchName">
+                <div class="error-message"
+                  *ngIf="createForm.get('BranchName').hasError(validation.type) && (createForm.get('BranchName').dirty || createForm.get('BranchName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="supplierName"><span style="color: red;">*</span>Customer name :</label>
+              <input class="form-control" type="text" id="supplierName" formControlName="supplierName"  placeholder="enter supplierName">
+              <div *ngFor="let validation of validationMessage.supplierName">
+                <div class="error-message"
+                  *ngIf="createForm.get('supplierName').hasError(validation.type) && (createForm.get('supplierName').dirty || createForm.get('supplierName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+              <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="Warehouse"><span style="color: red;">*</span>Warehouse :</label>
+              <select class="custom-select" formControlName="Warehouse" >
+                <option selected disabled value="">Select Warehouse name</option>
+                <option *ngFor="let item of warehouseList" value="{{item.WarehouseCode}}">
+                  {{ item.WarehouseName }} 
+                </option>
+              </select>
+              <div *ngFor="let validation of validationMessage.Warehouse">
+                <div class="error-message"
+                  *ngIf="createForm.get('Warehouse').hasError(validation.type) && (createForm.get('Warehouse').dirty || createForm.get('Warehouse').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+              <!-- <input class="form-control" type="text" id="Warehouse" formControlName="Warehouse"  placeholder="Warehouse">  -->
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="textOnInput">
+                <label for="PostDate"><span style="color: red;">*</span>Posting date :</label>
+                <input class="form-control" type="date" id="PostDate" [(ngModel)]="currentDate" formControlName="PostDate">
+                <div *ngFor="let validation of validationMessage.PostDate">
+                  <div class="error-message"
+                    *ngIf="createForm.get('PostDate').hasError(validation.type) && (createForm.get('PostDate').dirty || createForm.get('PostDate').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="row mainrow">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="entryType">Entry type :</label>
+            <select id="entryType" class="custom-select" formControlName="entryType">
+              <option value="Sale" selected>Sale </option>
+              <option value="Purchase">Purchase</option>
+            </select>
+        </div>
+         </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="docNo">Document No. :</label>
+              <input class="form-control" type="text" id="docNo" formControlName="docNo"  placeholder="enter docNo">
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="docDate"><span style="color: red;">*</span>Document date :</label>
+              <input class="form-control" type="date" id="docDate" formControlName="docDate">
+              <div *ngFor="let validation of validationMessage.docDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('docDate').hasError(validation.type) && (createForm.get('docDate').dirty || createForm.get('docDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+        <div class="col-sm-3">
+            <div class="textOnSelect">
+                <label for="transporterName">Transporter name :</label>
+                <input class="form-control" type="text" id="transporterName" formControlName="transporterName"  placeholder="enter transporter name">
+            </div>
+        </div>           
+      </div>
+      <div class="row mainrow">
+        <div class="col-sm-3">
+          <div class="textOnInput">
+              <label for="docketNo">Docket No :</label>
+              <input class="form-control" type="text" id="docketNo" formControlName="docketNo"  placeholder="enter Docket no."> 
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+        <div class="textOnInput">
+            <label for="empName">Employee name :</label>
+            <input class="form-control" type="text" id="empName" formControlName="empName"  placeholder="enter Employee name">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="itemType">Item type :</label>
+          <select id="itemType" class="custom-select" formControlName="itemType">
+            <option value="Serial" selected>Serial </option>
+            <option value="without serial">without serial</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="Remark">Reamrk :</label>
+          <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter remark">            
+      </div>
+      </div>
+      </div>
+      <div class="row mainrow">
+        <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="eWayBillNo">E-Way bill No:</label>
+              <input class="form-control" type="text" id="eWayBillNo" formControlName="eWayBillNo"  placeholder="enter E-way bill No.">
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="eWayBillDate">E-Way bill Date :</label>
+              <input class="form-control" type="date" id="eWayBillDate" formControlName="eWayBillDate">            
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-8">
+                  <div class="textOnInput">
+                      <label for="Import">Import :</label>
+                      <input class="form-control" type="file" #fileInput id="Import" style="padding-left: 0px;padding-top: 8px;" accept=".xlsx, .xls" (click)="resetFileInput($event)" (change)="onFileSelected($event)">
+                      <!-- <div *ngIf="!selectedFile && createForm.touched" class="text-danger">
+                        File is required.
+                      </div> -->
+                  </div>
+              </div>
+                  <!-- <div class="col-sm-2">
+                   <button type="button" class="btn btn-warning download" (click)="resetImport(fileInput)" matTooltip="Reset import">
+                       <i class="fa-solid fa-rotate-left"></i>
+                   </button>
+                </div> -->
+                  <div class="col-sm-2">
+                      <button type="button" class="btn btn-success download" (click)="generateExcel()" matTooltip="Download excel">
+                          <i class="fa-solid fa-download"></i>
+                        </button>
+                  </div>
+          </div>
+          </div>
+        </div>
+      <div class="row mainrow">
+        <div class="col-sm-12">
+            <div class="table-responsive text-nowrap" style="max-height: 250px;border: 1px solid #cad1d7;">
+              <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+                <thead style="position: sticky;top: 0; z-index: 1;font-size: 13px;background-color:  #a3b8d4; color: black;">
+                  <tr>
+                      <th  style="width: 30%;"><span style="color: red;">*</span>Item no.</th>
+                      <th  style="width: 25%;">Serial no.</th>
+                      <th  style="width: 30%;">Item name</th>
+                      <th style="width: 15%;">Quantity</th>
+                      <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr [formGroup]="createForm.get('itemEntry')">
+                    <td class="pt-1 pb-1">
+                        <!-- <select formControlName="itemNo" bindLabel="name" bindValue="name" class="custom-select">
+                          <option value="" selected disabled> select item no</option>
+                        
+                          <option *ngFor="let item of itemList" [value]="item.ItemCode">{{ item.ItemCode }}</option>
+                        </select> -->
+                        <ng-select
+                        formControlName="itemNo"
+                        [(ngModel)]="selectedItem"
+                        [items]="filteredItemList"
+                        bindLabel="ItemCode"
+                        bindValue="ItemCode"
+                        [clearable]="false"
+                        [virtualScroll]="true"
+                        (search)="onItemSearch($event)"
+                        class="custom-select1"
+                        style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+                        <ng-option *ngFor="let item of filteredItemList" [value]="item.ItemCode">
+                          {{ item.ItemCode }} ({{ item.ItemName }})
+                        </ng-option>
+                      </ng-select>
+                       <!-- <div *ngIf="orderForm.get('Product')?.touched && orderForm.get('Product')?.invalid" class="text-danger">
+                        required
+                      </div> -->
+                    </td>
+                     <td>    
+                         <!-- <input class="form-control" type="text" id="serialNo" formControlName="serialNo" min="1" step="1" readonly> -->  
+                        <ng-select formControlName="serialNo" [items]="filteredSerialList"  [searchable]="true" [clearable]="true" bindLabel="SerialNo" bindValue="SerialNo" [(ngModel)]="selectedSerialNo" (search)="onSerialSearch($event)"  class="custom-select1"
+                          style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;" (click)="getSerialList()">
+                         <ng-option *ngFor="let item of filteredSerialList" [value]="item.SerialNo">{{item.SerialNo}}</ng-option>
+                        </ng-select>
+                    </td>
+                    <td class="pt-1 pb-1">
+                      <input class="form-control" type="text" id="itemName" formControlName="itemName" min="1" step="1" readonly>
+                    </td>
+                    <td class="pt-1 pb-1">
+                      <input class="form-control" type="number" id="Qty" formControlName="Qty" min="1" step="1">
+                    </td>
+                    
+                    <td>
+                      <button type="button" class="btn btn-light form-icon" (click)="onAddItem()">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                    <tr *ngFor="let entry of StockOutDetails; let i = index">
+                      <td>{{ entry.ItemNo }}</td>
+                      <td>{{ entry.SerialNo }}</td>
+                      <td>{{ entry.ItemName }}</td>
+                      <td>{{ entry.Qty }}</td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(i)">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+      </div>
+       <div class="row mainrow"  style="border-bottom: 1px solid #d2d2d2; margin: 10px 0;">
+       
+       <div class="col-sm-3">
+        
+       </div>
+       
+        <div class="col-sm-3 d-flex form-group" style="justify-content: end;">
+        </div>
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3 d-flex" style="justify-content: end;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+    </form> 
+  <!-- <div class="row mainrow">
+  <div class="col-sm-12 mt-2 p-0">
+    <div *ngIf="showTable && dataSource.data.length > 0">
+      <div class="table-responsive">
+        <div class="row d-flex m-0" style="justify-content: right;" >
+          <div class="form-group has-search col-sm-3">
+            <button class="btn btn-secondary" type="button" style="z-index: 1001;
+            position: absolute;
+            background: none;
+            top: -3px;
+            width: 38px;
+            height: 30px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            background-color: #2e3f55;">
+              <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
+            </button>
+            <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive text-nowrap">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+    
+            <ng-container matColumnDef="tripNo">
+              <th mat-header-cell *matHeaderCellDef> Trip No </th>
+              <td mat-cell *matCellDef="let element"> {{ element.TripNo }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="tripDate">
+              <th mat-header-cell *matHeaderCellDef> Trip Date </th>
+              <td mat-cell *matCellDef="let element"> {{ element.TripDate | date: 'dd/MM/yyyy' }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="originName">
+              <th mat-header-cell *matHeaderCellDef> Origin </th>
+              <td mat-cell *matCellDef="let element"> {{ element.OriginName }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="destinationName">
+              <th mat-header-cell *matHeaderCellDef> Destination </th>
+              <td mat-cell *matCellDef="let element"> {{ element.DestinationName }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="driverName">
+              <th mat-header-cell *matHeaderCellDef> Driver </th>
+              <td mat-cell *matCellDef="let element"> {{ element.DriverName }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="vehicleNo">
+              <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+              <td mat-cell *matCellDef="let element"> {{ element.VehicleNo }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Status }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="tripStatus">
+              <th mat-header-cell *matHeaderCellDef> Trip Status </th>
+              <td mat-cell *matCellDef="let element"> {{ element.TripStatus }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="route">
+              <th mat-header-cell *matHeaderCellDef> Route </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="remark">
+              <th mat-header-cell *matHeaderCellDef> Remark </th>
+              <td mat-cell *matCellDef="let element"> {{ element.Remark || '-' }} </td>
+            </ng-container>          
+        
+            <ng-container matColumnDef="supplierName">
+              <th mat-header-cell *matHeaderCellDef> Supplier name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.supplierName }} </td>
+            </ng-container> 
+       
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./assets/images/NOdata.png" alt="">
+    </div>
+  
+  </div>
+  </div> -->
+  </div>

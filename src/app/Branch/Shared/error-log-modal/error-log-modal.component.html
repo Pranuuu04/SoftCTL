@@ -1,0 +1,162 @@
+<div class="container" style="margin: 0; max-width: 100%;">
+    <div class="row Topbutton">
+        <div class="col-sm-6">
+          <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px; ">Error Log</h1>
+        </div>
+      <div class="col-sm-2 d-flex cancel download-button" style="justify-content: space-around;">
+        <button type="submit" class="btn btn-outline-light" (click)="generateExcel()"><i class="fa-solid fa-table"></i></button>
+        <!-- <button type="button" class="btn btn-light" (click)="CloseDialog()" style="background: #a6bcbd;">X</button> -->
+      </div>
+    </div>
+     <!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
+      <div class="table-responsive">
+        <div class="row d-flex m-0" style="justify-content: right;" >
+          <div class="form-group has-search col-sm-3">
+            <button class="btn btn-secondary" type="button" style="z-index: 1001;
+            position: absolute;
+            background: none;
+            top: -4px;
+            width: 38px;
+            height: 32px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            background-color: orange;">
+              <i class="fa fa-search" style="color: white; margin-top: -24px;"></i>
+            </button>
+            <!-- <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;"> -->
+          </div>
+         </div>
+      </div>
+      <div class="table-responsive text-nowrap" style="display: none;">
+        <table id="myTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: rgb(215 244 255 / 87%);" >
+           																
+          <ng-container matColumnDef="awbNo">
+            <th mat-header-cell *matHeaderCellDef>AWBNO </th>
+            <td mat-cell *matCellDef="let element"> {{element.awbNo}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="bookDate">
+            <th mat-header-cell *matHeaderCellDef> BOOKDATE</th>
+            <td mat-cell *matCellDef="let element"> {{element.bookDate | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="customerCode">
+            <th mat-header-cell *matHeaderCellDef> CUSTOMER CODE </th>
+            <td mat-cell *matCellDef="let element"> {{element.customerCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="originCode">
+            <th mat-header-cell *matHeaderCellDef> ORIGIN CODE</th>
+            <td mat-cell *matCellDef="let element"> {{element.originCode}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="consigneeName">
+            <th mat-header-cell *matHeaderCellDef> CONSIGNEE NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.consigneeName}} </td>
+          </ng-container>
+   
+          <ng-container matColumnDef="consigneeAdd1">
+            <th mat-header-cell *matHeaderCellDef>CONSIGNEE ADD1 </th>
+            <td mat-cell *matCellDef="let element"> {{element.consigneeAdd1}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="consigneeAdd2">
+            <th mat-header-cell *matHeaderCellDef>  CONSIGNEE ADD2 </th>
+            <td mat-cell *matCellDef="let element"> {{element.consigneeAdd2}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="consigneeAdd3">
+            <th mat-header-cell *matHeaderCellDef> CONSIGNEE ADD3 </th>
+            <td mat-cell *matCellDef="let element"> {{element.consigneeAdd3}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="consigneeAdd4">
+            <th mat-header-cell *matHeaderCellDef> CONSIGNEE ADD4 </th>
+            <td mat-cell *matCellDef="let element"> {{element.consigneeAdd4}} </td>
+          </ng-container>
+   
+          <ng-container matColumnDef="destinationName">
+            <th mat-header-cell *matHeaderCellDef>DESTINATION NAME</th>
+            <td mat-cell *matCellDef="let element"> {{element.destinationName}} </td>
+          </ng-container>
+   
+          <ng-container matColumnDef="pinCode">
+            <th mat-header-cell *matHeaderCellDef> PINCODE </th>
+            <td mat-cell *matCellDef="let element"> {{element.pinCode }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vendorCode">
+            <th mat-header-cell *matHeaderCellDef> VENDOR CODE</th>
+            <td mat-cell *matCellDef="let element"> {{element.vendorCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vendorAwbNo1">
+            <th mat-header-cell *matHeaderCellDef> VENDORAWBNO1 </th>
+            <td mat-cell *matCellDef="let element"> {{element.vendorAwbNo1}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="modeName">
+            <th mat-header-cell *matHeaderCellDef> MODE NAME</th>
+            <td mat-cell *matCellDef="let element"> {{element.modeName}} </td>
+          </ng-container>
+           
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef> PRODUCT NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="doxSpx">
+            <th mat-header-cell *matHeaderCellDef> DOXSPX </th>
+            <td mat-cell *matCellDef="let element"> {{element.doxSpx}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef> QTY </th>
+            <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> WEIGHT</th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>  
+         
+          <ng-container matColumnDef="volumetricWt">
+            <th mat-header-cell *matHeaderCellDef> VOLUMETRIC WT </th>
+            <td mat-cell *matCellDef="let element"> {{element.volumetricWt}} </td>
+          </ng-container>
+               
+          <ng-container matColumnDef="invValue">
+            <th mat-header-cell *matHeaderCellDef>INV VALUE </th>
+            <td mat-cell *matCellDef="let element"> {{element.invValue}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="invNo">
+            <th mat-header-cell *matHeaderCellDef>INV NO</th>
+            <td mat-cell *matCellDef="let element"> {{element.invNo}} </td>
+          </ng-container>         
+   
+          <ng-container matColumnDef="remark">
+            <th mat-header-cell *matHeaderCellDef> REMARK </th>
+            <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="error">
+            <th mat-header-cell *matHeaderCellDef> error</th>
+            <td mat-cell *matCellDef="let element"> {{element.error}} </td>
+          </ng-container>  
+     
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+      
+    </div>
+    <mat-paginator [pageSizeOptions]="[5,10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"> </mat-paginator>
+     <!-- </div> -->
+     <!-- <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./assets/images/NOdata.png" alt="">
+      </div> -->
+</div>

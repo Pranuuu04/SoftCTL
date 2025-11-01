@@ -1,0 +1,202 @@
+<div class="container">
+  <div class="row">
+    <form>
+    <h4 mat-dialog-title>
+      Credit Vendor1<button
+        type="button"
+        class="close btn-lg mt-1"
+        aria-label="Close"
+        (click)="CloseDialog()"
+      >
+        <span
+          aria-hidden="true"
+          class="mt-2"
+          style="color: white; height: 20px !important"
+          >X</span
+        >
+      </button>
+    </h4>
+      <div class="row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label"
+          >Actual Weight</label
+        >
+        <div class="col-sm-9">
+          <input
+            style="
+              border: 1px solid #d2d2d2;
+              border-radius: 0.25rem;
+              padding-left: 10px;
+              padding-top: 10px;
+              font-family: auto;
+              margin-bottom: 0.5rem;
+            "
+            type="text"
+            class="form-control"
+            id="inputCity"
+            placeholder="Enter "
+          />
+        </div>
+      </div>
+      <div class="row">
+        <label for="inputEmail3" class="col-sm-4 col-form-label"
+          >vol metric Weight:</label
+        >
+        <div class="col-sm-8">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >Length</label
+            >
+            <div class="col-sm-3">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 3rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >Width</label
+            >
+            <div class="col-sm-3">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 3rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >Height</label
+            >
+            <div class="col-sm-3">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 3rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >Quantity</label
+            >
+            <div class="col-sm-3">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 3rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="inputEmail3" class="col-sm-4 col-form-label"
+          >Vendor 1</label
+        >
+        <div class="col-sm-8">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-6 col-form-label"
+              >Forwarding Vendor 1</label
+            >
+            <div class="col-sm-6">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 9rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label for="inputEmail3" class="col-sm-4 col-form-label"
+          >Vendor 2</label
+        >
+        <div class="col-sm-8">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-6 col-form-label"
+              >Forwarding Vendor 2</label
+            >
+            <div class="col-sm-6">
+              <input
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                  margin-bottom: 0.5rem;
+                  width: 9rem;
+                "
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" align="end">
+        <div class="col-md-2">
+          <!-- <button class='btn btn-success' (click)="openLoginModal()">LOGIN</button> -->
+        </div>
+        <div class="col-md-8 submitbtn">
+          <button type="button" class="btn btn-save">Save</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            matDialogClose
+            (click)="CloseDialog()"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </form>
+  </div>
+</div>

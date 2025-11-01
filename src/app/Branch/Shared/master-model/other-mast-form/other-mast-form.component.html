@@ -1,0 +1,683 @@
+<!--Shipper Form-->
+<div class="container" *ngIf="data.action === 'ShipperAdd' || data.action === 'ShipperEdit'">
+        <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-6">
+            <h1 style="font-weight: 600;
+            font-size: large;
+            margin-bottom: 0;
+            margin-top: 7px; ">Shipper</h1>
+          </div>
+            <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            font-weight: 500;
+            font-size: large;
+            background: red;
+            color: white;">X</button>
+        </div>
+        </div>
+        <form [formGroup]="shipperForm" (ngSubmit)="formSubmitShipper(shipperForm.value)">
+
+        <div class="row">
+           <div class="col-4">
+
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="textOnInput">
+                        <label for="Gst">Gst No</label>
+                        <input class="form-control" type="text" formControlName="gstNoShip"  placeholder="Enter Gst No">
+                      </div>
+                  </div>
+                  <div col-sm-1></div>
+                  <div class="col-sm-2 d-flex align-items-end justify-content-end" style="padding-right: 0;">
+                    <button type="button" class="btn btn-success shadow-sm d-flex align-items-center px-2 py-2 rounded-pill gap-2" [disabled]="shipperForm.get('gstNoShip')?.value?.length !== 15" (click)="gstVerify()">
+                      <i class="bi bi-shield-check fs-2"></i>
+                      <span class="fw-semibold">Verify</span>
+                    </button>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Shipper Name"><span style="color: red;">*</span>Shipper Name</label>
+                        <input class="form-control" type="text" [(ngModel)]="shipperName" formControlName="shipperName"  placeholder="Enter Shipper Name">
+                    </div>
+                    <div *ngFor="let validation of validationMessage.shipperName">
+                      <div class="error-message position-absolute"
+                        *ngIf="shipperForm?.get('shipperName').hasError(validation?.type) && (shipperForm?.get('shipperName').dirty || shipperForm?.get('shipperName').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="companyNameShip">Company Name</label>
+                      <ng-select [clearable]="false" formControlName="companyNameShip" bindLabel="item.CompanyName" bindValue="item.CompanyCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                        <ng-option  *ngFor="let item of companyList" [value]="item.CompanyCode" style="font-size: 14px;" >{{item.CompanyName}}</ng-option>
+                      </ng-select>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Shipper Name">Contact Person</label>
+                        <input class="form-control" type="text" [(ngModel)]="contactPersonShip" formControlName="contactPersonShip"  placeholder="Enter Contact Name">
+                    </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="ContactNo">Contact No</label>
+                        <input class="form-control" type="number" [(ngModel)]="contactNo" formControlName="contactNo"  placeholder="Enter Contact No">
+                    </div>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Email">Email-ID</label>
+                        <input class="form-control" type="email" [(ngModel)]="emailID" formControlName="emailID"  placeholder="Enter Email_ID">
+                      </div>
+                  </div>
+              </div>
+
+            </div>
+
+            <div class="col-4">
+      
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Add1"><span style="color: red;">*</span>Address 1 </label>
+                        <input class="form-control" type="text" formControlName="address1Ship"  placeholder="Enter Add1">
+                    </div>
+                </div>
+              </div>
+      
+           
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="add2"><span style="color: red;">*</span>Address 2</label>
+                        <input class="form-control" type="text" formControlName="address2Ship"  placeholder="Enter add2">
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label>Landmark</label>
+                    <input class="form-control" type="text" formControlName="landMarkShip" placeholder="Enter Landmark">
+                  </div>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Pincode">PinCode</label> <!--(change)="getPinCode($event)"-->
+                        <input class="form-control" type="number"  min="0" formControlName="pinCodeShip"  placeholder="Enter Pincode">
+                    </div>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label class="span">City</label>
+                    <ng-select [clearable]="false" formControlName="cityNameShip" bindLabel="item.destinationName" bindValue="item.destinationCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                        <ng-option  *ngFor="let item of cityList" [value]="item.destinationCode" style="font-size: 14px;" >{{item.destinationName}}</ng-option>
+                      </ng-select>
+                  </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label><span style="color: red;">*</span>State</label>
+                    <ng-select [clearable]="false" formControlName="stateNameShip" bindLabel="item.stateName" bindValue="item.stateCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                      <ng-option *ngFor="let item of stateList" [value]="item.stateCode">{{item.stateName}}</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-4">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label >Country</label>
+                    <!-- <ng-select [clearable]="false" formControlName="countryNameShip" bindLabel="item.countryName" bindValue="item.countryCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                      <ng-option *ngFor="let item of countryList" [value]="item.countryCode">{{item.countryName}}</ng-option>
+                    </ng-select> -->
+                      <ng-select
+                      [items]="countryList"
+                      bindLabel="countryName"
+                      bindValue="countryCode"
+                      [clearable]="false"
+                      formControlName="countryNameShip"
+                      class="custom-select1"
+                      style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Pincode">Kyc Type</label>
+                        <input class="form-control" type="text"  [(ngModel)]="kycType" formControlName="kycType"  placeholder="Enter Type">
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="textOnInput">
+                        <label for="Pincode">Kyc Number</label>
+                        <input class="form-control" type="text"  [(ngModel)]="kycNumber" formControlName="kycNumber"  placeholder="Enter Number">
+                    </div>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label for="image">Upload image :</label>
+                    <input type="file" (change)="fileChangeEvent($event)" class="form-control" formControlName="kycImage" placeholder="Uload KYC Here"/>
+                  </div>
+                  </div>
+              </div>
+              <div class="row">
+                 <div class="col-sm-12">
+                  <div class="textOnSelect">
+                      <label for="shipperCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                    <select id="shipperCustomer" class="custom-select" formControlName="shipperCustomer">
+                      <option value="" selected disabled>Select customer </option>
+                      <option *ngFor="let item of customerList" [value]="item.customerCode">
+                        {{item.customerName}}
+                      </option>
+                    </select>
+                  </div>
+              </div>
+              </div>
+
+             </div>
+            </div>
+      
+              <div *ngIf="data.ShipperMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+                <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+                  <button type="submit" class="btn btn-light other-button">Submit</button>
+                </div>
+               </div>
+             
+               <div *ngIf="data.ShipperMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+                <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+                  <button type="button" class="btn btn-light other-button" (click)="formSubmitShipper(shipperForm.value)">Update</button>
+                </div>
+              </div>
+
+            </form>
+     </div>
+
+
+<!--Consignee Form-->
+<div class="container" *ngIf="data.action === 'ConsigneeAdd' || data.action === 'ConsigneeEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600; font-size: large; margin: 7px 0;">Consignee</h1>
+      </div>
+      <div class="col-sm-6 d-flex justify-content-end">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; height: 30px; font-size: large; background: red; color: white;">X</button>
+      </div>
+    </div>
+  
+    <form [formGroup]="consigneeForm" (ngSubmit)="formSubmitConsignee(consigneeForm.value)">
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-4">
+
+            <div class="row">
+                <div class="col-sm-9">
+                  <div class="textOnInput">
+                    <label>GST No</label>
+                    <input class="form-control" type="text" placeholder="Enter GST No." formControlName="gstNo" [(ngModel)]="gstNo">
+                  </div>
+                </div>
+                 <div col-sm-1></div>
+                  <div class="col-sm-2 d-flex align-items-end justify-content-end" style="padding-right: 0;">
+                    <button type="button" class="btn btn-success shadow-sm d-flex align-items-center px-2 py-2 rounded-pill gap-2" [disabled]="isGstVerified !== true || consigneeForm.get('gstNo')?.value?.length !== 15"
+      (click)="gstVerifyConsignee()">
+                      <i class="bi bi-shield-check fs-2"></i>
+                      <span class="fw-semibold">Verify</span>
+                    </button>
+                  </div>
+              </div>
+  
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label><span style="color: red;">*</span>Consignee</label>
+                <input class="form-control" type="text" placeholder="Enter Consignee Name." formControlName="consigneeName">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="companyName">Company Name</label>
+                      <ng-select [clearable]="false" formControlName="companyName" bindLabel="item.CompanyName" bindValue="item.CompanyCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                        <ng-option  *ngFor="let item of companyList" [value]="item.CompanyCode" style="font-size: 14px;" >{{item.CompanyName}}</ng-option>
+                      </ng-select>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="Shipper Name">Contact Person</label>
+                    <input class="form-control" type="text" [(ngModel)]="contactPerson" formControlName="contactPerson"  placeholder="Enter Contact Name">
+                </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label>Contact No</label>
+                <input class="form-control" type="tel" placeholder="Enter Contact No." formControlName="mobileNo">
+              </div>
+            </div>
+          </div>
+  
+         
+        </div>
+  
+        <!-- Middle Column -->
+        <div class="col-4">
+
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label>Email ID</label>
+                    <input class="form-control" type="email" placeholder="Enter Email-ID" formControlName="emailId" [(ngModel)]="emailId">
+                  </div>
+                </div>
+              </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label><span style="color: red;">*</span>Address 1</label>
+                    <input class="form-control" type="text" placeholder="Enter Address-1." formControlName="address1" [(ngModel)]="address1">
+                  </div>
+                </div>
+              </div>
+      
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label><span style="color: red;">*</span>Address 2</label>
+                    <input class="form-control" type="text" placeholder="Enter Address-2." formControlName="address2" [(ngModel)]="address2">
+                  </div>
+                </div>
+              </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label>Landmark</label>
+                    <input class="form-control" type="text" placeholder="Enter Landmark" formControlName="landMark" [(ngModel)]="landMark">
+                  </div>
+                </div>
+              </div>
+         
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label>Pin Code</label><!--(change)="getPinCode($event)"-->
+                <input class="form-control" type="number" placeholder="Enter Pincode" formControlName="pinCode" (change)="getPinCode($event)">
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+        <!-- Right Column -->
+        <div class="col-4">
+
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label class="span">City</label>
+                    <ng-select
+                      [items]="cityList"
+                      bindLabel="destinationName"
+                      bindValue="destinationCode"
+                      [clearable]="false"
+                      formControlName="cityName"
+                      class="custom-select1"
+                      style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    </ng-select>
+                  </div>
+                  </div>
+              </div>
+        
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label><span style="color: red;">*</span>State</label>
+                      <ng-select
+                      [items]="stateList"
+                      bindLabel="stateName"
+                      bindValue="stateCode"
+                      [clearable]="false"
+                      formControlName="stateName"
+                      class="custom-select1"
+                      style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+  
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label >Country</label>
+                    <!-- <ng-select [clearable]="false" formControlName="countryName" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                      <ng-option *ngFor="let item of countryList" [value]="item.countryCode">{{item.countryName}}</ng-option>
+                    </ng-select> -->
+                    <ng-select
+                      [items]="countryList"
+                      bindLabel="countryName"
+                      bindValue="countryCode"
+                      [clearable]="false"
+                      formControlName="countryName"
+                      class="custom-select1"
+                      style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+  
+        <div class="row">
+                 <div class="col-sm-12">
+                  <div class="textOnSelect">
+                      <label for="consigneeCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                    <select id="consigneeCustomer" class="custom-select" formControlName="consigneeCustomer">
+                      <option value="" selected disabled>Select customer </option>
+                      <option *ngFor="let item of customerList" [value]="item.customerCode">
+                        {{item.customerName}}
+                      </option>
+                    </select>
+                  </div>
+              </div>
+              </div>
+    </div>
+  </div>
+    
+      <!-- Submit Button -->
+      <div *ngIf="data.ConsigneeMode !== 'edit'" class="row form-group d-flex justify-content-end mt-3">
+        <div class="col-sm-4 d-flex justify-content-end">
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+
+      <div *ngIf="data.ConsigneeMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="formSubmitConsignee(consigneeForm.value)">Update</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  
+
+
+
+  <div class="container" *ngIf="data.action === 'companyMastAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Company mast</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="companyMastForm">
+   <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+    <div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="companyMastName"><span style="color: red;">*</span>Company name :</label>
+      <input class="form-control" type="text" id="companyMastName" 
+                formControlName="companyMastName"  
+                placeholder="Enter Company name">
+                <div *ngIf="companyMastForm.get('companyMastName')?.invalid && companyMastForm.get('companyMastName')?.touched" style="color:red; font-size:12px;">
+                Company Name is required
+              </div>
+             </div>
+      </div>
+    </div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="companyMastGst">GST No :</label>
+      <input class="form-control" type="text" id="companyMastGst"
+             formControlName="companyMastGst" 
+             placeholder="Enter GST No">
+    </div>
+  </div>
+</div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastAdd1">Address 1 :</label>
+            <input class="form-control" type="text" id="companyMastAdd1" 
+                formControlName="companyMastAdd1"  
+                placeholder="Enter add1">
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastAdd2">Address 2 :</label>
+            <input class="form-control" type="text" id="companyMastAdd2" 
+                formControlName="companyMastAdd2"  
+                placeholder="Enter add2">
+        </div>
+      </div>
+    </div>
+    
+       <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastAdd3">Address 3 :</label>
+            <input class="form-control" type="text" id="companyMastAdd3" 
+                formControlName="companyMastAdd3"
+                placeholder="Enter add3">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastEmail">Email :</label>
+          <input class="form-control" type="email" id="companyMastEmail" 
+                formControlName="companyMastEmail"  
+                placeholder="Enter Email ID">
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-3" style="border-right: 1px solid #d2d2d2;">
+      
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastMobile">Phone :</label>
+          <input class="form-control" type="text" id="companyMastMobile" 
+                formControlName="companyMastMobile"  
+                placeholder="Enter Phone No">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastPin">Pin :</label>
+          <input class="form-control" type="text" id="companyMastPin" 
+                formControlName="companyMastPin"  
+                placeholder="Enter Pin Name">
+        </div>
+      </div>
+    </div>
+<!-- <div class="row">
+  <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label for="companyMastCity">City :</label>
+           <ng-select
+                  [items]="cityList"
+                  class="custom-select1"
+                  bindLabel="destinationName"
+                  bindValue="destinationCode"
+                  formControlName="companyMastCity"
+                  style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+                </ng-select>
+        </div>
+      </div>
+</div>
+
+       <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+          <label class="span">State</label>
+          <ng-select
+                  [items]="stateList"
+                  class="custom-select1"
+                  bindLabel="stateName"
+                  bindValue="stateCode"
+                  formControlName="companyMastState"
+                  style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+                </ng-select>
+        </div>
+      </div>
+    </div> -->
+      <div class="row">
+         <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label for="companyMastLogo">Logo :</label>
+            <input
+        class="form-control"
+        type="file"
+        id="companyMastLogo"
+        accept="image/*"
+        (change)="onFileSelected($event, 'logo')"
+      />
+        </div>
+
+         <!-- <div *ngIf="logoPreview" style="margin-top: 8px;">
+      <img [src]="logoPreview" alt="Logo Preview" style="height: auto; width: 150px; border-radius: 4px;" />
+    </div> -->
+      </div>
+      </div>
+      <div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="companyMastStamp">Stamp :</label>
+      <input
+        class="form-control"
+        type="file"
+        id="companyMastStamp"
+        accept="image/*"
+        (change)="onFileSelected($event, 'stamp')"
+      />
+    </div>
+    <!-- <div *ngIf="stampPreview" style="margin-top: 8px;">
+      <img [src]="stampPreview" alt="Stamp Preview" style="height: 80px; border-radius: 4px;" />
+    </div> -->
+  </div>
+</div>
+      <div class="row"> 
+        <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyMastWeb">Web :</label>
+          <input class="form-control" type="text"
+        id="companyMastWeb"
+        formControlName="companyMastWeb"
+        placeholder="Enter website URL">
+        </div>
+      </div>
+      </div>
+   </div>
+<div class="col-sm-6">
+<div class="row">
+  <div class="col-sm-12">
+    <label><strong><span style="color: red;">*</span>Standard format Details :</strong></label>
+    <div class="checkbox-container" [ngClass]="{
+       'invalid-checkbox-container':
+         companyMastForm.get('printDetails')?.errors?.required &&
+         companyMastForm.get('printDetails')?.touched
+     }" style="max-height: 250px; overflow-y: auto; border:1px solid #ccc; padding: 0 16px; border-radius:5px;">
+      <div formArrayName="printDetails" class="row">
+        <div class="col-sm-4" *ngFor="let key of printDetailKeys; let i = index">
+          <mat-checkbox [formControlName]="i">{{key}}</mat-checkbox>
+        </div>
+      </div>
+    </div>
+     <div *ngIf="companyMastForm.get('printDetails')?.errors?.required && companyMastForm.get('printDetails')?.touched"
+       style="color:red; font-size:12px;">
+    Please select at least one print detail.
+  </div>
+  </div>
+</div>
+
+    </div>
+  </div> 
+   <div class="row d-flex" style="justify-content: right;" >
+  <div class="row form-group m-0" >
+      <div class="col-sm-12 d-flex" style="justify-content: right;" >
+        <!-- <button type="button" class="btn btn-light other-button"  (click)="formSubmitCompanyMast(companyMastForm.value)">{{buttonLable}}</button> -->
+          <button type="button" class="btn btn-light other-button"
+          (click)="formSubmitCompanyMast(companyMastForm.value)">
+          {{buttonLable}}
+        </button>
+      </div>
+    </div>
+</div>
+    
+  </form>
+</div>

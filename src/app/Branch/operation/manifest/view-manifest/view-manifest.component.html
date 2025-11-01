@@ -1,0 +1,134 @@
+ <div>
+    <form [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+      <div class="row mainrow">
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="fromDate">From :</label>
+            <input class="form-control" type="date" formControlName="fromDate" id="fromDate" [max]="createForm.get('toDate')?.value">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="toDate">To :</label>
+            <input class="form-control"  [max]="getCurrentDate()" type="date" formControlName="toDate" id="toDate">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="Destination">Destination :</label>
+              <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
+                <option selected disabled>Select destination</option>
+                <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                  {{ item.destinationName }} 
+                </option>
+              </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="manifestNo">Manifest No :</label>
+            <input class="form-control" id="manifestNo" formControlName="manifestNo" [(ngModel)]="manifestNo" placeholder="Enter manifestNo">
+        </div>
+        </div>
+      </div>
+      <div class="row mainrow form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+     </div>
+    </form>
+    <div class="row mainrow">
+      <div class="col-sm-12">
+        <div *ngIf="showTable && dataSource.data.length > 0">
+          <div class="table-responsive">
+            <div class="row d-flex m-0" style="justify-content: right;" >
+              <div class="form-group has-search col-sm-3">
+                <button class="btn btn-secondary" type="button" style="z-index: 1001;
+                position: absolute;
+                background: none;
+                top: -3px;
+                width: 38px;
+                height: 30px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                background-color: #2e3f55;">
+                  <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
+                </button>
+                <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive text-nowrap">
+            <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+
+              <ng-container matColumnDef="shipment">
+                <th mat-header-cell *matHeaderCellDef> Shipment </th>
+                <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="manifestNo">
+                <th mat-header-cell *matHeaderCellDef> Manifest No</th>
+                <td mat-cell *matCellDef="let element"> {{element.manifestNo}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="manifestDt">
+                <th mat-header-cell *matHeaderCellDef> Manifest Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.manifestDt | date:'dd/MM/yyyy'}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="todest">
+                <th mat-header-cell *matHeaderCellDef>To Dest </th>
+                <td mat-cell *matCellDef="let element"> {{element.todest}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="mode">
+                <th mat-header-cell *matHeaderCellDef> Mode </th>
+                <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="SumQty">
+                <th mat-header-cell *matHeaderCellDef> Qty </th>
+                <td mat-cell *matCellDef="let element"> {{element.SumQty}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="sumActualWt">
+                <th mat-header-cell *matHeaderCellDef>Actual Wt </th>
+                <td mat-cell *matCellDef="let element"> {{element.sumActualWt}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="vehicleNo">
+                <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+                <td mat-cell *matCellDef="let element"> {{element.vehicleNo}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="driverName">
+                <th mat-header-cell *matHeaderCellDef> Driver Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.driverName}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
+                  <mat-icon matTooltip="Add" class="custom1-color" (click)="openviewadd(element)">add</mat-icon>
+                  <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon>
+                  <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+         </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+        <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+          <img src="./assets/images/NOdata.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>

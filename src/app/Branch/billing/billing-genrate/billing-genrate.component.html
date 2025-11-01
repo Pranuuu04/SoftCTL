@@ -1,0 +1,456 @@
+<div style="height: 530px; max-height: 530px;">
+    <form [formGroup]="billingform" (ngSubmit)="onSubmit(billingform.value)">
+      <div class="row mainrow" style="border-bottom: 4px double #a5a3a3; margin-bottom: 23px;">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="ClientType"><span style="color: red;">*</span>Client Type :</label>
+            <select id="ClientType" class="custom-select" formControlName="ClientType">
+              <option value="Cash">Cash</option>
+              <option value="Credit">Credit</option>
+              <option value="ToPay">Topay</option>
+              <option value="FOC">FOC</option>
+              <option value="NEFT">NEFT</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+            <div *ngIf="billingform.get('ClientType')?.touched && billingform.get('ClientType')?.invalid" class="error">
+              Client type is required.
+            </div>
+          </div>
+        </div>
+       <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="invType"><span style="color: red;">*</span>Type :</label>
+            <select id="invType" class="custom-select" formControlName="Type">
+              <option value="clientWise">Client wise</option>
+              <option value="shipperWise">Shipper wise</option>
+              <option value="consigneeWise">Consignee wise</option>
+              <option value="cNoteWise">CNote wise</option>
+            </select>
+            <!-- <label for="invType"><span style="color: red;">*</span>Type :</label>
+            <section class="invType" style="padding-top: 2px;">
+             <div class="row">
+              <div class="col-sm-3">
+                <mat-radio-button value="clientWise" name="invType" [(ngModel)]="selectedType" checked (change)="onTypeChange($event.value)">
+                  Client wise
+                </mat-radio-button>
+              </div>
+              <div class="col-sm-3">
+                <mat-radio-button value="shipperWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
+                  Shipper wise
+                </mat-radio-button>
+              </div>
+              <div class="col-sm-3">
+                <mat-radio-button value="consigneeWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
+                  Consignee wise
+                </mat-radio-button>
+              </div>
+              <div class="col-sm-3">
+                <mat-radio-button value="cNoteWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
+                  CNote wise
+                </mat-radio-button>
+              </div>
+             </div>
+          </section> -->
+          </div>
+        </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="Location"><span style="color: red;">*</span>Location :</label>
+            <select id="Location" class="custom-select" formControlName="Location">
+              <option selected disabled>Select Location</option>
+              <option *ngFor="let item of LocationList" value="{{item.Location_Code}}">
+                {{item.Location_Name}}
+              </option>
+            </select>
+            <div *ngIf="billingform.get('Location')?.touched && billingform.get('Location')?.invalid" class="error">
+              Location is required.
+            </div>
+          </div>
+        </div>
+         <div class="col-sm-3">
+            <div class="textOnSelect">
+              <label for="BillingType"><span style="color: red;">*</span>Billing Type :</label>
+              <select id="BillingType" class="custom-select" formControlName="BillingType">
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Fortnightly">Fortnightly</option>
+                <option value="Monthly">Monthly</option>
+              </select>
+              <div *ngIf="billingform.get('BillingType')?.touched && billingform.get('BillingType')?.invalid" class="error">
+                Billing type is required.
+              </div>
+            </div>
+          </div>
+      </div>
+    <div class="row mainrow">
+    <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="consignorType"><span style="color: red;">*</span>Consignor type :</label>
+              <select
+                id="consignorType"
+                class="custom-select"
+                formControlName="selectedConsignorType"
+                (change)="onConsignorTypeChange($event.target.value)"
+              >
+              <option value="Single">Single</option>
+              <option value="All">All</option>
+              </select>
+            </div>
+            <!-- <div class="textOnInput">
+              <label for="Consigors"><span style="color: red;">*</span>Consigor type :</label>
+              <section class="consignorType" style="padding-top: 2px;">
+                <div class="row">
+                  <div class="col-sm-6 pr-0">
+                    <mat-radio-button name="consignorType" value="all" (change)="onConsignorTypeChange('all')"  >All</mat-radio-button>
+                  </div>
+                  <div class="col-sm-6 pl-0">
+                    <mat-radio-button name="consignorType" value="single" (change)="onConsignorTypeChange('single')" checked>Single</mat-radio-button>
+                  </div>
+                </div>
+            </section>
+            </div> -->
+          </div>
+            <div class="col-sm-6">
+            <div class="textOnSelect">
+                <!-- <label for="Consignor"><span style="color: red;">*</span>Consignor :</label>
+                <select id="Consignor" class="custom-select" (change)="onConsignorChange($event.target.value)" formControlName="Consignor" [disabled]="selectedConsignorType === 'all'">
+                  <option selected disabled>Select Consignor</option>
+                  <option *ngFor="let item of customerList" [value]="item.customerCode">{{ item.customerName }}</option>
+                </select> -->
+                <label for="Consignor"><span style="color: red;">*</span>Consignor :</label>
+                <ng-select 
+                  id="Consignor"
+                  class="custom-select1"
+                  [items]="customerList"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="Consignor"
+                  [searchable]="true"
+                  [clearable]="true"
+                  (change)="onConsignorChange($event)">
+                </ng-select>
+                <div *ngIf="billingform.get('Consignor')?.touched && billingform.get('Consignor')?.invalid" class="error">
+                  Consignor is required.
+                </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="destination" style="top: -10px;">Destination :</label>
+            <ng-select
+              [items]="destinationList"
+              class="custom-select2"
+              bindLabel="destinationName"
+              bindValue="destinationCode"
+              [multiple]="true"
+              [formControl]="billingform.get('destination')">
+            </ng-select>
+
+            <!-- <mat-form-field appearance="outline" class="w-100">
+              <mat-select
+                id="destination"
+                formControlName="destination"
+                multiple>
+                <mat-option *ngFor="let item of destinationList" [value]="item.destinationCode">
+                  {{ item.destinationName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field> -->
+          </div>
+        </div>
+      </div>
+      <div class="row mainrow">
+        <!-- <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="DestinationT"><span style="color: red;">*</span>Destination type :</label>
+            <section class="DestinationType" style="padding-top: 2px;">
+              <div class="row">
+                <div class="col-sm-6 pr-0">
+                  <mat-radio-button name="DestinationType" value="all" (change)="onConsignorTypeChange('all')"  >All</mat-radio-button>
+                </div>
+                <div class="col-sm-6 pl-0">
+                  <mat-radio-button name="DestinationType" value="single" (change)="onConsignorTypeChange('single')" checked>Single</mat-radio-button>
+                </div>
+              </div>
+          </section>
+          </div>
+        </div> -->
+     
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="fromDate"><span style="color: red;">*</span>From :</label>
+            <input class="form-control" type="date" formControlName="fromDate" id="fromDate">
+            <div *ngIf="billingform.get('fromDate')?.touched && billingform.get('fromDate')?.invalid" class="error">
+              Date is required.
+            </div>
+        </div> 
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="toDate"><span style="color: red;">*</span>To :</label>
+            <input class="form-control" type="date" formControlName="toDate" id="toDate">
+            <div *ngIf="billingform.get('toDate')?.touched && billingform.get('toDate')?.invalid" class="error">
+              Date is required.
+            </div>
+        </div>
+          </div>
+        <div class="col-sm-3">
+            <div class="textOnInput">
+                <label for="billDate">Invoice Date :</label>
+                <input class="form-control" type="date" formControlName="billDate" id="billDate">
+                <div *ngIf="billingform.get('billDate')?.touched && billingform.get('billDate')?.invalid" class="error">
+                  Invoice Date is required.
+                </div>
+            </div>
+          </div>
+             <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="Mode">Mode :</label>
+              <select id="Mode" class="custom-select" formControlName="Mode">
+                <option selected disabled>Select Mode</option>
+                <option *ngFor="let item of modeList" [value]="item.Mode_code">
+                  {{item.Mode_name}}
+                </option>
+              </select>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row mainrow">
+       
+         <div class="col-sm-3"> -->
+            <!-- <div class="textOnSelect">
+                <label for="multiDest">Destination :</label>
+                <ng-select 
+                    [items]="areaOptions"
+                    class="custom-select1"
+                    bindLabel="label"
+                    bindValue="value"
+                    [multiple]="true"
+                    formControlName="multiDest">
+                </ng-select>
+          </div> -->
+          <!-- <div class="textOnSelect">
+            <label for="RateProduct">Product name :</label>
+            <ul class="small-checkbox">
+              <li *ngFor="let product of destinationList">
+                <mat-checkbox>{{ product.destinationName }}</mat-checkbox>
+              </li>
+             </ul>
+        </div> -->
+        <!-- </div>
+      </div> -->
+      <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+        <!-- <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="destination" style="top: -10px;">Destination :</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select
+                id="destination"
+                formControlName="destination"
+                multiple>
+                <mat-option *ngFor="let item of destinationList" [value]="item.destinationCode">
+                  {{ item.destinationName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div> -->
+     
+       
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-sm-6" *ngIf="selectedType === 'shipperWise'" >
+              <div class="textOnSelect">
+                <label for="Shipper">Shipper :</label>
+                <select id="Shipper" class="custom-select" formControlName="Shipper" [disabled]="selectedConsignorType === 'all'">
+                  <option selected disabled>Select Shipper</option>
+                  <option *ngFor="let item of shipperList" value="{{item.locationCode}}">
+                    {{item.locationName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="selectedType === 'consigneeWise'" >
+              <div class="textOnSelect">
+                <label for="Consignee">Consignee :</label>
+                <select id="Consignee" class="custom-select" formControlName="Consignee" [disabled]="selectedConsignorType === 'all'">
+                  <option selected disabled>Select Consignee</option>
+                  <option *ngFor="let item of consigneeList" value="{{item.locationCode}}">
+                    {{item.locationName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6" >
+              <div class="row" >
+                <div class="col-sm-9"  *ngIf="isInvoiceVisible">
+                  <div class="textOnInput">
+                    <label for="billno">Invoice no. :</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="billno"
+                      id="billno"
+                      placeholder="Enter Invoice no."
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-3" style="justify-content: end; display: flex;" *ngIf="invoiceNoEnable">
+                  <button type="button" class="btn btn-light form-icon"  (click)="isInvoiceVisible = !isInvoiceVisible">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 d-flex" style="justify-content: end;">
+          <button matTooltip="Invoice Description" (click)="openDescription()" type="button" class="btn btn-light form-icon"><i class="fa-solid fa-file-invoice"></i></button>
+          <button type="submit" class="btn btn-light other-button" style="margin-left: 29px;">Submit</button>
+        </div>
+     </div>
+     <!-- <div class="row mainrow d-flex" style="justify-content: end;">
+      <div class="col-sm-3 d-flex" style="justify-content: end;">
+        <button matTooltip="Invoice Description" (click)="openDescription()" type="button" class="btn btn-light form-icon"><i class="fa-solid fa-file-invoice"></i></button>
+        <button type="submit" class="btn btn-light other-button" style="margin-left: 29px;">Submit</button>
+      </div>
+     </div> -->
+    </form>
+    <!-- <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="listData.length > 0">
+          <div class="table-responsive text-nowrap mt-2">
+            <table class="table table-bordered table-striped"  style="background-color: #e2e9f1">
+              <thead style="background-color:#a3b8d4; color: black;">
+                <tr>
+                    <th>Awb No</th>
+                    <th>Booking Date</th>
+                    <th>Conginer</th>
+                    <th>Conginee</th>
+                    <th>Qty</th>
+                    <th>Weight</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listData;" >
+                  <td >awbNo</td>
+                  <td >bookDate</td>
+                  <td >conginer</td>
+                  <td >conginee</td>
+                  <td >qty</td>
+                  <td >weight</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="showTable && dataSource.data.length > 0">
+          <div class="table-responsive">
+            <div class="row d-flex m-0" style="justify-content: right;" >
+              <div class="form-group has-search col-sm-3">
+                <button class="btn btn-secondary" type="button" style="z-index: 1001;
+                position: absolute;
+                background: none;
+                top: -3px;
+                width: 38px;
+                height: 30px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                background-color: #2e3f55;">
+                  <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
+                </button>
+                <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive text-nowrap">
+            <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+
+              <ng-container matColumnDef="shipment">
+                <th mat-header-cell *matHeaderCellDef> Shipment </th>
+                <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="dispatchNo">
+                <th mat-header-cell *matHeaderCellDef> Dispatch No</th>
+                <td mat-cell *matCellDef="let element"> {{element.dispatchNo}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="dispatchDt">
+                <th mat-header-cell *matHeaderCellDef> Dispatch Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.dispatchDt | date:'dd/MM/yyyy'}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="todest">
+                <th mat-header-cell *matHeaderCellDef>Destination </th>
+                <td mat-cell *matCellDef="let element"> {{element.todest}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="mode">
+                <th mat-header-cell *matHeaderCellDef> Mode </th>
+                <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="SumQty">
+                <th mat-header-cell *matHeaderCellDef> Qty </th>
+                <td mat-cell *matCellDef="let element"> {{element.SumQty}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="sumActualWt">
+                <th mat-header-cell *matHeaderCellDef>Actual Wt </th>
+                <td mat-cell *matCellDef="let element"> {{element.sumActualWt}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="vehicleNo">
+                <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+                <td mat-cell *matCellDef="let element"> {{element.vehicleNo}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="driverName">
+                <th mat-header-cell *matHeaderCellDef> Driver Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.driverName}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
+                  <mat-icon matTooltip="Add" class="custom1-color" (click)="openviewadd(element)">add</mat-icon>
+                  <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon>
+                  <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+         </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+        <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+          <img src="./assets/images/NOdata.png" alt="">
+        </div>
+      </div>
+    </div> -->
+      <!-- <div class="col-sm-3">
+            <div class="textOnSelect">
+                <label for="Areas">Areas:</label>
+                <ng-select 
+                    [items]="areaOptions"
+                    class="custom-select1"
+                    bindLabel="label"
+                    bindValue="value"
+                    [multiple]="true"
+                    formControlName="Areas">
+                </ng-select>
+          </div>
+        </div> -->
+  </div>

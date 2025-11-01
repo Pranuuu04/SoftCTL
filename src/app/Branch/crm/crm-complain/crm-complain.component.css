@@ -1,0 +1,250 @@
+* {
+  font-size: 12px;
+  padding-top: 1.1px;
+  color: black;
+}
+form .col-sm-1{
+  padding-right: 8px;
+}
+.form-control,
+.form-select,
+.btn {
+  height: 26px;
+}
+input, 
+textarea{
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  font-family: auto;
+}
+h3{
+  margin: 0;
+  font-size: 14px;
+  font-family: auto;
+  margin-bottom: 5px;
+}
+h4{
+  color: #f8f9fa;
+}
+.modal-backdrop
+{
+  opacity:-0.5!important;
+}
+.modal-backdrop.in {
+opacity: 0.9;
+}
+.card{
+  text-align: inherit;
+  display: flex; 
+  justify-content: center;
+  margin: 4px;
+  word-wrap: inherit;
+}
+.card .card-body{
+  padding: 1px 5px;
+}
+.card .col-sm-4{
+  height: 31px;
+}
+.table-responsive{
+  max-height: 400px ; 
+  overflow: auto ; 
+   padding-top: 0 ;
+  margin-top: 0 ;
+}
+.submit button{
+  width: 70px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: medium;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  margin-right: 7px;
+  line-height: 26px;
+  text-transform: capitalize;
+}
+
+.submit button:hover,
+.submit button:focus
+{
+  background-color: white;
+  color: #ff9800;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table th{ 
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+th.mat-header-cell:first-of-type,td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+  padding-left: 0;
+}
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-right: 0;
+}
+.mat-cell {
+  font-size: 13px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.mat-header-cell {
+  font-size: medium;
+  font-weight: 600;
+  color: white;
+}
+tr.mat-row {
+  height: 26px;
+}
+tr.mat-header-row {
+  height: 30px;
+  font-weight: 600;
+  background-color: #34b0d3;
+}
+
+/* tracking table  */
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+} 
+.table thead tr th {
+  font-size: small;
+  padding: 4px 2px;
+  text-align: center;
+  font-weight: 500;
+}
+.table tbody  tr  td {
+   font-size: small;
+  padding: 0 8px;
+  text-align: center;
+}
+.table-responsive{
+  margin-bottom: 0;
+  color: black;
+  font-weight: 400;
+}
+table , td ,th {
+  border:1px Solid  #d2d2d2;
+}
+.tracking table tbody tr td{
+  padding: 0 1px;
+}
+.tracking table thead tr th{
+  padding: 4px 0;
+}
+.maintable th {
+  color: white;
+}
+.action button{
+  width: 50px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: medium;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  margin-right: 7px;
+  line-height: 26px;
+  text-transform: capitalize;
+}
+
+.action button:hover,
+.action button:focus
+{
+  background-color: white;
+  color: #28a745;
+}
+table , td ,th {
+  border: 1px Solid #9b9898;
+}
+
+.custom-select{
+  height: 26px;
+  padding: 0 0px 1px 0px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #d2d2d2; 
+  padding-left: 10px;
+  border-radius: 0.25rem;
+  padding-top: 5px; 
+  font-family: auto;
+}
+label{
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.select{
+  height: 26px;
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-left: 3px;
+  left: 10px;
+}
+@media (min-width: 1200px){
+  .container {
+    max-width: 100%;
+}
+}
+@media  (min-width: 320px) and (max-width: 425px){
+  .mat-paginator-range-actions .mat-paginator-range-label {
+    margin: 0 0 0 0;
+  }
+}
+
+@media  (min-width: 375px) and (max-width: 425px){
+  .select{
+    left: 15px;
+    width: 91%;
+  }
+}
+@media  (min-width: 320px) and (max-width: 375px){
+  .select{
+    width: 90%;
+  }
+}
+@media  (max-width: 320px){
+  .select{
+    width: 87%;
+    left: 15px;
+  }
+}
+
+.error-message{
+  color: red;
+}
+
+::ng-deep .full-width {
+  width: 100% !important;
+}
+::ng-deep .custom-snackbar {
+  color: white !important;
+  background-color: #0a990a !important;
+  margin-top: 72px !important;
+  margin-right: 66px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+  color: white !important;
+  background-color: red !important;
+  margin-top: 72px !important;
+  margin-right: 66px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+color: white;
+}

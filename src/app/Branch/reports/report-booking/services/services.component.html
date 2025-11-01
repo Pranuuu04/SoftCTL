@@ -1,0 +1,304 @@
+<div class="col-lg-12 col-md-12" style="display: flex;
+justify-content: center;">
+    <div class="card">
+        <div class="card-body table-responsive">
+            <div class="container m-0" style=" padding: 1px 1px; width: 100%;">
+                    <form [formGroup]="serviceForm" (ngSubmit)="formSubmit(serviceForm.value)">
+                  <div class="row">
+                    <label for="floatingTextarea" class="col-sm-1 form-label">Mode</label>
+                        <div class="col-sm-3">
+                          <select id="modeName" class="custom-select" formControlName="modeName" [(ngModel)]="modeName" (change)="resetPagination()">
+                            <option value="All">All Mode</option>
+                            <option value="{{item.Mode_code}}"  *ngFor="let item of modeList" >{{item.Mode_name}}</option>
+                          </select>
+                        </div>
+                        <label id="vendorName" for="vendorName" class="col-sm-1 form-label">Product</label>
+                        <div class="col-sm-3">
+                          <select id="userName" class="custom-select" formControlName="productName" [(ngModel)]="productName" (change)="resetPagination()">
+                            <option value="All">All Product</option>
+                            <option value="{{item.productCode}}"  *ngFor="let item of vendorList" >{{item.productName}}</option>
+                          </select>
+                        </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+                      <input type="radio" id="details" name="fav_language" value="StatementDetails" formControlName="reportType" [(ngModel)]="reportType">
+                      <label for="details" class="details" style="font-size: small;"> Details</label>
+                  </div>
+                  <div class="col-sm-1 download-buttons">
+                    <button type="button" class="btn btn-outline-light" disabled ><i class="fa-solid fa-file-pdf"></i>
+                      <span class="text">PDF</span></button>
+                  </div>
+
+                </div>
+                <div class="row">
+                    <label id="DRSNo" for="DRSDate" class="col-sm-1 form-label">Fdate</label>
+                    <div class="col-sm-3">
+                        <input type="date"  class="form-control" [value]="getDefaultDate()" [(ngModel)]="fromDate" formControlName="fromDate" (change)="resetPagination()">
+                    </div>
+                    <label for="date" id="date" class="col-sm-1 form-label">Tdate</label>
+                    <div class="col-sm-3">
+                        <input type="date" class="form-control" [value]="getCurrentDate()" [(ngModel)]="toDate" formControlName="toDate" (change)="resetPagination()">
+                    </div> <div class="col-sm-1"></div>
+
+                    <div class="col-sm-2 d-flex" style="height: 30px; justify-content: center;">
+                      <input type="radio" id="summery" name="fav_language" value="StatementSummary" formControlName="reportType" [(ngModel)]="reportType">
+                      <label for="summery" class="summery" style="font-size: small;">Summary</label>
+                    </div>
+                    <div class="col-sm-1 download-buttons">
+                      <button type="button" (click)="downloadSample()" class="btn btn-outline-light"><i class="fa-solid fa-table"></i>
+                        <span class="text">XLs</span></button>
+                    </div>
+                  </div>
+                  <div class="row" style="justify-content: right;">
+                    <div class="col-sm-3 d-flex" style="justify-content: space-evenly;">
+                      <button type="submit"  class="btn btn-info">Search</button>
+                    </div>
+                      <div class="col-sm-1 download-buttons">
+                        <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                        <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                        <span class="text">Setup</span></button>
+                    </div>
+                  </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="enabledTableDetails">
+  <div class="table-responsive text-nowrap" >
+    <div class="mat-elevation-z8" >
+      <table id="myTable" mat-table [dataSource]="dataSourceDetails" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+ <ng-container *ngFor="let column of displayedColumnsDetails" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ columnHeaderMap[column] || column }}
+      </th>
+
+      <td mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="column === 'index'; else defaultCell">
+      {{ i + 1 }}
+    </ng-container>
+    <ng-template #defaultCell>
+      {{ element[column] }}
+    </ng-template>
+      </td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <mat-paginator 
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSize]="pageSize"
+      [disabled]="disabled"
+      [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : [5, 10, 20]"
+      [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex">
+    </mat-paginator>
+
+    <div style="justify-content: right; display: flex; margin-right: 16px; color: black; font-size: 12px;">Page: {{ pageIndex + 1 }} of {{ pageCount }}</div>
+  </div>
+
+
+  <div *ngIf="enabledTableSummary">
+    <div class="table-responsive text-nowrap" >
+      <div class="mat-elevation-z8" >
+        <table id="myTable" mat-table [dataSource]="dataSourceSummary" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+
+          
+        <ng-container matColumnDef="srNo">
+          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer_name">
+          <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+          <td mat-cell *matCellDef="let element"> {{ element.customer_name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="locationName">
+          <th mat-header-cell *matHeaderCellDef> Location </th>
+          <td mat-cell *matCellDef="let element"> {{ element.locationName }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="TotalAwbno">
+          <th mat-header-cell *matHeaderCellDef> Total AWB No </th>
+          <td mat-cell *matCellDef="let element"> {{ element.TotalAwbno }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_qty">
+          <th mat-header-cell *matHeaderCellDef> Total Qty </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_qty }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_actualwt">
+          <th mat-header-cell *matHeaderCellDef> Actual Wt </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_actualwt }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_rate">
+          <th mat-header-cell *matHeaderCellDef> Rate </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_rate }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_chargedwt">
+          <th mat-header-cell *matHeaderCellDef> Charged Wt </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_chargedwt }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_fov_chrgs">
+          <th mat-header-cell *matHeaderCellDef> FOV Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_fov_chrgs }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_fuelcharges">
+          <th mat-header-cell *matHeaderCellDef> Fuel Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_fuelcharges }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_docketchargs">
+          <th mat-header-cell *matHeaderCellDef> Docket Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_docketchargs }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_essamt">
+          <th mat-header-cell *matHeaderCellDef> ESS Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_essamt }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_oda_chrgs">
+          <th mat-header-cell *matHeaderCellDef> ODA Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_oda_chrgs }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_idccharges">
+          <th mat-header-cell *matHeaderCellDef> IDC Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_idccharges }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_cafcharges">
+          <th mat-header-cell *matHeaderCellDef> CAF Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_cafcharges }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_othercharges">
+          <th mat-header-cell *matHeaderCellDef> Other Charges </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_othercharges }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges1">
+          <th mat-header-cell *matHeaderCellDef> Charges1 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges2">
+          <th mat-header-cell *matHeaderCellDef> Charges2 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges2 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges3">
+          <th mat-header-cell *matHeaderCellDef> Charges3 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges3 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges4">
+          <th mat-header-cell *matHeaderCellDef> Charges4 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges4 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_carges5">
+          <th mat-header-cell *matHeaderCellDef> Charges5 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_carges5 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges6">
+          <th mat-header-cell *matHeaderCellDef> Charges6 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges6 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges7">
+          <th mat-header-cell *matHeaderCellDef> Charges7 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges7 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges8">
+          <th mat-header-cell *matHeaderCellDef> Charges8 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges8 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges9">
+          <th mat-header-cell *matHeaderCellDef> Charges9 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges9 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_charges10">
+          <th mat-header-cell *matHeaderCellDef> Charges10 </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_charges10 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_igst">
+          <th mat-header-cell *matHeaderCellDef> IGST </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_igst }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_sgst">
+          <th mat-header-cell *matHeaderCellDef> SGST </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_sgst }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_cgst">
+          <th mat-header-cell *matHeaderCellDef> CGST </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_cgst }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_serviceTax">
+          <th mat-header-cell *matHeaderCellDef> Service Tax </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_serviceTax }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_totalamt">
+          <th mat-header-cell *matHeaderCellDef> Total Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_totalamt }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_vpp">
+          <th mat-header-cell *matHeaderCellDef> VPP </th>
+          <td mat-cell *matCellDef="let element"> {{ element.total_vpp }} </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumnsSummmary"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumnsSummmary;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+      <mat-paginator 
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSize]="pageSize"
+        [disabled]="disabled"
+        [showFirstLastButtons]="showFirstLastButtons"
+        [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : [5, 10, 20]"
+        [hidePageSize]="hidePageSize"
+        [pageIndex]="pageIndex">
+      </mat-paginator>
+
+      <div style="justify-content: right; display: flex; margin-right: 16px; color: black; font-size: 12px;">Page: {{ pageIndex + 1 }} of {{ pageCount }}</div>
+    </div>
+  <div>
+    <div id="displayValues" [hidden]="isHidden" >Selected values: </div>
+    <div id="displayValuesSummary" [hidden]="isHidden" >Selected values: </div>
+  </div>
+<div *ngIf="!enabledTableDetails && !enabledTableSummary " class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="No data">
+</div>

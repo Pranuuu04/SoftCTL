@@ -1,0 +1,30 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Driver">
+                        <app-trans-driver [driverData]="driverViewData"></app-trans-driver>
+                    </mat-tab>
+                    <mat-tab label="Route">
+                        <app-trans-route [routeData]="routeViewData"></app-trans-route>
+                    </mat-tab>
+                    <mat-tab label="Transort-Name">
+                        <app-trans-type [transportData]="transportViewData"></app-trans-type>
+                    </mat-tab>
+                    <mat-tab label="Vehicle-type">
+                        <app-vehicle-type [VtypeData]="VtypeViewData"></app-vehicle-type>
+                    </mat-tab>
+                    <mat-tab label="import pickup & delivery">
+                        <app-import-pd></app-import-pd>
+                    </mat-tab>
+                    <mat-tab label="Vehicle">
+                        <app-trans-vehicle [vehicleData]="vehicleViewData"></app-trans-vehicle>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+
+

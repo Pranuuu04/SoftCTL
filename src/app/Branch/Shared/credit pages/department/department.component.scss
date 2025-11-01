@@ -1,0 +1,30 @@
+*{
+    font-size: 13px;
+    padding-top: 3px;
+}
+// .form-control, .form-select{
+//     height: 26px;
+// }
+.row{
+    margin-bottom: 6px;
+}
+// .seconddiv>.row{
+//     margin-bottom: 3px;
+// }
+.submitbtn button{
+    margin-right: 25px;
+}
+.btn-save{
+    background-color: #002b5c;
+    color: whitesmoke;
+}
+.btn-danger{
+    background-color: #ff9514 !important;
+    border-color: #ed890e !important;
+}
+h4{
+    color: #f8f9fa;
+    /* text-align: center; */
+    border-bottom: 2px solid #002b5c;
+    background-color: #002b5c;
+}

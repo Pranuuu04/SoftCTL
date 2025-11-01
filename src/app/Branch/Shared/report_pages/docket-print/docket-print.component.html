@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Multiple print</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+  </div>
+  </div>
+  <form  [formGroup]="PrintForm" (ngSubmit)="onSubmit(PrintForm.value)">
+    <div class="row">
+
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
+        <input type="radio"id="awbNo" name="print" value="awbNo" checked (click)="onCheckedAwb()" [(ngModel)]="printType">
+        <label for="awbNo" class="awbNo" style="font-size: small;"> AWB No.</label>
+    </div>
+
+    <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center;">
+      <input type="radio" id="cust" name="print" value="cust" (click)="onCheckedCust()" [(ngModel)]="printType">
+      <label for="cust" class="cust" style="font-size: small;">Customer</label>
+    </div>
+   </div>
+   <div class="row"[hidden]="awbDisabled">
+      <div class="col-sm-6">
+        <label for="fAwbNo" class="col-form-label">From Awb No.</label>
+        <input type="text" placeholder="Enter Awb No." class="form-control" id="fAwbNo" formControlName="fAwbNo" [(ngModel)]="fAwbNo"/>
+      </div>
+      <div class="col-sm-6">
+        <label for="ToAwbNo" class="col-form-label">To Awb No.</label>
+        <input type="text" placeholder="Enter Awb No." class="form-control" id="ToAwbNo" formControlName="ToAwbNo" [(ngModel)]="ToAwbNo"/>
+      </div>
+      <div class="col-sm-12">
+        <label for="Employee" class="col-form-label">Print Format</label>
+        <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintType" formControlName="multiplePrintType">
+          <option value="" disabled selected>Select Format Size</option>
+          <!-- <option value="1Format">1 Docket Print</option>
+          <option value="1Formatcopy">1 Docket Print copy</option> -->
+          <option value="1-2 Format" >1-2 Docket Print</option>
+          <option value="1-3 Format" >1-3 Docket Print</option>
+          <!-- <option value="label" >Sticker Print1</option>
+          <option value="label2" >Sticker Print2</option>
+          <option value="label3" >Sticker Print3 </option> -->
+          <!-- <option value="label3" >Label Sticker Unique</option> -->
+        </select>
+      </div>
+    </div>
+
+    <div class="row" [hidden]="CustDisabled">
+      <div class="col-sm-12" *ngIf="this.userType === 'Customer'">
+        <label for="Customer" class="col-form-label">Customer name</label>
+        <input type="text" class="form-control" formControlName="Customer" readonly/>
+        <!-- <select id="Customer" class="custom-select" formControlName="Customer">
+          <option value="" selected disabled>Select Customer</option>
+          <option value="{{item.customerCode}}" *ngFor="let item of customerNameList">
+            {{ item.customerName }} &nbsp; ({{ item.customerCode }})
+          </option>
+        </select> -->
+    </div>
+    <div class="col-sm-12" *ngIf="this.userType !== 'Customer'">
+        <label for="Customer" class="col-form-label">Customer name</label>
+        <select id="Customer" class="custom-select" formControlName="Customer">
+          <option value="" selected disabled>Select Customer</option>
+          <option value="{{item.customerCode}}" *ngFor="let item of customerNameList">
+            {{ item.customerName }} &nbsp; ({{ item.customerCode }})
+          </option>
+        </select>
+    </div>
+    </div>
+    <div class="row" [hidden]="CustDisabled">
+      <div class="col-sm-6">
+        <label for="fromdate" class="col-form-label">Date</label>
+        <input type="date" value="{{currentDate}}" class="form-control" id="fromdate" formControlName="fromdate" />
+      </div>
+      <div class="col-sm-6">
+        <label for="todate" class="col-form-label">Date</label>
+        <input type="date" value="{{currentDate}}" class="form-control" id="todate" formControlName="todate"/>
+      </div>
+    </div>
+    <div class="row"  [hidden]="CustDisabled">
+      <div class="col-sm-12">
+        <label for="Employee" class="col-form-label">Print Format</label>
+        <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintType" formControlName="multiplePrintType">
+          <option value="" disabled selected>Select Format Size</option>
+          <!-- <option value="1Format">1 Docket Print</option>
+          <option value="1Formatcopy">1 Docket Print copy</option> -->
+          <option value="1-2 Format" >1-2 Docket Print</option>
+          <option value="1-3 Format" >1-3 Docket Print</option>
+          <!-- <option value="label" >Sticker Print1</option>
+          <option value="label2" >Sticker Print2</option>
+          <option value="label3" >Sticker Print3 </option> -->
+          <!-- <option value="label3" >Label Sticker Unique</option> -->
+        </select>
+      </div>
+    </div>
+        <!-- <div class="row d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-5 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-info"  [disabled]="isPrintButtonDisabled()">
+              <mat-icon>print</mat-icon> Print
+            </button>
+          </div>
+         </div> -->
+         <div class="row d-flex m-0" style="justify-content: right;" >
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-info" >Ok</button>
+          </div>
+      </div>
+      </form>
+</div>

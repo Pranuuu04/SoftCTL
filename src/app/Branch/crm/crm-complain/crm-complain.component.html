@@ -1,0 +1,273 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9 col-md-9"  style="display: flex; border-right: 1px solid  #d2d2d2; justify-content: center;">
+      <div class="card">
+        <div class="card-body">
+          <div class="container" style=" padding: 1px 1px;">
+
+            <div class="row">
+                  <select class="custom-select col-sm-1 col-md-1 form-label select" data-live-search="true" [(ngModel)]="selectType">
+                    <option value="Awb" selected>Awb No.</option>
+                    <option value="Complain">Complain No.</option>
+                    <option value="RefNo">Ref No.</option>
+                </select>
+                
+                  <div class="col-sm-3 col-md-3">
+                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control" id="awb." required />
+                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control" id="awb." required />    
+                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" id="awb." required />   
+                  </div>
+                  <div class="col-sm-8 col-md-8 d-flex action" style="justify-content: space-between;">
+                    <button (click)="checkAwbData()" class="btn btn-success">
+                      Find
+                    </button>
+                  </div>
+                </div>
+                <form [formGroup]="ComplainFORM" (ngSubmit)="formSubmit(ComplainFORM.value)">
+                  <div class="row mt-1">
+                    <label for="Date" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                        <input type="date" value="{{currentDate}}" id="Date" class="form-control" [(ngModel)]="currentDate" readonly>
+                    </div>
+                    <label for="Name" class="col-sm-1 col-lg-1 col-md-2 form-label">Name</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                        <input type="text" placeholder="Leave a comment here" formControlName="Name" class="form-control" id="Name" required />
+                        <div *ngFor="let validation of validationMessage.Name">
+                          <div class="error-message"
+                            *ngIf="ComplainFORM.get('Name').hasError(validation.type) && (ComplainFORM.get('Name').dirty || ComplainFORM.get('Name').touched)">
+                            {{ validation.message }}
+                          </div>
+                        </div>
+                    </div>
+                    <label for="MobileNo" class="col-sm-1 col-lg-1 col-md-2 form-label">No.</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                      <input type="text" placeholder="enter mobile no." formControlName="MobileNo" class="form-control" id="MobileNo" required />
+                        </div>
+                </div>
+                <div class="row mt-1">
+                    <label for="Email" class="col-sm-1 col-lg-1 col-md-2 form-label">Email</label>
+                  <div class="col-sm-3 col-md-4 col-lg-3">
+                    <input type="email" class="form-control" id="Email" placeholder="abc@gmail.com " formControlName="Email"
+                    aria-describedby="emailHelp">
+                  </div>
+                  <label for="Type" class="col-sm-1 col-lg-1 col-md-2 form-label">Selection</label>
+                  <div class="col-sm-3 col-md-4 col-lg-3">
+                    <select class="custom-select" data-live-search="true" formControlName="Type">
+                      <option value="Urgent" selected>Urgent</option>
+                      <option value="Normal">Normal</option>
+                  </select>
+                  </div>
+                
+                  <label for="Status" class="col-sm-1 col-lg-1 col-md-2 form-label">Status</label>
+                  <div class="col-sm-3 col-md-4 col-lg-3">
+                    <select class="custom-select" data-live-search="true" formControlName="Status">
+                      <option value="Unsolved" selected>Unsolved</option>
+                      <option value="Solved">Solved</option>
+                  </select>
+                </div>
+                  
+              </div>
+              <div class="row mt-1">
+                <label for="Detail" class="col-sm-1 col-md-2 col-lg-1 form-label">Complain</label>
+                  <div class="col-sm-3 col-md-10 col-lg-11">
+                    <input type="text" class="form-control" id="Detail" placeholder="Enter Complain details" formControlName="Detail"
+                    aria-describedby="emailHelp" required>
+                    <div *ngFor="let validation of validationMessage.Detail">
+                      <div class="error-message"
+                        *ngIf="ComplainFORM.get('Detail').hasError(validation.type) && (ComplainFORM.get('Detail').dirty || ComplainFORM.get('Detail').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="row mt-1">
+                <label for="Action" class="col-sm-1 col-md-2 col-lg-1 form-label">Action</label>
+              <div class="col-sm-3 col-md-10 col-lg-11">
+                <input type="text" class="form-control" id="Action" placeholder="" formControlName="Action"
+                aria-describedby="emailHelp">
+                <div *ngFor="let validation of validationMessage.Action">
+                  <div class="error-message"
+                    *ngIf="ComplainFORM.get('Action').hasError(validation.type) && (ComplainFORM.get('Action').dirty || ComplainFORM.get('Action').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="row mt-1">
+              <div class="col-sm-12 d-flex submit" style="justify-content: right;">
+                  <button type="submit"  class="btn btn-warning">Submit</button>
+              </div>
+          </div>
+         </form>
+      </div>
+     </div>
+<div *ngIf="showTable && dataSource.data.length > 0">
+  <div class="table-responsive">
+    <div class="row d-flex m-0" style="justify-content: right;" >
+      <div class="form-group has-search col-sm-3">
+        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+        position: absolute;
+        background: none;
+        top: -4px;
+        width: 38px;
+        height: 32px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: orange;">
+          <i class="fa fa-search" style="color: white; margin-top: -4px;"></i>
+        </button>
+        <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+      </div>
+     </div>
+  </div>
+    <div class="table-responsive text-nowrap">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
+        
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.Date | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="AwbNo">
+          <th mat-header-cell *matHeaderCellDef> AwbNo </th>
+          <td mat-cell *matCellDef="let element"> {{element.AwbNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="RefNo">
+          <th mat-header-cell *matHeaderCellDef> RefNo </th>
+          <td mat-cell *matCellDef="let element"> {{element.RefNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ComplainNo">
+          <th mat-header-cell *matHeaderCellDef> ComplainNo </th>
+          <td mat-cell *matCellDef="let element"> {{element.ComplainNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="MobileNo">
+          <th mat-header-cell *matHeaderCellDef> MobileNo </th>
+          <td mat-cell *matCellDef="let element"> {{element.MobileNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.Type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Detail">
+          <th mat-header-cell *matHeaderCellDef> Detail </th>
+          <td mat-cell *matCellDef="let element"> {{element.Detail}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element"> {{element.Action}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div >
+    <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./../../../../../assets/images/NOdata.png" alt="">
+      </div>
+  </div>
+  
+</div>
+
+<div class="col-sm-3 tracking">
+
+  <div class="row">
+      <div class="col-sm-12">
+          <h1 class="text-center" style="font-size: large; font-weight: 600;">Tracking Details</h1>
+      </div>
+  </div>
+ 
+  <div *ngIf="showTable2">
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered table-striped" style="border-collapse: collapse;
+  width: 100%; background-color: rgb(223 233 237 / 87%);">
+        <thead style="background-color:#afdadf;">
+          <tr>
+              <th>AwbNo</th>
+              <th>RefNo</th>
+              <th>Bookdate</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of trackingTableData">
+              <td>{{item.AwbNo}}</td>
+              <td>{{item.RefNo}}</td>
+              <td>{{item.BookDate | date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#afdadf;">
+          <tr>
+            <th>Consignee</th>
+            <th>Destination</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of trackingTableData">
+              <td>{{item.Consignee}}</td>
+              <td>{{item.Destination}}</td>
+              <td>{{item.Status}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#afdadf;">
+          <tr>
+              <th>Deliverydate</th>
+              <th>ReceiverName</th>
+              <th>PodImage</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of trackingTableData">
+              <td>{{item.DelvDt | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.recvname}}</td>
+              <td>{{item.Date}}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
+        <thead style="background-color:#afdadf; color: white;">
+          <tr>
+              <th>StatusDate</th>
+              <th>Time</th>
+              <th>Location</th>
+              <th>ShipmentHistory</th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let item of trackingTableData2">
+              <td>{{item.DelvDt | date:'dd/MM/yyyy' }}</td>
+              <td>{{item.DelvTime }}</td>
+              <td>{{item.Destinationname }}</td>
+              <td>{{item.ShipmentHistory }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <div *ngIf="!showTable2" class="d-flex" style="justify-content: center;">
+    <img src="./../../../../assets/images/tracking.png" style="width: 100%;">
+    </div>
+
+</div>
+</div>
+</div> 

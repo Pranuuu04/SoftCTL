@@ -1,0 +1,91 @@
+* {
+    font-size: 12px;
+    padding-top: 1.1px;
+    color: black;
+}
+form .col-sm-1{
+    padding-right: 8px;
+}
+.form-control,
+.form-select {
+    height: 26px;
+}
+input{
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+}
+
+.btn-save{
+    background-color: #002b5c;
+    color: whitesmoke;
+}
+
+h3{
+    margin: 0;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: black;
+    font-weight: 700;
+    font-family: system-ui;
+    word-wrap: inherit;
+}
+
+h4{
+    color: #f8f9fa;
+}
+
+.modal-backdrop{
+    opacity:-0.5!important;
+}
+
+.modal-backdrop.in {
+	opacity: 0.9;
+}
+
+.card{
+    text-align: inherit;
+    display: flex; 
+    justify-content: center;
+    margin: 4px;
+    border: 2px solid  rgba(214, 226, 230, 0.874);
+    word-wrap: inherit;
+}
+
+.card .card-body{
+    padding: 2px 20px;
+}
+
+.btn{
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2; 
+    font-size: medium;
+    margin: 0 3px;
+    margin-left: 14px;
+}
+
+.custom-select{
+    height: 26px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-family: auto;
+}
+
+label{
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+.error-message{
+    color: red;
+}  

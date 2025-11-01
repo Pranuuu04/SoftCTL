@@ -1,0 +1,219 @@
+<!-- <div style="margin-left: 20px; margin-right: 20px; margin-top: 17px;">
+        <div class="container" style=" padding: 1px;">
+          <form [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+            <div class="row">
+           
+              <div class=" col-md-2">
+                <div class="textOnInput">
+                  <label for="date">Date</label>
+                  <input [(ngModel)]="currentDate" value="{{currentDate}}" type="date" placeholder="book"
+                    formControlName="date" class="form-control" id="date">
+                    <div *ngFor="let validation of validationMessage.AwbNo">
+                      <div class="error-message"
+                        *ngIf="Drsentryform.get('AwbNo').hasError(validation.type) && (Drsentryform.get('AwbNo').dirty || Drsentryform.get('AwbNo').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class=" col-md-1">
+                <div class="textOnInput">
+                  <label for="time">Time</label>
+                  <input formControlName="time" type="time" class="form-control" id="time">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="textOnInput">
+                  <label for="from">From</label>
+                  <input formControlName="from" value="{{originName}}" class="form-control" readonly [(ngModel)]="originName"/>
+                  <div *ngFor="let validation of validationMessage.from">
+                    <div class="error-message"
+                      *ngIf="createForm.get('from').hasError(validation.type) && (createForm.get('from').dirty || createForm.get('from').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <div class="textOnInput">
+                  <label for="tolocation">To</label>
+                  <input list="destinations" formControlName="to" class="form-control" />
+                    <datalist id="destinations">
+                        <option *ngFor="let item of DestinationName" value="{{ item.destinationCode }}"> {{ item.destinationName }}</option>
+                    </datalist>
+                  <div *ngFor="let validation of validationMessage.to">
+                    <div class="error-message"
+                      *ngIf="createForm.get('to').hasError(validation.type) && (createForm.get('to').dirty || createForm.get('to').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-md-4">
+                <div class="textOnInput">
+                  <label for="remark">Remark</label>
+                  <input list="remark" formControlName="remark" class="form-control" />
+                  <datalist id="remark">
+                    <option *ngFor="let option of remarkOptions" [value]="option">{{ option }}</option>
+                </datalist>
+                <div *ngFor="let validation of validationMessage.remark">
+                  <div class="error-message"
+                    *ngIf="createForm.get('remark').hasError(validation.type) && (createForm.get('remark').dirty || createForm.get('remark').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="textOnInput">
+                  <label for="awbno">AWB No.</label>
+                  <input [(ngModel)]="inputAWBNo" formControlName="awbNo" type="text" class="form-control" id="awbno" placeholder="Enter AWB No." (keydown)="handleKeyDown($event)">
+                </div>
+              </div>
+              <div class="col-3">
+                  <div class="card" style="width: 23rem; height: 314px; margin-top: 1px;">
+                    <div class="card-body">
+                      <ul>
+                        <li *ngFor="let awbNo of awbNumbers">{{ awbNo }}</li>
+                      </ul>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-3">
+                <div class="textOnInput">
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <div class="textOnInput">
+                  <input type="file" #fileInput accept=".xlsx, .xls"  style="height: 37px;" class="form-control" (change)="readFile($event.target.files[0])" />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-success m-0 p-0" (click)="generateExcel()" tabindex="-1" matTooltip="Download">
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </div>
+          </div>
+       
+            <div class="row">
+              <div class="col-sm-7 generate text-right" style="padding-top: 0px;">
+                <button type="submit" class="dot btn-warning" [disabled]="createForm.ivalid">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+   -->
+
+   <div>
+    <form  [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+      <div class="row ml-0 mr-0">
+        <div class="col-sm-8" style="border-right: 1px solid  #d2d2d2;">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="textOnInput">
+                <label for="date">Date</label>
+                <input [(ngModel)]="currentDate" value="{{currentDate}}" type="date" placeholder="book"
+                  formControlName="date" class="form-control" id="date">
+            </div> 
+            </div>
+            <div class="col-md-6">
+              <div class="textOnInput">
+                <label for="awbno">AWB No.</label>
+                <input [(ngModel)]="inputAWBNo" formControlName="awbNo" type="text" class="form-control" id="awbno" placeholder="Enter AWB No." (keydown)="handleKeyDown($event)">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+             <div class="col-sm-6">
+              <div class="textOnInput">
+                <label for="time">Time</label>
+                      <input formControlName="time" type="time" class="form-control" id="time">
+            </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="textOnInput">
+                <label for="from">From</label>
+                <input value="{{originName}}" class="form-control" readonly [(ngModel)]="originName"/>
+              </div>
+            </div>
+          
+          </div>
+          <div class="row">          
+            <div class=" col-md-6">
+              <div class="textOnInput">
+                <label for="remark">Remark</label>
+                <input list="remark" formControlName="remark" class="form-control" />
+                <datalist id="remark">
+                  <option *ngFor="let option of remarkOptions" [value]="option">{{ option }}</option>
+                </datalist>
+              <div *ngFor="let validation of validationMessage.remark">
+                <div class="error-message"
+                  *ngIf="createForm.get('remark').hasError(validation.type) && (createForm.get('remark').dirty || createForm.get('remark').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="textOnSelect">
+                <label for="tolocation">To :</label>
+                <select id="tolocation" class="custom-select" formControlName="to">
+                  <option selected disabled>Select Driver Name</option>
+                  <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                    {{ item.destinationName }} 
+                  </option>
+                </select>
+                <div *ngFor="let validation of validationMessage.to">
+                  <div class="error-message"
+                    *ngIf="createForm.get('to').hasError(validation.type) && (createForm.get('to').dirty || createForm.get('to').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="row">
+            <div class=" col-md-6">
+              <div class="textOnInput">
+                <input type="file" #fileInput accept=".xlsx, .xls"  style="height: 37px;" class="form-control" (change)="readFile($event.target.files[0])" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-success m-0 p-0" (click)="generateExcel()" tabindex="-1" matTooltip="Download">
+                <i class="fa-solid fa-download"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="row form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;">
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+              <!-- <button type="submit" class="btn btn-light other-button"  [disabled]="!createForm.valid || awbNumbers.length === 0">Submit</button> -->
+            </div>
+         </div>
+        </div>
+    <!--<div class="col-sm-4">
+          <ul>
+            <li *ngFor="let awbNo of awbNumbers">{{ awbNo }}</li>
+          </ul>
+        </div> -->
+        <div *ngFor="let column of splitAWBNumbers(awbNumbers)">
+          <div class="col-sm-4">
+            <ul>
+              <li *ngFor="let awbNo of column">{{ awbNo }}</li>
+            </ul>
+          </div>  
+        </div>
+        
+       
+      </div>     
+    </form>
+  </div>

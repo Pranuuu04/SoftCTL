@@ -1,0 +1,159 @@
+.example-small-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    height: 32px;
+    width: 150px;
+    font-weight: 500;
+    font-size: larger;
+    max-width: 240px;
+    cursor: pointer;
+}
+
+
+.card-stats {
+    padding: 1px 1px !important;
+    margin-top: 20px !important;
+    height: 115px !important;
+}
+
+h1 {
+    text-align: center;
+}
+
+.mat-tab-group {
+    justify-content: center;
+    align-items: center;
+}
+
+::ng-deep .mat-tab-label {
+    min-width: 60px !important;
+    padding: 0px 23px !important;
+    font-size: 13px !important;
+    height: 26px !important;
+}
+.second-row ::ng-deep .mat-tab-label,
+.third-row ::ng-deep .mat-tab-label{
+        width: 100px !important;
+}
+
+.mat-elevation-z4 {
+    color: white;
+}
+.card-stats .card-icon {
+    padding: 3px;
+}
+
+.card-stats .card-header-icon {
+    margin-top: 7px;
+}
+
+.card-stats .card-icon i {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;  
+    font-size: 25px;
+}
+.card-stats ::ng-deep .mat-tab-label.mat-tab-label-active {
+    background: linear-gradient(60deg, #ffa726, #fb8c00) !important;
+    color: white !important;
+    border-radius: 7px !important;
+}
+
+.card-stats .card-body {
+    padding: 5px 1px;
+}
+.status .example-small-box {
+    background: rgba(214, 226, 230, 0.874);
+    color: black;
+    max-width: 800px;
+   width: 700px;
+}
+.example-small-box{
+    background: rgba(214, 226, 230, 0.874);
+    color:black;
+}
+
+.card-stats h4 {
+    color: black;
+   
+    top: 37px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 3px !important;
+    font-weight: 500;
+}
+    @media (min-width: 650px){
+
+        .status ::ng-deep .mat-tab-label{
+            width: 120px !important;
+        }
+        .status .example-small-box {
+            max-width: 500px;
+           width: 400px;
+        }
+    }
+    @media (min-width: 375px) and (max-width: 768px){
+        .status .example-small-box {
+            max-width: 240px;
+           width: 100px;
+        }
+        .Status ::ng-deep .mat-tab-label{
+            padding: 0px 11px !important;
+        }
+
+    }
+    @media (min-width: 768px) and (max-width: 1024px){
+        .Status ::ng-deep .mat-tab-label{
+            padding: 0px 16px !important;
+        }
+    }
+
+    @media (max-width: 375px){
+
+        .status ::ng-deep .mat-tab-label{
+            width: 45px !important;
+            padding: 0px 0px !important;
+        }
+        .status .example-small-box {
+            max-width: 240px;
+           width: 100px;
+        }
+    }
+
+    @media (max-width: 320px){
+        .second-row ::ng-deep .mat-tab-label,
+        .third-row ::ng-deep .mat-tab-label{
+                width: 80px !important;
+        }
+    }
+    @media (min-width: 320px) and (max-width: 375px) {
+        ::ng-deep .mat-tab-label {
+            padding: 0px 13px !important;
+        }
+        .table th{
+            padding: 0.01rem;
+        }
+        .table-responsive{
+            padding: 0.9375rem 17px;
+        }
+        .table tbody tr td{
+            padding: 12px 4px;
+        }
+    }    
+    @media (min-width: 425px) and (max-width: 768px){
+    .chart,
+    .pie,
+    .line{
+        height: 131px;
+    }
+    }
+    .chart,
+    .pie,
+    .line{
+        height: 180px;
+    }
+.line{
+    background-color: #28bbf5;
+}
+  

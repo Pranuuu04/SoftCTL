@@ -1,0 +1,211 @@
+<div>
+    <form [formGroup]="createForm" (ngSubmit)="generateCancelTrip(createForm.value)">
+      <div class="row mainrow">
+        <div class="col-sm-6">
+          <div class="textOnSelect">
+              <label for="CustomerName">Customer name :</label>
+                <ng-select
+                  [items]="CustomerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="CustomerName"
+                  (change)="resetPagination()">
+                </ng-select>
+              <div *ngFor="let validation of validationMessage.CustomerName">
+                <div class="error-message"
+                  *ngIf="createForm.get('CustomerName').hasError(validation.type) && (createForm.get('CustomerName').dirty || createForm.get('CustomerName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="textOnInput">
+                  <label for="supplierName">Supplier name :</label>
+          <ng-select 
+           class="custom-select1"
+            [items]="supplierList"
+            bindLabel="shipperName"
+            bindValue="shipperCode"
+            formControlName="supplierName"
+            [searchable]="true"
+            [clearable]="true">
+          </ng-select>
+          <div *ngFor="let validation of validationMessage.supplierName">
+                <div class="error-message"
+                  *ngIf="createForm.get('supplierName').hasError(validation.type) && (createForm.get('supplierName').dirty || createForm.get('supplierName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-1 download-buttons" (click)="generatePdf()">
+            <button type="button" class="btn btn-outline-light pb-0"><i class="fa-solid fa-file-pdf"></i>
+              <span class="text">PDF</span></button>
+          </div>
+      </div>
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="fromDate">From :</label>
+              <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate" (change)="resetPagination()">
+              <div *ngFor="let validation of validationMessage.fromDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('fromDate').hasError(validation.type) && (createForm.get('fromDate').dirty || createForm.get('fromDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="toDate">To :</label>
+              <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate" (change)="resetPagination()">
+              <div *ngFor="let validation of validationMessage.toDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('toDate').hasError(validation.type) && (createForm.get('toDate').dirty || createForm.get('toDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-5"></div>
+          <div class="col-sm-1 download-buttons">
+            <button type="button" class="btn btn-outline-light pb-0" (click)="downloadSample()" [disabled]="!showTable"><i
+                class="fa-solid fa-table"></i>
+              <span class="text">XLs</span></button>
+          </div>
+                
+      </div>
+    
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2; margin: 10px 0;">
+        <div class="col-sm-9">
+        </div>
+        <div class="col-sm-3 d-flex" style="justify-content: end;" >
+          <button type="submit" class="btn btn-light CancelReport">Cancel Report</button>
+        </div>
+      </div>
+    </form> 
+  </div>
+  <div *ngIf="showTable">
+  <div class="table-responsive text-nowrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef> Sr.No </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      {{ pageIndex * pageSize + i + 1 }}
+    </td>
+  </ng-container>
+
+  <!-- Customer Name -->
+  <ng-container matColumnDef="Customer_Name">
+    <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Customer_Name }} </td>
+  </ng-container>
+
+  <!-- Date -->
+  <ng-container matColumnDef="Date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Date }} </td>
+  </ng-container>
+
+  <!-- Route -->
+  <ng-container matColumnDef="Route">
+    <th mat-header-cell *matHeaderCellDef> Route </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+  </ng-container>
+
+  <!-- Reporting Time -->
+  <ng-container matColumnDef="ReportingTime">
+    <th mat-header-cell *matHeaderCellDef> Reporting Time </th>
+    <td mat-cell *matCellDef="let element"> {{ element.ReportingTime }} </td>
+  </ng-container>
+
+  <!-- Quantity -->
+  <ng-container matColumnDef="Qty">
+    <th mat-header-cell *matHeaderCellDef> Qty </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Qty }} </td>
+  </ng-container>
+
+  <!-- Store In -->
+  <ng-container matColumnDef="storeIn">
+    <th mat-header-cell *matHeaderCellDef> Store In </th>
+    <td mat-cell *matCellDef="let element"> {{ element.storeIn }} </td>
+  </ng-container>
+
+  <!-- Vehicle Type -->
+  <ng-container matColumnDef="vehicleType">
+    <th mat-header-cell *matHeaderCellDef> Vehicle Type </th>
+    <td mat-cell *matCellDef="let element"> {{ element.vehicleType }} </td>
+  </ng-container>
+
+  <!-- Shipper Name -->
+  <ng-container matColumnDef="Shipper_Name">
+    <th mat-header-cell *matHeaderCellDef> Shipper Name </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Shipper_Name }} </td>
+  </ng-container>
+
+  <!-- Loading In -->
+  <ng-container matColumnDef="LoadingIn">
+    <th mat-header-cell *matHeaderCellDef> Loading In </th>
+    <td mat-cell *matCellDef="let element"> {{ element.LoadingIn }} </td>
+  </ng-container>
+
+  <!-- Loading Out -->
+  <ng-container matColumnDef="LoadingOut">
+    <th mat-header-cell *matHeaderCellDef> Loading Out </th>
+    <td mat-cell *matCellDef="let element"> {{ element.LoadingOut }} </td>
+  </ng-container>
+
+  <!-- In Transit -->
+  <ng-container matColumnDef="InTransit">
+    <th mat-header-cell *matHeaderCellDef> In Transit </th>
+    <td mat-cell *matCellDef="let element"> {{ element.InTransit }} </td>
+  </ng-container>
+
+  <!-- Store Out -->
+  <ng-container matColumnDef="storeOut">
+    <th mat-header-cell *matHeaderCellDef> Store Out </th>
+    <td mat-cell *matCellDef="let element"> {{ element.storeOut }} </td>
+  </ng-container>
+
+  <!-- Dispatch Time -->
+  <ng-container matColumnDef="DispatchTime">
+    <th mat-header-cell *matHeaderCellDef> Dispatch Time </th>
+    <td mat-cell *matCellDef="let element"> {{ element.DispatchTime }} </td>
+  </ng-container>
+
+  <!-- Reason -->
+  <ng-container matColumnDef="Reason">
+    <th mat-header-cell *matHeaderCellDef> Reason </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Reason }} </td>
+  </ng-container>
+
+  <!-- Remark -->
+  <ng-container matColumnDef="Remark">
+    <th mat-header-cell *matHeaderCellDef> Remark </th>
+    <td mat-cell *matCellDef="let element"> {{ element.Remark }} </td>
+  </ng-container>
+
+  <!-- Header & Row Declarations -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+  <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+</div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="">
+</div>

@@ -1,0 +1,22 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Airline">
+              <app-airline [airlineData]="airlineViewData"></app-airline>
+            </mat-tab>
+            <mat-tab label="Flight">
+              <app-flight-master [flightData]="flightViewData"></app-flight-master>
+            </mat-tab>
+            <mat-tab label="Train">
+              <app-train-master [trainData]="trainViewData"></app-train-master>
+            </mat-tab>
+            <mat-tab label="Train number">
+              <app-train-number [trainNoData]="trainNoViewData"></app-train-number>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>

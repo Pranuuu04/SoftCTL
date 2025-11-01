@@ -1,0 +1,224 @@
+ <div class="container">
+      <form  [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="fromDate">From :</label>
+              <input class="form-control" value="{{currentDate1}}" [(ngModel)]="currentDate1" [value]="getDefaultDate()" [max]="currentDate2" type="date" formControlName="fromDate" id="fromDate">
+          </div> 
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="toDate">To :</label>
+              <input class="form-control" value="{{currentDate2}}" [(ngModel)]="currentDate2" [max]="getCurrentDate()" type="date" formControlName="toDate" id="toDate">
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnSelect">
+                <label for="Destination">Destination :</label>
+                <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
+                  <option selected disabled>Select destination</option>
+                  <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                    {{ item.destinationName }} 
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="manifestNo">Dispatch No :</label>
+              <input class="form-control" id="manifestNo" formControlName="dispatchNo" [(ngModel)]="dispatchNo" placeholder="Enter Dispatch">
+          </div>
+          </div>
+        </div>
+        <div class="row form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-light other-button">Submit</button>
+          </div>
+       </div>
+      </form>
+      <div class="row">
+        <div class="col-sm-12">
+          <div *ngIf="showTable && dataSource.data.length > 0">
+            <div class="table-responsive">
+              <div class="row d-flex m-0" style="justify-content: right;" >
+                <div class="form-group has-search col-sm-3">
+                  <button class="btn btn-secondary" type="button" style="z-index: 1001;
+                  position: absolute;
+                  background: none;
+                  top: -3px;
+                  width: 38px;
+                  height: 30px;
+                  border-top-left-radius: 10px;
+                  border-bottom-left-radius: 10px;
+                  background-color: #2e3f55;">
+                    <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
+                  </button>
+                  <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+              <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+
+                <ng-container matColumnDef="shipment">
+                  <th mat-header-cell *matHeaderCellDef> Shipment </th>
+                  <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="dispatchNo">
+                  <th mat-header-cell *matHeaderCellDef> Dispatch No</th>
+                  <td mat-cell *matCellDef="let element"> {{element.dispatchNo}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="dispatchDt">
+                  <th mat-header-cell *matHeaderCellDef> Dispatch Date </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dispatchDt | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+          
+                <ng-container matColumnDef="todest">
+                  <th mat-header-cell *matHeaderCellDef>Destination </th>
+                  <td mat-cell *matCellDef="let element"> {{element.todest}} </td>
+                </ng-container>
+          
+                <ng-container matColumnDef="mode">
+                  <th mat-header-cell *matHeaderCellDef> Mode </th>
+                  <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="SumQty">
+                  <th mat-header-cell *matHeaderCellDef> Qty </th>
+                  <td mat-cell *matCellDef="let element"> {{element.SumQty}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="sumActualWt">
+                  <th mat-header-cell *matHeaderCellDef>Actual Wt </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sumActualWt}} </td>
+                </ng-container>
+          
+                <ng-container matColumnDef="vehicleNo">
+                  <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+                  <td mat-cell *matCellDef="let element"> {{element.vehicleNo}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="driverName">
+                  <th mat-header-cell *matHeaderCellDef> Driver Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.driverName}} </td>
+                </ng-container>
+          
+                <ng-container matColumnDef="Action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
+                    <mat-icon matTooltip="Add" class="custom1-color" (click)="openviewadd(element)">add</mat-icon>
+                    <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon>
+                    <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
+                  </td>
+                </ng-container>
+          
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+           </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+          </div>
+          <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+            <img src="./assets/images/NOdata.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+                    <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+          
+                  <ng-container matColumnDef="awbNo">
+                    <th mat-header-cell *matHeaderCellDef> AWB No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.awbNo}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="bookDate">
+                    <th mat-header-cell *matHeaderCellDef>Booking Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.bookDate | date:'dd/MM/yyyy'}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="customerName">
+                    <th mat-header-cell *matHeaderCellDef> Consigner</th>
+                    <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+                  </ng-container>
+            
+                  
+                  <ng-container matColumnDef="consigneeName">
+                    <th mat-header-cell *matHeaderCellDef> Consignee </th>
+                    <td mat-cell *matCellDef="let element"> {{element.consigneeName}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="product">
+                    <th mat-header-cell *matHeaderCellDef> Product</th>
+                    <td mat-cell *matCellDef="let element"> {{element.product}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="mode">
+                    <th mat-header-cell *matHeaderCellDef> Mode </th>
+                    <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="delivery">
+                    <th mat-header-cell *matHeaderCellDef> Delivery Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.delivery}} </td>
+                  </ng-container>
+            
+              
+                 <ng-container matColumnDef="fromDest">
+                    <th mat-header-cell *matHeaderCellDef> From Dest </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fromDest}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="toDest">
+                    <th mat-header-cell *matHeaderCellDef> To Dest </th>
+                    <td mat-cell *matCellDef="let element"> {{element.toDest}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="qty">
+                    <th mat-header-cell *matHeaderCellDef> PCs </th>
+                    <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="actualWt">
+                    <th mat-header-cell *matHeaderCellDef> Weight </th>
+                    <td mat-cell *matCellDef="let element"> {{element.actualWt}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="manifestno">
+                    <th mat-header-cell *matHeaderCellDef> MFT NO. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.manifestno}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="manifestdate">
+                    <th mat-header-cell *matHeaderCellDef> MFT Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.manifestdate}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="manifestmode">
+                    <th mat-header-cell *matHeaderCellDef> MFT Mode </th>
+                    <td mat-cell *matCellDef="let element"> {{element.manifestmode}} </td>
+                  </ng-container>
+            
+                  <ng-container matColumnDef="invoiceNo">
+                    <th mat-header-cell *matHeaderCellDef> Invoice No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+                  </ng-container>
+              
+              
+                  <ng-container matColumnDef="invoiceValue">
+                    <th mat-header-cell *matHeaderCellDef> Invoice Value </th>
+                    <td mat-cell *matCellDef="let element"> {{element.invoiceValue}} </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table> -->
+ 

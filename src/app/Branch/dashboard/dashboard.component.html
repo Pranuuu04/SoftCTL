@@ -1,0 +1,430 @@
+<div class="main-content" style="margin-top: 57px; padding: 9px 1px;">
+  <div class="container-fluid">
+          <!-- First row  -->
+      <div class="row" style="margin-top: -6px">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="./assets/img/pickup.png" alt="">
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0">Pickup</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group  dynamicHeight class="Customer" style="margin: 0 11px;" (selectedTabChange)="onTabChangePickup($event)">
+                        <mat-tab label="Pending" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" >
+                                {{pickupPending}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Done" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4">
+                              {{pickupDone}}
+                            </div>
+                          </mat-tab>                                                   
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="this.dispatch !== '1'">
+            <div class="card card-stats">
+                <div class="card-header card-header-icon" >
+                    <div class="card-icon" style="background-color:
+                     #28bbf5">
+                        <img src="./assets/img/manifest.png" alt="">
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0" >Manifest</h4>
+                </div>
+                <div class="card-body">
+                  <mat-tab-group dynamicHeight class="Customer" style="margin: 0 11px;" (selectedTabChange)="onTabChangeManf($event)">
+                      <mat-tab label="Pending">
+                          <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Pending')" [class.pointer-cursor]="isClicked">
+                              {{ manifestPending }}
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Done">
+                          <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Done')" [class.pointer-cursor]="isClicked">
+                              {{ manifestDone }}
+                          </div>
+                      </mat-tab>
+                  </mat-tab-group>
+              </div>
+            </div>
+        </div>
+
+        
+          <div class="col-lg-4 col-md-6 col-sm-6"  *ngIf="this.dispatch === '1'">
+              <div class="card card-stats">
+                  <div class="card-header card-header-icon" >
+                      <div class="card-icon" style="background-color:
+                       #28bbf5">
+                          <img src="./assets/img/manifest.png" alt="">
+                      </div>
+                      <h4 class="d-flex justify-content-center mb-0" >Manifest / Dispatch</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Customer" style="margin: 0 11px;" (selectedTabChange)="onTabChangeManf($event)">
+                        <mat-tab label="Pending">
+                            <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Pending')" [class.pointer-cursor]="isClicked">
+                                {{ manifestPending }}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Done">
+                            <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Done')" [class.pointer-cursor]="isClicked">
+                                {{ manifestDone }}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Pending">
+                            <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Done')" [class.pointer-cursor]="isClicked">
+                                {{ DispatchPending }}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Done">
+                            <div class="example-small-box mat-elevation-z4" (click)="ManifestModal('Done')" [class.pointer-cursor]="isClicked">
+                                {{ DispatchDone }}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                        <img src="./assets/img/InscanIcon.png" alt="">
+                    </div>
+                      <h4 class="d-flex justify-content-center mb-0" >Inscan</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Customer" style="margin: 0 11px;" (selectedTabChange)="onTabChangeInscan($event)">
+                        <mat-tab label="Pending" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="InscanModal('Pending')" [class.pointer-cursor]="isClicked" >
+                               {{inscanPending}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Done" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="InscanModal('Done')" [class.pointer-cursor]="isClicked">
+                                {{inscanDone}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+    
+      </div>
+     
+      <!-- second row  -->
+
+      <div class="row" style="margin-top: -6px">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <img src="./assets/img/runsheet.png" alt="">                   
+                     </div>
+                    <h4 class="d-flex justify-content-center mb-0">DRS</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Customer" style="margin: 0 11px;" (selectedTabChange)="onTabChangeDrs($event)">
+                        <mat-tab label="Pending" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="DrsModal('Pending')" [class.pointer-cursor]="isClicked" >
+                                {{drsPending}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Done" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="DrsModal('Done')" [class.pointer-cursor]="isClicked">
+                                {{drsDone}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-
+                header card-header-icon">
+                    <div class="card-icon" style="background-color: #28bbf5 ">
+                        <img src="./assets/img/status.png" alt="">                   
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0" >Status</h4>
+                </div>
+                <div class="card-body">
+                  <mat-tab-group dynamicHeight class="FrenchiseeS" (selectedTabChange)="onTabChangeStatus($event)">
+                    <mat-tab label="InTransit" [{ngModel}]="statusInTransit">
+                        <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('InTransit')" [class.pointer-cursor]="isClicked">    
+                            {{statusInTransit}}
+                        </div>
+                    </mat-tab>
+                      <mat-tab label="OFD" >
+                          <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('OFD')" [class.pointer-cursor]="isClicked">    
+                              {{statusOFD}}
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="UnDelv">
+                          <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('UnDelivered' )" [class.pointer-cursor]="isClicked">
+                              {{statusUnDelv}}
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Delv">
+                          <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('Delivered' )" [class.pointer-cursor]="isClicked">
+                            {{statusDelv}}
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="RTO">
+                        <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('RTO' )" [class.pointer-cursor]="isClicked">
+                            {{statusRTO}}
+                        </div>
+                    </mat-tab>
+                  </mat-tab-group>
+              </div>
+            </div>
+        </div>
+  
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                        <img src="./assets/img/sales.png" alt="">                   
+                      </div>
+                      <h4 class="d-flex justify-content-center mb-0" >Sales</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="FrenchiseeS" (selectedTabChange)="onTabChangeSales($event)">
+                        <mat-tab [{ngModel}]="salesCredit" label="Credit">
+                            <div class="example-small-box mat-elevation-z4"  (click)="SalesModal('Credit')" [class.pointer-cursor]="isClicked">
+                                {{salesCredit}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Cash">
+                            <div class="example-small-box mat-elevation-z4"  (click)="SalesModal('Cash')" [class.pointer-cursor]="isClicked">
+                                {{salesCash}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="To Pay">
+                            <div class="example-small-box mat-elevation-z4"  (click)="SalesModal('ToPay')" [class.pointer-cursor]="isClicked">
+                                {{salesTopay}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="COD">
+                            <div class="example-small-box mat-elevation-z4"  (click)="SalesModal('COD')" [class.pointer-cursor]="isClicked">
+                                {{salesCOD}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Third row graph -->
+
+      <div class="row" style="margin-top: -6px">
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-danger chart" style="height: 180px;">
+                    <canvas #chartCanvas1 id="chartCanvas1" ></canvas>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Shipment Details</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-light pie" style=" background-color: rgba(214, 226, 230, 0.874);">
+                    <canvas #chartCanvas3 id="chartCanvas3" style="width: auto;"></canvas>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">Shipment Status MonthWise</h4>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-light Sales line">
+                    <canvas #chartCanvas2 id="chartCanvas2"></canvas>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Sales</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth row  -->
+
+    <div class="row" style="margin-top: -6px">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">content_copy</i>
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0">Trip Sheet</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Sheet" (selectedTabChange)="onTabChangeTrip($event)">
+                        <mat-tab label="Open" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="InscanModal('Pending')" [class.pointer-cursor]="isClicked">
+                                {{TripOpen}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Close"  class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="InscanModal('Pending')" [class.pointer-cursor]="isClicked">
+                                {{TripClose}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+        
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header  card-header-icon">
+                      <div class="card-icon" style="background-color: #28bbf5">
+                          <i class="material-icons">store</i>
+                      </div>
+                      <h4 class="d-flex justify-content-center mb-0" >TAT Report</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Within" (selectedTabChange)="onTabChangeTat($event)">
+                        <mat-tab label="Within">
+                            <div class="example-small-box mat-elevation-z4" (click)="InscanModal('Pending')" [class.pointer-cursor]="isClicked">
+                                {{TATWithin}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Due">
+                            <div class="example-small-box mat-elevation-z4"  (click)="InscanModal('Pending')" [class.pointer-cursor]="isClicked">
+                                {{TATDue}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">info_outline</i>
+                      </div>
+                      <h4 class="d-flex justify-content-center mb-0" >AWB Stock</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="CRM">
+                        <mat-tab label="Used" [{ngModel}]="AWBUsed">
+                            <div class="example-small-box mat-elevation-z4">
+                               {{AWBUsed}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="UnUsed" [{ngModel}]="AWBUnused" (ngModelChange)="awbUnusedData">
+                            <div class="example-small-box mat-elevation-z4">
+                                {{AWBUnused}}
+                            </div>  
+                        </mat-tab>
+                        <mat-tab label="Total" [{ngModel}]="AWBTotal" (ngModelChange)="awbAWBTotalData">
+                            <div class="example-small-box mat-elevation-z4">
+                                {{AWBTotal}}
+                            </div>  
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+    
+      </div>
+
+      <!-- other infomation  -->
+
+      <!-- <div class="row" style="margin-top: -6px">
+          <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-warning" style="padding: 7px; margin-top: -12px;">
+                    <h4 class="card-title">Customer</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <th>SR.</th>
+                            <th>Date</th>
+                            <th>Total WT</th>
+                            <th>Amount</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Dakota Rice</td>
+                                <td>$36,738</td>
+                                <td>Niger</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Minerva Hooper</td>
+                                <td>$23,789</td>
+                                <td>Curaçao</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Sage Rodriguez</td>
+                                <td>$56,142</td>
+                                <td>Netherlands</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+          </div>
+          <div class="col-lg-6 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-light" style="padding: 7px; margin-top: -12px; background-color: #28bbf5 ;">
+                      <h4 class="card-title">Vehicle</h4>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning">
+                              <th>SR.</th>
+                              <th>Mode Name</th>
+                              <th>Date</th>
+                              <th>Renew Date</th>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>1</td>
+                                  <td>Dakota Rice</td>
+                                  <td>$36,738</td>
+                                  <td>Niger</td>
+                              </tr>
+                              <tr>
+                                  <td>2</td>
+                                  <td>Minerva Hooper</td>
+                                  <td>$23,789</td>
+                                  <td>Curaçao</td>
+                              </tr>
+                              <tr>
+                                  <td>3</td>
+                                  <td>Sage Rodriguez</td>
+                                  <td>$56,142</td>
+                                  <td>Netherlands</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+  </div>
+</div>
+
+<!-- <div *ngIf="isLoading">
+    <img src="./../../../assets/gif/loading.gif" alt="Loading...">
+  </div> -->

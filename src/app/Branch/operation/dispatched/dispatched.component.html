@@ -1,0 +1,19 @@
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Pending Dispatched">
+                        <app-pending-dispatched></app-pending-dispatched>
+                    </mat-tab> 
+                    <mat-tab label="Create Dispatched">
+                        <app-create-dispatched></app-create-dispatched>
+                    </mat-tab> 
+                    <mat-tab label="View Dispatched">
+                        <app-view-dispatched></app-view-dispatched>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

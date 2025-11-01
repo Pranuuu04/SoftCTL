@@ -1,0 +1,152 @@
+<div class="container" style="max-height: 400px;">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Shipper</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+  </div>
+  <form [formGroup]="shipperForm" (ngSubmit)="formSubmit()">
+   
+        <div class="row">
+          <!-- <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="Shipper Name"><span style="color: red;">*</span>Shipper Name</label>
+                  <input class="form-control" type="text" [(ngModel)]="shipperName" formControlName="shipperName"  placeholder="Enter Shipper Name">
+              </div>
+              <div *ngIf="shipperForm.get('shipperName').touched && shipperForm.get('shipperName').invalid">
+                <div class="error-message" *ngIf="shipperForm.get('shipperName').hasError('required')">
+                  Please enter Shipper Name.
+                </div>
+              </div>
+          </div> -->
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label for="shipperName">Shipper Name</label>
+              <input
+                list="shipperNameList"
+                class="form-control"
+                formControlName="shipperName"
+                (input)="onShipperSelectedInDialog()"
+                placeholder="Enter / Select Shipper"
+              />
+              <datalist id="shipperNameList">
+                <option *ngFor="let item of shipperNameList" [value]="item.shipperName">
+                   {{item.shipperName}} ({{item.Shipper_GSTNo}})
+              </option>
+              </datalist>
+            </div>
+            <div *ngIf="shipperForm.get('shipperName')?.touched && shipperForm.get('shipperName')?.invalid">
+              <div class="error-message" *ngIf="shipperForm.get('shipperName')?.hasError('required')">
+                Please enter Shipper Name.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="ContactNo">Contact No</label>
+                  <input class="form-control" type="number" [(ngModel)]="contactNo" formControlName="contactNo"  placeholder="Enter Contact No">
+              </div>
+          </div>
+        </div>
+ <div class="row">
+          <div class="col-sm-9">
+              <div class="textOnInput">
+                  <label for="gstNo">GST verification</label>
+                  <input class="form-control" type="text" [(ngModel)]="gstNo" formControlName="gstNo" placeholder="Enter gst verification">
+              </div>
+          </div>
+          <div class="col-sm-3 d-flex" style="justify-content: end;">
+             <button matTooltip="Verify" tabindex="-1" type="button" class="btn btn-success hexagon-btn m-0 p-0" width="auto" [disabled]="isGstVerified !== true || shipperForm.get('gstNo')?.value?.length !== 15"  (click)="verifyGST()">
+              <i class="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Email">Email-ID</label>
+                  <input class="form-control" type="email" [(ngModel)]="emailID" formControlName="emailID"  placeholder="Enter Email_ID">
+                </div>
+            </div>
+             <!-- <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="Gst">Gst No</label>
+                  <input class="form-control" type="text" [(ngModel)]="gstNo" formControlName="gstNo"  placeholder="Enter Gst No">
+                </div>
+            </div> -->
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Add1">Address 1 </label>
+                  <input class="form-control" type="text" [(ngModel)]="address1" formControlName="address1"  placeholder="Enter Add1">
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="add2">Address 2</label>
+                  <input class="form-control" type="text" [(ngModel)]="address2" formControlName="address2"  placeholder="Enter add2">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="textOnInput">
+                  <label for="Pincode">PinCode</label>
+                  <input class="form-control" type="number"  min="0"  [(ngModel)]="pinCode" (change)="getPinCode($event)" formControlName="pinCode"  placeholder="Enter Pincode">
+              </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label class="span">City</label>
+              <ng-select
+                [items]="cityList"
+                bindLabel="destinationName"
+                bindValue="destinationCode"
+                formControlName="cityName"
+                [clearable]="false"
+                class="custom-select1"
+                style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+              </ng-select>
+            </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnInput">
+              <label for="image">Upload image :</label>
+              <input type="file" (change)="fileChangeEvent($event)" [(ngModel)]="kycImage" class="form-control"  placeholder="Upload KYC Here"/>
+            </div>
+            </div>
+        </div>
+
+        <section class="example-section">
+          <mat-checkbox class="example-margin" formControlName="saveShipper">Save Shipper</mat-checkbox>
+        </section>
+
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-light other-button">Submit</button>
+          </div>
+         </div>
+      </form>
+</div>

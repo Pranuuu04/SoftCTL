@@ -1,0 +1,169 @@
+* {
+    font-size: 12px;
+    padding-top: 1.1px;
+    color: black;
+}
+
+form .col-sm-1{
+    padding-right: 8px;
+}
+
+.form-control,
+.form-select , 
+textarea,
+input{
+    border: 1px solid #d2d2d2;
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+    height: 26px;
+}
+
+.custom-select{
+    height: 30px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2;
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-family: auto;
+}
+
+label{
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+form button{
+    width: 70px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2; 
+    font-size: medium;
+    padding-top: 1.1px;
+    height: 26px;
+    margin-top: 0;
+    margin-right: 7px;
+    line-height: 26px;
+    text-transform: capitalize;
+}
+
+p{
+    margin: 0;
+    display: inline;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: black;
+    font-weight: 700;
+    font-family: system-ui;
+    word-wrap: inherit;
+}
+
+h4{
+    color: #f8f9fa;
+}
+
+.modal-backdrop{
+    opacity:-0.5!important;
+}
+
+.modal-backdrop.in {
+	opacity: 0.9;
+}
+
+.card{
+    text-align: inherit;
+    display: flex; 
+    justify-content: center;
+    margin: 4px;
+    border: 2px solid  rgba(214, 226, 230, 0.874);
+    word-wrap: inherit;
+}
+
+.card .card-body{
+    padding: 2px 20px;
+}
+ 
+ 
+tr i{
+    border: 1px solid #d2d2d2;
+    height: 22px;
+    width: 22px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-size: large;
+    border-radius: 22px;
+    margin: 0px 2px;
+   }
+
+   .error-message{
+    color: red;
+  }
+
+  button.mat-icon-button{
+    height: 26px;
+    line-height: 21px;
+  }
+.submitbtn{
+  justify-content: right;
+}
+
+.table-responsive{
+  max-height: 400px ; 
+  overflow: auto ; 
+   padding-top: 0 ;
+  margin-top: 0 ;
+}
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+} 
+
+.table tbody  tr  td {
+   font-size: small;
+  padding: 0 8px;
+  text-align: center;
+}
+.table-responsive{
+  margin-bottom: 0;
+  color: black;
+  font-weight: 400;
+}
+table , td ,th {
+  border: 1px Solid #9b9898;
+}
+table th{ 
+  font-size: 14px;
+  padding: 4px 8px;
+  font-weight: 600;
+  text-align: center;
+}
+table {
+    width: 100%;
+  }
+
+  ::ng-deep .custom-snackbar {
+    color: white !important;
+    background-color: #0a990a !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+    color: white !important;
+    background-color: red !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+  color: white;
+}

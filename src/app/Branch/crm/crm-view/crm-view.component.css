@@ -1,0 +1,70 @@
+input{
+  border: 1px solid #d2d2d2;
+  border-radius: 0.25rem;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  font-family: auto;
+  height: 26px;
+}
+table {
+  width: 100%;
+}
+th.mat-header-cell {
+  text-align: center;
+}
+table ,th {
+  color: black;
+}
+table th{ 
+  font-size: 15px;
+  font-weight: 600;
+}
+table , td ,th {
+  border: 1px Solid #9b9898;
+}
+th.mat-header-cell:first-of-type,td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+  padding-left: 0;
+}
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-right: 0;
+}
+.mat-cell {
+  font-size: 13px;
+  text-align: center;
+  font-weight: 400;
+}
+
+tr.mat-row {
+  height: 26px;
+}
+tr.mat-header-row {
+  height: 30px;
+  color: black;
+  font-weight: 600;
+  background-color: #afdadf;
+}
+
+button.mat-icon-button{
+  height: 26px;
+  line-height: 26px;
+}
+::ng-deep .custom-snackbar {
+  color: white !important;
+  background-color: #0a990a !important;
+  margin-top: 72px !important;
+  margin-right: 66px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+  color: white !important;
+  background-color: red !important;
+  margin-top: 72px !important;
+  margin-right: 66px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+color: white;
+}

@@ -1,0 +1,143 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600; font-size: large; margin-bottom: 0; margin-top: 7px; ">Label</h1>
+      </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;text-align: center; line-height: 30px; height: 30px; font-weight: 500; font-size: large; background: red; color: white;">X</button>
+      </div>
+    </div>
+    <form>
+      <div class="row">
+        <div class="col-sm-6" style="border-right: 1px solid #d2d2d2;">
+          <div class="row">
+
+            <!-- <div class="col-sm-12"(click)="handleEventToUncheckEdd()">
+                <mat-slide-toggle [checked]="isEddChecked">Book</mat-slide-toggle>
+            </div> -->
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isEddChecked" (change)="updateCheckboxEDD('isEddChecked')">EDD</mat-slide-toggle>
+            </div>
+              
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isShipperChecked" (change)="updateCheckboxShipper('isShipperChecked')">Shipper</mat-slide-toggle>
+            </div>  
+         
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isDepartmentChecked" (change)="updateCheckboxDepartment('isDepartmentChecked')">Department</mat-slide-toggle>
+            </div>
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isConsigneeChecked" (change)="updateCheckboxConsignee('isConsigneeChecked')">Consignee</mat-slide-toggle>
+            </div>
+         
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isAddressChecked" (change)="updateCheckboxAddress('isAddressChecked')">Address</mat-slide-toggle>
+            </div>
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isBillPartyChecked" (change)="updateCheckboxBillParty('isBillPartyChecked')">BillParty</mat-slide-toggle>
+            </div>
+         
+            <!-- <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isEddChecked">ADDButton</mat-slide-toggle>
+            </div> -->
+                     
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isRemarkChecked" (change)="updateCheckboxRemark('isRemarkChecked')">Remark</mat-slide-toggle>
+            </div>
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isSNoChecked" (change)="updateCheckboxSrNo('isSNoChecked')">SNo</mat-slide-toggle>
+            </div>
+         
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isVendorChecked" (change)="updateCheckboxVendor('isVendorChecked')">Vendor</mat-slide-toggle>
+            </div>
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isForwardNoChecked" (change)="updateCheckboxForwardNo('isForwardNoChecked')">ForwardNo</mat-slide-toggle>
+            </div>
+         
+            <!-- <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isEddChecked">Via</mat-slide-toggle>
+            </div> -->
+
+            <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isDelvTypeChecked" (change)="updateCheckboxDelvType('isDelvTypeChecked')">DelvType</mat-slide-toggle>
+            </div>
+          </div>
+  
+        </div> 
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isPkgTypeChecked" (change)="updateCheckboxPkgTpye('isPkgTypeChecked')">PkgType</mat-slide-toggle>
+                </div>
+             
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isDiscountChecked" (change)="updateCheckboxDiscount('isDiscountChecked')">Discount</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isDocketChecked" (change)="updateCheckboxDocket('isDocketChecked')">Docket</mat-slide-toggle>
+                </div>
+             
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isFovChecked" (change)="updateCheckboxFOV('isFovChecked')">FOV</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isOdaChecked" (change)="updateCheckboxODA('isOdaChecked')">ODA</mat-slide-toggle>
+                </div>
+             
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isPackingChrgChecked" (change)="updateCheckboxPacking('isPackingChrgChecked')">PackingChrg</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isInsurranceChecked" (change)="updateCheckboxIncCharge('isInsurranceChecked')">InsuranceChrg</mat-slide-toggle>
+                </div>
+             
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isLoadingChecked" (change)="updateCheckboxLoading('isLoadingChecked')">LoadingChrg</mat-slide-toggle>
+                </div>
+                         
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isOtherChrgChecked" (change)="updateCheckboxOther('isOtherChrgChecked')">OtherChrg</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                <mat-slide-toggle [checked]="isFuelChrgChecked" (change)="updateCheckboxFuel('isFuelChrgChecked')">FuelChrg</mat-slide-toggle>
+                </div>
+             
+                <!-- <div class="col-sm-12">
+                    <mat-slide-toggle checked>chrg71</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                    <mat-slide-toggle checked>chrg81</mat-slide-toggle>
+                </div>
+             
+                <div class="col-sm-12">
+                    <mat-slide-toggle checked>chrg91</mat-slide-toggle>
+                </div>
+    
+                <div class="col-sm-12">
+                    <mat-slide-toggle checked>chrg10</mat-slide-toggle>
+                </div> -->
+              </div>
+        </div>
+  
+      </div>
+  
+          <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+              <button type="button" class="btn btn-light other-button" (click)="submitValue()">Submit</button>
+            </div>
+           </div>
+        </form>
+  </div>
+  

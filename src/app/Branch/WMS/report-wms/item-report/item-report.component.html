@@ -1,0 +1,135 @@
+<div>
+    <form [formGroup]="createForm" (ngSubmit)="generateItemReport(createForm.value)">
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        <!-- <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="fromDate">From :</label>
+            <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate">
+            <div *ngFor="let validation of validationMessage.fromDate">
+              <div class="error-message"
+                *ngIf="createForm.get('fromDate').hasError(validation.type) && (createForm.get('fromDate').dirty || createForm.get('fromDate').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="toDate">To :</label>
+            <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate">
+            <div *ngFor="let validation of validationMessage.toDate">
+              <div class="error-message"
+                *ngIf="createForm.get('toDate').hasError(validation.type) && (createForm.get('toDate').dirty || createForm.get('toDate').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+        </div> -->
+          <div class="col-sm-3">
+            <div class="textOnSelect">
+                <label for="itemName"><span style="color: red;">*</span>Item name :</label>
+                 <!--<select class="custom-select" formControlName="itemName"  (change)="resetPagination()">
+                  <option value="All" selected>All Item</option>
+                     <option *ngFor="let item of itemList" [value]="item.ItemCode">{{ item.ItemName }}</option>
+                </select>  style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"-->
+                 <!-- <ng-select
+                        formControlName="itemName"
+                        (change)="resetPagination()"
+                        [items]="filteredItemList"
+                        bindLabel="ItemName"
+                        bindValue="ItemCode"
+                        [clearable]="false"
+                        [virtualScroll]="true"
+                        (search)="onItemSearch($event)"
+                        class="custom-select1">
+                        <ng-option *ngFor="let item of filteredItemList" [value]="item.ItemCode">
+                          {{item.ItemName}}
+                        </ng-option>
+                      </ng-select> -->
+                    <ng-select [clearable]="false" formControlName="itemName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px; width: 100%;">
+                       <ng-option  *ngFor="let item of itemList" [value]="item.ItemCode" style="font-size: 14px;" >{{ item.ItemName }}({{ item.ItemCode }})</ng-option>
+                    </ng-select>  
+             </div>
+          </div>
+          <div class="col-sm-1 download-buttons">
+            <button type="button" class="btn btn-outline-light pb-0 m-0" (click)="downloadSample()" [disabled]="!showTable"><i
+                class="fa-solid fa-table"></i>
+              <span class="text">XLs</span></button>
+          </div>
+      </div>    
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2; margin: 10px 0;">
+        <div class="col-sm-2">
+         </div>
+        <div class="col-sm-6">
+         
+        </div>
+        <div class="col-sm-3 d-flex" style="justify-content: end;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+    </form> 
+  </div>
+  <div *ngIf="showTable">
+  <div class="table-responsive text-nowrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+        
+      <ng-container matColumnDef="S_no">
+        <th mat-header-cell *matHeaderCellDef> S.No </th>
+        <td mat-cell *matCellDef="let element"> {{ element.S_no }} </td>
+      </ng-container>
+
+      <!-- Category_Code Column -->
+      <ng-container matColumnDef="Category_Code">
+        <th mat-header-cell *matHeaderCellDef> Category Code </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Category_Code }} </td>
+      </ng-container>
+
+      <!-- Item_Code Column -->
+      <ng-container matColumnDef="Item_Code">
+        <th mat-header-cell *matHeaderCellDef> Item Code </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Item_Code }} </td>
+      </ng-container>
+
+      <!-- Item_Name Column -->
+      <ng-container matColumnDef="Item_Name">
+        <th mat-header-cell *matHeaderCellDef> Item Name </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Item_Name }} </td>
+      </ng-container>
+
+      <!-- Qty Column -->
+      <ng-container matColumnDef="Qty">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Qty }} </td>
+      </ng-container>
+
+      <!-- Rate Column -->
+      <ng-container matColumnDef="Rate">
+        <th mat-header-cell *matHeaderCellDef> Rate </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Rate }} </td>
+      </ng-container>
+
+      <!-- Volume Column -->
+      <ng-container matColumnDef="Volume">
+        <th mat-header-cell *matHeaderCellDef> Serial no. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Volume }} </td>
+      </ng-container>
+
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+</div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="">
+</div>

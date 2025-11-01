@@ -1,0 +1,248 @@
+    .logo {
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      text-align: center; 
+      background-color: white;
+      padding: 9px 0px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center; 
+      margin: 0;
+      height: 50px;
+    }
+    
+    .logo img {
+      width: 50px;
+      height: auto;
+      object-fit: contain;
+      position: unset;
+    }
+  .sidebar-wrapper{
+      width: 206px;
+      padding-bottom: 0;
+      height: 90vh;
+  }
+  .sidebar-wrapper .nav p{
+      font-size: 13px;
+  }
+  .sidebar-wrapper .nav i{
+      margin-right: 1px;
+  }
+  
+  .sidebar-wrapper .nav li a{
+      font-size: 13px;
+      padding: 9.5px 4px;
+  }
+  .sidebar-wrapper .nav p{
+      font-size: 13px;
+      font-weight: 500;
+      color: black; 
+  }
+  @media (min-width: 320px) and (max-width: 991px) {
+    .sidebar-wrapper{
+        width: 259px;
+    }
+    :ng-deep .mat-drawer-container {
+      width: 259px !important;
+    }
+    .mat-nav button{
+      width: 229px;
+    }
+  }
+  .mat-drawer-container {
+      background-color: white;
+      color: white;
+      background-color: none; 
+      height: 90vh;
+  }
+  .mat-nav{
+    margin-top: 0px;
+    display: block;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: white;
+  }
+  .mat-nav button{
+   width:  168px;
+  height: 49px;
+  float: left;
+  display: flex;
+  padding: 9.5px 4px;
+  margin: 4px 15px ;
+  line-height: 30px;
+  font-size: 13px;
+  }
+  .menu-button{
+    box-shadow: rgba(99, 99, 99, 0.2) 3px 6px 9px -1px;
+  }
+  .sidebtn{
+    box-shadow:rgba(99, 99, 99, 0.2) 2px 4px 7px -1px;
+  }
+  .mat-menu-item{
+    line-height: 43px;
+      height: 44px;
+  }
+  ::ng-deep .sideMenu {
+  margin-top: -53px !important;
+  margin-bottom: -3rem !important;
+  }
+  mat-icon{
+      color: #a9afbb;
+  }
+  .menu-button span,
+  .sidebtn span{
+      font-size: 13px;
+      font-weight: 500;
+      color: black; 
+  }
+  @media (min-width: 320px) and (max-width: 991px){
+      .mat-nav button{
+          width: 229px;
+       }
+  }
+  @media (min-width: 425px) and (max-width: 1024px){
+      ::ng-deep .sideMenu {
+          }
+  }
+  @media (min-width: 320px) and (max-width: 425px){
+      ::ng-deep .sideMenu {
+      margin-left: -128px !important;
+      }
+  }
+  .form-control{
+      border-radius: 11px;
+       margin: 0px 0 0; 
+       box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; 
+       height: 28px; 
+       padding-left: 17px;
+       background-color: white;
+       width: 60%; 
+       margin-left: 23px;
+       margin-right: 5px; 
+       padding-right: 10px; 
+       border-top-right-radius: 0;  
+       border-bottom-right-radius: 0;
+    }
+    .search{
+      z-index: 1001;
+      position: absolute;
+      top: -6px;
+      width: 38px;
+      height: 28px;
+      right: 41px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 1px solid #b1a4a4; 
+    }
+    .drop{
+      z-index: 1001;
+      position: absolute;
+      top: -6px;
+      width: 38px;
+      height: 28px;
+      right: 41px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      mat-icon{
+        margin-top: -35px; 
+        font-size: 25px;
+      }
+    }
+    .search,
+    .drop{
+      background-color: rgba(214, 226, 230, 0.874);
+      i,
+      mat-icon{
+        color: black;
+      }
+    }
+    .search:hover,
+    .drop:hover{
+      background-color: #28bbf5;
+      i,
+      mat-icon{
+        color: white;
+      }
+    }
+  
+  input[type=date]{
+      padding-left: 10px;
+    }
+    .date-range-picker label{
+      padding: 6px;
+    }
+    
+    @media (min-width:1024px) and  (max-width: 560px){
+      input[type=date]{
+        width: 123px;
+      } 
+      .form-control{
+        width: 64%;
+        margin-right: 28px;
+      }
+    }
+    ::ng-deep .sideMenu{
+      left: 187px !important;
+  }
+  @media screen and (max-width: 425px){
+      ::ng-deep .sideMenu{
+      left: 0 !important;
+  }
+  }
+    ::ng-deep .custom-snackbar {
+      color: #055305 !important;
+      border: 1px solid #80a580  !important;
+        background-color: #aed7ae !important;
+      margin-top: 72px !important;
+      margin-right: 66px !important;
+      font-weight: 400 !important;
+      font-size: 15px !important;
+      }
+      ::ng-deep .error-snackbar{
+      color: red !important;
+      border: 1px solid  #e39999 !important;
+      background-color: #f1d7d7 !important;
+      margin-top: 72px !important;
+      margin-right: 66px !important;
+      font-weight: 400 !important;
+      font-size: 15px !important;
+      }
+      ::ng-deep .mat-simple-snackbar-action button  {
+      color: black;
+      }
+      ::ng-deep .mat-menu-panel{
+        max-height: 394px !important;
+      }
+      @media (min-width: 320px) and (max-width: 991px) {
+  .sidebar-wrapper {
+    width: 259px;
+  }
+  :ng-deep .mat-drawer-container {
+    width: 259px !important;
+    height: 90vh;
+  }
+  .mat-nav button {
+    width: 215px;
+  }
+}
+::ng-deep mat-sidenav {
+  transition: transform 0.3s ease-in-out;
+}
+/* === New styles for MatSidenav Sidebar support === */
+
+::ng-deep mat-sidenav {
+  height: 100vh !important;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 991px) {
+  ::ng-deep mat-sidenav {
+    width: 259px !important;
+  }
+}

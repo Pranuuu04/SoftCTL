@@ -1,0 +1,208 @@
+<div class="col-lg-12 col-md-12" style="display: flex;
+justify-content: center;">
+    <div class="card">
+        <div class="card-body table-responsive ">
+                    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
+                  <div class="row">
+                    <label id="DRSDates" for="DRSDate" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                        <input type="date" class="form-control" id="DRSDate" formControlName="DrsDate">
+                    </div>
+                    <label for="area" class="col-sm-1 col-lg-1 col-md-2 form-label">Area</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                        <input type="text" placeholder="Leave a comment here" formControlName="area" class="form-control" id="area" required />
+                        <div *ngFor="let validation of validationMessage.area">
+                          <div class="error-message"
+                            *ngIf="Drsentryform.get('area').hasError(validation.type) && (Drsentryform.get('area').dirty || Drsentryform.get('area').touched)">
+                            {{ validation.message }}
+                          </div>
+                        </div>
+                    </div>
+                    <label for="userName" class="col-sm-1 col-lg-1 col-md-2 form-label">Name</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3" >
+                      <select id="userName" class="custom-select" formControlName="userName" (change)="onEmployeeSelect($event)">
+                        <option value="" selected disabled>Select pickup boy</option>
+                        <option value="{{item.employeeCode}}"  *ngFor="let item of nameList" >{{item.employeeName}}</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="row ">
+                    <label for="employeeMobile" class="col-sm-1 col-lg-1 col-md-2 form-label">Mobile No.</label>
+                  <div class="col-sm-3 col-md-4 col-lg-3">
+                    <input type="tel" class="form-control" id="employeeMobile" placeholder="Enter Mobile No" formControlName="employeeMobile"
+                    aria-describedby="emailHelp" required>
+                    <div *ngFor="let validation of validationMessage.employeeMobile">
+                      <div class="error-message"
+                        *ngIf="Drsentryform.get('employeeMobile').hasError(validation.type) && (Drsentryform.get('employeeMobile').dirty || Drsentryform.get('employeeMobile').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+                  <label for="vehicleNo" class="col-sm-1 col-lg-1 col-md-2 form-label">Vehicle No.</label>
+                  <div class="col-sm-3 col-md-4 col-lg-3">
+                    <input type="text" class="form-control" id="vehicleNo" placeholder="Vechile No." formControlName="vehicleNo"
+                    aria-describedby="emailHelp">
+                    <div *ngFor="let validation of validationMessage.vehicleNo">
+                      <div class="error-message"
+                        *ngIf="Drsentryform.get('vehicleNo').hasError(validation.type) && (Drsentryform.get('vehicleNo').dirty || Drsentryform.get('vehicleNo').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+                  <label for="AwbNo" class="col-sm-1 col-lg-1 col-md-2 form-label">Awb No.</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                      <input type="text" class="form-control" id="AwbNo" placeholder="Enter Awb No" formControlName="AwbNo" [(ngModel)]="AwbNo" aria-describedby="emailHelp">
+                      <div *ngFor="let validation of validationMessage.AwbNo">
+                        <div class="error-message"
+                          *ngIf="Drsentryform.get('AwbNo').hasError(validation.type) && (Drsentryform.get('AwbNo').dirty || Drsentryform.get('AwbNo').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              
+              <div class="row" style="justify-content: right;">
+                <div class="col-sm-3 d-flex" style=" justify-content: right;">
+                  <button type="button" class="btn btn-light" style="background-color: #2e3f55;color: white;" (click)="openDirectDrsBulkModal()">Bulk</button>
+
+                  <button type="button" class="btn btn-light" [disabled]="!Drsentryform.get('AwbNo').value" (click)="submitDrsForm(Drsentryform.value)">Find</button>
+                  <button type="button" class="btn btn-light" (click)="generateData()" >Generate</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        
+      <div *ngIf="listData.length > 0">
+        <div class="table-responsive text-nowrap mt-2">
+          <table class="table table-bordered table-striped"  style="background-color: rgb(223 233 237 / 87%);">
+            <thead style="background-color:#34b0d3; color: white;">
+              <tr>
+                  <th>Awb No</th>
+                  <th>Booking Date</th>
+                  <th>Conginer</th>
+                  <th>Conginee</th>
+                  <th>Qty</th>
+                  <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listData;" >
+                <td >{{item.awbNo}}</td>
+                <td >{{item.bookDate | date:'dd/MM/yyyy'}}</td>
+                <td >{{item.conginer}}</td>
+                <td >{{item.conginee}}</td>
+                <td >{{item.qty}}</td>
+                <td >{{item.weight}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+</div>
+
+ <div *ngIf="showTable && dataSource.data.length > 0">
+  <div class="table-responsive">
+    <div class="row d-flex m-0" style="justify-content: right;" >
+      <div class="form-group has-search col-sm-3">
+        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+        position: absolute;
+        background: none;
+        top: -4px;
+        width: 38px;
+        height: 32px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: white; margin-top: -4px;"></i>
+        </button>
+        <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+      </div>
+     </div>
+  </div>
+  <div class="table-responsive text-nowrap">
+      <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+  
+        <ng-container matColumnDef="awbNo">
+          <th mat-header-cell *matHeaderCellDef>Awb no. </th>
+          <td mat-cell *matCellDef="let element"> {{element.awbNo}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="bookDate">
+          <th mat-header-cell *matHeaderCellDef> Booking Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.bookDate | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="manifestNo">
+          <th mat-header-cell *matHeaderCellDef> MFT No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.manifestNo}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="manifestDate">
+          <th mat-header-cell *matHeaderCellDef> Manifest date </th>
+          <td mat-cell *matCellDef="let element"> {{element.manifestDate}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="customerType">
+          <th mat-header-cell *matHeaderCellDef> Cust Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.customerType}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="consigneeName">
+          <th mat-header-cell *matHeaderCellDef> Conginee </th>
+          <td mat-cell *matCellDef="let element"> {{element.consigneeName}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Origin">
+          <th mat-header-cell *matHeaderCellDef>Origin</th>
+          <td mat-cell *matCellDef="let element"> {{element.Origin}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Destination_Name">
+          <th mat-header-cell *matHeaderCellDef> Dst </th>
+          <td mat-cell *matCellDef="let element"> {{element.Destination_Name}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="consigneePin">
+          <th mat-header-cell *matHeaderCellDef> consignee Pin </th>
+          <td mat-cell *matCellDef="let element"> {{element.consigneePin}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="modeCode">
+          <th mat-header-cell *matHeaderCellDef> Mode</th>
+          <td mat-cell *matCellDef="let element"> {{element.modeCode}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Product_Type">
+          <th mat-header-cell *matHeaderCellDef> Product </th>
+          <td mat-cell *matCellDef="let element"> {{element.Product_Type}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Qty">
+          <th mat-header-cell *matHeaderCellDef> Pcs </th>
+          <td mat-cell *matCellDef="let element"> {{element.Qty}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="ActualWt">
+          <th mat-header-cell *matHeaderCellDef>Actual Wt</th>
+          <td mat-cell *matCellDef="let element"> {{element.ActualWt}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="totalAmt">
+          <th mat-header-cell *matHeaderCellDef>total Amt</th>
+          <td mat-cell *matCellDef="let element"> {{element.totalAmt}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    </div>
+<mat-paginator [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+ </div>
+  <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="">
+    </div>

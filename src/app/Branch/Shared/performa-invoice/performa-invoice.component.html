@@ -1,0 +1,121 @@
+<!-- <div class="container"> -->
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Performa Invoice</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+  <form [formGroup]="performaForm" (ngSubmit)="formSubmit(performaForm.value,performaForm)">
+  <div class="table-responsive text-nowrap">
+    <table class="table table-bordered table-striped"  style="background-color: rgb(223 233 237 / 87%);">
+      <thead style="background-color: #b2bcff; color: white;">
+        <tr>
+            <th> <span style="color: red;">*</span>Inv no.</th>
+            <th> <span style="color: red;">*</span>Inv date</th>
+            <th style="width: 450px;"> <span style="color: red;">*</span>Description</th>
+            <th>HS code</th>
+            <th>Unit type</th>
+            <th><span style="color: red;">*</span>Qty </th>
+            <th><span style="color: red;">*</span>Unit rate </th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+      </thead>
+      <tbody >
+        <tr>
+            <td>
+                <input class="form-control" type="text" formControlName="invNo" #poNo id="invNo">
+                <div *ngIf="performaForm.get('invNo').invalid && performaForm.get('invNo').touched">
+                  <div *ngFor="let error of validationMessage.invNo" class="text-danger">{{ error.message }}</div>
+                </div>
+            </td>
+            <td>
+              <input class="form-control" type="date" id="invDate" formControlName="invDate" value="{{currentDate}}" [max]="currentDate" >
+              <div *ngIf="performaForm.get('invDate').invalid && performaForm.get('invDate').touched">
+                <div *ngFor="let error of validationMessage.invDate" class="text-danger">{{ error.message }}</div>
+              </div>
+            </td>
+          <td>
+             <input class="form-control" type="text" id="Description"  formControlName="Description">
+             <div *ngIf="performaForm.get('Description').invalid && performaForm.get('Description').touched">
+              <div *ngFor="let error of validationMessage.Description" class="text-danger">{{ error.message }}</div>
+            </div>
+          </td>
+          <td>
+            <input class="form-control" type="text" id="HScode" formControlName="HScode">
+          </td>
+          <td>
+            <input class="form-control" type="text" id="unitType" formControlName="unitType">
+          </td>
+          <td>
+            <input class="form-control" type="number" min="0" id="Qty" formControlName="Qty">
+            <div *ngIf="performaForm.get('Qty').invalid && performaForm.get('Qty').touched">
+              <div *ngFor="let error of validationMessage.Qty" class="text-danger">{{ error.message }}</div>
+            </div>
+          </td>
+          <td>
+            <input class="form-control" type="number" min="0" id="unitRate"  formControlName="unitRate">
+            <div *ngIf="performaForm.get('unitRate').invalid && performaForm.get('unitRate').touched">
+              <div *ngFor="let error of validationMessage.unitRate" class="text-danger">{{ error.message }}</div>
+            </div>
+          </td>
+          <td>
+            <input class="form-control" type="number"  min="0" id="Amount" formControlName="Amount" readonly>
+          </td> 
+          <td>
+            <button type="submit" class="btn btn-light form-icon"><i class="fa-solid fa-plus"></i></button>
+          </td>
+        </tr>
+        <tr *ngFor="let item of performaListData; let i = index">
+          <td>{{item.InvoiceNo}}</td>
+          <td>{{item.InvoiceDate | date:'dd/MM/yyyy'}}</td>
+          <td>{{item.Description}}</td>
+          <td>{{item.HSCode }}</td>
+          <td>{{item.UnitType}}</td>
+          <td>{{item.Qty}}</td>
+          <td>{{item.UnitRate}}</td>
+          <td>{{item.Amount}}</td>
+          <td>
+            <button type="button" class="btn btn-light delete" (click)="deleteItem(i)"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </form>
+  <div class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4">
+        <div class="textOnInput">
+            <label for="Note">Note :</label>
+            <input class="form-control" [(ngModel)]="Note" type="text" style="background-color: white;">
+          </div>
+    </div>
+    <div class="col-sm-4 d-flex" style=" padding-right: 0;" >
+        <div class="textOnInput">
+      <label for="Charge">Total Invoice value :</label>
+      <input class="form-control" [value]="totalPerformaValue" readonly style="background-color: white;">
+    </div>
+  </div>
+  
+  <div class="col-sm-4" style="display: flex; justify-content: right;">
+    <button tabindex="-1" type="button" class="btn btn-light form-button" style="width: 66px;
+    height: auto;
+    background: #2e3f55;
+    color: white;
+    padding-top: 10px;"  (click)="saveData()">Submit</button>
+  </div>
+  </div>
+  <!-- </div> -->
+  

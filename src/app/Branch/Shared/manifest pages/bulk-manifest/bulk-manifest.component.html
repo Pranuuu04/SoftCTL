@@ -1,0 +1,163 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Manifest bulk</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+  <form class="mt-2"  [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
+     <div class="row">
+       <label for="fdate" class="col-sm-1 col-form-label">From Date</label>
+       <div class="col-sm-3">
+         <input type="date" placeholder="date" class="form-control" id="fdate" formControlName="fromDate" [(ngModel)]="currentDate" value="{{currentDate}}" />
+       </div>
+
+       <label for="tdate" class="col-sm-1 col-form-label">To Date</label>
+       <div class="col-sm-3">
+         <input type="date" placeholder="date" class="form-control" id="tdate"  formControlName="toDate" value="{{currentDate2}}" [(ngModel)]="currentDate2"/>
+       </div>
+       <label for="destination" class="col-sm-1 col-form-label">Destination</label>
+       <div class="col-sm-3">
+              <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
+                <option selected disabled>Select destination</option>
+                <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                  {{ item.destinationName }} 
+                </option>
+              </select>
+       </div>
+
+     </div>
+     <div class="row d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-2 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light" >Find</button>
+      </div>
+     </div>
+   </form>
+   <div *ngIf="showTable && dataSource.data.length > 0">
+   <div class="table-responsive">
+      <div class="row d-flex m-0" style="justify-content: right;" >
+        <div class="form-group has-search col-sm-4">
+          <button class="btn btn-secondary" type="button" style="z-index: 1001;
+          position: absolute;
+          background: none;
+          top: -4px;
+          width: 38px;
+          height: 32px;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+            <i class="fa fa-search" style="color: white; margin-top: -4px;"></i>
+          </button>
+          <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+        </div>
+       </div>
+    </div>
+<div class="table-responsive" style="max-height: 164px;">
+<div class="mat-elevation-z8 text-nowrap">
+  <table id="myTable" mat-table [dataSource]="dataSource"  class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
+   
+      <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="awbNo">
+          <th mat-header-cell *matHeaderCellDef> AWB No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.awbNo}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="bookDate">
+          <th mat-header-cell *matHeaderCellDef>Booking Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.bookDate | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="consigneeName">
+          <th mat-header-cell *matHeaderCellDef> Consignee </th>
+          <td mat-cell *matCellDef="let element"> {{element.consigneeName}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="customerName">
+          <th mat-header-cell *matHeaderCellDef> Consigner</th>
+          <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="fromDest">
+          <th mat-header-cell *matHeaderCellDef> From Dest </th>
+          <td mat-cell *matCellDef="let element"> {{element.fromDest}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="toDest">
+          <th mat-header-cell *matHeaderCellDef> To Dest </th>
+          <td mat-cell *matCellDef="let element"> {{element.toDest}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="qty">
+          <th mat-header-cell *matHeaderCellDef> PCs </th>
+          <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="actualWt">
+          <th mat-header-cell *matHeaderCellDef> Weight </th>
+          <td mat-cell *matCellDef="let element"> {{element.actualWt}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="invoiceNo">
+          <th mat-header-cell *matHeaderCellDef> Invoice No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+        </ng-container>
+    
+    
+        <ng-container matColumnDef="invoiceValue">
+          <th mat-header-cell *matHeaderCellDef> Invoice Value </th>
+          <td mat-cell *matCellDef="let element"> {{element.invoiceValue}} </td>
+        </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+      (click)="toggleRowSelection(row)"
+      [class.selected-row]="selection.isSelected(row)">
+      </tr>
+
+      <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="14">No data matching the filter "{{input.value}}"</td>
+        </tr>    
+    </table>
+</div>
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+showFirstLastButtons
+aria-label="Select page of periodic elements">
+</mat-paginator>
+<div class="row d-flex" style="justify-content: right;">
+  <div class="col-sm-2 d-flex" style="justify-content: right;">
+    <button type="button" class=" Unload btn btn-light"  (click)="onUnload()">Unload</button>
+  </div>
+</div>
+</div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="" style="height: 200px;">
+</div>
+</div>

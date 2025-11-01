@@ -1,0 +1,1831 @@
+<!-- Fuel Charge -->
+<div class="container" *ngIf="data.action === 'FuelCharAdd' || data.action === 'FuelCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Fuel Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="fuelChargeForm" (ngSubmit)="formSubmitFuelCharg(fuelChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnSelect">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerNameFuel" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameFuel" formControlName="customerNameFuel" bindLabel="customerName" bindValue="customerCode" class="custom-select1" style="border: 1px solid #d2d2d2; border-radius: 4px; margin-top: 4px; padding-left: 16px;" [readonly]="data.FuelCharMode === 'edit'">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                    <!-- <mat-form-field appearance="outline" class="w-100">
+                      <mat-select id="customerNameFuel" formControlName="customerNameFuel" [(ngModel)]="customerNameFuel" multiple>
+                        <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
+               </div>
+              <div *ngFor="let validation of validationMessage.customerNameFuel">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="fuelChargeForm.get('customerNameFuel').hasError(validation.type) && (fuelChargeForm.get('customerNameFuel').dirty || fuelChargeForm.get('customerNameFuel').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productFuel" formControlName="productFuel" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productFuel">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="fuelChargeForm.get('productFuel').hasError(validation.type) && (fuelChargeForm.get('productFuel').dirty || fuelChargeForm.get('productFuel').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Fuel % :</label>
+                  <input class="form-control" type="number" formControlName="fuelCharge" [(ngModel)]="fuelCharge" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.fuelCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="fuelChargeForm.get('fuelCharge').hasError(validation.type) && (fuelChargeForm.get('fuelCharge').dirty || fuelChargeForm.get('fuelCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>HDP % :</label>
+                  <input class="form-control" type="number" formControlName="HdpCharge" [(ngModel)]="HdpCharge" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.HdpCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="fuelChargeForm.get('HdpCharge').hasError(validation.type) && (fuelChargeForm.get('HdpCharge').dirty || fuelChargeForm.get('HdpCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.FuelCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.FuelCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateFuelCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+
+<!-- Docket Charge -->
+<div class="container" *ngIf="data.action === 'DocketCharAdd' || data.action === 'DocketCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Docket Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="docketChargeForm" (ngSubmit)="formSubmitDocketCharg(docketChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameDocket" formControlName="customerNameDocket" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.DocketCharMode === 'edit'" style="border: 1px solid #d2d2d2; border-radius: 4px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameDocket" formControlName="customerNameDocket" [(ngModel)]="customerNameDocket" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameDocket">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="docketChargeForm.get('customerNameDocket').hasError(validation.type) && (docketChargeForm.get('customerNameDocket').dirty || docketChargeForm.get('customerNameDocket').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productDocket" formControlName="productDocket" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productDocket">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="docketChargeForm.get('productDocket').hasError(validation.type) && (docketChargeForm.get('productDocket').dirty || docketChargeForm.get('productDocket').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Packing Charge :</label>
+                  <input class="form-control" type="number" formControlName="packingCharge" [(ngModel)]="packingCharge" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.packingCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="docketChargeForm.get('packingCharge').hasError(validation.type) && (docketChargeForm.get('packingCharge').dirty || docketChargeForm.get('packingCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Docket Charge :</label>
+                  <input class="form-control" type="number" formControlName="docketCharge" [(ngModel)]="docketCharge" min="0">
+                </div>
+                 <div *ngFor="let validation of validationMessage.docketCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="docketChargeForm.get('docketCharge').hasError(validation.type) && (docketChargeForm.get('docketCharge').dirty || docketChargeForm.get('docketCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.DocketCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.DocketCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateDocketCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+
+  <!-- Ess Charge -->
+<div class="container" *ngIf="data.action === 'EssCharAdd' || data.action === 'EssCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Miscellaneous Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="essChargeForm" (ngSubmit)="formSubmitEssCharg(essChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameEss" formControlName="customerNameEss" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.EssCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameEss" formControlName="customerNameEss" [(ngModel)]="customerNameEss" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameEss">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="essChargeForm.get('customerNameEss').hasError(validation.type) && (essChargeForm.get('customerNameEss').dirty || essChargeForm.get('customerNameEss').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productEss" formControlName="productEss" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productEss">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="essChargeForm.get('productEss').hasError(validation.type) && (essChargeForm.get('productEss').dirty || essChargeForm.get('productEss').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Miscellaneous % :</label>
+                  <input class="form-control" type="number" formControlName="essCharge" [(ngModel)]="essCharge" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.essCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="essChargeForm.get('essCharge').hasError(validation.type) && (essChargeForm.get('essCharge').dirty || essChargeForm.get('essCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date">Docket Charge :</label>
+                  <input class="form-control" type="number" formControlName="docketCharge" [(ngModel)]="docketCharge">
+                </div>
+              </div>
+           </div> -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.EssCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.EssCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateEssCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+
+<!-- Fov Charge -->
+<div class="container" *ngIf="data.action === 'FovCharAdd' || data.action === 'FovCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Fov Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="fovChargeForm" (ngSubmit)="formSubmitFovCharg(fovChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameFov" formControlName="customerNameFov" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.FovCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameFov" formControlName="customerNameFov" [(ngModel)]="customerNameFov" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameFov">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="fovChargeForm.get('customerNameFov').hasError(validation.type) && (fovChargeForm.get('customerNameFov').dirty || fovChargeForm.get('customerNameFov').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productFov" formControlName="productFov" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productFov">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="fovChargeForm.get('productFov').hasError(validation.type) && (fovChargeForm.get('productFov').dirty || fovChargeForm.get('productFov').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Fov % :</label>
+                  <input class="form-control" type="number" formControlName="fovPersent" [(ngModel)]="fovPersent" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.fovPersent">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="fovChargeForm.get('fovPersent').hasError(validation.type) && (fovChargeForm.get('fovPersent').dirty || fovChargeForm.get('fovPersent').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Amount :</label>
+                  <input class="form-control" type="number" formControlName="amount" [(ngModel)]="amount" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.amount">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="fovChargeForm.get('amount').hasError(validation.type) && (fovChargeForm.get('amount').dirty || fovChargeForm.get('amount').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.FovCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.FovCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateFovCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+  <!-- Ens Charge -->
+<div class="container" *ngIf="data.action === 'EnsCharAdd' || data.action === 'EnsCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Ens Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="ensChargeForm" (ngSubmit)="formSubmitEnsCharg(ensChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [(ngModel)]="customerNameEns" [closeOnSelect]="true" [readonly]="data.EnsCharMode === 'edit'" formControlName="customerNameEns" bindLabel="customerName" bindValue="customerCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameEns" formControlName="customerNameEns" [(ngModel)]="customerNameEns" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameEns">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="ensChargeForm.get('customerNameEns').hasError(validation.type) && (ensChargeForm.get('customerNameEns').dirty || ensChargeForm.get('customerNameEns').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Detination Name :</label>
+                  <ng-select [clearable]="false" [multiple]="true"  [closeOnSelect]="true" [items]="destinationObj"  [(ngModel)]="detinationName" formControlName="detinationName" bindLabel="destinationName" bindValue="destinationCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of destinationObj" [value]="item.destinationCode" style="font-size: 14px;" >{{item.destinationName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="detinationName" formControlName="detinationName" [(ngModel)]="detinationName" multiple>
+                      <mat-option *ngFor="let item of destinationObj" [value]="item.destinationCode"> {{item.destinationName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.detinationName">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="ensChargeForm.get('detinationName').hasError(validation.type) && (ensChargeForm.get('detinationName').dirty || ensChargeForm.get('detinationName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+         <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Rate Per Kg:</label>
+                  <input class="form-control" type="number" formControlName="ratePerKg" [(ngModel)]="ratePerKg" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.ratePerKg">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="ensChargeForm.get('ratePerKg').hasError(validation.type) && (ensChargeForm.get('ratePerKg').dirty || ensChargeForm.get('ratePerKg').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Minimum Wt:</label>
+                  <input class="form-control" type="number" formControlName="minimumWt" [(ngModel)]="minimumWt" min="0">
+                </div>
+                 <div *ngFor="let validation of validationMessage.minimumWt">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="ensChargeForm.get('minimumWt').hasError(validation.type) && (ensChargeForm.get('minimumWt').dirty || ensChargeForm.get('minimumWt').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Minimum Amount :</label>
+                  <input class="form-control" type="number" formControlName="minimumAmount" [(ngModel)]="minimumAmount" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.minimumAmount">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="ensChargeForm.get('minimumAmount').hasError(validation.type) && (ensChargeForm.get('minimumAmount').dirty || ensChargeForm.get('minimumAmount').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.EnsCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.EnsCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateEnsCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+    <!-- Volumetric Charge -->
+<div class="container" *ngIf="data.action === 'VolCharAdd' || data.action === 'VolCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Volumetric Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="volumetricChargeForm" (ngSubmit)="formSubmitVolumetricCharg(volumetricChargeForm.value)">
+    <!-- <div class="row"> -->
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameVol" formControlName="customerNameVol" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.VolCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameVol" formControlName="customerNameVol" [(ngModel)]="customerNameVol" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameVol">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="volumetricChargeForm.get('customerNameVol').hasError(validation.type) && (volumetricChargeForm.get('customerNameVol').dirty || volumetricChargeForm.get('customerNameVol').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Mode :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="volMode" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="volMode" formControlName="volMode" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <!-- <ng-option  *ngFor="let item of vehicleNumbers" [value]="item.vehicleReg" style="font-size: 14px;" >{{item.vehicleReg}}</ng-option> -->
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.volMode">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="volumetricChargeForm.get('volMode').hasError(validation.type) && (volumetricChargeForm.get('volMode').dirty || volumetricChargeForm.get('volMode').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+           <div class="row mt-3">
+            <div class="col-sm-12">
+              <label class="form-label fw-bold" style="position: absolute; top: -8px; left: 22px; padding: 2px; z-index: 1;
+                margin-bottom: 0; font-size: 13px; font-weight: 600;">Volumetric Calc. Formula:</label>
+          
+              <div class="card p-3 border" style="background-color: #f9f9f9; top: -20px;">
+                <div class="row align-items-end text-center gx-1 flex-nowrap">
+          
+                  <!-- Centimeter -->
+                  <div class="col-3">
+                    <label class="form-label fw-bold text-primary">Centimeter</label>
+                    <input type="number" class="form-control" formControlName="centimeter" [(ngModel)]="centimeter" min="0">
+                    <div *ngFor="let validation of validationMessage.centimeter">
+                      <div class="error-message position-absolute" style="margin-top: -10px;"
+                        *ngIf="volumetricChargeForm.get('centimeter').hasError(validation.type) && (volumetricChargeForm.get('centimeter').dirty || volumetricChargeForm.get('centimeter').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- × -->
+                  <div class="col-md-auto d-flex align-items-end justify-content-center pb-2">
+                    <span class="fw-bold fs-4">×</span>
+                  </div>
+          
+                  <!-- CFT -->
+                  <div class="col-2">
+                    <label class="form-label fw-bold text-primary">CFT</label>
+                    <input type="number" class="form-control" formControlName="cft" [(ngModel)]="cft" min="0">
+                    <div *ngFor="let validation of validationMessage.cft">
+                      <div class="error-message position-absolute" style="margin-top: -10px;"
+                        *ngIf="volumetricChargeForm.get('cft').hasError(validation.type) && (volumetricChargeForm.get('cft').dirty || volumetricChargeForm.get('cft').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+
+                   <div class="col-md-auto"></div>
+
+                  <!-- Inches -->
+                  <div class="col-3">
+                    <label class="form-label fw-bold text-primary">Inches</label>
+                    <input type="number" class="form-control" formControlName="inches" [(ngModel)]="inches" min="0">
+                    <div *ngFor="let validation of validationMessage.inches">
+                      <div class="error-message position-absolute" style="margin-top: -10px;"
+                        *ngIf="volumetricChargeForm.get('inches').hasError(validation.type) && (volumetricChargeForm.get('inches').dirty || volumetricChargeForm.get('inches').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- × -->
+                  <div class="col-md-auto d-flex align-items-end justify-content-center pb-2">
+                    <span class="fw-bold fs-4">×</span>
+                  </div>
+          
+                  <!-- Inch CFT -->
+                  <div class="col-2">
+                    <label class="form-label fw-bold text-primary">CFT</label>
+                    <input type="number" class="form-control" formControlName="inchCft" [(ngModel)]="inchCft" min="0">
+                    <div *ngFor="let validation of validationMessage.inchCft">
+                      <div class="error-message position-absolute" style="margin-top: -10px;"
+                        *ngIf="volumetricChargeForm.get('inchCft').hasError(validation.type) && (volumetricChargeForm.get('inchCft').dirty || volumetricChargeForm.get('inchCft').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </div>
+
+  
+      <div *ngIf="data.VolCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.VolCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateVolumetricCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+
+<!-- Sc Charge -->
+<div class="container" *ngIf="data.action === 'ScCharAdd' || data.action === 'ScCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Sc Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="scChargeForm" (ngSubmit)="formSubmitScCharg(scChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameSc" formControlName="customerNameSc" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.ScCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameSc" formControlName="customerNameSc" [(ngModel)]="customerNameSc" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameSc">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="scChargeForm.get('customerNameSc').hasError(validation.type) && (scChargeForm.get('customerNameSc').dirty || scChargeForm.get('customerNameSc').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>State Name :</label>
+                  <ng-select [clearable]="false" [multiple]="true" [closeOnSelect]="true" [items]="stateObj" [(ngModel)]="stateName" formControlName="stateName" bindLabel="stateName" bindValue="stateCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of stateObj" [value]="item.stateCode" style="font-size: 14px;" >{{item.stateName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="detinationName" formControlName="stateName" [(ngModel)]="stateName" multiple>
+                      <mat-option *ngFor="let item of stateObj" [value]="item.stateCode"> {{item.stateName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.stateName">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="scChargeForm.get('stateName').hasError(validation.type) && (scChargeForm.get('stateName').dirty || scChargeForm.get('stateName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+         <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Per Kg:</label>
+                  <input class="form-control" type="number" formControlName="scPerKg" [(ngModel)]="scPerKg" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.scPerKg">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="scChargeForm.get('scPerKg').hasError(validation.type) && (scChargeForm.get('scPerKg').dirty || scChargeForm.get('scPerKg').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.ScCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.ScCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateScCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+   <!-- Caf Charge -->
+<div class="container" *ngIf="data.action === 'CafCharAdd' || data.action === 'CafCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Caf Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="cafChargeForm" (ngSubmit)="formSubmitCafCharg(cafChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameCaf"  formControlName="customerNameCaf" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.CafCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameCaf" formControlName="customerNameCaf" [(ngModel)]="customerNameCaf" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameCaf">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="cafChargeForm.get('customerNameCaf').hasError(validation.type) && (cafChargeForm.get('customerNameCaf').dirty || cafChargeForm.get('customerNameCaf').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productCaf" formControlName="productCaf" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productCaf">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="cafChargeForm.get('productCaf').hasError(validation.type) && (cafChargeForm.get('productCaf').dirty || cafChargeForm.get('productCaf').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Caf Charge :</label>
+                  <input class="form-control" type="number" formControlName="cafCharge" [(ngModel)]="cafCharge" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.cafCharge">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="cafChargeForm.get('cafCharge').hasError(validation.type) && (cafChargeForm.get('cafCharge').dirty || cafChargeForm.get('cafCharge').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date">Docket Charge :</label>
+                  <input class="form-control" type="number" formControlName="docketCharge" [(ngModel)]="docketCharge">
+                </div>
+              </div>
+           </div> -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.CafCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.CafCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateCafCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div> 
+
+
+   <!-- Idc Charge -->
+   <div class="container" *ngIf="data.action === 'IdcCharAdd' || data.action === 'IdcCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Idc Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="idcChargeForm" (ngSubmit)="formSubmitIdcCharg(idcChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameIdc" formControlName="customerNameIdc" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.IdcCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameIdc" formControlName="customerNameIdc" [(ngModel)]="customerNameIdc" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameCaf">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="idcChargeForm.get('customerNameIdc').hasError(validation.type) && (idcChargeForm.get('customerNameIdc').dirty || idcChargeForm.get('customerNameIdc').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product Name :</label>
+                  <ng-select [clearable]="false" [multiple]="true" [closeOnSelect]="true" [items]="productObj" [(ngModel)]="productIdc" formControlName="productIdc" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="productIdc" formControlName="productIdc" [(ngModel)]="productIdc" multiple>
+                      <mat-option *ngFor="let item of productObj" [value]="item.productCode"> {{item.productName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.productIdc">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="idcChargeForm.get('productIdc').hasError(validation.type) && (idcChargeForm.get('productIdc').dirty || idcChargeForm.get('productIdc').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>IDC % :</label>
+                  <input class="form-control" type="number" formControlName="idcPer" [(ngModel)]="idcPer" min="0"/>
+                </div>
+                <div *ngFor="let validation of validationMessage.idcPer">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="idcChargeForm.get('idcPer').hasError(validation.type) && (idcChargeForm.get('idcPer').dirty || idcChargeForm.get('idcPer').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date">Docket Charge :</label>
+                  <input class="form-control" type="number" formControlName="docketCharge" [(ngModel)]="docketCharge">
+                </div>
+              </div>
+           </div> -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.IdcCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.IdcCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateIdcCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div> 
+
+  <!-- Insurance Charge -->
+  <div class="container" *ngIf="data.action === 'InsCharAdd' || data.action === 'InsCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Insurance Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="insChargeForm" (ngSubmit)="formSubmitInsCharg(insChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> [(ngModel)]="customerNameIns"-->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameIns" formControlName="customerNameIns" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.InsCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameIns" formControlName="customerNameIns" [(ngModel)]="customerNameIns" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameIns">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="insChargeForm.get('customerNameIns').hasError(validation.type) && (insChargeForm.get('customerNameIns').dirty || insChargeForm.get('customerNameIns').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productIns" formControlName="productIns" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productIns">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="insChargeForm.get('productIns').hasError(validation.type) && (insChargeForm.get('productIns').dirty || insChargeForm.get('productIns').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Insurance % :</label>
+                  <input class="form-control" type="number" formControlName="insPersent" [(ngModel)]="insPersent" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.insPersent">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="insChargeForm.get('insPersent').hasError(validation.type) && (insChargeForm.get('insPersent').dirty || insChargeForm.get('insPersent').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date">Docket Charge :</label>
+                  <input class="form-control" type="number" formControlName="docketCharge" [(ngModel)]="docketCharge">
+                </div>
+              </div>
+           </div> -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.InsCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.InsCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateInsCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+  <!-- Metro Charge -->
+<div class="container" *ngIf="data.action === 'MetroCharAdd' || data.action === 'MetroCharEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Metro Charges</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+
+    <form [formGroup]="metroChargeForm" (ngSubmit)="formSubmitMetroCharg(metroChargeForm.value)">
+    <div class="row">
+      <div class="col-sm-7">
+
+        <div class="row">
+          <div class="col-sm-12 multi-customer-select">
+              <div class="textOnInput">
+                  <label for="Name"><span style="color: red;">*</span>Customer Name :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                  <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="true" [(ngModel)]="customerNameMetro" formControlName="customerNameMetro" bindLabel="customerName" bindValue="customerCode" class="custom-select1" [readonly]="data.MeCharMode === 'edit'" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                  </ng-select>
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <mat-select id="customerNameMetro" formControlName="customerNameMetro" [(ngModel)]="customerNameMetro" multiple>
+                      <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+              </div>
+              <div *ngFor="let validation of validationMessage.customerNameMetro">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="metroChargeForm.get('customerNameMetro').hasError(validation.type) && (metroChargeForm.get('customerNameMetro').dirty ||metroChargeForm.get('customerNameMetro').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="textOnInput">
+                  <label for="Contact-per"><span style="color: red;">*</span>Product :</label>
+                  <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                  <ng-select [clearable]="false" [(ngModel)]="productMetro" formControlName="productMetro" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                    <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                  </ng-select>
+              </div>
+              <div *ngFor="let validation of validationMessage.productMetro">
+                <div class="error-message position-absolute" style="margin-top: -16px;"
+                  *ngIf="metroChargeForm.get('productMetro').hasError(validation.type) && (metroChargeForm.get('productMetro').dirty || metroChargeForm.get('productMetro').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date"><span style="color: red;">*</span>Metro :</label>
+                  <input class="form-control" type="number" formControlName="metro" [(ngModel)]="metro" min="0">
+                </div>
+                <div *ngFor="let validation of validationMessage.metro">
+                    <div class="error-message position-absolute" style="margin-top: -16px;"
+                      *ngIf="metroChargeForm.get('metro').hasError(validation.type) && (metroChargeForm.get('metro').dirty || metroChargeForm.get('metro').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+              </div>
+           </div>
+        
+        </div>
+        <div class="col-sm-5">
+
+           <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                  <label for="Date">Non Metro :</label>
+                  <input class="form-control" type="number" formControlName="nonMetro" [(ngModel)]="nonMetro" min="0">
+                </div>
+              </div>
+           </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date" >From Date :</label>
+                <input class="form-control" type="date" formControlName="fromDate" [(ngModel)]="fromDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                <label for="Date">To Date :</label>
+                <input class="form-control" type="date" formControlName="toDate" [(ngModel)]="toDate">
+                </div>
+            </div>
+        </div> 
+
+   </div>
+</div> 
+  
+      <div *ngIf="data.MetroCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+  
+      <div *ngIf="data.MetroCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateMetroCharg()">Update</button>
+        </div>
+      </div>
+     
+    </form>
+  </div>
+
+
+    <!-- Oda Charge -->
+<div class="container" *ngIf="data.action === 'OdaCharAdd' || data.action === 'OdaCharEdit'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Oda Charges</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+
+  <form [formGroup]="odaChargeForm" (ngSubmit)="formSubmitOdaCharg(odaChargeForm.value)">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">*Customer Name :</label>
+                <!-- <input class="form-control" type="text" [(ngModel)]="customerName" formControlName="customerName"  placeholder="enter name"> -->
+                <!-- <ng-select [clearable]="true" [multiple]="true" [closeOnSelect]="false" [(ngModel)]="customerNameMetro" formControlName="customerNameMetro" bindLabel="customerName" bindValue="customerCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                  <ng-option  *ngFor="let item of customerObj" [value]="item.customerCode" style="font-size: 14px;" >{{item.customerName}}</ng-option>
+                </ng-select> -->
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select id="customerNameMetro" formControlName="customerNameOda" [(ngModel)]="customerNameOda">
+                    <mat-option *ngFor="let item of customerObj" [value]="item.customerCode"> {{item.customerName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngFor="let validation of validationMessage.customerNameOda">
+              <div class="error-message position-absolute" style="margin-top: -16px;"
+                *ngIf="odaChargeForm.get('customerNameOda').hasError(validation.type) && (odaChargeForm.get('customerNameMetro').dirty ||odaChargeForm.get('customerNameOda').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      </div>
+      <div class="col-sm-6">
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Contact-per">*Mode :</label>
+                <!-- <input class="form-control" type="text" [(ngModel)]="product" formControlName="product"  placeholder="enter Contact person"> -->
+                <!-- <ng-select [clearable]="false" [(ngModel)]="productMetro" formControlName="productOda" bindLabel="productName" bindValue="productCode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                  <ng-option  *ngFor="let item of productObj" [value]="item.productCode" style="font-size: 14px;" >{{item.productName}}</ng-option>
+                </ng-select> -->
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select id="productOda" formControlName="productOda" [(ngModel)]="productOda" multiple>
+                    <mat-option *ngFor="let item of productObj" [value]="item.productCode"> {{item.productName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngFor="let validation of validationMessage.productOda">
+              <div class="error-message position-absolute" style="margin-top: -16px;"
+                *ngIf="odaChargeForm.get('productOda').hasError(validation.type) && (odaChargeForm.get('productOda').dirty || odaChargeForm.get('productOda').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="textOnInput">
+                <label for="Date">*Rate Mode :</label>
+                <!-- <input class="form-control" type="number" formControlName="metro" [(ngModel)]="metro"> -->
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select id="rateMode" formControlName="rateMode" [(ngModel)]="rateMode">
+                    <mat-option  value="Self">Fixed</mat-option>
+                    <mat-option  value="Hired">Flat</mat-option>
+                    <mat-option  value="Hired">Kilometers</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div *ngFor="let validation of validationMessage.rateMode">
+                  <div class="error-message position-absolute" style="margin-top: -16px;"
+                    *ngIf="odaChargeForm.get('rateMode').hasError(validation.type) && (odaChargeForm.get('rateMode').dirty || odaChargeForm.get('rateMode').touched)">
+                    {{ validation.message }}
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="textOnInput">
+                <label for="Date">*Minimum Amount :</label>
+                <input class="form-control" type="number" formControlName="minimumAmountOda" [(ngModel)]="minimumAmountOda">
+              </div>
+            </div>
+           
+         </div>
+
+
+    <div class="row">
+      <!-- Left Table -->
+      <!-- <div class="col-sm-4 d-flex flex-column">
+        <label for="Weight" class="fw-bold mt-3"></label>
+        <div class="table-responsive mt-2" formArrayName="rateTable" >
+          <table class="table table-bordered text-center custom-table" style="background-color:aqua">
+            <thead class="table-light fw-bold">
+              <tr style="background-color:#a3b8d4;">
+                <th style="width: 20%;">Sr No</th>
+                <th style="width: 40%;">Kms\Kgs</th>
+                <th style="width: 40%;">1-20</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of rateTable.controls; let i = index" [formGroupName]="i">
+                <td>{{ i + 1 }}</td>
+                <td><input type="text" class="form-control form-control-sm" formControlName="kmsKgs" style="background-color: #ffffff;" /></td>
+                <td><input type="number" class="form-control form-control-sm" formControlName="rate" style="background-color: #ffffff;"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+    
+      <div class="col-sm-12 d-flex flex-column">
+        <label for="Weight" class="fw-bold mt-0"></label>
+        <div class="table-responsive " formArrayName="weightTable" style="margin-top: -4px;">
+          <table class="table table-bordered text-center custom-table" style="background-color:#fefeff;"  ><!--[ngClass]="getRowClass(statusList[i])""-->
+            <thead class="table-light fw-bold">
+              <tr style="background-color:  #a3b8d4;">
+                <th style="width: 10%;">Sr No</th>
+                <th style="width: 18%;">From Weight</th>
+                <th style="width: 18%;">To Weight</th>
+                <th style="width: 18%;">From Kilometer</th>
+                <th style="width: 18%;">To Kilometer</th>
+                <th style="width: 18%;">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of weightTable.controls; let i = index" [formGroupName]="i">
+                <td>{{ i + 1 }}</td>
+                <td><input type="text" class="form-control form-control-sm" formControlName="FromWeight" [ngClass]="getRowClass(statusList[0])" /></td>
+                <td><input type="text" class="form-control form-control-sm" formControlName="ToWeight" [ngClass]="getRowClass(statusList[1])" /></td>
+                <td><input type="text" class="form-control form-control-sm" formControlName="FromKilometer" [ngClass]="getRowClass(statusList[1])" /></td>
+                <td><input type="text" class="form-control form-control-sm" formControlName="ToKilometer" [ngClass]="getRowClass(statusList[0])" /></td>
+                <td><input type="number" class="form-control form-control-sm" formControlName="rate" [ngClass]="getRowClass(statusList[1])" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-6 d-flex flex-column">
+            <label for="Weight" class="fw-bold mt-2">Kilometers :</label>
+            <div class="table-responsive " formArrayName="KilometerTable" style="margin-top: -4px;">
+              <table class="table table-bordered text-center custom-table" style="background-color:#fefeff;">
+                <thead class="table-light fw-bold">
+                  <tr style="background-color:  #a3b8d4;">
+                    <th style="width: 17%;">Sr No</th>
+                    <th style="width: 31%;">From</th>
+                    <th style="width: 31%;">To</th>
+                    <th style="width: 31%;">Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of KilometerTable.controls; let i = index" [formGroupName]="i">
+                    <td>{{ i + 1 }}</td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="From"  /></td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="To" /></td>
+                    <td><input type="number" class="form-control form-control-sm" formControlName="rate" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </div> -->
+
+    </div>
+     
+    <div class="row">
+
+     <!-- <div class="col-sm-6"> 
+      <div class="row form-group d-flex m-0" style="justify-content: left;">
+          <div class="col-sm-4 d-flex" style="justify-content: left; padding-left: 0;" > 
+             <button type="button" class="btn btn-light other-button" (click)="AddKmWgt()">KmWgt</button>
+          </div>
+      </div>
+     </div> -->
+
+     <div class="col-sm-12"><!--btn-sm <i class="fas fa-arrow-right"></i> -->
+    <div *ngIf="data.OdaCharMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="data.OdaCharMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateOdaCharg()">Update</button>
+      </div>
+    </div>
+  </div>
+
+ </div>
+
+  </form>
+
+     <!-- <div *ngIf="dataSource.data.length">
+        <div class="mat-elevation-z8 table-responsive text-nowrap">
+          <table mat-table [dataSource]="dataSource" class="table-bordered table-striped">
+
+            <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+              <th mat-header-cell *matHeaderCellDef> {{ col }} </th> 
+              <td mat-cell *matCellDef="let element"> {{ element[col] }} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+          </table>
+         </div>
+        </div>
+        <div *ngIf="dataSource.filteredData.length === 0" class="d-flex justify-content-center">
+          <img src="./assets/images/NOdata.png" alt="No data available">
+        </div> -->
+
+</div>
+
+
+
+  <!-- Oda Charge Popup-->
+    <div class="container" *ngIf="data.action === 'OdaWtKMAdd'">
+      <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-6">
+          <h1 style="font-weight: 600;
+          font-size: large;
+          margin-bottom: 0;
+          margin-top: 7px; ">Oda Wieght And Kilometers</h1>
+        </div>
+          <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+          <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+          text-align: center;
+          line-height: 30px;
+          height: 30px;
+          font-weight: 500;
+          font-size: large;
+          background: red;
+          color: white;">X</button>
+      </div>
+    </div>
+    
+      <form [formGroup]="odaChargeWtKm" (ngSubmit)="formSubmitWtKm(odaChargeWtKm.value)">
+    
+        <div class="row">
+          <!-- Left Table -->
+          <div class="col-sm-6 d-flex flex-column">
+            <label for="Weight" class="fw-bold mt-2">Weight :</label>
+            <div class="table-responsive " formArrayName="weightTable" style="margin-top: -4px;">
+              <table class="table table-bordered text-center custom-table" style="background-color:#fefeff;">
+                <thead class="table-light fw-bold">
+                  <tr style="background-color:  #a3b8d4;">
+                    <th style="width: 17%;">Sr No</th>
+                    <th style="width: 31%;">From</th>
+                    <th style="width: 31%;">To</th>
+                    <th style="width: 31%;">Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of weightTable.controls; let i = index" [formGroupName]="i">
+                    <td>{{ i + 1 }}</td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="From"  /></td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="To" /></td>
+                    <td><input type="number" class="form-control form-control-sm" formControlName="rate" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    
+           <!-- Right Table -->
+           <div class="col-sm-6 d-flex flex-column">
+            <label for="Weight" class="fw-bold mt-2">Kilometers :</label>
+            <div class="table-responsive " formArrayName="KilometerTable" style="margin-top: -4px;">
+              <table class="table table-bordered text-center custom-table" style="background-color:#fefeff;">
+                <thead class="table-light fw-bold">
+                  <tr style="background-color:  #a3b8d4;">
+                    <th style="width: 17%;">Sr No</th>
+                    <th style="width: 31%;">From</th>
+                    <th style="width: 31%;">To</th>
+                    <th style="width: 31%;">Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of KilometerTable.controls; let i = index" [formGroupName]="i">
+                    <td>{{ i + 1 }}</td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="From"  /></td>
+                    <td><input type="text" class="form-control form-control-sm" formControlName="To" /></td>
+                    <td><input type="number" class="form-control form-control-sm" formControlName="rate" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    
+        </div>
+        
+    
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-light other-button">Submit</button>
+          </div>
+        </div>
+    
+        <!-- <div class="row form-group d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="button" class="btn btn-light other-button" (click)="CloseDialog()">Close</button>
+          </div>
+        </div> -->
+       
+      </form>
+    </div>
+
+
+
+

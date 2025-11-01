@@ -1,0 +1,656 @@
+<div class="container" *ngIf="data.action === 'modeAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Mode</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form [formGroup]="modeForm" (ngSubmit)="formSubmitMode(modeForm.value)">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="ModeCode"><span style="color: red;">*</span>Mode Code :</label>
+                <input *ngIf="modeType !== 'edit'" class="form-control" type="text" [(ngModel)]="modeCode" formControlName="modeCode"  placeholder="enter code">
+                <input *ngIf="modeType === 'edit'" class="form-control" type="text" [(ngModel)]="modeCode" formControlName="modeCode"  placeholder="enter code" readonly>
+            </div>
+            <div *ngFor="let validation of validationMessage.modeCode">
+              <div class="error-message"
+                *ngIf="modeForm.get('modeCode').hasError(validation.type) && (modeForm.get('modeCode').dirty || modeForm.get('modeCode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="ModeName"><span style="color: red;">*</span>Mode Name :</label>
+                <input class="form-control" type="text" [(ngModel)]="modeName" formControlName="modeName"  placeholder="enter name">
+            </div>
+            <div *ngFor="let validation of validationMessage.modeName">
+              <div class="error-message"
+                *ngIf="modeForm.get('modeName').hasError(validation.type) && (modeForm.get('modeName').dirty || modeForm.get('modeName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="textOnSelect">
+            <label class="span"><span style="color: red;">*</span>Product Type</label>
+            <ng-select [(ngModel)]="productType" formControlName="productType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-option *ngFor="let item of productTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}} &nbsp;({{item.value}})</ng-option>
+           </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.productType">
+            <div class="error-message"
+              *ngIf="modeForm.get('productType').hasError(validation.type) && (modeForm.get('productType').dirty || modeForm.get('productType').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="textOnSelect">
+            <label class="span"><span style="color: red;">*</span>Dox/Spx Type</label>
+            <ng-select [(ngModel)]="dosSpxType" formControlName="dosSpxType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-option *ngFor="let item of dosSpxTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}} &nbsp;({{item.value}})</ng-option>
+           </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.dosSpxType">
+            <div class="error-message"
+              *ngIf="modeForm.get('dosSpxType').hasError(validation.type) && (modeForm.get('dosSpxType').dirty || modeForm.get('dosSpxType').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="ModeName">Company Name :</label>
+                <input class="form-control" type="text" [(ngModel)]="companyName" formControlName="companyName"  placeholder="enter name">
+            </div>
+        </div>
+      </div>
+
+      <div *ngIf="modeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" >Submit</button>
+        </div>
+      </div>
+
+      <div *ngIf="modeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="button" class="btn btn-light other-button" (click)="updateMode()" >Update</button>
+        </div>
+      </div>
+    </form>
+ </div>
+
+ <div class="container" *ngIf="data.action === 'productAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Product</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="productForm" (ngSubmit)="formSubmitProduct(productForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="ModeCode">Product Code :</label>
+              <input *ngIf="modeType !== 'edit'" class="form-control" type="text" [(ngModel)]="productCode" formControlName="productCode"  placeholder="enter code">
+              <input *ngIf="modeType === 'edit'" class="form-control" type="text" [(ngModel)]="productCode" formControlName="productCode"  placeholder="enter code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.productCode">
+            <div class="error-message"
+              *ngIf="productForm.get('productCode').hasError(validation.type) && (productForm.get('productCode').dirty || productForm.get('productCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="ModeName">Product Name :</label>
+              <input class="form-control" type="text" [(ngModel)]="productName" formControlName="productName"  placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.productName">
+            <div class="error-message"
+              *ngIf="productForm.get('productName').hasError(validation.type) && (productForm.get('productName').dirty || productForm.get('productName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Product Type</label>
+          <ng-select [(ngModel)]="productType" formControlName="productType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of productTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}} &nbsp;({{item.value}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.productType">
+          <div class="error-message"
+            *ngIf="productForm.get('productType').hasError(validation.type) && (productForm.get('productType').dirty || productForm.get('productType').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Dox/Spx Type</label>
+          <ng-select [(ngModel)]="dosSpxType" formControlName="dosSpxType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of dosSpxTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}} &nbsp;({{item.value}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.dosSpxType">
+          <div class="error-message"
+            *ngIf="productForm.get('dosSpxType').hasError(validation.type) && (productForm.get('dosSpxType').dirty || productForm.get('dosSpxType').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="ModeName">Company Name :</label>
+              <input class="form-control" type="text" [(ngModel)]="companyName" formControlName="companyName"  placeholder="enter name">
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="modeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="modeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateProduct()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'deptAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Department</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="departmentForm" (ngSubmit)="formSubmitDept(departmentForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="ModeCode">Department Code :</label>
+              <input *ngIf="deptModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="departmentCode" formControlName="departmentCode"  placeholder="enter code">
+              <input *ngIf="deptModeType === 'edit'" class="form-control" type="text" [(ngModel)]="departmentCode" formControlName="departmentCode"  placeholder="enter code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.departmentCode">
+            <div class="error-message"
+              *ngIf="departmentForm.get('departmentCode').hasError(validation.type) && (departmentForm.get('departmentCode').dirty || departmentForm.get('departmentCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="ModeName">Department Name :</label>
+              <input class="form-control" type="text" [(ngModel)]="departmentName" formControlName="departmentName"  placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.departmentName">
+            <div class="error-message"
+              *ngIf="departmentForm.get('departmentName').hasError(validation.type) && (departmentForm.get('departmentName').dirty || departmentForm.get('departmentName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="deptModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="deptModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateDepartment()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'expenseAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Expense</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+<form [formGroup]="expansesForm" (ngSubmit)="formSubmitExpanses(expansesForm.value)">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="ModeCode">Expenses Code :</label>
+            <input *ngIf="expensesModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="expensesCode" formControlName="expensesCode"  placeholder="enter code">
+            <input *ngIf="expensesModeType === 'edit'" class="form-control" type="text" [(ngModel)]="expensesCode" formControlName="expensesCode"  placeholder="enter code" readonly>
+        </div>
+        <div *ngFor="let validation of validationMessage.expensesCode">
+          <div class="error-message"
+            *ngIf="expansesForm.get('expensesCode').hasError(validation.type) && (expansesForm.get('expensesCode').dirty || expansesForm.get('expensesCode').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="ModeName">Expenses Name :</label>
+            <input class="form-control" type="text" [(ngModel)]="expensesName" formControlName="expensesName"  placeholder="enter name">
+        </div>
+        <div *ngFor="let validation of validationMessage.expensesName">
+          <div class="error-message"
+            *ngIf="expansesForm.get('expensesName').hasError(validation.type) && (expansesForm.get('expensesName').dirty || expansesForm.get('expensesName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div *ngIf="expensesModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="submit" class="btn btn-light other-button" >Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="expensesModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="button" class="btn btn-light other-button" (click)="updateExpenses()" >Update</button>
+    </div>
+  </div>
+</form>
+</div>
+
+ <div class="container" *ngIf="data.action === 'bankAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Bank name</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+<form [formGroup]="bankForm" (ngSubmit)="formSubmitBank(bankForm.value)">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageCode">Code :</label>
+            <input *ngIf="bankModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="bankCode" formControlName="bankCode"  placeholder="enter code">
+            <input *ngIf="bankModeType === 'edit'" class="form-control" type="text" [(ngModel)]="bankCode" formControlName="bankCode"  placeholder="enter code" readonly>
+        </div>
+        <div *ngFor="let validation of validationMessage.bankCode">
+          <div class="error-message"
+            *ngIf="bankForm.get('bankCode').hasError(validation.type) && (bankForm.get('bankCode').dirty || bankForm.get('bankCode').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageName">Name :</label>
+            <input class="form-control" type="tel" [(ngModel)]="bankName" formControlName="bankName"  placeholder="enter name">
+        </div>
+        <div *ngFor="let validation of validationMessage.bankName">
+          <div class="error-message"
+            *ngIf="bankForm.get('bankName').hasError(validation.type) && (bankForm.get('bankName').dirty || bankForm.get('bankName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="bankModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="submit" class="btn btn-light other-button" >Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="bankModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="button" class="btn btn-light other-button" (click)="updateBank()" >Update</button>
+    </div>
+  </div>
+</form>
+</div>
+
+<div class="container" *ngIf="data.action === 'packageAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Package</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="packageForm" (ngSubmit)="formSubmitPackage(packageForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="packageCode">Code :</label>
+              <input *ngIf="packageModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="packageCode" formControlName="packageCode"  placeholder="enter code">
+              <input *ngIf="packageModeType === 'edit'" class="form-control" type="text" [(ngModel)]="packageCode" formControlName="packageCode"  placeholder="enter code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.packageCode">
+            <div class="error-message"
+              *ngIf="packageForm.get('packageCode').hasError(validation.type) && (packageForm.get('packageCode').dirty || packageForm.get('packageCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="packageName">Name :</label>
+              <input class="form-control" type="tel" [(ngModel)]="packageName" formControlName="packageName"  placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.packageName">
+            <div class="error-message"
+              *ngIf="packageForm.get('packageName').hasError(validation.type) && (packageForm.get('packageName').dirty || packageForm.get('packageName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="packageModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+  
+    <div *ngIf="packageModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updatePackage()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'deliveryAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">delivery type</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="deliveryForm" (ngSubmit)="formSubmitDelivery(deliveryForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="packageCode">Code :</label>
+              <input *ngIf="deliveryModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="deliveryCode" formControlName="deliveryCode"  placeholder="enter code">
+              <input *ngIf="deliveryModeType === 'edit'" class="form-control" type="text" [(ngModel)]="deliveryCode" formControlName="deliveryCode"  placeholder="enter code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.deliveryCode">
+            <div class="error-message"
+              *ngIf="deliveryForm.get('deliveryCode').hasError(validation.type) && (deliveryForm.get('deliveryCode').dirty || deliveryForm.get('deliveryCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="packageName">Name :</label>
+              <input class="form-control" type="tel" [(ngModel)]="deliveryName" formControlName="deliveryName"  placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.deliveryName">
+            <div class="error-message"
+              *ngIf="deliveryForm.get('deliveryName').hasError(validation.type) && (deliveryForm.get('deliveryName').dirty || deliveryForm.get('deliveryName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="deliveryModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="deliveryModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateDelivery()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'reasonAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Reason</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+<form [formGroup]="reasonForm" (ngSubmit)="formSubmitReason(reasonForm.value)">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageCode">Code :</label>
+            <input *ngIf="reasonModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="reasonCode" formControlName="reasonCode"  placeholder="enter code">
+            <input *ngIf="reasonModeType === 'edit'" class="form-control" type="text" [(ngModel)]="reasonCode" formControlName="reasonCode"  placeholder="enter code" readonly>
+        </div>
+        <div *ngFor="let validation of validationMessage.reasonCode">
+          <div class="error-message"
+            *ngIf="reasonForm.get('reasonCode').hasError(validation.type) && (reasonForm.get('reasonCode').dirty || reasonForm.get('reasonCode').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageName">Name :</label>
+            <input class="form-control" type="tel" [(ngModel)]="reasonName" formControlName="reasonName"  placeholder="enter name">
+        </div>
+        <div *ngFor="let validation of validationMessage.reasonName">
+          <div class="error-message"
+            *ngIf="reasonForm.get('reasonName').hasError(validation.type) && (reasonForm.get('reasonName').dirty || reasonForm.get('reasonName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="reasonModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="submit" class="btn btn-light other-button" >Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="reasonModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="button" class="btn btn-light other-button" (click)="updateReason()" >Update</button>
+    </div>
+  </div>
+</form>
+</div>
+
+<div class="container" *ngIf="data.action === 'serviceTypeAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Service type</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+<form [formGroup]="serviceForm" (ngSubmit)="formSubmitService(serviceForm.value)">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageCode">Code :</label>
+            <input *ngIf="serviceModeType !== 'edit'" class="form-control" type="text" [(ngModel)]="serviceCode" formControlName="serviceCode"  placeholder="enter code">
+            <input *ngIf="serviceModeType === 'edit'" class="form-control" type="text" [(ngModel)]="serviceCode" formControlName="serviceCode"  placeholder="enter code" readonly>
+        </div>
+        <div *ngFor="let validation of validationMessage.serviceCode">
+          <div class="error-message"
+            *ngIf="serviceForm.get('serviceCode').hasError(validation.type) && (serviceForm.get('serviceCode').dirty || serviceForm.get('serviceCode').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="textOnInput">
+            <label for="packageName">Name :</label>
+            <input class="form-control" type="tel" [(ngModel)]="serviceName" formControlName="serviceName"  placeholder="enter name">
+        </div>
+        <div *ngFor="let validation of validationMessage.serviceName">
+          <div class="error-message"
+            *ngIf="serviceForm.get('serviceName').hasError(validation.type) && (serviceForm.get('serviceName').dirty || serviceForm.get('serviceName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="serviceModeType !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="submit" class="btn btn-light other-button" >Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="serviceModeType === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+    <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+      <button type="button" class="btn btn-light other-button" (click)="updateService()" >Update</button>
+    </div>
+  </div>
+</form>
+</div>

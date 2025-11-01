@@ -1,0 +1,95 @@
+<div class="col-lg-12 col-md-12" style="display: flex; justify-content: center;">
+    <div class="card">
+      <div class="card-body table-responsive">
+        <form [formGroup]="manifestForm" (ngSubmit)="onSubmit()">            
+          <div class="row" style="margin-left: 6rem; margin-bottom: 2rem; color: black;">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                      <input type="radio" id="Manifest" formControlName="drone" value="Manifest" checked  />
+                      <label for="Manifest" class="col-sm-4 col-form-label" style="color: black;">Manifest</label>
+                
+                      <input type="radio" id="Forwading" formControlName="drone" value="Forwading"  />
+                      <label for="Forwading" class="col-sm-5 col-form-label" style="color: black;" >Forwading</label>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+
+            <div class="row" *ngIf="manifestForm.get('drone').value !== 'Forwading'">
+                <label for="Manifest_Date" class="col-sm-1 form-label" style="padding-right: 1px; color: black;">ManifestDt</label>
+                <div class="col-sm-3">
+                  <input type="date" class="custom-select" formControlName="Manifest_Date">
+                </div>
+      
+                <label for="mode" class="col-sm-1 form-label" style="padding-right: 1px;color: black;">Mode</label>
+                <div class="col-sm-3">
+                  <select id="userName" class="custom-select" formControlName="mode">
+                    <option value="" selected disabled>Select Mode</option>
+                    <option value="{{item.Mode_name}}"  *ngFor="let item of ModeName">{{item.Mode_name}}</option>
+                  </select>
+                </div>
+      
+                <label for="Origin" class="col-sm-1 form-label" style="padding-right: 1px;color: black;">Origin</label>
+                <div class="col-sm-3"> 
+                  <input type="text" class="custom-select" id="Origin" formControlName="Origin" [(ngModel)]="originName" value="{{originName}}" readonly>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="manifestForm.get('drone').value !== 'Forwading'">
+                <label for="Destination" class="col-sm-1 form-label" style="padding-right: 1px;margin-bottom: 4rem ;color: black;">Destination</label>
+                <div class="col-sm-3">
+                  <select id="userName" class="custom-select" formControlName="Destination">
+                    <option value="" selected disabled>Select Destination</option>
+                    <option value="{{item.destinationCode}}"  *ngFor="let item of DestinationName">{{item.destinationName}}</option>
+                  </select>
+                </div>
+      
+                <label for="Forwading_Name" class="col-sm-1 form-label" style="padding-right: 1px;color: black;">Forwading_Name</label>
+                <div class="col-sm-3">
+                  <select id="userName" class="custom-select" formControlName="Forwading_Name">
+                    <option value="" selected disabled>Select Co-Loader</option>
+                    <option value="{{item.vendorCode}}"  *ngFor="let item of ColoaderName">{{item.vendorName}}</option>
+                  </select>
+                </div>
+      
+                <label for="Forwading_No" class="col-sm-1 form-label" style="padding-right: 1px;color: black;">Forwading_No</label>
+                <div class="col-sm-3">
+                  <input type="text" class="custom-select" id="Forwading_No" formControlName="Forwading_No">
+                </div>
+            </div>
+    
+          <div class="row"  style="    margin-left: -2rem;color: black;">
+            <label for="inputExcel" class="col-sm-1 col-form-label dash" style="margin-left: 9rem;color: black;">Import</label>
+            <div class="col-sm-7 col-md-2">
+              <input type="file" id="inputExcel" accept=".xlsx, .xls" (change)="onFileSelected($event)" style="width: 10rem;height: 2rem;padding-top: 0rem;">
+            </div>
+              <!-- ok Button for Import -->
+              <div class="col-md-1 col-sm-3"  *ngIf="manifestForm.get('drone').value !== 'Forwading'">
+                <button type="button" class="btn" style="width: 3rem;" (click)="onSubmit()">
+                  <i>ok Manifest</i>
+                </button>
+              </div>
+              <div class="col-md-1 col-sm-3"  *ngIf="manifestForm.get('drone').value === 'Forwading'">
+                <button type="button" class="btn" style="width: 3rem;" (click)="onSubmitForwarding()">
+                  <i>ok Forwarding</i>
+                </button>
+              </div>
+            
+
+            <!-- Download_Sample Button for Import -->
+            <div class="col-md-1 col-sm-3" style="margin-left: 2rem;">
+              <button type="button" class="btn" style="width: 9rem;" (click)="onDownloadSample()">
+                <i>Download_Sample</i>
+              </button>
+            </div>
+            
+             <!-- Erorr_log Button for Import -->
+            <div class="col-md-1 col-sm-3" style=" margin-left: 7rem;">
+              <button type="button" class="btn"  style="width: 5rem;"  (click)=" ErrorLog()">Erorr_log</button>
+            </div> 
+            </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  

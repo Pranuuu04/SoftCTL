@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 d-flex" style="justify-content: right;">
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="    width: 30px;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            font-weight: 600;
+            font-size: large;
+            background: #a6bcbd;">X</button>
+        </div>
+    </div>
+    <form >
+       <div class="row">
+         <label for="inputEmail3" class="col-sm-1 col-form-label">From Date</label>
+         <div class="col-sm-2">
+           <input type="date" placeholder="date" class="form-control" id="inputCity" />
+         </div>
+
+         <label for="inputEmail3" class="col-sm-1 col-form-label">To Date</label>
+         <div class="col-sm-2">
+           <input type="date" placeholder="date" class="form-control" id="inputCity" />
+         </div>
+       </div>
+     </form>
+
+
+   <div class="table-responsive">
+       <table class="table table-bordered table-striped m-0 p-0"  style="background-color: rgb(215 244 255 / 87%);">
+         <thead style="background-color:#34b0d3; color: white;">
+           <tr>
+             <th>Select All
+              <input type="checkbox" class="form-control" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
+            </th>
+             <th>Order No.</th>
+             <th>Date</th>
+             <th>Sender name</th>
+             <th>Pincode</th>
+             <th>Contact No</th>
+             <th>Conginee name</th>
+             <th>From Dst</th>
+             <th>To Dst</th>
+             <th>Pcs</th>
+             <th>Mode</th>
+             <th>Weight</th>
+           </tr>
+         </thead>   
+         <tbody>
+          <tr *ngFor="let item of items">
+            <td>
+              <input type="checkbox" class="checkbox" [(ngModel)]="item.selected">
+            </td>
+            <td>{{ item.order }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.Sender }}</td>
+            <td>{{ item.pincode }}</td>
+            <td>{{ item.contact }}</td>
+            <td>{{ item.Conginee }}</td>
+            <td>{{ item.Fdst }}</td>
+            <td>{{ item.Tdst }}</td>
+            <td>{{ item.PCS }}</td>
+            <td>{{ item.mode }}</td>
+            <td>{{ item.weight }}</td>
+          </tr>
+         </tbody>
+       </table>
+
+       
+     </div>
+
+
+     <div class="row" style="justify-content: right;">
+       <div class="col-sm-3 d-flex" style=" justify-content: right;">
+         <button type="button" class=" Unload btn btn-info">Generate</button>
+       </div>
+     </div>
+
+ </div>
+ 

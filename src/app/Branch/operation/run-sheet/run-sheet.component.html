@@ -1,0 +1,22 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Pending-Drs">
+                        <app-pending-drs></app-pending-drs>
+                    </mat-tab> 
+                    <mat-tab label="Create-Drs">
+                        <app-drs-entry></app-drs-entry>
+                    </mat-tab> 
+                    <mat-tab label="View-Drs">
+                        <app-drs-view></app-drs-view>
+                    </mat-tab> 
+                    <mat-tab label="import-Drs">
+                        <app-import-drs></app-import-drs>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

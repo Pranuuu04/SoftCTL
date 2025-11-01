@@ -1,0 +1,118 @@
+<div class="col-lg-12 col-md-12" style="display: flex;
+justify-content: center;">
+    <div class="card">
+        <div class="card-body table-responsive">            
+              <form [formGroup]="DrsViewForm" (ngSubmit)="submit(DrsViewForm.value)">
+            <div class="row">
+              
+              <label for="floatingTextarea" class="col-sm-1 form-label">From Date</label>
+              <div class="col-sm-2">
+                  <input type="date" value="{{currentDate1}}" [max]="currentDate1" class="form-control" id="date" formControlName="fromDate"  [(ngModel)]="currentDate1"  >
+              </div>
+
+              <label for="floatingTextarea" class="col-sm-1 form-label">To Date</label>
+              <div class="col-sm-2">
+                  <input type="date" value="{{currentDate2}}" [max]="currentDate2" class="form-control" id="date" formControlName="toDate"  [(ngModel)]="currentDate2" >
+              </div>
+
+              <label for="floatingTextarea" class="col-sm-1 form-label">Delivery Boy</label>
+              <div class="col-sm-2">
+                <select id="userName" class="custom-select" formControlName="deliveryBoy"  >
+                  <option value="{{item.employeeCode}}"  *ngFor="let item of nameList" >{{item.employeeName}}</option>
+                </select>
+              </div>
+
+              <label id="DRSNo" for="DRSDate" class="col-sm-1 form-label">DRS No.</label>
+              <div class="col-sm-2">
+                  <input type="number" placeholder="Enter DRS No." value="" class="form-control" id="DRSNo" formControlName="DRS">
+              </div>
+
+            </div>
+            <div class="row" style="justify-content: right;">
+              <div class="col-sm-3 d-flex" style=" justify-content: right;">
+                <button type="submit" class="btn btn-light" style="margin-right: 37px;">Search</button>
+                <button type="button" class="btn btn-light">Download</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+<div *ngIf="showTable && dataSource.data.length > 0">
+  <div class="table-responsive">
+    <div class="row d-flex m-0" style="justify-content: right;" >
+      <div class="form-group has-search col-sm-3">
+        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+        position: absolute;
+        background: none;
+        top: -4px;
+        width: 38px;
+        height: 32px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: #a3b8d4; margin-top: -4px;"></i>
+        </button>
+        <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+      </div>
+     </div>
+  </div>
+<div class="table-responsive">
+  <div class="mat-elevation-z8 text-nowrap">
+    <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: #e2e9f1;" matSort >
+
+      <ng-container matColumnDef="DrsNO">
+        <th mat-header-cell *matHeaderCellDef>Drs no. </th>
+        <td mat-cell *matCellDef="let element"> {{element.DrsNO}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="DrsDate">
+        <th mat-header-cell *matHeaderCellDef> Drs Date</th>
+        <td mat-cell *matCellDef="let element"> {{element.DrsDate| date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef> Emp Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeNo">
+        <th mat-header-cell *matHeaderCellDef> Emp No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Area">
+        <th mat-header-cell *matHeaderCellDef> Area </th>
+        <td mat-cell *matCellDef="let element"> {{element.Area}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="counting">
+        <th mat-header-cell *matHeaderCellDef> Total Awb </th>
+        <td mat-cell *matCellDef="let element"> {{element.counting}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
+          <mat-icon matTooltip="Add" class="custom1-color" (click)="addBulkModal(element)">add</mat-icon>
+          <mat-icon matTooltip="Delete" class="custom2-color" (click)="deleteBulkModal(element)">delete</mat-icon> 
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<mat-paginator [pageSizeOptions]="[10 ,50, 100 , 200]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+
+<!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements" [pageSize]="pageSize" [pageIndex]="pageNumber - 1"></mat-paginator> -->
+</div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./../../../../../assets/images/NOdata.png" alt="">
+  </div>

@@ -1,0 +1,101 @@
+
+.form-control{
+  border-radius: 11px;
+   margin: 0px 0 0; 
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; 
+   height: 28px; 
+   padding-left: 17px;
+   background-color: white;
+   width: 60%; 
+   margin-right: 5px; 
+   padding-right: 10px; 
+   border-top-right-radius: 0;  
+   border-bottom-right-radius: 0;
+}
+.search{
+  z-index: 1001;
+  position: absolute;
+  top: 0;
+  width: 38px;
+  height: 28px;
+  right: 37px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 1px solid #b1a4a4; 
+}
+.drop{
+  z-index: 1001;
+  position: absolute;
+  top: 0;
+  width: 38px;
+  height: 28px;
+  right: -1px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  mat-icon{
+    margin-top: -35px; 
+    font-size: 25px;
+  }
+}
+.search,
+.drop{
+  background-color: rgba(214, 226, 230, 0.874);
+  i,
+  mat-icon{
+    color: black;
+  }
+}
+.search:hover,
+.drop:hover{
+  background-color: #28bbf5;
+  i,
+  mat-icon{
+    color: white;
+  }
+}
+input[type=date]{
+  padding-left: 10px;
+}
+.date-range-picker label{
+  padding: 6px;
+}
+
+@media (min-width:1024px) and  (max-width: 560px){
+  input[type=date]{
+    width: 123px;
+  } 
+  .form-control{
+    width: 64%;
+    margin-right: 28px;
+  }
+}
+::ng-deep .custom-snackbar {
+	color: #055305 !important;
+	border: 1px solid #80a580  !important;
+    background-color: #aed7ae !important;
+	margin-top: 72px !important;
+	margin-right: 66px !important;
+	font-weight: 400 !important;
+	font-size: 15px !important;
+  }
+  ::ng-deep .error-snackbar{
+	color: red !important;
+	border: 1px solid  #e39999 !important;
+	background-color: #f1d7d7 !important;
+	margin-top: 72px !important;
+	margin-right: 66px !important;
+	font-weight: 400 !important;
+	font-size: 15px !important;
+  }
+  ::ng-deep .mat-simple-snackbar-action button  {
+  color: black;
+  }
+ .navbar .mat-raised-button {
+        min-width: 35px;
+    padding: 12px
+  }
+ @media (max-width: 991px) {
+   [class*=navbar-expand-] > .container-fluid {
+            padding-right: 31px;
+  }
+}

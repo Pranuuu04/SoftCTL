@@ -1,0 +1,264 @@
+<div>
+  <form [formGroup]="createForm" (ngSubmit)="generateManifest(createForm.value)">
+    <div class="row mainrow">
+      <div class="col-sm-3">
+        <div class="textOnInput" *ngIf=" this.userType === 'Admin'">
+          <label for="origin">From :</label>
+          <input class="form-control" type="text" id="origin"  value="{{destinationName}}"
+          [(ngModel)]="originName" readonly>
+        </div>
+        <div class="textOnInput" *ngIf="this.userType !== 'Admin'">
+          <label for="origin">From :</label>
+          <input class="form-control" type="text" id="origin"  value="{{originName}}"
+          [(ngModel)]="originName" readonly>
+        </div>
+       </div>
+       <div class="col-sm-3">
+            <div class="textOnInput">
+            <label for="ManfDate"><span style="color: red;">*</span>Manifest date :</label>
+            <input class="form-control" type="date" formControlName="ManfDate">
+        </div>
+       </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="destination"><span style="color: red;">*</span>destination :</label>
+            <select id="destination" class="custom-select" formControlName="destination">
+              <option selected disabled>Select destination</option>
+              <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+                {{ item.destinationName }} 
+              </option>
+            </select>
+            <div *ngFor="let validation of validationMessage.destination">
+              <div class="error-message"
+                *ngIf="createForm.get('destination').hasError(validation.type) && (createForm.get('destination').dirty || createForm.get('destination').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="via">Via :</label>
+          <select id="via" class="custom-select" formControlName="via" >
+            <option selected disabled>Select via</option>
+            <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
+              {{ item.destinationName }} 
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mainrow">
+       <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="Mode"><span style="color: red;">*</span>Mode :</label>
+          <select id="Mode" class="custom-select" formControlName="Mode" >
+            <option selected disabled>Select Mode</option>
+            <option  *ngFor="let item of ModeName" value="{{ item.Mode_name }}">
+              {{ item.Mode_name }}
+            </option>
+          </select>
+          <div *ngFor="let validation of validationMessage.Mode">
+            <div class="error-message"
+              *ngIf="createForm.get('Mode').hasError(validation.type) && (createForm.get('Mode').dirty || createForm.get('Mode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+       <div class="row">
+        <div class="col-sm-8">
+          <div class="textOnSelect">
+            <label for="Transporttype">Transport Type :</label>
+            <select id="Transporttype" class="custom-select" formControlName="Transporttype" (change)="onTransportTypeChange($event)">
+              <option value="Self" selected>Self</option>
+              <option value="Hired">Hired</option>
+            </select>
+        </div>
+        </div>
+        <div class="col-sm-4"  style="display: flex; justify-content: right;">
+          <button matTooltip="Add" type="button" class="btn btn-light form-icon" width="auto" (click)="openaddmanifest()">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+       </div>
+      </div>
+      <!-- <div *ngIf="selectedType !== 'Self'"> -->
+        <div class="col-sm-3">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="textOnSelect">
+                <label for="VehicleType">Vehicle Type :</label>
+                <select id="VehicleType" class="custom-select" formControlName="VehicleType">
+                  <option value="Self" selected>Self</option>
+                  <option value="Hired">Hired</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="selectedType !== 'Self'">
+              <div class="textOnInput">
+                <label for="VehicleNo">Vehicle No. :</label>
+                <input class="form-control" type="text" id="VehicleNo" formControlName="VehicleNo"  placeholder="vehicle number">
+            </div>
+            </div>
+            <div class="col-sm-6" *ngIf="selectedType === 'Self'">
+              <div class="textOnInput">
+                <label for="VehicleNo">Vehicle No. :</label>
+                <select id="VehicleNo" class="custom-select" formControlName="VehicleNo" >
+                <option *ngFor="let vehicle of vehicleNumbers" value="{{vehicle.vehicleReg}}">{{ vehicle.vehicleReg }}</option>
+              </select>
+            </div>
+            </div>
+          </div>
+         
+        </div>
+        <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
+          <div class="textOnInput">
+              <label for="Drivername">Driver Name :</label>
+              <input class="form-control" type="text" id="Drivername" formControlName="Drivername"  placeholder="enter Driver name"> 
+          </div>
+        </div>
+    
+      <div class="col-sm-3"  *ngIf="selectedType === 'Self'">
+        <div class="textOnSelect">
+            <label for="Drivername">Driver Name :</label>
+            <select id="Drivername" class="custom-select" formControlName="Drivername" (change)="onDriverNameChange($event)">
+              <option selected disabled>Select Driver Name</option>
+              <option *ngFor="let item of DriverName" value="{{item.driverCode}}">
+                {{ item.driverName }} 
+              </option>
+            </select>
+        </div>
+      </div>
+  
+    
+    </div>
+    <div class="row mainrow">
+        <div class="col-sm-3">
+        <div class="textOnInput">
+            <label for="DriverNo">Driver Number :</label>
+            <input class="form-control" type="text" id="DriverNo" formControlName="DriverNo"  placeholder="enter Driver Number"  [value]="driverNumber">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="ColoaderName">Coloader Name :</label>
+            <select id="ColoaderName" class="custom-select" formControlName="ColoaderName" >
+              <option selected disabled>Select Coloader Name </option>
+              <option *ngFor="let item of ColoaderName" value="{{item.vendorCode}}">
+                {{ item.vendorName }} 
+              </option>
+            </select>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="ColoaderNumber">Coloader Number :</label>
+          <input class="form-control" type="number" id="ColoaderNumber" formControlName="ColoaderNumber"  placeholder="enter Coloader Number">
+      </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="Route">Route :</label>
+            <select id="Route" class="custom-select" formControlName="Route" >
+              <option selected disabled>Select Route</option>
+              <option *ngFor="let item of inputRouteName" value="{{item.routeName}}">
+                {{ item.routeName }} 
+              </option>
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="Remark">Remark :</label>
+          <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter Remark">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mainrow mt-3"  style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-3">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="awbNumber"><span style="color: red;">*</span>AWB no :</label>
+              <input class="form-control" type="text" id="awbNumber" formControlName="awbNumber"  placeholder="enter Awb No"  [(ngModel)]="awbNumber">
+          </div>
+          </div>
+          <div class="col-sm-4"  style="display: flex; justify-content: right;">
+            <button matTooltip="Add Consigner" type="button" class="btn btn-light form-icon" width="auto"[disabled]="!createForm.get('awbNumber').value"  (click)="findAwbNo(createForm.value)">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+      
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="BookingWt">Booking weight :</label>
+          <input class="form-control" type="number" id="BookingWt" placeholder=" Booking weight" formControlName="BookingWeight" readonly  [value]="actualWeight !== undefined ? actualWeight : ''">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="ManifestWeight">Manifest weight :</label>
+          <input class="form-control" type="number" id="ManifestWeight" formControlName="ManifestWeight"  placeholder="enter Manifest weight">
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex" style="justify-content: space-between;" >
+        <button type="submit" class="btn btn-light other-button">Generate</button>
+        <button type="button" class="btn btn-light other-button" (click)="openbulkmanifest()">Bulk</button>
+      </div>
+    </div>
+  </form> 
+<div class="row mainrow">
+<div class="col-sm-12 mt-2 p-0">
+     <div *ngIf="showTable && listData.length > 0">
+      <div class="table-responsive text-nowrap">
+        <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+          <thead style=" background-color:  #a3b8d4; color: black;">
+            <tr>
+              <th>AwbNo</th>
+              <th>Date</th>
+              <th>Consigner</th>
+              <th>Consignee</th>
+              <th>FromDest</th>
+              <th>ToDest</th>
+              <th>PCs</th>
+              <th>Weight</th>
+              <th>InvoiceValue</th>
+              <th>eWayBillNo</th>
+              <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listData;" >
+              <td >{{item.AwbNo}}</td>
+              <td >{{item.Date| date:'dd/MM/yyyy'}}</td>
+              <td >{{item.Consigner}}</td>
+              <td >{{item.Consignee}}</td>
+              <td >{{item.FromDest}}</td>
+              <td >{{item.ToDest}}</td>
+              <td >{{item.PCs}}</td>
+              <td >{{item.Weight}}</td>
+              <td >{{item.InvoiceValue}}</td>
+              <td >{{item.eWayBillNo}}</td>
+              <td>
+                <button mat-icon-button color="warn"  (click)="deleteRow(item)">
+                  <mat-icon style=" font-size: 22px; color: #f44336;">delete</mat-icon>
+                </button>
+              </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="" style="height: 290px;">
+  </div>
+</div>
+</div>
+</div>

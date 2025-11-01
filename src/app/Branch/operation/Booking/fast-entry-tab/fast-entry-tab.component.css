@@ -1,0 +1,305 @@
+* {
+    font-size: 14px;
+    padding-top: 1.1px;
+    color: black;
+  }
+  form .col-sm-1{
+    padding-right: 8px;
+  }
+  form{
+    margin-top: 10px;
+    margin-bottom: 0.125rem;
+    padding: 0 15px;
+  }
+
+  .form-control,
+  input,
+  .custom-select1{
+    border: 1px solid #d2d2d2; 
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: auto;
+    margin: 4px 0;
+    height: 33px;
+    border-radius: 6px;
+  }
+  
+  .form-icon{
+    width: 40px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2;
+    font-size: medium;
+    padding-top: 1.1px;
+    height: 30px;
+    margin-top: 0;
+    line-height: 22px;
+  }
+  .btn .material-icons{
+    font-size: 25px;
+  }
+  .delete{
+  width: 30px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: medium;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  line-height: 26px;
+  background-color: white;
+  i{
+    color: red;
+    font-size: 16px;
+  }
+  }
+  .edit{
+    width: 30px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: medium;
+  padding-top: 1.1px;
+  height: 26px;
+  margin-top: 0;
+  line-height: 26px;
+  background-color: white;
+  i{
+    color: green;
+    font-size: 16px;
+  }
+  }
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+  
+  ::ng-deep .mat-dialog-container {
+    padding: 6px 2px !important; 
+    overflow-y: initial !important;
+  
+  }
+  @media  (min-width: 320px) and (max-width: 425px){
+    ::ng-deep .mat-dialog-container{
+        max-height: 431px !important;
+    }
+    .cancel{
+      margin-top: -33px;
+  }
+  }
+  
+  .form-group{
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .textOnInput{
+    position: relative;
+    margin-bottom: 15px; 
+  }
+  
+  .textOnInput label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 2px;
+    z-index: 1;
+    text-wrap: nowrap;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .textOnInput label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .table-responsive{
+    max-height: 400px ; 
+    overflow: auto ; 
+     padding-top: 0 ;
+    margin-top: 0 ;
+  }
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  } 
+  .table thead tr th {
+    font-size: 13px;
+    width: 250px;
+    border: 1px Solid #9b9898;
+    padding: 6px 4px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .table tbody  tr  td {
+     font-size: small;
+    padding: 0 8px;
+    text-align: center;
+  }
+  .table-responsive{
+    margin-bottom: 0;
+    color: black;
+    font-weight: 400;
+  }
+  table , td {
+    border: 1px Solid #9b9898;
+    padding: 0 8px;
+    height: 30px;
+  }
+  table th{ 
+    font-size: 15px;
+    font-weight: 600;
+  }
+  button[disabled] {
+    cursor: not-allowed;
+}
+.other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 35px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 35px;
+  color: white;
+  text-transform: capitalize;
+}
+   
+.error-message{
+  color: red;
+  font-size: 12px;
+  font-weight: 500;
+  text-wrap: nowrap;
+  overflow: overlay;
+  /* margin-top: -10px; */
+}
+.custom-select1{
+  height: 28px;
+   display: flex;
+  line-height: 20px;
+  justify-content: center;
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-top: 5px; 
+  font-size: 14px;
+  font-family: auto;
+  padding-left: -7px;
+}
+/* td .custom-select1,
+.AwbNo{
+  width: 130px;
+} */
+@media (min-width: 660px) and (max-width: 1024px){
+   .custom-select1{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  width: auto !important;
+  }
+}
+
+.form-control:focus,
+::ng-deep .custom-select1:focus{
+    color: #495057 !important;
+    background-color: rgba(173, 11, 11, 0) !important;
+    border-color: #9acffa !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25) !important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    background-color: white !important;
+    padding: 1px 8px;
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  
+  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover,
+  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background-color: rgb(201, 214, 214) !important;
+  }
+  ::ng-deep .ng-dropdown-panel {
+    border: 1px solid #d2d2d2 !important;
+    border-top: none !important;
+  }
+  ::ng-deep .ng-dropdown-panel .scroll-host{
+    border: 1px solid #d2d2d2 !important; 
+  }
+  ::ng-deep .ng-select {
+    height: 28px !important;
+  }
+  
+  ::ng-deep .ng-select .ng-arrow {
+    font-family: "icomoon" !important;
+    border-color: inherit !important;
+    border-width: 0 !important;
+    font-size: 10px;
+    color: black !important;
+    top: 0 !important;
+    left: -3px;
+    color: inherit;
+    text-align: center;
+    transform: rotate(0deg);
+    transform-origin: 8px 12px;
+    transition: transform 0.2s ease;
+    padding-right: 10px !important;
+  }
+  
+  ::ng-deep .ng-select .ng-arrow:before {
+    content: "\25BC";
+  }
+  
+  ::ng-deep .ng-select .ng-select-container .ng-value-container {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    left: 16px !important;
+  }
+  
+  ::ng-deep .ng-select.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    background-color: rgb(201, 214, 214) !important;
+  }
+
+  &.ng-select-opened {
+      .ng-arrow {
+          transform: rotate(180deg);
+      }
+  }
+  ::ng-deep .custom-snackbar {
+    color: white !important;
+    background-color: #0a990a !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+    color: white !important;
+    background-color: red !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+  color: white;
+}
+/* ::ng-deep .mat-tab-body-wrapper {
+  height: 470px !important;
+} */

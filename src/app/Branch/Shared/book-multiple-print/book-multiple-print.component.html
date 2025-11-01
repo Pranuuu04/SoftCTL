@@ -1,0 +1,901 @@
+<div class="container1">
+    <div class="row m-0" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-6">
+            <p style="font-weight: 600; font-size: large; margin-bottom: 0;  margin-top: 7px; ">Print </p>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === '1Format'">
+            <button type="button" class="btn btn-light p-0" (click)="printPDF()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === '1Formatcopy'">
+            <button type="button" class="btn btn-light p-0" (click)="printPDF()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === '1-2 Format'">
+            <button type="button" class="btn btn-light" (click)="printPDF()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === '1-3 Format'" >
+            <button type="button" class="btn btn-light" (click)="printPDF1_3()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === 'label'">
+            <button type="button" class="btn btn-light" (click)="generatePDFLabel()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === 'label2'">
+            <button type="button" class="btn btn-light" (click)="generatePDFLabel2()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;" *ngIf="printType === 'label3'" >
+            <button type="button" class="btn btn-light" (click)="generatePDFLabel3()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf"></i></button>
+            <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+    </div>
+
+<div class="main-wrapper"></div>
+
+<div  style=" overflow-x: auto; max-height: 400px; "  *ngIf="printType === '1Format'"  [ngClass]="{'one-format': printType === '1Format', 'one-two-format': printType === '1-2 Format', 'one-three-format': printType === '1-3 Format'}">
+    <div  id="contentToConvert">
+        <div class="main-container1" style=" margin: 15px;">
+            <div class="container ml-1 mr-1" #container1>
+                <div class="row headerr pt-0">
+                    <div class="col-3" style="border-right: 2px solid; border-bottom: 2px solid;">
+                        <div class="image-container">
+                            <img src="{{logoImage}}" width="190" style="object-fit: contain;">
+                        </div>
+                    </div>
+                    <div class="col-6 heading" style="font-size: medium; text-align: center; border-right: 2px solid; border-bottom: 2px solid;">
+                        <h1>{{listData.companyName}}</h1>
+                        <p>{{listData.locationAdd1}} {{listData.locationAdd2}}</p>
+                        <p>{{listData.locationAdd3}}, &nbsp;{{listData.locationpin}}</p>
+                        <p><strong class="bold">Email:</strong>{{listData.locationemail}}&nbsp;<strong class="bold">Contact No:</strong>{{listData.locationphone}}&nbsp; <strong class="bold">GST NO:</strong>{{listData.locationgst}}</p>
+                    </div>
+                    <div class="col-3" style="border-bottom: 2px solid">
+                        <div class="image-container">
+                            <img src="{{listData.barcode}}" width="175" style="object-fit: contain;">
+                            <h5 style="margin: 8px 0; font-size: 20px;">{{listData.AwbNo}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Origin: {{listData.originName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Dest:{{listData.destinationName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Mode: {{listData.modeName}}</strong></p>
+                    </div>
+                    <div class="col-6" style="padding:5px;">
+                        <p><strong class="bold">Refrance no. :</strong> {{listData.Ref_No}} <ng-container *ngIf="listData.vendorAwbNo1">
+                            &nbsp;-&nbsp;({{listData.vendorAwbNo1}})
+                          </ng-container>
+                    </div>
+                </div>
+                <div class="row text-nowrap">
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pcs</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Act Wt.</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Charg.Wt</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv No.</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv Value</strong></p>
+                    </div>
+                    <div class="col-2 cust">
+                        <p><strong class="bold">E-way bill</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pay Mode</strong></p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -2px;">
+                    <div class="col-1 charges">
+                        <span>{{listData.pcs}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.actualWt}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.chargedWt}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invNo}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invValue}}</span>
+                    </div>
+                    <div class="col-2 charges">
+                        <span>{{listData.EwayBill}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.paymentMode}}</span>
+                    </div>
+                </div>
+                <div class="row address" style="border-bottom: 2px solid; margin-top: -2px;">
+                    <div class="col-6" style="border-right: 2px solid; padding: 0 5px;">
+                        <p><strong class="bold">Consignor:</strong>{{listData.consignorName | uppercase}} </p>
+                        <p><strong class="bold">Shipper Name:</strong> {{listData.shipperName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong>{{listData.shipperAdd1}}&nbsp;{{listData.shipperAdd2}}&nbsp;{{listData.shipperPhone}}&nbsp;{{listData.shipperStateCode}}&nbsp; {{listData.shipperpin}}</p><br>
+                        <p><strong class="bold">GST No:</strong>{{listData.shipperGst}}</p>
+                    </div>
+                    <div class="col-6" style="padding: 0 5px;">
+                        <p><strong class="bold">Consignee:</strong> {{listData.consigneeName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong> {{listData.consigneeAdd1}}&nbsp;
+                        {{listData.consigneeAdd2}}&nbsp;{{listData.consigneeAdd3}}&nbsp;{{listData.consigneeCity}}&nbsp;{{listData.consigneeState}} &nbsp;{{listData.consigneePin}}</p>
+                        <p><strong class="bold">Email:</strong> {{listData.consigneeEmail}}</p>
+                        <p><strong class="bold">Mobile No:&nbsp; {{listData.consigneeTel}}</strong></p>
+                    </div>
+                </div>
+                <div class="row pt-0">
+                    <div class="col-3 contentborder">
+                        <p><strong class="bold">Order by:</strong>&nbsp;</p>{{listData.Remark}}<br>
+                        <p style="border-top: 2px solid"><strong class="bold">Job / Event:</strong>&nbsp;{{listData.S_No}}</p>
+                        <p style="border-top: 2px solid"><strong class="bold">Type:</strong>  {{listData.ConsigneeGST}}&nbsp;</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Date:</strong> &nbsp;{{listData.bookDate}}</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Shipper Sign: &nbsp;</strong></p>
+                        <p style="font-weight: 600;border-top: 2px solid;">Book by : {{listData.Username}}</p>
+                    </div> 
+                    <div class="col-4" style="border-right: 2px solid; padding: 0 6px; font-size: smaller;">
+                        <span>I/We Have This Day Taken Delivery Of The</span><br>
+                        <span>Consignment Mentioned Above in Good Condition To</span><br>
+                        <span>My/Our Satisfaction</span><br>
+                        <span>1.Receiver's Sign.</span><br>
+                        <span>2.Receiver's Name.</span><br>
+                        <span>3.Date & Time.</span><br>
+                        <span>4.Stamp.</span><br>
+                    </div>
+                    <div class="col-2" style="border-right: 2px solid; font-size: smaller;" >
+                        <div class="row">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">L</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">W</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">H</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">Q</div>
+                        </div>
+                        <div class="row" *ngFor="let item of listData.volumetric">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Length}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Width}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Height}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Qty}}</div>
+                        </div>
+                    </div>
+                    <div class="col-2" style="padding-left: inherit; padding-right: inherit; text-align: center; border-right: 1px solid;">
+                        <p style="border-bottom: 1px solid;"><strong class="bold">Description</strong></p>
+                        <p style="border-bottom: 1px solid;">freight amount</p>
+                        <p style="border-bottom: 1px solid;">Docket Chgs</p>
+                        <p style="border-bottom: 1px solid;">Fuel Charges</p>
+                        <p style="border-bottom: 1px solid;">IGST 0%</p>
+                        <p style="border-bottom: 1px solid;">CGST 9%</p>
+                        <p style="border-bottom: 1px solid;">SGST 9%</p>
+                        <p>GRAND TOTAL</p>
+                    </div>
+                    <div class="col-1" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                        <p style="border-bottom: 1px solid"><strong class="bold">Charge</strong></p>
+                        <p style="border-bottom: 1px solid">{{listData.amount}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.docketCharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.enscharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.IGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.CGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.SGSTPer}}</p>
+                        <p>{{listData.TotalAmt}}</p>
+                    </div>
+                </div>
+              <div class="row pt-0"  style="border-top: 2px solid;">
+               <div class="col-7 p-2" style="border-right: 1px solid;">
+                   <p><strong class="bold">Declaration 1 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. Unde </p>
+                   <p><strong class="bold">Declaration 2 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. Unde t consectetur adipisicing elit. Quas dignissimos </p>
+                   <p><strong class="bold">Declaration 3 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. t consectetur adipisicing elit. Quas dignissimos  </p>
+               </div>
+               <div class="col-5 p-2">
+                   <p><strong class="bold">A/C copy with stamp :</strong></p> <br><br>
+                   <p><strong class="bold">Pickup by :</strong></p> <br><br>
+                   <p><strong class="bold">Deliver by :</strong></p><br><br>
+                   <p><strong class="bold">carriage :</strong></p><br><br>
+                   <p><strong class="bold">Remark :</strong></p>
+               </div>
+             </div>
+             <div class="row" style="border-top: 2px solid; justify-content: center;">
+               <div class="col-4" style="border-right: 2px solid black;;font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                   <input type="checkbox" style="margin-right: 5px;" />
+                   Shipper copy
+                 </label>
+               </div>
+               <div class="col-4" style="font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                       <input type="checkbox" style="margin-right: 5px;" />
+                       Consignee copy
+                     </label>
+               </div>
+               <div class="col-4" style="border-left: 2px solid black; margin-top: -2px;font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                       <input type="checkbox" style="margin-right: 5px;" />
+                       POD Copy
+                     </label>
+               </div>
+         </div>
+            </div>
+        </div>
+       </div> 
+</div>
+<div  style=" overflow-x: auto; max-height: 400px; "  *ngIf="printType === '1Formatcopy'" >
+    <div  id="contentToConvert">
+        <div class="main-container1" style=" margin: 15px;">
+            <div class="container ml-1 mr-1" #container1>
+                <div class="row headerr pt-0">
+                    <div class="col-3" style="border-right: 2px solid; border-bottom: 2px solid;">
+                        <div class="image-container">
+                            <img src="{{logoImage}}" width="190" style="object-fit: contain;">
+                        </div>
+                    </div>
+                    <div class="col-6 heading" style="font-size: medium; text-align: center; border-right: 2px solid; border-bottom: 2px solid;">
+                        <h1>{{listData.companyName}}</h1>
+                        <p>{{listData.locationAdd1}} {{listData.locationAdd2}}</p>
+                        <p>{{listData.locationAdd3}}, &nbsp;{{listData.locationpin}}</p>
+                        <p><strong class="bold">Email:</strong>{{listData.locationemail}}&nbsp;<strong class="bold">Contact No:</strong>{{listData.locationphone}}&nbsp; <strong class="bold">GST NO:</strong>{{listData.locationgst}}</p>
+                    </div>
+                    <div class="col-3" style="border-bottom: 2px solid">
+                        <div class="image-container">
+                            <img src="{{listData.barcode}}" width="175" style="object-fit: contain;">
+                            <h5 style="margin: 8px 0; font-size: 20px;">{{listData.AwbNo}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Origin: {{listData.originName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Dest:{{listData.destinationName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding:5px;">
+                        <p><strong class="bold">Mode: {{listData.modeName}}</strong></p>
+                    </div>
+                    <div class="col-6" style="padding:5px;">
+                        <p><strong class="bold">Refrance no. :</strong> {{listData.Ref_No}} <ng-container *ngIf="listData.vendorAwbNo1">
+                            &nbsp;-&nbsp;({{listData.vendorAwbNo1}})
+                          </ng-container>
+                    </div>
+                </div>
+                <div class="row text-nowrap">
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pcs</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Act Wt.</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Charg.Wt</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv No.</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv Value</strong></p>
+                    </div>
+                    <div class="col-2 cust">
+                        <p><strong class="bold">E-way bill</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pay Mode</strong></p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -2px;">
+                    <div class="col-1 charges">
+                        <span>{{listData.pcs}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.actualWt}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.chargedWt}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invNo}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invValue}}</span>
+                    </div>
+                    <div class="col-2 charges">
+                        <span>{{listData.EwayBill}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.paymentMode}}</span>
+                    </div>
+                </div>
+                <div class="row address" style="border-bottom: 2px solid; margin-top: -2px;">
+                    <div class="col-6" style="border-right: 2px solid; padding: 0 5px;">
+                        <p><strong class="bold">Consignor:</strong>{{listData.consignorName | uppercase}} </p>
+                        <p><strong class="bold">Shipper Name:</strong> {{listData.shipperName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong>{{listData.shipperAdd1}}&nbsp;{{listData.shipperAdd2}}&nbsp;{{listData.shipperPhone}}&nbsp;{{listData.shipperStateCode}}&nbsp; {{listData.shipperpin}}</p><br>
+                        <p><strong class="bold">GST No:</strong>{{listData.shipperGst}}</p>
+                    </div>
+                    <div class="col-6" style="padding: 0 5px;">
+                        <p><strong class="bold">Consignee:</strong> {{listData.consigneeName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong> {{listData.consigneeAdd1}}&nbsp;
+                        {{listData.consigneeAdd2}}&nbsp;{{listData.consigneeAdd3}}&nbsp;{{listData.consigneeCity}}&nbsp;{{listData.consigneeState}} &nbsp;{{listData.consigneePin}}</p>
+                        <p><strong class="bold">Email:</strong> {{listData.consigneeEmail}}</p>
+                        <p><strong class="bold">Mobile No:&nbsp; {{listData.consigneeTel}}</strong></p>
+                    </div>
+                </div>
+                <div class="row pt-0">
+                    <div class="col-3 contentborder">
+                        <p><strong class="bold">Order by:</strong>&nbsp;</p>{{listData.Remark}}<br>
+                        <p style="border-top: 2px solid"><strong class="bold">Job / Event:</strong>&nbsp;{{listData.S_No}}</p>
+                        <p style="border-top: 2px solid"><strong class="bold">Type:</strong>  {{listData.ConsigneeGST}}&nbsp;</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Date:</strong> &nbsp;{{listData.bookDate}}</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Shipper Sign: &nbsp;</strong></p>
+                        <p style="font-weight: 600;border-top: 2px solid;">Book by : {{listData.Username}}</p>
+                    </div> 
+                    <div class="col-4" style="border-right: 2px solid; padding: 0 6px; font-size: smaller;">
+                        <span>I/We Have This Day Taken Delivery Of The</span><br>
+                        <span>Consignment Mentioned Above in Good Condition To</span><br>
+                        <span>My/Our Satisfaction</span><br>
+                        <span>1.Receiver's Sign.</span><br>
+                        <span>2.Receiver's Name.</span><br>
+                        <span>3.Date & Time.</span><br>
+                        <span>4.Stamp.</span><br>
+                    </div>
+                    <div class="col-2" style="border-right: 2px solid; font-size: smaller;" >
+                        <div class="row">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">L</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">W</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">H</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">Q</div>
+                        </div>
+                        <div class="row" *ngFor="let item of listData.volumetric">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Length}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Width}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Height}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Qty}}</div>
+                        </div>
+                    </div>
+                    <div class="col-2" style="padding-left: inherit; padding-right: inherit; text-align: center; border-right: 1px solid;">
+                        <p style="border-bottom: 1px solid;"><strong class="bold">Description</strong></p>
+                        <p style="border-bottom: 1px solid;">freight amount</p>
+                        <p style="border-bottom: 1px solid;">Docket Chgs</p>
+                        <p style="border-bottom: 1px solid;">Fuel Charges</p>
+                        <p style="border-bottom: 1px solid;">IGST 0%</p>
+                        <p style="border-bottom: 1px solid;">CGST 9%</p>
+                        <p style="border-bottom: 1px solid;">SGST 9%</p>
+                        <p>GRAND TOTAL</p>
+                    </div>
+                    <div class="col-1" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                        <p style="border-bottom: 1px solid"><strong class="bold">Charge</strong></p>
+                        <p style="border-bottom: 1px solid">{{listData.amount}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.docketCharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.enscharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.IGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.CGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.SGSTPer}}</p>
+                        <p>{{listData.TotalAmt}}</p>
+                    </div>
+                </div>
+              <div class="row pt-0"  style="border-top: 2px solid;">
+               <div class="col-7 p-2" style="border-right: 1px solid;">
+                   <p><strong class="bold">Declaration 1 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. Unde </p>
+                   <p><strong class="bold">Declaration 2 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. Unde t consectetur adipisicing elit. Quas dignissimos </p>
+                   <p><strong class="bold">Declaration 3 :</strong></p>
+                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas dignissimos temporibus officiis quae dicta consequuntur saepe sapiente? Magnam beatae enim dignissimos ducimus deleniti. t consectetur adipisicing elit. Quas dignissimos  </p>
+               </div>
+               <div class="col-5 p-2">
+               </div>
+             </div>
+             <div class="row" style="border-top: 2px solid; justify-content: center;">
+               <div class="col-4" style="border-right: 2px solid black;;font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                   <input type="checkbox" style="margin-right: 5px;" />
+                   Shipper copy
+                 </label>
+               </div>
+               <div class="col-4" style="font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                       <input type="checkbox" style="margin-right: 5px;" />
+                       Consignee copy
+                     </label>
+               </div>
+               <div class="col-4" style="border-left: 2px solid black; margin-top: -2px;font-weight: 600; padding: 5px;">
+                   <label class="mb-0">
+                       <input type="checkbox" style="margin-right: 5px;" />
+                       POD Copy
+                     </label>
+               </div>
+         </div>
+            </div>
+        </div>
+       </div> 
+</div>
+
+    <div  style=" overflow-x: auto; max-height: 400px; "  *ngIf="printType === '1-2 Format'"  [ngClass]="{'one-format': printType === '1Format', 'one-two-format': printType === '1-2 Format', 'one-three-format': printType === '1-3 Format'}" >
+       <div  id="contentToConvert" >
+        <div class="main-container1" *ngFor="let j of [0, 1]" style=" margin: 15px;" >
+            <div class="container ml-1 mr-1" #container1>
+                <div class="row">
+                    <div class="col-3" style="border-right: 2px solid; border-bottom: 2px solid;">
+                        <div class="image-container">
+                            <img src="{{logoImage}}" width="190" style="object-fit: contain;">
+                        </div>
+                    </div>
+                    <div class="col-6 heading" style="font-size: medium; text-align: center; border-right: 2px solid; border-bottom: 2px solid;">
+                        <h1>{{listData.companyName}}</h1>
+                        <p>{{listData.locationAdd1}} {{listData.locationAdd2}}</p>
+                        <p>{{listData.locationAdd3}}, &nbsp;{{listData.locationpin}}</p>
+                        <p><strong class="bold">Email:</strong>{{listData.locationemail}}&nbsp;<strong class="bold">Contact No:</strong>{{listData.locationphone}}&nbsp; <strong class="bold">GST NO:</strong>{{listData.locationgst}}</p>
+                    </div>
+                    <div class="col-3" style="border-bottom: 2px solid">
+                        <div class="image-container">
+                            <img [src]="barcode" width="190" style="object-fit: contain;">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2" style="padding: 0 5px;">
+                        <p><strong class="bold">Origin: {{listData.originName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding: 0 5px;">
+                        <p><strong class="bold">Dest:{{listData.destinationName}}</strong></p>
+                    </div>
+                    <div class="col-2" style="padding: 0 5px;">
+                        <p><strong class="bold">Mode: {{listData.modeName}}</strong></p>
+                    </div>
+                    <div class="col-6" style="padding: 0 5px;">
+                        <p><strong class="bold">Vendor:</strong> {{listData.Ref_No}} <ng-container *ngIf="listData.vendorAwbNo1">
+                            &nbsp;-&nbsp;({{listData.vendorAwbNo1}})
+                          </ng-container>
+                    </div>
+                </div>
+                <div class="row text-nowrap">
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pcs/Box</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Act Wt.</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Charg.Wt</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv No.</strong></p>
+                    </div>
+                    <div class="col-3 cust">
+                        <p><strong class="bold">Inv Value</strong></p>
+                    </div>
+                    <div class="col-2 cust">
+                        <p><strong class="bold">E-way bill</strong></p>
+                    </div>
+                    <div class="col-1 cust">
+                        <p><strong class="bold">Pay Mode</strong></p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -2px;">
+                    <div class="col-1 charges">
+                        <span>{{listData.pcs}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.actualWt}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.chargedWt}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invNo}}</span>
+                    </div>
+                    <div class="col-3 charges">
+                        <span>{{listData.invValue}}</span>
+                    </div>
+                    <div class="col-2 charges">
+                        <span>{{listData.EwayBill}}</span>
+                    </div>
+                    <div class="col-1 charges">
+                        <span>{{listData.paymentMode}}</span>
+                    </div>
+                </div>
+                <div class="row" style="border-bottom: 2px solid; margin-top: -2px;">
+                    <div class="col-6" style="border-right: 2px solid; padding: 0 5px;">
+                        <p><strong class="bold">Consignor:</strong>{{listData.consignorName | uppercase}} </p>
+                        <p><strong class="bold">Shipper Name:</strong> {{listData.shipperName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong>{{listData.shipperAdd1}}&nbsp;{{listData.shipperAdd2}}&nbsp;{{listData.shipperPhone}}&nbsp;{{listData.shipperStateCode}}&nbsp; {{listData.shipperpin}}</p><br>
+                        <p><strong class="bold">GST No:</strong>{{listData.shipperGst}}</p>
+                    </div>
+                    <div class="col-6" style="padding: 0 5px;">
+                        <p><strong class="bold">Consignee:</strong> {{listData.consigneeName | uppercase}}</p>
+                        <p><strong class="bold">Address:</strong> {{listData.consigneeAdd1}}&nbsp;
+                        {{listData.consigneeAdd2}}&nbsp;{{listData.consigneeAdd3}}&nbsp;{{listData.consigneeCity}}&nbsp;{{listData.consigneeState}} &nbsp;{{listData.consigneePin}}</p>
+                        <p><strong class="bold">Email:</strong> {{listData.consigneeEmail}}</p>
+                        <p><strong class="bold">Mobile No:&nbsp; {{listData.consigneeTel}}</strong></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 contentborder">
+                        <p><strong class="bold">{{listData.Label1}}:</strong>&nbsp;</p>{{listData.Remark}}<br>
+                        <p style="border-top: 2px solid"><strong class="bold">{{listData.Label2}}:</strong>&nbsp;{{listData.S_No}}</p>
+                        <p style="border-top: 2px solid"><strong class="bold">Type:</strong>  {{listData.ConsigneeGST}}&nbsp;</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Date:</strong> &nbsp;{{listData.bookDate}}</p><br>
+                        <p style="border-top: 2px solid;"><strong class="bold">Shipper Sign: &nbsp;</strong></p>
+                    </div>
+                    <div class="col-4" style="border-right: 2px solid; padding: 0 6px; font-size: smaller;">
+                        <span>I/We Have This Day Taken Delivery Of The</span><br>
+                        <span>Consignment Mentioned Above in Good Condition To</span><br>
+                        <span>My/Our Satisfaction</span><br>
+                        <span>1.Receiver's Sign.</span><br>
+                        <span>2.Receiver's Name.</span><br>
+                        <span>3.Date & Time.</span><br>
+                        <span>4.Stamp.</span><br>
+                    </div>
+                    <div class="col-2" style="border-right: 2px solid; font-size: smaller;" >
+                        <div class="row">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">L</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">W</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">H</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">Q</div>
+                        </div>
+                        <div class="row" *ngFor="let item of listData.volumetric">
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Length}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Width}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Height}}</div>
+                            <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Qty}}</div>
+                        </div>
+                    </div>
+                    <div class="col-2" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;"><strong class="bold">Description</strong></p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">Amount</p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">Docket Chgs</p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">Fuel Charges</p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">IGST 0%</p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">CGST 9%</p>
+                        <p style="border-bottom: 1px solid; border-right: 1px solid;">SGST 9%</p>
+                        <p style=" border-right: 1px solid;">GRAND TOTAL</p>
+                    </div>
+                    <div class="col-1" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                        <p style="border-bottom: 1px solid"><strong class="bold">Charge</strong></p>
+                        <p style="border-bottom: 1px solid">{{listData.amount}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.docketCharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.enscharges}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.IGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.CGSTPer}}</p>
+                        <p style="border-bottom: 1px solid">{{listData.SGSTPer}}</p>
+                        <p>{{listData.TotalAmt}}</p>
+                    </div>
+                </div>
+                <div class="row" style="border-top: 2px solid; justify-content: center;">
+                    <div class="col-3" style="border-right: 2px solid black; margin-top: -2px;font-weight: 600;">Book by : {{listData.Username}}</div>
+                    <div class="col-6" style="text-align: center;font-weight: 600;">{{ClientName}}</div>
+                    <div class="col-3" style="border-left: 2px solid black; margin-top: -2px;font-weight: 600;">{{ j === 0 ? 'Shipper Copy' : 'Account Copy' }}</div>
+              </div>
+            </div>
+            <hr class="dotted-line">
+        </div>
+       </div> 
+    </div>
+    <div  style=" overflow-x: auto; max-height: 400px; "  *ngIf="printType === '1-3 Format'"  [ngClass]="{'one-format': printType === '1Format', 'one-two-format': printType === '1-2 Format', 'one-three-format': printType === '1-3 Format'}">
+        <div id="contentToConvert">
+            <div class="main-container1" *ngFor="let j of [0, 1, 2]" style=" margin: 15px;">
+                <div class="container ml-1 mr-1" #container1>
+                    <div class="row headerr">
+                        <div class="col-3" style="border-right: 2px solid; border-bottom: 2px solid;">
+                            <div class="image-container">
+                                <img src="{{logoImage}}" width="190" style="object-fit: contain;">
+                            </div>
+                        </div>
+                        <div class="col-6 heading" style="font-size: medium; text-align: center; border-right: 2px solid; border-bottom: 2px solid;">
+                        <h1>{{listData.companyName}}</h1>
+                            <p>{{listData.locationAdd1}} {{listData.locationAdd2}}</p>
+                            <p>{{listData.locationAdd3}}, &nbsp;{{listData.locationpin}}</p>
+                            <p><strong class="bold">Email:</strong>{{listData.locationemail}}&nbsp;<strong class="bold">Contact No:</strong>{{listData.locationphone}}&nbsp; <strong class="bold">GST NO:</strong>{{listData.locationgst}}</p>
+                           </div>
+                            <div class="col-3" style="border-bottom: 2px solid">
+                               <div class="image-container">
+                                   <img src="{{listData.barcode}}" width="190" style="object-fit: contain;">
+                               </div>
+                           </div>
+                        </div>
+                                
+                    <div class="row">
+                        <div class="col-2" style="padding: 0 5px;">
+                            <p><strong class="bold">Origin: {{listData.originName}}</strong></p>
+                        </div>
+                        <div class="col-2" style="padding: 0 5px;">
+                            <p><strong class="bold">Dest:{{listData.destinationName}}</strong> </p>
+                        </div>
+                        <div class="col-2" style="padding: 0 5px;">
+                            <p><strong class="bold">Mode: {{listData.modeName}}</strong></p>
+                        </div>
+                        <div class="col-6" style="padding: 0 5px;">
+                            <p><strong class="bold">Vendor:</strong> {{listData.Ref_No}} <ng-container *ngIf="listData.vendorAwbNo1">
+                                &nbsp;-&nbsp;({{listData.vendorAwbNo1}})
+                              </ng-container>
+                        </div>
+                    </div>
+                    <div class="row text-nowrap">
+                        <div class="col-1 cust">
+                            <p><strong class="bold">Pcs</strong></p>
+                        </div>
+                        <div class="col-1 cust">
+                            <p><strong class="bold">Act Wt.</strong></p>
+                        </div>
+                        <div class="col-1 cust">
+                            <p><strong class="bold">Charg.Wt</strong></p>
+                        </div>
+                        <div class="col-3 cust">
+                            <p><strong class="bold">Inv No.</strong></p>
+                        </div>
+                        <div class="col-3 cust">
+                            <p><strong class="bold">Inv Value</strong></p>
+                        </div>
+                        <div class="col-2 cust">
+                            <p><strong class="bold">E-way bill</strong></p>
+                        </div>
+                        <div class="col-1 cust">
+                            <p><strong class="bold">Pay Mode</strong></p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: -2px;">
+                        <div class="col-1 charges">
+                            <span>{{listData.pcs}}</span>
+                        </div>
+                        <div class="col-1 charges">
+                            <span>{{listData.actualWt}}</span>
+                        </div>
+                        <div class="col-1 charges">
+                            <span>{{listData.chargedWt}}</span>
+                        </div>
+                        <div class="col-3 charges">
+                            <span>{{listData.invNo}}</span>
+                        </div>
+                        <div class="col-3 charges">
+                            <span>{{listData.invValue}}</span>
+                        </div>
+                        <div class="col-2 charges">
+                            <span>{{listData.EwayBill}}</span>
+                        </div>
+                        <div class="col-1 charges">
+                            <span>{{listData.paymentMode}}</span>
+                        </div>
+                    </div>
+                    <div class="row address" style="border-bottom: 2px solid; margin-top: -2px;">
+                        <div class="col-6" style="border-right: 2px solid; padding: 0 5px;">
+                            <p><strong class="bold">Consignor:</strong>{{listData.consignorName | uppercase}} </p>
+                            <p><strong class="bold">Shipper Name:</strong> {{listData.shipperName | uppercase}}</p>
+                            <p><strong class="bold">Address:</strong>{{listData.shipperAdd1}}&nbsp;{{listData.shipperAdd2}}&nbsp;{{listData.shipperPhone}}&nbsp;{{listData.shipperStateCode}}&nbsp; {{listData.shipperpin}}</p><br>
+                            <p><strong class="bold">GST No:</strong>{{listData.shipperGst}}</p>
+                        </div>
+                        <div class="col-6" style="padding: 0 5px;">
+                            <p><strong class="bold">Consignee:</strong> {{listData.consigneeName | uppercase}}</p>
+                            <p><strong class="bold">Address:</strong> {{listData.consigneeAdd1}}&nbsp;
+                            {{listData.consigneeAdd2}}&nbsp;{{listData.consigneeAdd3}}&nbsp;{{listData.consigneeCity}}&nbsp;{{listData.consigneeState}} &nbsp;{{listData.consigneePin}}</p>
+                            <p><strong class="bold">Email:</strong> {{listData.consigneeEmail}}</p>
+                            <p><strong class="bold">Mobile No:&nbsp; {{listData.consigneeTel}}</strong></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 contentborder">
+                            <p><strong class="bold">{{listData.Label1}}:</strong>&nbsp;</p>{{listData.Remark}}<br>
+                            <p style="border-top: 2px solid"><strong class="bold">{{listData.Label2}}:</strong>&nbsp;{{listData.S_No}}</p>
+                            <p style="border-top: 2px solid"><strong class="bold">Type:</strong>  {{listData.ConsigneeGST}}&nbsp;</p><br>
+                            <p style="border-top: 2px solid;"><strong class="bold">Date:</strong> &nbsp;{{listData.bookDate}}</p><br>
+                            <p style="border-top: 2px solid;"><strong class="bold">Shipper Sign: &nbsp;</strong></p>
+                        </div>
+                        <div class="col-4" style="border-right: 2px solid; padding: 0 6px; font-size: smaller;">
+                            <span>I/We Have This Day Taken Delivery Of The</span><br>
+                            <span>Consignment Mentioned Above in Good Condition To</span><br>
+                            <span>My/Our Satisfaction</span><br>
+                            <span>1.Receiver's Sign.</span><br>
+                            <span>2.Receiver's Name.</span><br>
+                            <span>3.Date & Time.</span><br>
+                            <span>4.Stamp.</span><br>
+                        </div>
+                        <div class="col-2" style="border-right: 2px solid; font-size: smaller;" >
+                            <div class="row">
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">L</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">W</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">H</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;font-weight: 600;">Q</div>
+                            </div>
+                            <div class="row" *ngFor="let item of listData.volumetric">
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Length}}</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Width}}</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Height}}</div>
+                                <div class="col-3" style="padding-left: inherit; padding-right: inherit; text-align: center; font-size: 12px; border: 1px solid gray;">{{item.Qty}}</div>
+                            </div>
+                        </div>
+                        <div class="col-2" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;"><strong class="bold">Description</strong></p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">Amount</p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">Docket Chgs</p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">Fuel Charges</p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">IGST 0%</p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">CGST 9%</p>
+                            <p style="border-bottom: 1px solid; border-right: 1px solid;">SGST 9%</p>
+                            <p style=" border-right: 1px solid;">GRAND TOTAL</p>
+                        </div>
+                        <div class="col-1" style="padding-left: inherit; padding-right: inherit; text-align: center;">
+                            <p style="border-bottom: 1px solid"><strong class="bold">Charge</strong></p>
+                            <p style="border-bottom: 1px solid">{{listData.amount}}</p>
+                            <p style="border-bottom: 1px solid">{{listData.docketCharges}}</p>
+                            <p style="border-bottom: 1px solid">{{listData.enscharges}}</p>
+                            <p style="border-bottom: 1px solid">{{listData.IGSTPer}}</p>
+                            <p style="border-bottom: 1px solid">{{listData.CGSTPer}}</p>
+                            <p style="border-bottom: 1px solid">{{listData.SGSTPer}}</p>
+                            <p>{{listData.TotalAmt}}</p>
+                        </div>
+                    </div>
+                    <div class="row" style="border-top: 2px solid; justify-content: center;">
+                        <div class="col-3" style="border-right: 2px solid black; margin-top: -2px;font-weight: 600;">Book by : {{listData.Username}}</div>
+                        <div class="col-6" style="text-align: center;font-weight: 600;">{{ClientName}}</div>
+                        <div class="col-3" style="border-left: 2px solid black; margin-top: -2px;font-weight: 600;">{{ j === 0 ? 'Shipper Copy' : j === 1 ? 'Account Copy' : 'POD Copy' }}</div>
+                  </div>
+                </div>
+               </div>
+              <hr class="dotted-line">
+            </div>
+    </div>
+    <div *ngIf="printType === 'label'"  >
+        <div class="main-container" >
+            <div class="container ml-1 mr-1" #container >
+                <div class="row">
+                    <div class="col-2 vertical-align" style=" display: flex; align-items: center; border-left: 2px solid; writing-mode: vertical-lr; transform: rotate(180deg);">
+                        <p><strong class="bold" style="font-weight: bold; margin: auto;">{{ClientName}}</strong></p>
+                    </div>
+                    <div class="col-10 img">
+                    <div class="row">
+                        <div class="col-12 bottom-border" style="border-bottom: 2px solid;">
+                            <img [src]="barcode" width="250" height="90">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 borderleft" style="border-bottom: 2px solid; border-right: 2px solid;">
+                            <p>From</p>
+                            <p>{{listData.originName }}</p>
+                        </div>
+                        <div class="col-4 borderleft" style="border-bottom: 2px solid; border-right: 2px solid;">
+                            <p>To</p>
+                            <p>{{listData.destinationName }}</p>
+                        </div>
+                        <div class="col-4 borderight" style="border-bottom: 2px solid;">
+                            <p>Pieces</p>
+                            <p>{{listData.pcs}}</p>
+                        </div>
+                    </div>
+                    <div class="row bottom-border" style="border-bottom: 2px solid;">
+                        <div class="col-12">
+                            <p>Con. No</p>
+                            <strong class="bold">{{listData.customerCode}}</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Tel-{{listData.locationphone}} {{listData.locationemail}}</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="overflow-x: auto; max-height: 500px;" *ngIf="printType === 'label2'"  >
+        <div class="main-container" >
+            <div class="container ml-1 mr-1" #container style="width: 400px;" >
+                <div class="row" style="text-align: center;">
+                    <div class="col-6" style="border-right: 1px solid black;"><img src="{{logoImage}}" style="height: 50px; width: 150px;"></div>
+                    <div class="col-6" style="text-align: center; font-size: larger; font-weight: bolder;">{{ClientName}}</div>
+                </div>
+                  <div class="row" style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                    <div class="col-12" style="text-align: center; padding-bottom: 4px;">
+                        <img [src]="barcode" height="50">
+                    </div>
+                  </div>
+
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6" style="font-size: 16px; font-family: 'inherit'; font-weight: bold; border-right: 1px solid black;" >Awb No: &nbsp; &nbsp; {{listData?.AwbNo}}</div>
+                    <div class="col-6">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Date: &nbsp; &nbsp; {{listData?.bookDate | date: 'dd/MM/yyyy' }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Origin: &nbsp; &nbsp;<span style="font-size: 14px; font-weight: bold;">{{listData?.originName | uppercase}}</span></p>
+                    </div>
+                    <div class="col-6" style="font-size: 10px; font-family: 'inherit'; font-weight: bold; border-left: 1px solid black;" >Destination: &nbsp; &nbsp;<span style="font-size: 14px; font-weight: bold;">{{listData?.destinationName | uppercase}}</span></div>
+                  </div>
+
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Pcs: &nbsp; &nbsp;{{listData?.pcs}}</p>
+                    </div>
+                    <div class="col-6" style="font-size: 10px; font-family: 'inherit'; font-weight: bold; border-left: 1px solid black;" >Weight: &nbsp; &nbsp;{{listData?.chargedWt }}</div>
+                  </div>
+
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6" style="border-right: 1px solid black;">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Cust/Shipper: &nbsp; {{listData?.shipperName | uppercase}}</p>
+                      <p style="font-size: 10px; margin-top: -8px; font-family: 'inherit'; font-weight: bold;">Address: {{listData?.shipperAdd1}}, {{listData?.shipperAdd2}},</p>
+                      <p style="font-size: 10px; margin-top: -8px; font-family: 'inherit'; font-weight: bold;"> State:{{listData?.shipperStateCode}},Pin: {{listData?.shipperpin}},</p>
+                      <p style="font-size: 10px; margin-top: -8px; font-family: 'inherit'; font-weight: bold;">Tel:{{listData?.shipperPhone}},GST: {{listData?.shipperGst}}</p>
+                    </div>
+                    <div class="col-6">
+                        <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Consignee: &nbsp; {{listData?.consigneeName | uppercase}}</p>
+                        <p style="font-size: 10px; margin-top: -8px; font-family: 'inherit'; font-weight: bold;">Address: {{listData?.consigneeAdd1}},{{listData?.consigneeAdd2}},{{listData?.consigneeAdd3}},</p>
+                      <p style="font-size: 10px; margin-top: -8px; font-family: 'inherit'; font-weight: bold;">Pin:{{listData?.consigneePin}}, Tel:{{listData?.consigneeTel}} </p>
+                      </div>
+                  </div>
+
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-12" style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">
+                        {{listData?.locationAdd1}},{{listData?.locationAdd2}},{{listData?.locationAdd3}}, {{listData?.locationpin}},
+                        {{listData?.locationemail}},{{listData?.locationphone}},{{listData?.locationgst}}            
+                    </div>
+                  </div> 
+            </div>
+        </div>
+    </div>
+
+    <div style="overflow-x: auto;" *ngIf="printType === 'label3'"  >
+        <div class="main-container"  >
+            <div class="container ml-1 mr-1" id="PrintInvoice" #container style="width: 400px;"   >
+    
+              <div class="row" style="border-bottom: 1px solid black; text-align: center;">
+                <div class="col-12" style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">
+                  <p style="text-align: center; font-weight: 600;">Box/Pcs - {{listData.pcs || listData?.bqty}} of {{listData.pcs || listData?.qty}} </p>
+                </div>
+              </div>
+    
+                <div class="row" style="text-align: center;">
+                    <div class="col-6" style="border-right: 1px solid black;"><img src="{{logoImage}}" style="height: 50px; width: 150px;"></div>
+                    <div class="col-6" style="text-align: center;">{{ClientName}}</div>
+                </div>
+                  <div class="row" style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                    <div class="col-12" style="text-align: center;">
+                        <!-- <img [src]="barcode" height="40"> -->
+                        <!-- <svg #barcode id="barcode"></svg> -->
+                        <!-- <svg [id]="'barcode' + i"></svg> -->
+                        <img [src]="barcode" width="150" height="90">
+                    </div>
+                  </div>
+    
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-12">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Airway Bill No: &nbsp;<span style="font-size: 16px; font-weight: bold;">{{listData?.AwbNo  || listData?.awbNo}}</span></p>
+                    </div>
+                  </div>
+    
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Origin:&nbsp;<span style="font-size: 16px; font-weight: bold;">{{listData?.originName || listData?.fromLoc | uppercase}}</span></p>
+                    </div>
+                    <div class="col-6" style="font-size: 10px; text-align: center; font-family: 'inherit'; font-weight: bold; border-left: 1px solid black;" >Quantity:&nbsp;<span style="font-size: 16px; font-weight: bold;">{{listData?.pcs || listData?.qty}}</span></div>
+                  </div>
+    
+                  <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="col-6">
+                      <p style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">Destination:&nbsp;<span style="font-size: 16px; font-weight: bold;">{{listData?.destinationName || listData?.toLoc | uppercase}}</span></p>
+                    </div>
+                    <div class="col-6" style="font-size: 10px; text-align: center; font-family: 'inherit'; font-weight: bold; border-left: 1px solid black;" >Mode Name: &nbsp;<span style="font-size: 16px; font-weight: bold;">{{listData?.modeName || listData?.modeCode }}</span></div>
+                  </div>
+    
+                  <div class="row" style="border-bottom: 1px solid black; text-align: center;">
+                    <div class="col-12" style="font-size: 10px; font-family: 'inherit'; font-weight: bold;">
+                        {{listData?.locationAdd1}},{{listData?.locationAdd2}},{{listData?.locationAdd3}},<br>
+                        {{listData?.locationemail}}<br>
+                        {{listData?.locationgst}}<br>
+                        {{listData?.locationphone}},<br>
+                        {{listData?.locationpin}}
+                    </div>
+                  </div>
+            </div>
+        </div> 
+    </div>
+</div>

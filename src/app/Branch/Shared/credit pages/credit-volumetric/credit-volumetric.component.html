@@ -1,0 +1,214 @@
+
+  <!-- <form [formGroup]="form" (submit)="submit(form.value)"> -->
+    <div class="container" style="width: 60rem;">
+        <div class="row">
+            <h4 mat-dialog-title>Credit Volumetric</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">L</label>
+                        <div class="col-sm-2">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3"
+                                formControlName="invoiceno">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">W</label>
+                        <div class="col-sm-2">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3"
+                                formControlName="invoiceval">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">H</label>
+                        <div class="col-sm-2">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">NCP</label>
+                        <div class="col-sm-2">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">CFT</label>
+                        <div class="col-sm-2">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">Vol Wt</label>
+                        <div class="col-sm-3">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-1 col-form-label">Act Wt</label>
+                        <div class="col-sm-3">
+                            <input  style="
+                            border: 1px solid #d2d2d2;
+                            border-radius: 0.25rem;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            font-family: auto;
+                            margin-bottom: 0.5rem;
+                          " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <legend>Invoice Value:</legend> -->
+            <ng-container formArrayName="contacts" *ngFor="let contact of contacts.controls; index as i">
+                <ng-container [formGroupName]="i">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">L</label>
+                                <div class="col-sm-2">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3"
+                                        formControlName="invoiceno">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">W</label>
+                                <div class="col-sm-2">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3"
+                                        formControlName="invoiceval">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">H</label>
+                                <div class="col-sm-2">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">NCP</label>
+                                <div class="col-sm-2">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">CFT</label>
+                                <div class="col-sm-2">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                                </div>
+
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Vol Wt</label>
+                                <div class="col-sm-3">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                                </div>
+
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Act Wt</label>
+                                <div class="col-sm-3">
+                                    <input  style="
+                                    border: 1px solid #d2d2d2;
+                                    border-radius: 0.25rem;
+                                    padding-left: 10px;
+                                    padding-top: 10px;
+                                    font-family: auto;
+                                    margin-bottom: 0.5rem;
+                                  " type="text" class="form-control" id="inputEmail3" formControlName="remark">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <!-- <button class='btn btn-success' (click)="openLoginModal()">LOGIN</button> -->
+                </div>
+                <div class="col-md-10 submitbtn">
+                    <button class="btn btn-save" type="button" (click)="addContactField()">Add</button>
+                    <button class="btn btn-danger" type="button" (click)="reset()">Reset</button>
+                    <button type="button" class="btn btn-save">Save</button>
+                    <button type="button" class="btn btn-danger" matDialogClose (click)="CloseDialog()">Cancel</button>
+                </div>
+                <div class="col-md-1"></div>
+
+
+            </div>
+        </div>
+    </div>
+<!-- </form> -->

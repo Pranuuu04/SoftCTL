@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Customer Invoice</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+<form [formGroup]="vendorForm" (ngSubmit)="formSubmit(vendorForm.value,vendorForm)">
+<div class="table-responsive text-nowrap">
+  <table class="table table-bordered table-striped"  style="background-color: rgb(223 233 237 / 87%);">
+    <thead style="background-color: #b2bcff;; color: white;">
+      <tr>
+          <th>PO_NO</th>
+          <th>PO-Date</th>
+          <th><span style="color: red;">*</span>Invoice No</th>
+          <th><span style="color: red;">*</span>Invoice value</th>
+          <th>Invoice Description </th>
+          <th><span style="color: red;">*</span>Qty</th>
+          <th>E-Way bill No</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+    <tbody >
+      <tr>
+        <td>
+            <input class="form-control" type="text" formControlName="PO_NO" #poNo id="poNo">
+        </td>
+        <td>
+          <input class="form-control" type="date" id="ContactNo" formControlName="PO_Date" value="{{currentDate}}" [max]="currentDate" >
+        </td>
+        <td>
+          <input class="form-control" type="text" id="ContactNo" formControlName="Invoice_No">
+          <div *ngIf="vendorForm.get('Invoice_No').invalid && vendorForm.get('Invoice_No').touched">
+            <div *ngFor="let error of validationMessages.Invoice_No" class="text-danger">{{ error.message }}</div>
+          </div>
+        </td>
+        <td>
+          <input class="form-control" type="number"  min="0" id="ContactNo" formControlName="Inv_Value">
+          <div *ngIf="vendorForm.get('Inv_Value').invalid && vendorForm.get('Inv_Value').touched">
+            <div *ngFor="let error of validationMessages.Inv_Value" class="text-danger">{{ error.message }}</div>
+          </div>
+        </td>
+        <td>
+          <input class="form-control" type="text" id="ContactNo"  formControlName="Description">
+        </td>
+        <td>
+          <input class="form-control" type="number"  min="0" id="ContactNo" formControlName="Qty">
+          <div *ngIf="vendorForm.get('Qty').invalid && vendorForm.get('Qty').touched">
+            <div *ngFor="let error of validationMessages.Qty" class="text-danger">{{ error.message }}</div>
+          </div>
+        </td> 
+        <td>
+          <input class="form-control" type="text" id="ContactNo" formControlName="E_way_Bill_No">
+        </td>
+        <td>
+          <button type="submit" class="btn btn-light form-icon"><i class="fa-solid fa-plus"></i></button>
+        </td>
+      </tr>
+      <tr *ngFor="let item of invoiceListData; let i = index">
+        <td>{{item.poNo}}</td>
+        <td>{{item.poDate | date:'dd/MM/yyyy'}}</td>
+        <td>{{item.InvoiceNo}}</td>
+        <td>{{item.InvoiceValue}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.qty}}</td>
+        <td>{{item.ewayBillNo}}</td>
+        <td>
+          <button type="button" class="btn btn-light delete" (click)="deleteItem(i)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+    <!-- <tbody >
+      <tr *ngFor="let item of custInvoice; let i = index">
+        <td>{{item.poNo}}</td>
+        <td>{{item.poDate | date:'dd/MM/yyyy'}}</td>
+        <td>{{item.InvoiceNo}}</td>
+        <td>{{item.InvoiceValue}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.qty}}</td>
+        <td>{{item.ewayBillNo}}</td>
+        <td>
+          <button type="button" class="btn btn-light delete" (click)="deleteItem(i)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody> -->
+  </table>
+</div>
+</form>
+<div class="row form-group d-flex m-0" style="justify-content: right;">
+<div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+  <div class="textOnInput">
+    <label for="Charge">Total Invoice value :</label>
+    <input class="form-control" [value]="totalInvoiceValue" readonly style="background-color: white;">
+  </div>
+</div>
+
+<div class="col-sm-4" style="display: flex; justify-content: right;">
+  <button tabindex="-1" type="button" class="btn btn-light form-button" style="width: 66px;
+  height: auto;
+  background: #2e3f55;
+  color: white;
+  padding-top: 10px;"  (click)="saveData()">Submit</button>
+</div>
+</div>
+</div>

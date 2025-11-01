@@ -1,0 +1,154 @@
+
+  <form [formGroup]="fastEntryForm" (ngSubmit)="handleFormSubmit(fastEntryForm.value)">
+     <div class="row">
+      <div class="col-md-2">
+        <div class="textOnInput">
+            <label for="bookDt">Book date :</label>
+            <input formControlName="bookDt" type="date" class="form-control" id="bookDt" [attr.max]="maxDate">
+            <div *ngFor="let validation of validationMessage.bookDt">
+              <div class="error-message"
+                *ngIf="fastEntryForm.get('bookDt').hasError(validation.type) && (fastEntryForm.get('bookDt').dirty || fastEntryForm.get('bookDt').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+    </div>
+      <div class="col-md-2">
+        <div class="textOnInput">
+          <label for="Product">Product :</label>
+          <ng-select id="Product" class="custom-select1"  [(ngModel)]="selectedProduct" formControlName="Product" >
+            <ng-option selected disabled>Select Product</ng-option>
+            <ng-option  *ngFor="let item of productList" [value]="item.productCode">
+              {{item.productName}}
+            </ng-option>
+          </ng-select>
+          <div *ngFor="let validation of validationMessage.Product">
+            <div class="error-message"
+              *ngIf="fastEntryForm.get('Product').hasError(validation.type) && (fastEntryForm.get('Product').dirty || fastEntryForm.get('Product').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div> 
+      </div>
+      <div class="col-md-2">
+        <div class="textOnInput">
+            <label for="Mode">Mode :</label>
+            <ng-select id="Mode" class="custom-select1"  [(ngModel)]="selectedMode" formControlName="modeName" >
+              <ng-option selected disabled>Select Mode</ng-option>
+              <ng-option *ngFor="let item of modeList" [value]="item.Mode_code">
+                {{item.Mode_name}}
+              </ng-option>
+            </ng-select>
+            <div *ngFor="let validation of validationMessage.modeName">
+              <div class="error-message"
+                *ngIf="fastEntryForm.get('modeName').hasError(validation.type) && (fastEntryForm.get('modeName').dirty || fastEntryForm.get('modeName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="textOnInput">
+          <label for="Cust">Consignor :</label>
+          <ng-select id="Cust" class="custom-select1" [(ngModel)]="consignerCode" formControlName="Cust"  (change)="fetchReleventData($event)" bindLabel="name" bindValue="name">
+            <ng-option selected disabled>Select Consignor</ng-option>
+            <ng-option  *ngFor="let item of consignerList" [value]="item.customerCode">
+              {{item.customerName}}
+            </ng-option>
+          </ng-select>
+          <div *ngFor="let validation of validationMessage.Cust">
+            <div class="error-message"
+              *ngIf="fastEntryForm.get('Cust').hasError(validation.type) && (fastEntryForm.get('Cust').dirty || fastEntryForm.get('Cust').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-3">
+        <div class="textOnInput">
+            <label for="Shipper">Shipper :</label>
+            <input formControlName="Shipper" type="text" class="form-control" id="Shipper">
+        </div>
+    </div>
+      <!-- <div class="col-sm-3">
+          <button type="button" class="btn btn-light other-button mt-1" style="margin-right: 37px;">Find</button>
+      </div> -->
+     </div>
+      <div class="table-responsive text-nowrap">
+          <table class="table table-bordered table-striped" style="background-color: rgb(223, 233, 237, 0.87);">
+              <thead style="background-color: #c2c7ea; color: white;">
+                  <tr>
+                      <th style="padding: 6px 38px">Pincode</th>
+                      <th style="padding: 6px 44px">Awb No.</th>
+                      <th style="padding: 6px 44px">Origin</th>
+                      <th style="padding: 6px 44px">Destination</th>
+                      <th style="padding: 6px 19px">consignee</th>
+                      <th style="padding: 6px 19px">PCS</th>
+                      <th style="padding: 6px 15px">Actual Wt</th>
+                      <th style="padding: 6px 19px">Vol. Wt</th>
+                      <th style="padding: 6px 15px">Amount</th>
+                      <th [width]="100">Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td> <input 
+                      formControlName="Pincode" 
+                      class="form-control AwbNo" 
+                      type="text"  
+                      maxlength="6" 
+                      (input)="getFastpinCode($event)" 
+                      [(ngModel)]="FastpinCode" 
+                      pattern="[0-9]*"  
+                      inputmode="numeric" 
+                      #pincodeInput 
+                    ></td>
+                      <!-- <td><input formControlName="Pincode" class="form-control AwbNo" type="number" maxlength="6" (input)="getFastpinCode($event)" [(ngModel)]="FastpinCode" min="0" #pincodeInput ></td> -->
+                      <td><input formControlName="AwbNo" class="form-control AwbNo" type="text"></td>
+                      <td>
+                        <ng-select id="Origin" class="custom-select1" bindLabel="name" bindValue="name" [(ngModel)]="selectedOrigin" formControlName="Origin">
+                          <ng-option *ngFor="let item of originList" [value]="item.originCode">
+                            {{item.originName}}
+                          </ng-option>
+                        </ng-select>
+                      </td>
+                      <td>
+                        <ng-select id="Destination"  bindLabel="name" bindValue="name" class="custom-select1"  formControlName="Destination">
+                          <ng-option selected disabled>Select City</ng-option>
+                          <ng-option  *ngFor="let item of destinationListCon" [value]="item.destinationCode" >
+                            {{item.destinationName}}
+                          </ng-option>
+                        </ng-select>
+                      </td>
+                      <td><input formControlName="consignee" class="form-control" type="text"></td>
+                      <td><input formControlName="Quantity" class="form-control" type="number" min="0"></td>
+                      <td><input formControlName="actWt" class="form-control" type="number" min="0"></td>
+                      <td><input formControlName="volWt" class="form-control" type="number" min="0"></td>
+                      <td><input formControlName="Amt" class="form-control" type="number" min="0"></td>
+                      <td>
+                        <button type="submit" class="btn btn-light form-icon" style="background-color: blue;">
+                            <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
+                        </button>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let entry of entryList; let i = index">
+                    <td>{{ entry.Pincode }}</td>
+                    <td>{{ entry.AwbNo }}</td>
+                    <td>{{ entry.originName }}</td>
+                    <td>{{ entry.destinationName }}</td>
+                    <td>{{ entry.consignee }}</td>
+                    <td>{{ entry.Quantity }}</td>
+                    <td>{{ entry.actWt }}</td>
+                    <td>{{ entry.volWt }}</td>
+                    <td>{{ entry.Amt }}</td>
+                    <td>
+                      <button type="button" class="btn btn-light delete"  (click)="openDeleteDialog(entry.AwbNo)" >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+              </tbody>
+          </table> 
+      </div>
+  </form>
+

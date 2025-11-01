@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Airway Bill</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+       <form class="mt-2">
+          <div class="row">
+            <label for="topay" class="col-sm-1 col-form-label">Topay/COD Amt</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="Topay/COD amt" class="form-control" id="topay" formControlName="topay"/>
+            </div>
+  
+            <label for="recived" class="col-sm-1 col-form-label">Recived Amt</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="Recived Amt" class="form-control" id="recived" formControlName="recived" />
+            </div>
+
+            <label for="date" class="col-sm-1 col-form-label">Date</label>
+            <div class="col-sm-3">
+              <input type="date" placeholder="date" class="form-control" id="date" formControlName="date" />
+            </div>
+              </div>
+
+              <div class="row">
+                <label for="payment" class="col-sm-1 col-form-label">Payment Mode</label>
+                <div class="col-sm-3">
+                    <input style="
+                    border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem;
+                    padding-left: 10px;
+                    padding-top: 10px;
+                    font-family: auto;
+                  " type="text" placeholder="Payment Mode" 
+                        class="custom-select" [matAutocomplete]="auto" id="payment" formControlName="payment">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option>Gpay</mat-option>
+                        <mat-option>Net Banking</mat-option>
+                    </mat-autocomplete>
+                </div>
+      
+                <label for="inputEmail3" class="col-sm-1 col-form-label">Payment Recipt No.</label>
+                <div class="col-sm-3">
+                  <input type="text" placeholder="Payment Recipt No." class="form-control" id="inputCity" />
+                </div>
+    
+                <label for="inputEmail3" class="col-sm-1 col-form-label">Outstanding</label>
+                <div class="col-sm-3">
+                  <input type="text" placeholder="Outstanding" class="form-control" id="inputCity" />
+                </div>
+                  </div>
+
+                  <div class="row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">Remark</label>
+                    <div class="col-sm-3">
+                      <input type="text" placeholder="Remark" class="form-control" id="inputCity" />
+                    </div>
+          
+                    <div class="col-sm-3">
+                        <button type="button" class=" Unload btn btn-info">Ok</button>
+                      </div>
+                   
+                      </div>
+        </form>
+  
+    </div>
+    

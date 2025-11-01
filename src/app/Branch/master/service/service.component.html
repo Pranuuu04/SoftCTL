@@ -1,0 +1,37 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Mode">
+                        <app-mode [modeData]="modeViewData" ></app-mode>
+                    </mat-tab>
+                    <mat-tab label="Product">
+                        <app-service-product [productData]="productViewData" ></app-service-product>
+                    </mat-tab>
+                    <mat-tab label="Department">
+                        <app-service-dept [departmentData]="departmentViewData" ></app-service-dept>
+                    </mat-tab>
+                    <mat-tab label="Expense">
+                        <app-service-expense [expenceData]="expenceViewData" ></app-service-expense>
+                     </mat-tab>
+                     <mat-tab label="Bank name">
+                        <app-service-bank-name [bankData]="bankViewData" ></app-service-bank-name>
+                     </mat-tab>
+                     <mat-tab label="Package">
+                        <app-service-package-typ [packageData]="packageViewData" ></app-service-package-typ>
+                     </mat-tab>
+                     <mat-tab label="Delivery">
+                        <app-service-deliverytype [deliveryData]="deliveryViewData" ></app-service-deliverytype>
+                     </mat-tab>
+                     <mat-tab label="Reason">
+                        <app-service-reason [reasonData]="reasonViewData" ></app-service-reason>
+                      </mat-tab>
+                      <mat-tab label="Service type">
+                        <app-service-type [serviceData]="serviceViewData" ></app-service-type>
+                      </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

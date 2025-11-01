@@ -1,0 +1,284 @@
+<div>
+    <form [formGroup]="createForm" (ngSubmit)="generateTrip(createForm.value)">
+      <div class="row mainrow">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="CustomerName"><span style="color: red;">*</span>Customer name :</label>
+              <select class="custom-select" formControlName="CustomerName"  (change)="resetPagination()">
+                <option value="All" selected>All Customer</option>
+                <option *ngFor="let item of CustomerList" value="{{item.customerCode}}">
+                  {{ item.customerName }} 
+                </option>
+              </select>
+              <div *ngFor="let validation of validationMessage.CustomerName">
+                <div class="error-message"
+                  *ngIf="createForm.get('CustomerName').hasError(validation.type) && (createForm.get('CustomerName').dirty || createForm.get('CustomerName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="textOnSelect">
+              <label for="Transporttype"><span style="color: red;">*</span>Transport :</label>
+              <select id="Transporttype" class="custom-select" formControlName="Transporttype" (change)="onTransportTypeChange($event)">
+                <option value="All" selected>All</option>
+                <option value="Self">Self</option>
+                <option value="Hired">Hired</option>
+              </select>
+              <div *ngFor="let validation of validationMessage.Transporttype">
+                <div class="error-message"
+                  *ngIf="createForm.get('Transporttype').hasError(validation.type) && (createForm.get('Transporttype').dirty || createForm.get('Transporttype').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+         </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="VehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
+              <select id="VehicleNo" class="custom-select" formControlName="VehicleNo" (change)="resetPagination()">
+                <option value="All" selected>All Numbers</option>
+
+              <option *ngFor="let vehicle of vehicleNumbers" value="{{vehicle.vehicleReg}}">{{ vehicle.vehicleReg }}</option>
+            </select>
+            <div *ngFor="let validation of validationMessage.VehicleNo">
+              <div class="error-message"
+                *ngIf="createForm.get('VehicleNo').hasError(validation.type) && (createForm.get('VehicleNo').dirty || createForm.get('VehicleNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="textOnInput">
+              <label for="Status"><span style="color: red;">*</span>Status :</label>
+              <select id="Status" class="custom-select" formControlName="Status" (change)="resetPagination()">
+                <option value="All" selected>All</option>
+              <option  value="Open">Open</option>
+              <option value="Close">Close</option>
+            </select>
+          </div>
+          </div>
+          <div class="col-sm-1 download-buttons" (click)="generatePdf()">
+            <button type="button" class="btn btn-outline-light pb-0"><i class="fa-solid fa-file-pdf"></i>
+              <span class="text">PDF</span></button>
+          </div>
+      </div>
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="fromDate">From :</label>
+              <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate">
+              <div *ngFor="let validation of validationMessage.fromDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('fromDate').hasError(validation.type) && (createForm.get('fromDate').dirty || createForm.get('fromDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="toDate">To :</label>
+              <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate">
+              <div *ngFor="let validation of validationMessage.toDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('toDate').hasError(validation.type) && (createForm.get('toDate').dirty || createForm.get('toDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-5"></div>
+          <div class="col-sm-1 download-buttons">
+            <button type="button" class="btn btn-outline-light pb-0" (click)="downloadSample()"><i
+                class="fa-solid fa-table"></i>
+              <span class="text">XLs</span></button>
+          </div>
+                
+      </div>
+    
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2; margin: 10px 0;">
+        <div class="col-sm-3">
+         </div>
+        <div class="col-sm-6">
+         
+        </div>
+        <div class="col-sm-3 d-flex" style="justify-content: end;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+    </form> 
+  </div>
+  <!-- <div *ngIf="showTable">
+  <div class="table-responsive text-nowrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+      <ng-container matColumnDef="TripNo">
+        <th mat-header-cell *matHeaderCellDef> Trip No </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripNo }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="AwbNo">
+        <th mat-header-cell *matHeaderCellDef> LR No. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.AwbNo }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="supplierName">
+        <th mat-header-cell *matHeaderCellDef> Supplier name</th>
+        <td mat-cell *matCellDef="let element">{{ element.supplierName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TripDate">
+        <th mat-header-cell *matHeaderCellDef> Trip Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripDate | date: 'dd-MM-yyyy' }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="VehicleNo">
+        <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+        <td mat-cell *matCellDef="let element"> {{ element.VehicleNo }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vehicleType">
+        <th mat-header-cell *matHeaderCellDef> Vehicle type </th>
+        <td mat-cell *matCellDef="let element"> {{ element.vehicleType }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="DriverName">
+        <th mat-header-cell *matHeaderCellDef> Driver </th>
+        <td mat-cell *matCellDef="let element"> {{ element.DriverName }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="DriverNo">
+        <th mat-header-cell *matHeaderCellDef> Driver no. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.DriverNo }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="OriginName">
+        <th mat-header-cell *matHeaderCellDef> Origin </th>
+        <td mat-cell *matCellDef="let element"> {{ element.OriginName }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="DestinationName">
+        <th mat-header-cell *matHeaderCellDef> Destination </th>
+        <td mat-cell *matCellDef="let element"> {{ element.DestinationName }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Route">
+        <th mat-header-cell *matHeaderCellDef> Route </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Status }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="TripStatus">
+        <th mat-header-cell *matHeaderCellDef> Trip Status </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripStatus }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="location_code">
+        <th mat-header-cell *matHeaderCellDef> Location </th>
+        <td mat-cell *matCellDef="let element"> {{ element.location_code }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="OpeningKM">
+        <th mat-header-cell *matHeaderCellDef> Opening KM </th>
+        <td mat-cell *matCellDef="let element"> {{ element.OpeningKM || 'N/A' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="ClosingKM">
+        <th mat-header-cell *matHeaderCellDef> Closing KM </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ClosingKM }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="TotalKM">
+        <th mat-header-cell *matHeaderCellDef> Total KM </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TotalKM }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="ContactNo">
+        <th mat-header-cell *matHeaderCellDef> Contact No </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ContactNo }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="ReciverName">
+        <th mat-header-cell *matHeaderCellDef> Receiver </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ReciverName }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="VehicleInDate">
+        <th mat-header-cell *matHeaderCellDef> Vehicle In Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.VehicleInDate | date: 'dd-MM-yyyy' || 'N/A' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="VehicleInTime">
+        <th mat-header-cell *matHeaderCellDef> Vehicle In Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.VehicleInTime ? (element.VehicleInTime | date: 'HH:mm:ss') : 'N/A' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="VehicleOutDate">
+        <th mat-header-cell *matHeaderCellDef> Vehicle Out Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.VehicleOutDate | date: 'dd-MM-yyyy' || 'N/A' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="VehicleOutTime">
+        <th mat-header-cell *matHeaderCellDef> Vehicle Out Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.VehicleOutTime ? (element.VehicleOutTime | date: 'HH:mm:ss') : 'N/A' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TripcloseInDate">
+        <th mat-header-cell *matHeaderCellDef> Trip arrival date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripcloseInDate | date: 'dd-MM-yyyy' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="TripcloseInTime">
+        <th mat-header-cell *matHeaderCellDef> Trip arrival Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripcloseInTime ? (element.TripcloseInTime | date: 'HH:mm:ss') : 'N/A' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TripStartDt">
+        <th mat-header-cell *matHeaderCellDef> Trip Start Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripStartDt | date: 'dd-MM-yyyy' || 'N/A' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="TripStartTime">
+        <th mat-header-cell *matHeaderCellDef> Trip Start Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripStartTime ? (element.TripStartTime | date: 'HH:mm:ss') : 'N/A' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TripEndDt">
+        <th mat-header-cell *matHeaderCellDef> Trip End Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripEndDt | date: 'dd-MM-yyyy' }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="TripEndTime">
+        <th mat-header-cell *matHeaderCellDef> Trip End Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TripEndTime | date: 'HH:mm:ss' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Remark">
+        <th mat-header-cell *matHeaderCellDef> Remark </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Remark }} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+</div> -->
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="">
+</div>

@@ -1,0 +1,170 @@
+<form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
+    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
+  
+      <!-- Customer Name -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label for="customerName"><span style="color: red;">*</span> Customer Name :</label>
+          <!-- <ng-select
+            [items]="customers"
+            bindLabel="customerName"
+            bindValue="customerCode"
+            formControlName="customerName"
+            class="custom-select1"
+            placeholder="Select Customer">
+          </ng-select> -->
+          <mat-form-field appearance="outline" class="w-100">
+            <!-- <mat-label>Select Customers</mat-label> -->
+            <mat-select formControlName="customers" multiple>
+              <mat-option (click)="selectAllCustomers()" *ngIf="!allSelected">All Customers</mat-option>
+              <mat-option (click)="deselectAllCustomers()" *ngIf="allSelected">Clear All</mat-option>
+              <mat-option *ngFor="let cust of customers" [value]="cust">{{ cust }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <!-- Location -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label for="location"><span style="color: red;">*</span> Location :</label>
+          <!-- <ng-select
+            [items]="locations"
+            bindLabel="locationName"
+            bindValue="locationCode"
+            formControlName="location"
+            class="custom-select1"
+            placeholder="Select Location">
+          </ng-select> -->
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Select Location</mat-label>
+            <mat-select formControlName="location">
+              <mat-option value="all">All Locations</mat-option>
+              <mat-option *ngFor="let loc of locations" [value]="loc">{{ loc }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <!-- Submit -->
+      <!-- <div class="col-sm-4 d-flex align-items-end justify-content-end" style="margin-bottom: 20px;">
+        <button type="submit" class="btn btn-primary other-button px-4 text-center" style="padding-right: 20px;">Submit</button>
+      </div> -->
+      <div class="col-sm-4 d-flex" style="justify-content: end;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+
+    </div>
+  </form>
+  
+  <div class="table-responsive mt-1">
+    <div class="row d-flex m-0 justify-content-end">
+      <div class="form-group has-search col-sm-3" style="margin: 10px 0 0;">
+        <button class="btn btn-secondary" type="button" style="
+          z-index: 1001;
+          position: absolute;
+          background: none;
+          top: -4px;
+          width: 38px;
+          height: 30px;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px; margin-left: 1px;"></i>
+        </button>
+        <input type="text"
+               class="form-control"
+               #input
+               (keyup)="applyFilter($event.target.value)"
+               placeholder="Search..."
+               id="Filter"
+               style="border-radius: 11px; margin: 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Table -->
+<div *ngIf="dataSource.data.length > 0" class="table-responsive text-nowrap">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: #e2e9f1;" matSort>
+
+    <ng-container matColumnDef="groupHeader">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="group-header">
+        <span>Customer Name : <strong>{{ element.customerName }}</strong></span>
+      </td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="SRNo">
+      <th mat-header-cell *matHeaderCellDef>Sr No</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="!element.isGroup">{{ i + 1 }}</ng-container>
+      </td>
+    </ng-container> -->
+    <ng-container matColumnDef="SRNo">
+      <th mat-header-cell *matHeaderCellDef>Sr No</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ getRowIndex(element) }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="BillNo">
+      <th mat-header-cell *matHeaderCellDef>Bill No</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.BillNo }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="BillDate">
+      <th mat-header-cell *matHeaderCellDef>Bill Date</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.BillDate | date: 'dd-MM-yyyy' }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="BillAmt">
+      <th mat-header-cell *matHeaderCellDef>Bill Amt</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.BillAmt | number:'1.2-2' }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TDS">
+      <th mat-header-cell *matHeaderCellDef>TDS</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.TDS | number:'1.2-2' }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Adjustment">
+      <th mat-header-cell *matHeaderCellDef>Adjustment</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.Adjustment | number:'1.2-2' }}</ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Outstanding">
+      <th mat-header-cell *matHeaderCellDef>Outstanding</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!element.isGroup">{{ element.Outstanding | number:'1.2-2' }}</ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroupRow"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; when: isDataRow"></tr>
+
+  </table>
+
+  <mat-paginator
+    [length]="dataSource.data.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+  <div *ngIf="dataSource.data.length === 0" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="">
+  </div> -->
+

@@ -1,0 +1,238 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Charges</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+  </div>
+  <form [formGroup]="chargeForm" (ngSubmit)="formSubmit(chargeForm.value)">
+    <div class="row">
+      <div class="col-sm-6" style="border-right: 1px solid #d2d2d2;">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">CAF</label>
+              <input class="form-control" type="number" formControlName="cafCharges" (focus)="fetchDialogCharge('CAFMast', 'cafCharges')" placeholder="Enter CAF Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">HDP</label>
+              <input class="form-control" type="number" formControlName="hdpCharges" (focus)="fetchDialogCharge('HDPMast', 'hdpCharges')" placeholder="Enter HDP Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">ESS</label>
+              <input class="form-control" type="number" formControlName="essCharges" (focus)="fetchDialogCharge('ESSMast', 'essCharges')" placeholder="Enter ESS Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">IDC</label>
+              <input class="form-control" type="number" formControlName="idcCharges" (focus)="fetchDialogCharge('IDCCharges', 'idcCharges')" placeholder="Enter IDC Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">ENC</label>
+              <input class="form-control" type="number" formControlName="encCharges" placeholder="Enter ENC Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">SC</label>
+              <input class="form-control" type="number" formControlName="scCharges" placeholder="Enter SC Charge">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel4Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge4" placeholder="Enter Charge4">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel5Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge5" placeholder="Enter Charge5">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel6Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge6" placeholder="Enter Charge6">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel7Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge7" placeholder="Enter Charge7">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel8Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge8" placeholder="Enter Charge8">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="textOnInput">
+              <label for="inputText">{{getLabel9Changes}}</label>
+              <input class="form-control" type="number" formControlName="charge9" placeholder="Enter Charges9">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="textOnSelect">
+              <label for="deliveryProof">Action</label>
+              <select class="selectpicker form-select custom-select">
+                <option data-tokens="Manual mustard">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+        <div class="row form-group d-flex m-0" style="justify-content: right;">
+          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-light other-button">Submit</button>
+          </div>
+         </div>
+      </form>
+</div>

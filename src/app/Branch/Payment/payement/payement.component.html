@@ -1,0 +1,41 @@
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 custom-tab-wrapper-payment">
+                
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                     <!-- <mat-tab label="Customer credit">
+                        <app-cust-credit></app-cust-credit>
+                    </mat-tab>  -->
+
+                    <mat-tab label="Cash-Topay">
+                        <app-cash-topay></app-cash-topay>
+                    </mat-tab>
+                    <mat-tab label="Credit note">
+                        <app-credit-note></app-credit-note>
+                    </mat-tab> 
+                    <mat-tab label="Payment entry">
+                        <app-payment-entry></app-payment-entry>
+                    </mat-tab>
+                    <mat-tab label="Wallet entry">
+                        <app-wallet-entry></app-wallet-entry>
+                    </mat-tab>
+
+                    <mat-tab label="Cash-Topay-Report">
+                        <app-cash-topay-report></app-cash-topay-report>
+                    </mat-tab>
+                    <mat-tab label="Credit note Report">
+                        <app-credit-note-report></app-credit-note-report>
+                    </mat-tab> 
+                    <mat-tab label="Payment entry Report">
+                        <app-payment-entry-report></app-payment-entry-report>
+                    </mat-tab>
+                    <mat-tab label="Wallet entry Report">
+                        <app-wallet-entry-report></app-wallet-entry-report>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

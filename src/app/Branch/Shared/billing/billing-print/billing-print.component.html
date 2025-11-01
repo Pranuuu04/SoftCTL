@@ -1,0 +1,391 @@
+<div class="container1">
+    <div class="row m-0" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-6">
+            <p style="font-weight: 600; font-size: large; margin-bottom: 0;  margin-top: 7px; ">Print </p>
+        </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+            <button type="button" class="btn btn-light pt-0" (click)="printPDF()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;" ><i class="fa-solid fa-file-pdf" style="font-family: 'FontAwesome';"></i></button>
+            <button type="button" class="btn btn-light pt-0" (click)="CloseDialog()" style="width: 30px; text-align: center; line-height: 30px; height: 30px; font-weight: 600; font-size: large; background: #a6bcbd;">X</button>
+        </div>
+    </div>
+    <div  style=" overflow-x: auto; max-height: 400px;">
+        <div  id="contentToConvert" >
+         <div class="main-container1" style=" margin: 0; line-height: 13px;justify-content: center;display:flex;" >
+             <div class="container" style="margin: 15px;" #container1>
+            <div class="row" style="border-bottom: 1px solid black;">
+                <div class="col-8" style="border-right: 1px solid black;">
+                    <div class="row">
+                        <div class="col-3" style="padding: 12px;">
+                            <div class="image-container">
+                                <img src="./../../../../../assets/images/softctl.jpeg" width="120" style="object-fit: contain;">
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <h2 style="font-weight: 600; font-size: x-large; white-space: nowrap;margin-bottom: 0px;">RENU SUPPLYCHAIN</h2>
+                            <p><b>GSTIN .:27AACCN0835B1ZY</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4" style="padding-top: 10px;">
+                    <p>66/68 Mint Road, Cross lane, Mumbai,Maharashtra,India-400001
+                        Contact:9860637328,<br>
+                        Email: abc@gmail.com</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 pt-1" style="border-right: 1px solid black; padding-bottom: 10px;">
+                    <p>TO, <br>
+                        <b>RITE WATER SOLUTIONS (I) PVT TLD</b> <br>
+                        GALA NO E6,220,OPP TATA HOUSING,NEAR KALYAN <br>
+                        BYPASS,BHUMIWORLD INDUSTRIAL PARK,BHIWANDI <br>
+                        WO NO:RWSIPL/MH/22-23/113 <br>
+                        421301</p>
+                        <p><b>GSTIN .:27AACCN0835B1ZY</b></p>
+                </div>
+                <div class="col-4 pr-0 pl-0">
+                    <table class="text-center">
+                        <tr style="border-bottom: 1px solid;">
+                            <th style="font-size: 13px;border-right: 1px solid;">Invoice No.</th>
+                            <th>21495</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid;">
+                            <th style="font-size: 13px;border-right: 1px solid;">From Date</th>
+                            <td>01/11/2024</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid;">
+                            <th style="font-size: 13px;border-right: 1px solid;">To Date</th>
+                            <td>01/11/2024</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid;">
+                            <th style="font-size: 13px;border-right: 1px solid;">Invoice Date</th>
+                            <td>01/11/2024</td>
+                        </tr>
+                        <!-- <tr style="border-bottom: 1px solid;">
+                            <th style="font-size: 13px;border-right: 1px solid;">Email</th>
+                            <td></td>
+                        </tr> -->
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12  pr-0 pl-0" style="border-top: 1px solid;">
+                    <div class="table-container">
+                <div class="table-responsive">
+                    <table class="text-center table-bordered">
+                        <tr>
+                            <th style="border-left: none;">Sr No.</th>
+                            <th>Date</th>
+                            <th>Awb No.</th>
+                            <th>Forwarding</th>
+                            <th>Inv No</th>
+                            <th>Receiver</th>
+                            <th>Destination</th>
+                            <th>Pcs</th>
+                            <th>Wt</th>
+                            <th>freight</th>
+                            <th>fuel</th>
+                            <th>Awb</th>
+                            <th>Fov</th>
+                            <th>IDC <br> CAF</th>
+                            <th>ESS</th>
+                            <th>D.T.D <br> ODA</th>
+                            <th>ENS</th>
+                            <th>SC</th>
+                            <th>O.C.1</th>
+                            <th>O.C.2</th>
+                            <th style="border-right: none;">Amount</th>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border-left: none;">4</td>
+                            <td>21/11/24</td>
+                            <td>29380</td>
+                            <td>53531399305</td>
+                            <td>1983</td>
+                            <td>RAY ANAYTICALS ANAYTICALS</td>
+                            <td>HYDERABAD</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>225</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>828</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td style="border-right: none;">1109.00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4 pr-0 pl-0" style="border-left: 1px solid;">
+                <table style="text-align: end;">
+                    <tr style="border-bottom: 1px solid;">
+                        <th style="border-right: 1px solid;font-size: 13px;">Sub Total</th>
+                        <td>21495</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                        <th style="border-right: 1px solid;font-size: 13px;">CGST@ 9%</th>
+                        <td>01/11/2024</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                        <th style="border-right: 1px solid;font-size: 13px;">SGST @ 9%</th>
+                        <td>01/11/2024</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                        <th style="border-right: 1px solid;font-size: 13px;">IGST@ 18%</th>
+                        <td>01/11/2024</td>
+                    </tr>
+                    <tr>
+                        <th style="border-right: 1px solid;font-size: 13px;">Grand Total</th>
+                        <th>62874.05</th>
+                    </tr>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12" style="border-top: 1px solid; border-bottom: 1px solid;padding: 4px">
+                <p><b> <p style="font-weight: bolder;display: inline">RUPEES IN WORDS : </p>SIXTY-TWO THOUSAND EIGHT HUNDRED SEVENTY-FOUR AND FIVE PAISA ONLY</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12" style="padding: 10px">
+                <p>
+                    1.Cheque should be issued in the Favour of "Renu Supplychain" <br>
+                    2.Any delay to pay the Invoice within two weekswill atract 2% Interest per month. <br>
+                    3.GSTIN No :27BDPPP3527C1ZG <br>
+                    4.Pan No. :BDPPP3527C <br>
+                    5.Bank Details:
+                    Company Name: Renu Supplychain Bank Name : Andhra Bank Account No. 270511100003624 <br>
+                    IFSC Code : ANDB0002705 <br>
+                    Branch : Vasai East -401208
+                </p>
+            </div>
+          </div>
+          <div class="row" style="padding: 4px">
+            <div class="col-6">
+                <p style="font-weight: bolder;font-size: 13px;"><b>Authorised Sign & Stamp</b></p>
+            </div>
+            <div class="col-6" style="display: flex; justify-content: center;">
+                <p style="font-weight: bolder;font-size: 13px;"><b>Receiver tamp & Stamp</b></p>
+            </div>
+          </div>
+        </div>
+    </div>
+</div> 
+</div>
+</div>

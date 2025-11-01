@@ -1,0 +1,55 @@
+*{
+    font-size: 13px;
+    padding-top: 3px;
+    color: black;
+}
+.form-control, .form-select{
+    height: 26px;
+    width: 8rem;
+}
+.row{
+    margin-bottom: -7px;
+}
+/* // .seconddiv>.row{
+//     margin-bottom: 3px;
+// } */
+.submitbtn button{
+    margin-right: 25px;
+    height: 2.5rem;
+    width: 3.5rem;
+    padding-top: 0.8rem;
+}
+.btn-save{
+    background-color:  #28bbf5 !important;
+    border: 1px solid black;
+    color: black;
+}
+.btn-danger{
+    background-color: darkorange !important;
+    border: 1px solid black;
+    color: black;
+}
+h4{
+    width: 22rem;
+    height: 2rem;
+    color: white;
+    background-color:  darkorange;
+    text-align: center;
+    padding-bottom: 2.25rem;
+    font-size: 1.3rem; 
+    margin-top: -1rem; 
+   
+}
+
+h3{
+    width: 22rem;
+    /* height: 2rem; */
+    color: white;
+    background-color:  darkorange;
+    text-align: center;
+    /* padding-bottom: 2.25rem; */
+    font-size: 1rem; 
+    margin-top: 1rem; 
+
+
+}

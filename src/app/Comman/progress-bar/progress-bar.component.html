@@ -1,0 +1,32 @@
+<div class="container" *ngIf="data.action === 'docketPrint'">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2 style="font-size: 14px; font-weight: 500; line-height: 55px;" >Loading please wait ...</h2>
+    </div>
+    <div class="col-sm-4 text-right" style="padding-right: 25px;">
+      <img src="./assets/gif/loading.gif" alt="" style="width: 65px;">
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="data.action !== 'docketPrint'">
+  <div class="row mt-2 pb-2" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-8">
+      <h2 style="font-size: 16px; font-family: auto;">Please wait while uploading <b style="font-size: 17px; font-weight: 600;"> &nbsp; {{ data.fileName }}</b></h2>
+    </div>
+    <div class="col-sm-4 text-right">
+      <!-- <button class="btn btn-danger" tabindex="-1" (click)="cancelUpload()"><mat-icon>close</mat-icon></button> -->
+    </div>
+  </div>
+  <div class="row mt-4 mb-2">
+    <div class="col-sm-12">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width.%]="progress">
+          <!-- {{ progress }}% -->
+        </div>
+      </div>
+      <!-- <div class="current-item">
+        {{ currentItem }}
+      </div> -->
+    </div>
+  </div>
+</div>

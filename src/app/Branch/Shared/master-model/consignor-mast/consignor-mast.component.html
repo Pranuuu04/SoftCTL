@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-8">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Payment Details</h1>
+      </div>
+        <div class="col-sm-4 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+    </div>
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+          <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="OpeningAmt">Opening amount :</label>
+                    <input class="form-control" type="number" id="OpeningAmt" formControlName="OpeningAmt"  placeholder="enter Opening amount">
+                </div>
+            </div>
+          </div> -->
+          
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="BalanceAmt">Balance amount :</label>
+                    <input class="form-control" type="number" id="BalanceAmt" formControlName="BalanceAmt">
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="MinAmt">Minimum amount :</label>
+                    <input class="form-control" type="number" id="MinAmt" formControlName="MinAmt">
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="creditDays">credit days :</label>
+                    <input class="form-control" type="number" id="creditDays" formControlName="creditDays">
+                  </div>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="InvdueDays">Inv due days : </label>
+                    <input class="form-control" type="number" id="InvdueDays" formControlName="InvdueDays">
+                  </div>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="textOnInput">
+                    <label for="Remark">Remark :</label>
+                    <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter Remark">
+                  </div>
+          </div>
+          </div>
+          <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+              <button type="submit" class="btn btn-light other-button">{{ data?.action === 'edit' ? 'Update' : 'Submit' }}</button>
+            </div>
+           </div>
+        </form>
+ </div>
+ 

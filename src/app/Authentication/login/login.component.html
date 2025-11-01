@@ -1,0 +1,105 @@
+<div class="container-fluid d-flex flex-column p-0 m-0">
+    <div class="row main-row m-0">
+      <div class="col-lg-7  gradient-custom-2 left-side m-0 p-0">
+    <div class="upper" style="height: 80vh;">
+      <div class="img d-flex mb-0" style="align-items: center;">
+        <img [src]="ClientLogo" width="176" class="img-fluid header-logo" alt="Sample image" style="padding: 10px;  object-fit: contain;">
+        <h6><b>{{ClientName}}</b></h6>
+     </div>
+      <div class="description">
+          <!-- <img src="./assets/images/softctl.jpeg" class=" img3 img-fluid" alt="Sample image"> -->
+          <ul>
+            <h4>Sign up & access all of SoftCtl Services</h4>  
+            <li> <i class="fa-solid fa-business-time"></i>SoftCTL Next-Gen Cloud Base ERP Software </li>
+            <li><i class="fa-solid fa-truck"></i> Courier & Cargo| Logistics| Transport| Warehouse Industry </li>
+              <li> <i class="fa-solid fa-coins"></i>Automate And Streamline Your Operations And Finance</li>
+              <li> <i class="fa-solid fa-users-gear"></i>Modernize Your Business With Powerful Innovation SoftCTL ERP</li>
+              <li> <i class="fa-solid fa-business-time"></i>Scalable Modules – Choose What You Need, When You Need</li>
+            <li> <i class="fas fa-cogs"></i> Centralize Data Management Improved Services | Distribution | Information Access Control </li>
+            <li> <i class="fa-solid fa-circle-info"></i>Implementation And 24X7 Customer Support</li>
+          </ul>
+          
+      </div>
+    </div>
+      <div class="lower" style="height: 20vh;">
+        <div class="img2">
+          <h5>Powerd by</h5>
+          <div class="footer p-0" style="float: right; width: 100%; justify-content: right;">
+           <!-- <p> <img src="./assets/images/softctl.jpeg" height="45" alt="Sample image"></p> -->
+            <p class="mb-0" style=" float: right; text-align: end; line-height: 20px;display: flex; width: 100%; justify-content: space-between;">
+              <span><img src="./assets/images/softctl.jpeg" height="45" alt="Sample image"></span>YOUR TRUSTED TECHNOLOGIES  PARTNER SINCE 2001 <br>
+              Transforming The Hope Into Faith</p>
+            <img class="img-fluid logo2"  src="./assets/images/NeotechLogo.jpg">
+           </div>
+         <div>  <h5 style=" justify-content: end;display: flex; font-size: 14px;font-weight: 500; padding-right: 45px;">
+          <a [href]="'mailto:cs@neotechnet.com'" class="email-link" (click)="handleEmailClick($event)">cs@neotechnet.com</a>
+
+         </h5></div>
+           <!-- <h5>mail</h5> -->
+
+        </div>
+      </div>
+        
+      </div>
+      <div class="col-lg-5 right-side">
+        
+        <div class="card form-card m-0 p-0">
+          <div class="card-body p-md-5 d-flex flex-column align-items-center " style="justify-content: center;">
+            <div class="text-center">
+              <img  [src]="ClientLogo" style="width: 185px; object-fit: contain;" alt="logo">
+              <h4 class="mt-2 mb-4" style="font-weight: 500;">{{ClientName}}</h4>
+            </div>
+            
+              <form [formGroup]="loginForm" (ngSubmit)="formSubmit(loginForm.value)" id="sign_in" class="form">
+                <div class="form__group">
+                  <label for="username" class="form__lbl">Username</label>
+                  <input id="username" formControlName="username" class="form__input" placeholder="Username" required autocomplete="new-username">
+                  <div *ngFor="let validation of validationMessage.username">
+                    <div class="error-message"
+                      *ngIf="loginForm.get('username').
+                      hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form__group">
+                  <label for="password" class="form__lbl">Password</label>
+                  <div class="input-group" style="justify-content: end;">
+                    <input type="{{hidePassword ? 'password' : 'text'}}" formControlName="password" id="password" class="form__input" placeholder="Password" required autocomplete="new-password">
+                    <div class="input-group-append" style="    margin-top: -41px;">
+                      <button class="btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" style=" padding: 0 16px;border: 1px solid #d2d2d2; border-radius: 0.25rem; margin-top: -1px; background: #e48455;" >
+                          <i class="fa" [ngClass]="{ 'fa-eye': hidePassword, 'fa-eye-slash': !hidePassword }" style="color: white; font-size: 19px;"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngFor="let validation of validationMessage.password">
+                    <div class="error-message"
+                      *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </div>
+                  
+                </div>
+               <br>
+                <button class="btn btn-light" expand="block" type="submit">Login</button>
+                <div class="space-between-elements"></div>
+                <!-- <div class="text-center mt-2">
+                  <h4><b>Help desk</b></h4>
+              </div>
+                <div class="text-center">
+                  <p><b>E-Mail</b> : 
+                    <a [href]="'mailto:cs@neotechnet.com'" class="email-link" (click)="handleEmailClick($event)">cs@neotechnet.com</a>
+                    </p>
+                </div>
+                <div class="text-center">
+                  <p><b>Contact</b> : <a href="tel:+917400400731" class="contact-link">+91-7400400731</a> | <a href="tel:+917777035525" class="contact-link">7777035525</a></p>
+                </div>
+                <div class="text-center">
+                  <p> <img src="./assets/images/softctl.jpeg" class=" img3 img-fluid" alt="Sample image"></p>
+                </div> -->
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,617 @@
+<div class="container">
+  <form [formGroup]="EshipForm" (ngSubmit)="SubmitEshipForm(EshipForm.value)">
+    <div class="row mt-2" style="border-bottom: 2px solid  #d2d2d2">
+      <div class="col-sm-3 p-0" style="border-right: 1px solid #d2d2d2;">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Vendor name  :</label>
+                      <input class="form-control" type="text" placeholder="Enter vendor name" formControlName="VendorName">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Master AWB no. :</label>
+                      <input class="form-control" type="text" placeholder="Enter master AWB no." formControlName="masterAWBNo">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">AWB No. :</label>
+                      <input class="form-control" type="text" placeholder="Enter AWB no." formControlName="awbNo">
+                      <div *ngFor="let validation of validationMessage.awbNo">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('awbNo').hasError(validation.type) && (EshipForm.get('awbNo').dirty || EshipForm.get('awbNo').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Date :</label>
+                      <input class="form-control" type="date" formControlName="date" value="{{currentDate}}" [max]="currentDate" >
+                      <div *ngFor="let validation of validationMessage.date">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('date').hasError(validation.type) && (EshipForm.get('date').dirty || EshipForm.get('date').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="origin">Origin :</label>
+                      <ng-select id="Route" class="custom-select1" formControlName="origin">
+                        <ng-option *ngFor="let item of originList" [value]="item.originCode">
+                          {{item.originName}} &nbsp;({{item.originCode}})
+                        </ng-option>
+                      </ng-select>
+                      <!-- <div *ngFor="let validation of validationMessage.origin">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('origin').hasError(validation.type) && (EshipForm.get('origin').dirty || EshipForm.get('origin').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="inputText">Destination :</label>
+                      <ng-select id="Route" class="custom-select1"  [(ngModel)]="selectedDestination" formControlName="destination" >
+                        <ng-option selected disabled>Select Route</ng-option>
+                        <ng-option  *ngFor="let item of destinationList" [value]="item.destinationCode" >
+                          {{item.destinationName}} &nbsp;({{item.destinationCode}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngFor="let validation of validationMessage.destination">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('destination').hasError(validation.type) && (EshipForm.get('destination').dirty || EshipForm.get('destination').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="inputText">Mode :</label>
+                      <ng-select id="Route" class="custom-select1"  [(ngModel)]="selectedMode" formControlName="Mode" >
+                        <ng-option selected disabled>Select Mode</ng-option>
+                        <ng-option *ngFor="let item of modeList" [value]="item.Mode_code">
+                          {{item.Mode_name}} &nbsp;({{item.Mode_code}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngFor="let validation of validationMessage.Mode">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('Mode').hasError(validation.type) && (EshipForm.get('Mode').dirty || EshipForm.get('Mode').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="inputText">Product :</label>
+                      <ng-select id="Route" class="custom-select1"  [(ngModel)]="selectedProduct" formControlName="product" >
+                        <ng-option selected disabled>Select Product</ng-option>
+                        <ng-option  *ngFor="let item of productList" [value]="item.productCode">
+                          {{item.productName}} &nbsp;({{item.productCode}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngFor="let validation of validationMessage.product">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('product').hasError(validation.type) && (EshipForm.get('product').dirty || EshipForm.get('product').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">               
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="deliveryType">Services type :</label>
+                      <ng-select id="deliveryType" class="custom-select1" [(ngModel)]="deliveryType" formControlName="deliveryType" >
+                        <ng-option selected disabled>Select Product</ng-option>
+                        <ng-option  *ngFor="let item of deliveryTypeList" [value]="item.deliverTypeCode">
+                          {{item.deliverTypeName}}&nbsp;({{item.deliverTypeCode}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngFor="let validation of validationMessage.deliveryType">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('deliveryType').hasError(validation.type) && (EshipForm.get('deliveryType').dirty || EshipForm.get('deliveryType').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">               
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="consignerName">Consignor :</label>
+                      <ng-select id="consignerName" class="custom-select1" [(ngModel)]="consignerCode" formControlName="consignerName" (change)="fetchReleventData($event)" bindLabel="name" bindValue="name">
+                        <ng-option selected disabled>Select Consignor</ng-option>
+                        <ng-option  *ngFor="let item of consignerList" [value]="item.customerCode">
+                          {{item.customerName}}&nbsp;({{item.customerCode}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngFor="let validation of validationMessage.consignerName">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('consignerName').hasError(validation.type) && (EshipForm.get('consignerName').dirty || EshipForm.get('consignerName').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Ref cust name :</label>
+                      <input class="form-control" type="text" placeholder="Enter refrance customer name" formControlName="refCustName">
+                    </div>
+                  </div>
+                  <!-- <div class="form-group row">               
+                    <div class="col-sm-12">
+                      <div class="textOnInput">
+                        <label for="inputText">Vendor No. :</label>
+                        <input class="form-control" type="text" placeholder="Enter Vendor No." formControlName="vendorNo">
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+            
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Remark :</label>
+                      <input class="form-control" type="book" placeholder="Enter remark" formControlName="remark">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+      <div class="col-sm-3 p-0" style="border-right: 1px solid #d2d2d2;">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group row">
+                  <div class="col-sm-8">
+                    <div class="textOnInput">
+                      <label for="shipperName">Shipper name :</label>  
+                      <input list="shipperName" formControlName="shipperName" class="form-control" (change)="shipperAddList()" [(ngModel)]="selectedShipper" placeholder="Enter shipper name"/>
+                      <datalist id="shipperName">
+                          <option *ngFor="let item of shipperNameList" [value]="item.shipperName">{{item.shipperName}}&nbsp;({{item.shipperCode}})</option>
+                      </datalist>
+                      <div *ngFor="let validation of validationMessage.shipperName">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('shipperName').hasError(validation.type) && (EshipForm.get('shipperName').dirty || EshipForm.get('shipperName').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 d-flex" style="justify-content: right;">
+                    <input class="form-button" matTooltip="Save shipper" type="checkbox" (click)="ShipperSubmit($event)">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Company Name :</label>
+                      <input class="form-control" type="text" placeholder="Enter company Name" formControlName="shipperCompanyName">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Contact person :</label>
+                      <input class="form-control" type="text" formControlName="shipperConPerson" placeholder="Enter person details">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Address-1 :</label>
+                      <input class="form-control" type="text" placeholder="Enter Address-1" formControlName="shipAddress1">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Address-2 :</label>
+                      <input class="form-control" type="text" placeholder="Enter Address-2" formControlName="shipAddress2">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">LandMark :</label>
+                      <input class="form-control" type="text" placeholder="Enter landmark." formControlName="shipALandMark">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <div class="textOnInput">
+                      <label for="inputText">PinCode :</label>
+                      <input class="form-control" type="number" placeholder="Enter pincode." (change)="getPinCode($event)" [(ngModel)]="pinCode" formControlName="shipPinCode">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="textOnSelect">
+                      <label for="inputText">City :</label>
+                      <ng-select id="Route" class="custom-select1" bindLabel="name" bindValue="name"  formControlName="ShipperCity" >
+                        <ng-option selected disabled>Select City</ng-option>
+                        <ng-option *ngFor="let item of originList" [value]="item.originCode">
+                          {{item.originName}} &nbsp;({{item.originCode}}) 
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <div class="textOnSelect">
+                      <label for="shipperState">State :</label>
+                      <ng-select id="shipperState" class="custom-select1" formControlName="shipperState" >
+                        <ng-option selected disabled>Select State</ng-option>
+                        <ng-option *ngFor="let item of stateList" [value]="item.stateCode">
+                          {{item.stateName}} &nbsp;({{item.stateCode}})
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="textOnSelect">
+                      <label for="shipperCountry">Country :</label>
+                      <ng-select id="shipperCountry" class="custom-select1" bindLabel="name" bindValue="name"  formControlName="shipperCountry" >
+                        <ng-option selected disabled>Select Country</ng-option>
+                        <ng-option *ngFor="let item of countryList" [value]="item.countryCode">
+                          {{item.countryName}} &nbsp;({{item.countryCode}}) 
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Contact No. :</label>
+                      <input class="form-control" type="tel" placeholder="Enter Contact no." formControlName="shipMmobileNo">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Email_ID :</label>
+                      <input class="form-control" type="email" placeholder="abc@gmail.com" formControlName="shipMailId">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <div class="textOnInput">
+                      <label for="inputText">GST No. :</label>
+                      <input class="form-control" type="email" placeholder="Enter GST no." formControlName="shipGstNo">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="textOnInput">
+                      <label for="inputText">KYC Type :</label>
+                      <input class="form-control" type="email" placeholder="Enter KYC type" formControlName="shipKycType">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <div class="textOnInput">
+                      <label for="inputText">KYC No. :</label>
+                      <input class="form-control" type="email" placeholder="Enter KYC no." formControlName="shipkycNo">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="textOnInput">
+                      <label for="inputText">Upload Doc :</label>
+                      <input class="form-control" type="file" (change)="fileChangeEvent($event)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+      <div class="col-sm-3 p-0" style="border-right: 1px solid #d2d2d2;">
+          
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group row">
+                  <div class="col-sm-8">
+                    <div class="textOnInput">
+                      <label for="consigneeName">Consignee name :</label>
+                      <input list="consigneeName" class="form-control" formControlName="consigneeName" (change)="addressList()" [(ngModel)]="consigneeName" placeholder="Enter consignee name"/>
+                      <datalist id="consigneeName">
+                          <option *ngFor="let item of consigneeList" [value]="item.ConsigneeName">{{item.ConsigneeName}}({{item.ConsigneeCode}})</option>
+                      </datalist>
+                      <div *ngFor="let validation of validationMessage.consigneeName">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('consigneeName').hasError(validation.type) && (EshipForm.get('consigneeName').dirty || EshipForm.get('consigneeName').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                      <!-- <input class="form-control" type="text" placeholder="Enter Your consignee name." formControlName="consigneeName" [(ngModel)]="consigneeName" [value]="CustomerName"> -->
+                    </div>
+                  </div>
+                  <div class="col-sm-4 d-flex" style="justify-content: right;">
+                    <input class="form-button" matTooltip="Save Consignee" type="checkbox" (click)="consigneeSubmit($event)">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Company Name :</label>
+                      <input class="form-control" type="text" placeholder="Enter Company Name" formControlName="consCompanyName">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Contact person :</label>
+                      <input class="form-control" type="text" placeholder="Enter person details" formControlName="consContactPer">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Address-1 :</label>
+                      <input class="form-control" type="text" placeholder="Enter Address-1" formControlName="consAdd1">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Address-2 :</label>
+                      <input class="form-control" type="text" placeholder="Enter Address-2" formControlName="consAdd2">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">LandMark :</label>
+                      <input class="form-control" type="text" placeholder="Enter LandMark." formControlName="consLandMark">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">PinCode :</label>
+                      <input class="form-control" type="text" placeholder="Enter PinCode."  [(ngModel)]="pinCodecons" (change)="getPinCodeCons($event)" formControlName="consPinCode">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnSelect">
+                      <label for="inputText">City :</label>
+                      <ng-select id="Route"  bindLabel="name" bindValue="name" class="custom-select1"  formControlName="consDestination" >
+                        <ng-option selected disabled>Select City</ng-option>
+                        <ng-option  *ngFor="let item of destinationListCon" [value]="item.destinationCode" >
+                          {{item.destinationName}} &nbsp;({{item.destinationCode}})
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <div class="textOnSelect">
+                      <label for="inputText">State :</label>
+                      <ng-select id="Route"  bindLabel="name" bindValue="name" class="custom-select1" formControlName="consStateName">
+                        <ng-option selected disabled>Select state</ng-option>
+                        <ng-option *ngFor="let item of stateListCons" [value]="item.stateCode">
+                          {{item.stateName}} &nbsp;({{item.stateCode}})
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="textOnSelect">
+                      <label for="countryName">Country :</label>
+                      <ng-select id="countryName"  bindLabel="name" bindValue="name" class="custom-select1" formControlName="consCountryName" >
+                        <ng-option selected disabled>Select country</ng-option>
+                        <ng-option *ngFor="let item of countryListcons" [value]="item.countryCode">
+                          {{item.countryName}} &nbsp;({{item.countryCode}}) 
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Contact No. :</label>
+                      <input class="form-control" type="tel" placeholder="Enter ContNo." formControlName="consContactNo">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Email_ID :</label>
+                      <input class="form-control" type="email" placeholder="Enter Email_ID" formControlName="consEmailID">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">GST No. :</label>
+                      <input class="form-control" type="email" placeholder="Enter GST no." formControlName="consGST">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      <div class="col-sm-3">
+        
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="textOnInput">
+                    <label for="inputText">PCS :</label>
+                    <input class="form-control" type="number" placeholder="Enter PCS.." formControlName="consPCS">
+                    <div *ngFor="let validation of validationMessage.consPCS">
+                      <div class="error-message"
+                        *ngIf="EshipForm.get('consPCS').hasError(validation.type) && (EshipForm.get('consPCS').dirty || EshipForm.get('consPCS').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="textOnInput">
+                      <label for="inputText">Acctual Wt :</label>
+                      <input class="form-control" type="number" placeholder="Enter Your Acctual Wt" formControlName="consAcctual">
+                      <div *ngFor="let validation of validationMessage.consAcctual">
+                        <div class="error-message"
+                          *ngIf="EshipForm.get('consAcctual').hasError(validation.type) && (EshipForm.get('consAcctual').dirty || EshipForm.get('consAcctual').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="col-sm-8">
+                      <div class="textOnInput">
+                        <label for="inputText">Volumetric Wt :</label>
+                        <input class="form-control" type="number"  min="0"  placeholder="Enter Volumetric Weight" formControlName="volumetricWt">
+                      </div>
+                    </div>
+                    <div class="col-sm-4 p-0">
+                      <button tabindex="-1" matTooltip="Consigner Volumetric" type="button" class="btn btn-light vol-button" (click)="openVolumetricModal(consignerCode,selectedProduct)"><i class="fa-solid fa-calculator"></i>Cal</button>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="textOnInput">
+                        <label for="inputText">Inv No. :</label>
+                        <input class="form-control" type="text" placeholder="Enter Inv No.." formControlName="InvNo">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="textOnInput">
+                        <label for="inputText">Inv Value :</label>
+                        <input class="form-control" type="text" placeholder="Enter Inv Value" formControlName="InvValue">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="textOnSelect">
+                        <label for="inputText">Currency :</label>
+                        <ng-select class="custom-select1" formControlName="CurrencyType" >
+                          <ng-option value="selected disabled">select Currency</ng-option>
+                          <ng-option>Rupee</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <div class="textOnInput">
+                        <label for="inputText">Inv Date :</label>
+                        <input class="form-control" type="date" placeholder=" Enter Inv Date" formControlName="InvDate">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <div class="textOnInput">
+                        <label for="inputText">Content :</label>
+                        <input class="form-control" type="text" placeholder="Enter Content" formControlName="InvContent">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <div class="textOnInput">
+                        <label for="inputText">Ewaybill no :</label>
+                        <input class="form-control" type="text" placeholder="Enter Ewaybill no." formControlName="Ewaybill">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <button tabindex="-1" matTooltip="Customer Invoice" type="button" class="btn btn-light form-button" (click)="openInvoiceModal()"><i class="fa-solid fa-users"></i>Cust</button>
+                    </div>
+                 </div>
+                   <!-- <h4>Cust Invoice</h4> -->
+                 <!-- <div class="col-sm-12">
+                  <div class="textOnSelect">
+                    <label class="span">Shipper Type :</label>
+                    <ng-select [(ngModel)]="awbType" formControlName="awbType" bindLabel="name" bindValue="name" class="custom-select11" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                      <ng-option value="Individual" style="font-size: 12px;" >Individual</ng-option>
+                      <ng-option value="Thermal" style="font-size: 12px;">Thermal</ng-option>
+                    </ng-select>
+                  </div>
+                </div> -->
+      </div>
+    </div>
+    <div class="row eship">
+      <div class="col-sm-12 d-flex" style=" justify-content: center;">
+        <button type="submit" class="btn btn-light other-button"><i class="fa-solid fa-floppy-disk"></i>Save</button>
+        <!-- <button type="button" class="btn btn-light other-button"><i class="fa-solid fa-floppy-disk"></i>Update</button> -->
+        <button tabindex="-1" type="button" class="btn btn-light other-button" (click)="openPrintDialog()"><i class="fa-solid fa-print"></i>Print</button>
+      </div>
+    </div>
+  </form>
+</div>

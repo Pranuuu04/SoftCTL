@@ -1,0 +1,90 @@
+/* input, 
+textarea{
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  font-family: auto;
+} */
+.date, .vendor ,.vendor1, .awb{
+  border: 1px solid #d2d2d2; 
+  border-radius: 0.25rem;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  font-family: auto;
+  height: 28px;
+}
+.btn-info{
+    width: 79px;
+    height: 33px;
+    margin-top: 1px;
+    margin-left: 6px;
+    border-radius: 21px;
+    padding-bottom: 26px;
+}
+
+:host .card {
+  margin-top: 20px;
+}
+
+:host .table {
+  width: 100%;
+  margin-top: 20px;
+  border: 2px balck solid;
+  height: 30px;
+  color: black;
+  font-weight: 600;
+  background-color: #afdadf;
+  font-size: medium;
+  font-weight: 600;
+}
+/* .table{
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 600;
+} */
+.table thead tr th {
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+:host .btn-info {
+  /* margin-top: 10px; */
+}
+@media (min-width:1024px) and (max-width:1440px) {
+  .btn-info{
+  margin-left: -10px;
+  width: 69px;
+}
+}
+@media (min-width:760px) and (max-width:1024px) {
+  .btn-info{
+    margin-left: -19px;
+    width: 59px;
+}
+}
+@media (min-width:425px) and (max-width:678px) {
+  .btn-info{
+    margin-left: 132px;
+    width: 59px;
+    border-radius: 8px;
+
+}
+}
+@media (min-width:320px) and (max-width:425px) {
+  .btn-info{
+    margin-left: 114px;
+    width: 59px;
+    border-radius: 8px;
+  }
+}
+@media (min-width:315px) and (max-width:320px) {
+  .btn-info{
+    margin-left: 78px;
+    width: 59px;
+    border-radius: 10px;
+
+}
+}

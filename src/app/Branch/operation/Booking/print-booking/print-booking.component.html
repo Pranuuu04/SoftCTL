@@ -1,0 +1,73 @@
+<div style="margin-left: 20px; margin-right: 20px;">
+    <div class="card">
+      <div class="card-body">
+        <div class="container" style=" padding: 1px;">
+            <form>
+              <div class="row form" style="text-align: center;">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                      <input type="radio" id="Awb_print_value" name="drone" value="Awb_print_value" checked  />
+                      <label for="Awb_print_value" class="col-sm-4 col-form-label" style="margin-left: -4rem;">Awb_Print</label>
+                
+                      <input type="radio" id="Label_print" name="drone" value="Label_print"  />
+                      <label for="Label_print" class="col-sm-5 col-form-label" style="margin-left: -4rem;">Label_Print</label>
+
+                      <input type="radio" id="Manual_print" name="drone" value="Manual_print"  />
+                      <label for="Manual_print" class="col-sm-5 col-form-label" style="margin-left: -4rem;">Manual_Print</label>
+                </div>
+                <div class="col-sm-2"></div>
+
+                <div class="row form">
+                  <!-- 1st: Customer Name -->
+                  <label for="inputState" class="col-sm-1 col-form-label" style="margin-bottom: 20px; margin-right: -4rem; color: black;">From AWB_NO.</label>
+                  <div class="col-sm-2" >
+                    <input  type="search"
+                    class="Consigner"
+                    placeholder="From AWB_NO."
+                    id="ConsignerInput">
+                  </div>
+
+                  <!-- Import Input -->
+                  <label for="inputState" class="col-sm-1 col-form-label" style="margin-bottom: 20px; margin-right: -4rem; margin-left: 5rem; color: black;">To AWB_NO.</label>
+                  <div class="col-sm-2" >
+                    <input  type="search"
+                    class="Consigner"
+                    placeholder="To AWB_NO."
+                    id="ConsignerInput"
+                    style="height: 2rem; margin-left: 4rem;">
+                  </div>
+      
+                  <!-- Ok Button for Import -->
+                  <div class="col-md-1 col-sm-1" style=" margin-left: 4rem;" >
+                    <button class="btn"  >
+                      <i>OK</i>
+                    </button>
+                  </div>
+                  
+      
+                  <!-- Download Button -->
+                    <label for="inputState" class="col-sm-2 col-form-label" style="margin-bottom: 20px; margin-right: -4rem;  margin-left: 2rem;color: black;">No.Of_Print_ON_Single_Page</label>
+                    <div class="col-sm-2" >
+                      <select class="custom-select"  style="height: 2rem; margin-left: 2rem; width: 5rem; padding-left: 2rem;" data-live-search="true">
+                        <option data-tokens="ketchup mustard">1</option>
+                        <option data-tokens="mustard">2</option>
+                      </select>
+                    </div>
+      
+
+                    <div class="col-md-1 col-sm-2">
+                      <button class="btn" >
+                        <i>Print</i>
+                      </button>
+                    </div>
+  
+      
+      
+                </div>
+              </div>
+            </form>
+        </div>
+       </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,25 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Scan by Airwaybill no.">
+                        <app-scan-by-abw-no></app-scan-by-abw-no>
+                    </mat-tab> 
+                    <mat-tab label="Scan by Manifest no."  *ngIf="this.dispatch === '0'">
+                        <app-scan-by-manifest></app-scan-by-manifest>
+                    </mat-tab> 
+                    <mat-tab label="Scan by Dispatch no."  *ngIf="this.dispatch === '1'">
+                        <app-scan-by-manifest></app-scan-by-manifest>
+                    </mat-tab> 
+                    <!-- <mat-tab label="Vehicle Inscan">
+                        <app-vehicle-inscan></app-vehicle-inscan>
+                    </mat-tab> 
+                    <mat-tab label="Unloading Tally">
+                        <app-unloading-tally></app-unloading-tally>
+                    </mat-tab> -->
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

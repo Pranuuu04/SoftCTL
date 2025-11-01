@@ -1,0 +1,147 @@
+* {
+  font-size: 13px;
+  padding-top: 1.1px;
+  color: black;
+}
+form .col-sm-1{
+    padding-right: 8px;
+}
+form{
+    margin-top: 10px;
+    margin-bottom: 0.125rem;
+}
+.form-control,
+.form-select {
+    height: 26px;
+}
+input{
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+}
+
+
+form button{
+  width: 103px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 20px;
+  padding-top: 1.1px;
+  height: 34px;
+  margin-top: 10px;
+  margin-right: 7px;
+  line-height: 31px;
+  text-transform: capitalize;
+}
+
+  .Unload{
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #d2d2d2; 
+    font-size: medium;
+}
+
+
+input[type="radio"] {
+    display: none; 
+  }
+  
+  input[type="radio"] + label {
+    position: relative;
+    padding-left: 30px; 
+    cursor: pointer;
+    font-size: small;
+    user-select: none; 
+  }
+  
+  input[type="radio"] + label::before {
+    content: '';
+    position: absolute;
+    top: 46%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #007bff;
+    background-color: white;
+    border-radius: 50%;
+  }
+  
+  input[type="radio"]:checked + label::before {
+    background-color: #007bff;
+    border-color: #007bff; 
+  }
+  
+  .huey,
+  .dewey {
+    margin-right: 12px;
+   
+  }
+  
+.custom-select{
+    height: 30px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-family: auto;
+}
+
+label{
+  padding-bottom: 4px;
+  margin-top: 10px;
+    margin-bottom: 0;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+ 
+  ::ng-deep .mat-dialog-container {
+    padding: 6px 2px !important; 
+  }
+  @media  (min-width: 320px) and (max-width: 425px){
+    ::ng-deep .mat-dialog-container{
+        max-height: 431px !important;
+    }
+    .cancel{
+      margin-top: -33px;
+  }
+  }
+  .btn .material-icons{
+    color: white;
+    font-size: 22px;
+    line-height: 17px;
+  }
+
+  ::ng-deep .custom-snackbar {
+    color: white !important;
+    background-color: #0a990a !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+    color: white !important;
+    background-color: red !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+  color: white;
+}

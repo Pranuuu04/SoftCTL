@@ -1,0 +1,82 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-md-12 custom-tab-wrapper">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedIndexChange)="onTabChange($event)">
+                    <mat-tab label="FuelChrg">
+                        <ng-container *ngIf="activeTab === 0">
+                           <app-fuel-charges></app-fuel-charges>
+                        </ng-container>
+                    </mat-tab>
+
+                    <mat-tab label="DocketChrg">
+                        <ng-container *ngIf="activeTab === 1">
+                            <app-docket-charges></app-docket-charges>
+                        </ng-container>
+                    </mat-tab>
+
+                    <mat-tab label="MiscellaneousChrg">
+                        <ng-container *ngIf="activeTab === 2">
+                            <app-ess-charges></app-ess-charges>
+                        </ng-container>
+                    </mat-tab>
+
+                    <mat-tab label="FovChrg">
+                        <ng-container *ngIf="activeTab === 3">
+                            <app-fov-charges></app-fov-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="EnsChrg">
+                        <ng-container *ngIf="activeTab === 4">
+                            <app-ens-charges></app-ens-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="VolumetricChrg">
+                        <ng-container *ngIf="activeTab === 5">
+                            <app-volumetric-charges></app-volumetric-charges>
+                        </ng-container>
+                     </mat-tab>
+                 
+                     <mat-tab label="ScChrg">
+                        <ng-container *ngIf="activeTab === 6">
+                            <app-sc-charges></app-sc-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="CafChrg">
+                        <ng-container *ngIf="activeTab === 7">
+                            <app-caf-charges></app-caf-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="IdcChrg">
+                        <ng-container *ngIf="activeTab === 8">
+                            <app-idc-charges></app-idc-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="InsuranceChrg">
+                        <ng-container *ngIf="activeTab === 9">
+                            <app-insurance-charges></app-insurance-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="MetroChrg">
+                        <ng-container *ngIf="activeTab === 10">
+                            <app-metro-charges></app-metro-charges>
+                        </ng-container>
+                     </mat-tab>
+
+                     <mat-tab label="OdaChrg">
+                        <ng-container *ngIf="activeTab === 11">
+                            <app-oda-charges></app-oda-charges>
+                        </ng-container>
+                     </mat-tab>
+                  
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

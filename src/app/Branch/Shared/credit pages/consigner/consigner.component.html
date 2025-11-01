@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <form [formGroup]="deptForm"  (ngSubmit)="saveAllData(deptForm.value)">
+            <h4 mat-dialog-title>Credit Department<button type="button" class="close btn-lg mt-1" aria-label="Close"
+                    (click)="CloseDialog()">
+                    <span aria-hidden="true" class="mt-2" style="color: white;  height: 20px !important;">X</span>
+                </button></h4>
+            <div class="row">
+                <label for="inputEmail3" class="col-sm-5 col-form-label">Department Name</label>
+                <div class="col-sm-7">
+                    <input style="
+                    border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem;
+                    padding-left: 10px;
+                    padding-top: 10px;
+                    font-family: auto;
+                    margin-bottom: 0.5rem;
+                  "
+                  type="search" list="Department" class="form-control" #Department formControlName="Departmentname"
+                        autocomplete="off" placeholder="name">
+                    <datalist id="Department">
+                        <option *ngFor="let Department of getName">
+                            {{ Department.DepartmentName }}
+                    </datalist>
+                </div>
+            </div>
+            <div class="row">
+                <label for="inputEmail3" class="col-sm-5 col-form-label">Contact Number</label>
+                <div class="col-sm-7">
+                    <input style="
+                    border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem;
+                    padding-left: 10px;
+                    padding-top: 10px;
+                    font-family: auto;
+                    margin-bottom: 0.5rem;
+                  "
+                  type="text" class="form-control" id="inputCity" formControlName="ContactNumber"
+                        placeholder="Enter contact no." #ContactNumber>
+                    <div class="text-danger"
+                        *ngIf=" deptForm.get('ContactNumber')?.invalid ">
+                        <!-- <small class="text-danger" *ngIf="deptForm.get('ContactNumber')?.errors?.['required']">Phone No. -->
+                            <!-- is required</small> -->
+                        <small class="text-danger" *ngIf="deptForm.get('ContactNumber')?.errors?.['maxlength']">The
+                            max-Length 10 characters</small>
+                        <small class="text-danger" *ngIf="deptForm.get('ContactNumber')?.errors?.['pattern']">Enter
+                            number max-Length 10</small>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <label for="inputEmail3" class="col-sm-5 col-form-label">Email </label>
+                <div class="col-sm-7">
+                    <input style="
+                    border: 1px solid #d2d2d2;
+                    border-radius: 0.25rem;
+                    padding-left: 10px;
+                    padding-top: 10px;
+                    font-family: auto;
+                    margin-bottom: 0.5rem;
+                  " type="text" class="form-control" formControlName="email" #email id="inputCity"
+                        placeholder="Enter email id">
+                    <div class="text-danger" *ngIf="deptForm.get('email')?.invalid">
+                        <!-- <small class="text-danger" *ngIf="deptForm.get('email')?.errors?.['required']">Email is
+                            required</small> -->
+                        <small class="text-danger" *ngIf="deptForm.get('email')?.errors?.['email']">email
+                            invalid</small>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" align="end">
+                <div class="col-md-3">
+                    <!-- <button class='btn btn-success' (click)="openLoginModal()">LOGIN</button> -->
+                </div>
+                <div class="col-md-6 submitbtn">
+                    <button type="button" class="btn btn-save"
+                    
+                        (click)="saveAllData(deptForm.value)" [disabled]="Department.value.length===0" >Save</button>
+                    <button type="button" class="btn btn-danger" matDialogClose (click)="CloseDialog()">Cancel</button>
+                </div>
+                <div class="col-md-3"></div>
+                <!-- [disabled]="deptForm.invalid"  -->
+
+            </div>
+        </form>
+    </div>
+</div>

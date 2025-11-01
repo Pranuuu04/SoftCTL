@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Unloading </h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 600;
+      font-size: large;
+      background: #a6bcbd;">X</button>
+  </div>
+  </div>
+     <form class="mt-2">
+        <div class="row">
+          <label for="fdate" class="col-sm-1 col-form-label">From Date</label>
+        <div class="col-sm-2">
+          <input type="date" placeholder="date" class="form-control" id="fdate" formControlName="fdate" />
+        </div>
+
+        <label for="tdate" class="col-sm-1 col-form-label">To Date</label>
+        <div class="col-sm-2">
+          <input type="date" placeholder="date" class="form-control" id="tdate"  formControlName="tdate" />
+        </div>
+        </div>
+      </form>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-bordered table-striped m-0 p-0"  style="background-color: rgb(215 244 255 / 87%);">
+          <thead style="background-color:#34b0d3; color: white;">
+            <tr>
+              <th rowspan="2">Manifest No</th>
+              <th rowspan="2">Manifest Dt.</th>
+              <th rowspan="2">From Dt.</th>
+              <th rowspan="2">To Dt.</th>
+              <th colspan="3">Package</th>
+             <th rowspan="2">Load</th>
+             <th rowspan="2">Unload</th>
+             <th rowspan="2">Excess</th>
+             <th rowspan="2">Action</th>
+            </tr>
+            <tr>
+              <th >load</th>
+             <th >Unload</th>
+             <th>Short</th>
+            </tr>
+          </thead>   
+          <tbody>
+            <tr>
+              <td>LR004</td>
+              <td>03/24/2023</td>
+              <td>ABC Company</td>
+              <td> Corporation</td>
+              <td>Manifest</td>
+              <td> Corporation</td>
+              <td> Corporation</td>
+              <td>Manifest</td>
+              <td> Corporation</td>
+              <td> Corporation</td>
+              <td>
+                <i class="fa-solid fa-check bg-success"></i>
+                <i class="fa-solid fa-xmark bg-danger"></i>
+             </td>
+            </tr>
+            <tr>
+                <td>LR004</td>
+                <td>03/24/2023</td>
+                <td>ABC Company</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+              <td> Corporation</td>
+              <td>
+                <i class="fa-solid fa-check bg-success"></i>
+                <i class="fa-solid fa-xmark bg-danger"></i>
+             </td>
+              </tr>
+              <tr>
+                <td>LR004</td>
+                <td>03/24/2023</td>
+                <td>ABC Company</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+              <td> Corporation</td>
+              <td>
+                <i class="fa-solid fa-check bg-success"></i>
+                <i class="fa-solid fa-xmark bg-danger"></i>
+             </td>
+              </tr>
+              <tr>
+                <td>LR004</td>
+                <td>03/24/2023</td>
+                <td>ABC Company</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+                <td> Corporation</td>
+                <td>Manifest</td>
+                <td> Corporation</td>
+              <td> Corporation</td>
+              <td>
+                <i class="fa-solid fa-check bg-success"></i>
+                <i class="fa-solid fa-xmark bg-danger"></i>
+             </td>
+              </tr>
+          </tbody>
+        </table>
+
+        
+      </div>
+
+
+      <div class="row" style="justify-content: right;">
+        <div class="col-sm-3 d-flex" style=" justify-content: right;">
+          <button type="button" class=" Unload btn btn-info">Unload</button>
+        </div>
+      </div>
+
+  </div>
+  

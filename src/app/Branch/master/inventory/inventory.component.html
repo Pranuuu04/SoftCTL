@@ -1,0 +1,27 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Stock-entry">
+                        <app-stock-entry [entryData]="entryViewData"></app-stock-entry>
+                    </mat-tab>
+                    <mat-tab label="stock-issue-branch">
+                        <app-stock-issue-branch [branchData]="branchViewData"></app-stock-issue-branch>
+                    </mat-tab>
+                    <mat-tab label="stock-issue-customer">
+                        <app-stock-issue-customer [customerData]="customerViewData"></app-stock-issue-customer>
+                    </mat-tab>
+                    <mat-tab label="stock-issue-employee">
+                        <app-stock-issue-emp [employeeData]="employeeViewData"></app-stock-issue-emp>
+                     </mat-tab>
+                     <mat-tab label="pod-cancle">
+                        <app-pod-cancle [podData]="podViewData"></app-pod-cancle>
+                     </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+
+

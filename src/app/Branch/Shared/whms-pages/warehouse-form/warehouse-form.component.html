@@ -1,0 +1,246 @@
+<div class="container" *ngIf="data.action === 'warehouseAdd' || data.action === 'warehouseEdit'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Warehouse</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form  [formGroup]="warehouseForm" (ngSubmit)="formSubmitwarehouse(warehouseForm.value)" >
+    <div class="row">
+     <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Code"><span style="color: red;">*</span>Code :</label>
+                <input *ngIf="data.warehouseMode !== 'edit'" class="form-control" type="text"  formControlName="code" [(ngModel)]="code"  placeholder="enter code">
+                <input *ngIf="data.warehouseMode === 'edit'" class="form-control" type="text"  formControlName="code" [(ngModel)]="code"  placeholder="enter code" readonly >
+            </div>
+            <div *ngFor="let validation of validationMessage.code">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('code').hasError(validation.type) && (warehouseForm.get('code').dirty || warehouseForm.get('code').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>Name :</label>
+                <input class="form-control" type="text" formControlName="name" [(ngModel)]="name" placeholder="enter name">
+            </div>
+            <div *ngFor="let validation of validationMessage.name">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('name').hasError(validation.type) && (warehouseForm.get('name').dirty || warehouseForm.get('name').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Contact Person :</label>
+                <input class="form-control" type="text" formControlName="contactPerson" [(ngModel)]="contactPerson" placeholder="enter contact person">
+            </div>
+            <div *ngFor="let validation of validationMessage.contactPerson">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('contactPerson').hasError(validation.type) && (warehouseForm.get('contactPerson').dirty || warehouseForm.get('contactPerson').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>Address :</label>
+                <input class="form-control" type="text" formControlName="address" [(ngModel)]="address" placeholder="enter address">
+            </div>
+            <div *ngFor="let validation of validationMessage.address">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('address').hasError(validation.type) && (warehouseForm.get('address').dirty || warehouseForm.get('address').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Address2 :</label>
+                <input class="form-control" type="text" formControlName="address2" [(ngModel)]="address2" placeholder="enter address">
+            </div>
+            <!-- <div *ngFor="let validation of validationMessage.address2">
+              <div class="error-message"
+                *ngIf="warehouseForm.get('address2').hasError(validation.type) && (warehouseForm.get('address2').dirty || warehouseForm.get('address2').touched)">
+                {{ validation.message }}
+              </div>
+            </div> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Address3 :</label>
+                <input class="form-control" type="text" formControlName="address3" [(ngModel)]="address3" placeholder="enter address">
+            </div>
+            <!-- <div *ngFor="let validation of validationMessage.address3">
+              <div class="error-message"
+                *ngIf="warehouseForm.get('address3').hasError(validation.type) && (warehouseForm.get('address3').dirty || warehouseForm.get('address3').touched)">
+                {{ validation.message }}
+              </div>
+            </div> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>State :</label>
+                <select class="custom-select" formControlName="state" [(ngModel)]="state" required>
+                   <option selected disabled value="">Select State</option>
+                   <option *ngFor="let item of stateList" [value]="item.stateCode ">
+                    {{ item.stateName }} ({{ item.stateCode }})
+                  </option>
+                </select>
+            </div>
+            <div *ngFor="let validation of validationMessage.state">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('state').hasError(validation.type) && (warehouseForm.get('state').dirty || warehouseForm.get('state').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name"><span style="color: red;">*</span>City :</label>
+                <select class="custom-select" formControlName="city" [(ngModel)]="city" required>
+                   <option selected disabled value="">Select City</option>
+                   <option *ngFor="let item of destinationList" [value]="item.destinationCode">
+                    {{ item.destinationName }} ({{ item.destinationCode }})
+                  </option>
+                </select>
+            </div>
+            <div *ngFor="let validation of validationMessage.city">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('city').hasError(validation.type) && (warehouseForm.get('city').dirty || warehouseForm.get('city').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+   
+   
+
+    
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Pincode :</label>
+                <input class="form-control" type="text" formControlName="pincode" [(ngModel)]="pincode" placeholder="enter pincode">
+            </div>
+            <div *ngFor="let validation of validationMessage.pincode">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('pincode').hasError(validation.type) && (warehouseForm.get('pincode').dirty || warehouseForm.get('pincode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Telephone No. :</label>
+                <input class="form-control" type="text" formControlName="telePhoneNo" [(ngModel)]="telePhoneNo" placeholder="enter tele phone No. ">
+            </div>
+            <div *ngFor="let validation of validationMessage.telePhoneNo">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('telePhoneNo').hasError(validation.type) && (warehouseForm.get('telePhoneNo').dirty || warehouseForm.get('telePhoneNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Mobile No. :</label>
+                <input class="form-control" type="text" formControlName="mobileNo" [(ngModel)]="mobileNo" placeholder="enter mobile No. ">
+            </div>
+            <div *ngFor="let validation of validationMessage.mobileNo">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('mobileNo').hasError(validation.type) && (warehouseForm.get('mobileNo').dirty || warehouseForm.get('mobileNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Fax No. :</label>
+                <input class="form-control" type="text" formControlName="faxNo" [(ngModel)]="faxNo" placeholder="enter fax No. ">
+            </div>
+            <div *ngFor="let validation of validationMessage.faxNo">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('faxNo').hasError(validation.type) && (warehouseForm.get('faxNo').dirty || warehouseForm.get('faxNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Email :</label>
+                <input class="form-control" type="email" formControlName="email" [(ngModel)]="email" placeholder="enter email. ">
+            </div>
+            <div *ngFor="let validation of validationMessage.email">
+              <div class="error-message position-absolute" style="margin-top: -18px;"
+                *ngIf="warehouseForm.get('email').hasError(validation.type) && (warehouseForm.get('email').dirty || warehouseForm.get('email').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+   
+    </div> 
+    </div>   
+
+      <div *ngIf="data.warehouseMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" [disabled] = "warehouseForm.invalid">Submit</button>
+        </div>
+      </div>
+      <div *ngIf="data.warehouseMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" [disabled] = "warehouseForm.invalid" (click)="updateWarehouse()" >Update</button>
+        </div>
+      </div>
+    </form>
+ </div>
+
+
+

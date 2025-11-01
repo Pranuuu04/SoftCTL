@@ -1,0 +1,58 @@
+<div class="main-content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4"  (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Import Trip">
+                        <app-trip-import></app-trip-import>
+                    </mat-tab>
+                    <mat-tab label="Pending Tripsheet">
+                        <app-pending-tripsheet></app-pending-tripsheet>
+                    </mat-tab> 
+                    <mat-tab label="Trip assign">
+                        <app-assign-trip></app-assign-trip>
+                    </mat-tab> 
+                    <mat-tab label="Create Tripsheet">
+                        <app-create-tripsheet></app-create-tripsheet>
+                    </mat-tab> 
+                    <mat-tab label="View Tripsheet">
+                        <app-view-tripsheet></app-view-tripsheet>
+                    </mat-tab>
+                </mat-tab-group> -->
+
+                 <mat-tab-group [(selectedIndex)]="activeTab" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+
+              <mat-tab label="Import Trip">
+                <ng-container *ngIf="activeTab === 0">
+                  <app-trip-import #TripImportRef></app-trip-import>
+                </ng-container>
+              </mat-tab>
+
+              <mat-tab label="Pending Trip">
+                <ng-container *ngIf="activeTab === 1">
+                  <app-pending-tripsheet #pendingTripRef></app-pending-tripsheet>
+                </ng-container>
+              </mat-tab>
+
+              <mat-tab label="Trip Assign">
+                <ng-container *ngIf="activeTab === 2">
+                  <app-assign-trip #TripAssignRef></app-assign-trip>
+                </ng-container>
+              </mat-tab>
+
+                <mat-tab label="Create Trip">
+                  <ng-container *ngIf="activeTab === 3">
+                    <app-create-tripsheet #createTripRef></app-create-tripsheet>
+                  </ng-container>
+                </mat-tab>
+              
+                <mat-tab label="View Trip">
+                  <ng-container *ngIf="activeTab === 4">
+                    <app-view-tripsheet #viewTripRef (editTripEvent)="onEditTrip($event)"></app-view-tripsheet>
+                  </ng-container>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+        </div>
+    </div>
+  </div>

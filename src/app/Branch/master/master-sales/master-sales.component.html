@@ -1,0 +1,27 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Consignor">
+                        <app-sale-consignor></app-sale-consignor>
+                    </mat-tab> 
+                    <mat-tab label="Rate">
+                        <app-sales-rate></app-sales-rate>
+                    </mat-tab>
+                    <mat-tab label="Rate Print">
+                        <app-rate-print></app-rate-print>
+                    </mat-tab>
+                    <mat-tab label="Rate Import">
+                        <app-rate-import></app-rate-import>
+                    </mat-tab>
+                    <mat-tab label="Rate mast">
+                        <app-rate-master2></app-rate-master2>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+
+

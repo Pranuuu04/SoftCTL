@@ -1,0 +1,43 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" (selectedIndexChange)="onTabChange($event)">
+                    <mat-tab label="Shipper">
+                        <ng-container *ngIf="activeTab === 0">
+                           <app-shipper></app-shipper>
+                        </ng-container>
+                    </mat-tab>
+                    <mat-tab label="Consignee">
+                        <ng-container *ngIf="activeTab === 1">
+                            <app-consignee></app-consignee>
+                        </ng-container>
+                    </mat-tab>
+                  
+                    <mat-tab label="Employee Mast">
+                        <ng-container *ngIf="activeTab === 2">
+                        <app-courier-boy [courierBoyData]="courierBoyViewData"></app-courier-boy>
+                        </ng-container>
+                    </mat-tab>
+
+                    <mat-tab label="Branch Mast">
+                        <ng-container *ngIf="activeTab === 3">
+                        <app-branch-mast [branchMastData]="branchMastViewData"></app-branch-mast>
+                        </ng-container>
+                    </mat-tab>
+                 <mat-tab label="Co-Courier mast">
+                        <ng-container *ngIf="activeTab === 4">
+                        <app-co-courier [CourierMastData]="CourierMastViewData"></app-co-courier>
+                        </ng-container>
+                    </mat-tab>
+                    <mat-tab label="Company mast">
+                        <ng-container>
+                        <app-company-master></app-company-master>
+                        </ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

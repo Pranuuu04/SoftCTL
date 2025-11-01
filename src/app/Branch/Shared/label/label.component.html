@@ -1,0 +1,231 @@
+<!-- <h1 mat-dialog-title>Change Label Names</h1>
+<div mat-dialog-content>
+  <form class="mat-form-field-container">
+    <mat-form-field>
+      <mat-label>New Label Name For PackingChrg</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;" matInput [(ngModel)]="newLabels.PackingChrg">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For charg61</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.charg61">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For LoadingChrg</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.LoadingChrg">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For charg71</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.charg71">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For InsuranceChrg</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.InsuranceChrg">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For charg81</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.charg81">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For PackgT</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.PackgT">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For charg91</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.charg91">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For DelV.T</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.DelVT">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For charg10</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.charg10">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For Remark</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.Remark">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>New Label Name For Sr. No</mat-label>
+      <input style="margin-bottom: 0.5rem;font-size: small;"  matInput [(ngModel)]="newLabels.SrNo">
+    </mat-form-field>
+  </form>
+</div>
+ <div mat-dialog-actions style="margin-left: 13rem;">
+   <button mat-button (click)="onClose()" style=" background:  #28bbf5; height: 2.5rem; color: white; padding-left: 0.25rem; padding-right: 0.25rem;
+   padding-top: 0.25rem;  width: 4.2rem; margin-left: 5rem;">Close</button>
+   <button mat-button [mat-dialog-close]="newLabels" cdkFocusInitial (click)="onSaveChanges()" style=" background:  darkorange; height: 2.5rem; color: white; padding-left: 0.25rem; padding-right: 0.25rem;
+   padding-top: 0.25rem;  width: 6.2rem; ">Save Changes</button>
+ </div>
+  -->
+
+
+
+
+  <div class="container">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Label</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+    </div>
+    <form [formGroup]="labeChangesForm" (ngSubmit)=" formSubmit(labeChangesForm.value)">
+      <div class="row">
+        <div class="col-sm-6" style="border-right: 1px solid #d2d2d2;">
+         
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="Remark">{{label12Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild1" [value]="label12Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="Remark">{{label13Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild2" [value]="label13Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="PackageT">{{label15Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild4" [value]="label15Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="deliveryT">{{label14Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild3" [value]="label14Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="PackingChrg">{{label1Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild5" [value]="label1Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="InsuranceChrg">{{label2Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild6" [value]="label2Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="LoadingChrg">{{label3Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild7" [value]="label3Changes">
+              </div>
+            </div>
+          </div>
+
+  
+        </div>
+  
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="PackingChrg">{{label4Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild8" [value]="label4Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="LoadingChrg"> {{label5Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild9" [value]="label5Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="InsuranceChrg">{{label6Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild10" [value]="label6Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="PackageT">{{label7Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild11" [value]="label7Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="deliveryT">{{label8Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild12" [value]="label8Changes">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="textOnInput">
+                <label for="Remark">{{label9Changes}}</label>
+                <input class="form-control" type="text" formControlName="inputFeild13" [value]="label9Changes">
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+  
+          <div class="row form-group d-flex m-0" style="justify-content: right;">
+            <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+            </div>
+           </div>
+        </form>
+  </div>
+  

@@ -1,0 +1,268 @@
+<div class="main-content" style="margin-top: 57px;
+padding: 9px 1px;">
+  <div class="container-fluid">
+      <div class="row" style="margin-top: -6px">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">content_copy</i>
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0">Status</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group dynamicHeight class="Status">
+                        <mat-tab label="InTransit"  [{ngModel}]="statusInTransit" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="StatusModal('InTransit')" >
+                                 {{statusInTransit}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="OFD" [{ngModel}]="statusOFD" (ngModelChange)="statusOFDData()" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="StatusModal('OFD')" >
+                                {{statusOFD}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Undeliverd" [{ngModel}]="statusUnDelv" (ngModelChange)="statusUnDelvData()" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4"  (click)="StatusModal('UnDelivered' )" >
+                                {{statusUnDelv}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Deliverd"  [{ngModel}]="statusDelv" (ngModelChange)="statusDelvData()" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="StatusModal('Delivered' )">
+                                {{statusDelv}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="RTO" [{ngModel}]="statusRTO" (ngModelChange)="statusRTOData()" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="StatusModal('RTO' )">
+                                {{statusRTO}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-icon">
+                    <div class="card-icon" style="background-color:
+                    #28bbf5">
+                        <i class="material-icons">content_copy</i>
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0">CRM</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group dynamicHeight class="second-row crm">
+                        <mat-tab label="Open" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" >
+                                0
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Close"  class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4">
+                                0
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Total" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4">
+                                0
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>    
+      </div>
+     
+      <!-- second row  -->
+
+      <div class="row" style="margin-top: -6px">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+           
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">content_copy</i>
+                    </div>
+                    <h4 class="d-flex justify-content-center mb-0">Sales</h4>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group dynamicHeight class="operation">
+                        <mat-tab label="Credit" [{ngModel}]="salesCredit" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="SalesModal('Credit')" >
+                                 {{salesCredit}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Cash" [{ngModel}]="salesCash" (ngModelChange)="salesCashData" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="SalesModal('Cash')" >
+                                {{salesCash}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="To Pay"  [{ngModel}]="salesTopay" (ngModelChange)="salesTopayData" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="SalesModal('ToPay')">
+                                 {{salesTopay}}
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="COD" [{ngModel}]="salesCOD" (ngModelChange)="salesCODData" class="mat-tab-label">
+                            <div class="example-small-box mat-elevation-z4" (click)="SalesModal('COD')">
+                                {{salesCOD}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+        
+          <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-icon">
+                      <div class="card-icon" style="background-color:
+                      #28bbf5">
+                          <i class="material-icons">store</i>
+                      </div>
+                      <h4 class="d-flex justify-content-center mb-0" >AWB Stock</h4>
+                  </div>
+                  <div class="card-body">
+                    <mat-tab-group dynamicHeight class="FrenchiseeS third-row">
+                        <mat-tab label="Used" [{ngModel}]="AWBUsed">
+                            <div class="example-small-box mat-elevation-z4">
+                                0
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Unused" [{ngModel}]="AWBUnused" (ngModelChange)="awbUnusedData">
+                            <div class="example-small-box mat-elevation-z4">
+                                0
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Total" [{ngModel}]="AWBTotal" (ngModelChange)="awbAWBTotalData">
+                            <div class="example-small-box mat-elevation-z4">
+                                0
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+          </div>
+       
+      </div>
+
+      <!-- graph -->
+
+      <div class="row" style="margin-top: -6px">
+
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-danger chart">
+                    <canvas #chartCanvas1 id="chartCanvas1" ></canvas>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Shipment Details</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-light pie" style=" background-color: rgba(214, 226, 230, 0.874);">
+                    <canvas #chartCanvas3 id="chartCanvas3" style="width: auto;"></canvas>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">Shipment Status</h4>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-md-4 ">
+            <div class="card card-chart">
+                <div class="card-header card-header-light line">
+                    <canvas #chartCanvas2 id="chartCanvas2"></canvas>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Sales</h4>
+                </div>
+            </div>
+        </div>
+        </div>
+
+      <!-- other infomation  -->
+      <!-- <div class="row" style="margin-top: -6px">
+        <div class="col-lg-6 col-md-12">
+          <div class="card">
+              <div class="card-header card-header-primary" style="padding: 7px; margin-top: -12px;">
+                  <h4 class="card-title">Customer</h4>
+              </div>
+              <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                      <thead class="text-warning">
+                          <th>SR.</th>
+                          <th>Month</th>
+                          <th>Total WT</th>
+                          <th>Amount</th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>1</td>
+                              <td>Dakota Rice</td>
+                              <td>$36,738</td>
+                              <td>Niger</td>
+                          </tr>
+                          <tr>
+                              <td>2</td>
+                              <td>Minerva Hooper</td>
+                              <td>$23,789</td>
+                              <td>Curaçao</td>
+                          </tr>
+                          <tr>
+                              <td>3</td>
+                              <td>Sage Rodriguez</td>
+                              <td>$56,142</td>
+                              <td>Netherlands</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-light" style="padding: 7px; margin-top: -12px; background-color:
+                #28bbf5">
+                    <h4 class="card-title">Vehicle</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <th>Complain</th>
+                            <th>Date</th>
+                            <th>Solved</th>
+                            <th>Unsolved</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Dakota Rice</td>
+                                <td>$36,738</td>
+                                <td>Niger</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Minerva Hooper</td>
+                                <td>$23,789</td>
+                                <td>Curaçao</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Sage Rodriguez</td>
+                                <td>$56,142</td>
+                                <td>Netherlands</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,1323 @@
+<div class="container" *ngIf="data.action === 'zoneAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Zone</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+    <form  [formGroup]="zoneForm" (ngSubmit)="formSubmitZone(zoneForm.value)" >
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Code">Code :</label>
+                <input *ngIf="mode !== 'edit'" class="form-control" type="text"  formControlName="zoneCode" [(ngModel)]="zoneCode"  placeholder="enter code">
+                <input *ngIf="mode === 'edit'" class="form-control" type="text"  formControlName="zoneCode" [(ngModel)]="zoneCode"  placeholder="enter code" readonly >
+            </div>
+            <div *ngFor="let validation of validationMessage.zoneCode">
+              <div class="error-message"
+                *ngIf="zoneForm.get('zoneCode').hasError(validation.type) && (zoneForm.get('zoneCode').dirty || zoneForm.get('zoneCode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="textOnInput">
+                <label for="Name">Name :</label>
+                <input class="form-control" type="text" formControlName="zoneName" [(ngModel)]="zoneName" placeholder="enter name">
+            </div>
+            <div *ngFor="let validation of validationMessage.zoneName">
+              <div class="error-message"
+                *ngIf="zoneForm.get('zoneName').hasError(validation.type) && (zoneForm.get('zoneName').dirty || zoneForm.get('zoneName').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="mode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+      </div>
+      <div *ngIf="mode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+        <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+          <button type="submit" class="btn btn-light other-button" (click)="updateZone()" >Update</button>
+        </div>
+      </div>
+    </form>
+ </div>
+
+ <div class="container" *ngIf="data.action === 'countryAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Country</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="countryForm" (ngSubmit)="formSubmitCountry(countryForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code">Code :</label>
+              <input *ngIf="countryMode !== 'edit'" class="form-control" type="text"  formControlName="countryCode" [(ngModel)]="countryCode"  placeholder="enter code">
+              <input *ngIf="countryMode === 'edit'" class="form-control" type="text"  formControlName="countryCode" [(ngModel)]="countryCode"  placeholder="enter code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.countryCode">
+            <div class="error-message"
+              *ngIf="countryForm.get('countryCode').hasError(validation.type) && (countryForm.get('countryCode').dirty || countryForm.get('countryCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Name :</label>
+              <input class="form-control" type="text" formControlName="countryName" [(ngModel)]="countryName"  placeholder="enter name">
+          </div>
+            <div *ngFor="let validation of validationMessage.countryName">
+              <div class="error-message"
+                *ngIf="countryForm.get('countryName').hasError(validation.type) && (countryForm.get('countryName').dirty || countryForm.get('countryName').touched)">
+                {{ validation.message }}
+              </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="countryMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="countryMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateCountry()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'stateAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">State</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="stateForm" (ngSubmit)="formSubmitState(stateForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code">Code :</label>
+              <input *ngIf="stateMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="stateCode" [(ngModel)]="stateCode"  placeholder="Enter State Code">
+              <input *ngIf="stateMode === 'edit'" class="form-control" type="text" id="Code" formControlName="stateCode" [(ngModel)]="stateCode"  placeholder="Enter State Code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.stateCode">
+            <div class="error-message"
+              *ngIf="stateForm.get('stateCode').hasError(validation.type) && (stateForm.get('stateCode').dirty || stateForm.get('stateCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Name :</label>
+              <input class="form-control" type="text" id="Name" formControlName="stateName" [(ngModel)]="stateName"  placeholder="Enter State Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.stateName">
+            <div class="error-message"
+              *ngIf="stateForm.get('stateName').hasError(validation.type) && (stateForm.get('stateName').dirty || stateForm.get('stateName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="stateMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="stateMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateState()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'pincodeAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Pincode</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="pinCodeForm" (ngSubmit)="formSubmitPinCode(pinCodeForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Pincode"><span style="color: red;">*</span>Pincode :</label>
+              <input *ngIf="pinCodeMode !== 'edit'" class="form-control" type="text" [(ngModel)]="Pincode" formControlName="Pincode"  placeholder="enter Pincode">
+              <input *ngIf="pinCodeMode === 'edit'" class="form-control" type="text" [(ngModel)]="Pincode" formControlName="Pincode"  placeholder="enter Pincode" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.Pincode">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('Pincode').hasError(validation.type) && (pinCodeForm.get('Pincode').dirty || pinCodeForm.get('Pincode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Area"><span style="color: red;">*</span>Area name :</label>
+              <input class="form-control" type="text" [(ngModel)]="Area" formControlName="Area"  placeholder="enter Area">
+          </div>
+          <div *ngFor="let validation of validationMessage.Area">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('Area').hasError(validation.type) && (pinCodeForm.get('Area').dirty || pinCodeForm.get('Area').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="City"><span style="color: red;">*</span>City name:</label>
+              <ng-select [(ngModel)]="pinCodeCity" formControlName="pinCodeCity" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of destinationList" [value]="item.destinationCode" style="font-size: 14px;">{{item.destinationName}} &nbsp;({{item.destinationCode}})</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.pinCodeCity">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('pinCodeCity').hasError(validation.type) && (pinCodeForm.get('pinCodeCity').dirty || pinCodeForm.get('pinCodeCity').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>State Name</label>
+          <ng-select [(ngModel)]="pinCodeState" formControlName="pinCodeState" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of stateList" [value]="item.stateCode" style="font-size: 14px;">{{item.stateName}} &nbsp;({{item.stateCode}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.pinCodeState">
+          <div class="error-message"
+            *ngIf="pinCodeForm.get('pinCodeState').hasError(validation.type) && (pinCodeForm.get('pinCodeState').dirty || pinCodeForm.get('pinCodeState').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Country Name</label>
+          <ng-select [(ngModel)]="pinCodeCountry" formControlName="pinCodeCountry" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of countryList" [value]="item.countryCode" style="font-size: 14px;">{{item.countryName}} &nbsp;({{item.countryCode}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.pinCodeCountry">
+          <div class="error-message"
+            *ngIf="pinCodeForm.get('pinCodeCountry').hasError(validation.type) && (pinCodeForm.get('pinCodeCountry').dirty || pinCodeForm.get('pinCodeCountry').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="Vendor"><span style="color: red;">*</span>Vendor :</label>
+              <ng-select [(ngModel)]="pinCodeVendor" formControlName="pinCodeVendor" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of vendorNames" [value]="item.vendorCode" style="font-size: 14px;">{{item.vendorName}} &nbsp;({{item.vendorCode}})</ng-option>
+             </ng-select>
+           </div>
+           <div *ngFor="let validation of validationMessage.pinCodeVendor">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('pinCodeVendor').hasError(validation.type) && (pinCodeForm.get('pinCodeVendor').dirty || pinCodeForm.get('pinCodeVendor').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="Kilometer">Kilometer :</label>
+              <input class="form-control" type="text" [(ngModel)]="Kilometer" formControlName="Kilometer"  placeholder="enter Kilometer">
+          </div>
+          <div *ngFor="let validation of validationMessage.Kilometer">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('Kilometer').hasError(validation.type) && (pinCodeForm.get('Kilometer').dirty || pinCodeForm.get('Kilometer').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+            <label for="ODA">ODA :</label>
+            <ng-select [(ngModel)]="pinCodeOda" formControlName="pinCodeOda" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-option *ngFor="let item of odaTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}}</ng-option>
+           </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.pinCodeOda">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('pinCodeOda').hasError(validation.type) && (pinCodeForm.get('pinCodeOda').dirty || pinCodeForm.get('pinCodeOda').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+              <label for="PincodeType">Pincode type :</label>
+              <ng-select [(ngModel)]="pinCodeType" formControlName="pinCodeType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of pinCodeTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}}</ng-option>
+             </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.pinCodeType">
+            <div class="error-message"
+              *ngIf="pinCodeForm.get('pinCodeType').hasError(validation.type) && (pinCodeForm.get('pinCodeType').dirty || pinCodeForm.get('pinCodeType').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="pinCodeMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="pinCodeMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updatePinCode()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'MultizoneAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Multi zone </h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="row">
+          <div class="col-sm-12">
+          <div class="textOnSelect">
+            <label for="ModeName">Mode name :</label>
+           <ul style="height: 200px;">
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+           </ul>
+         </div>
+        </div>
+      </div>
+         <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+              <label for="MultyVendor">Vendor :</label>
+              <select id="MultyVendor" class="custom-select" formControlName="MultyVendor" >
+                <option selected disabled>Select Vendor</option>
+                <option>abc </option>
+              </select>
+            </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-12">
+            <div class="textOnSelect">
+                <label for="MultiZone">Zone :</label>
+                <select id="MultiZone" class="custom-select" formControlName="MultiZone" >
+                  <option selected disabled>Select Zone</option>
+                  <option>abc </option>
+                </select>
+             </div>
+        </div>
+         </div>
+         
+      </div>
+    <div class="col-sm-3">
+      <div class="textOnSelect">
+          <label for="MultiCountry">Country :</label>
+          <ul>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+            <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+           </ul>
+      </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="textOnSelect">
+        <label for="MultiState">State :</label>
+        <ul>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+         </ul>
+     </div>
+</div>
+  <div class="col-sm-3">
+    <div class="textOnSelect">
+        <label for="MultiDestination">Destination :</label>
+        <ul>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+          <li><mat-checkbox [(ngModel)]="modelName" value=""> label</mat-checkbox></li>
+         </ul>
+      </div>
+    </div>
+  </div>
+    
+    <div class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'destAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Destination</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="destinationForm" (ngSubmit)="destinationFormSubmit(destinationForm.value)">
+
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="destCode"><span style="color: red;">*</span>Destination Code :</label>
+              <input *ngIf="destinationMode !== 'edit'" class="form-control" type="text" id="destCode" formControlName="destDestinationCode" [(ngModel)]="destDestinationCode"  placeholder="enter code">
+              <input *ngIf="destinationMode === 'edit'" class="form-control" type="text" id="destCode" formControlName="destDestinationCode" [(ngModel)]="destDestinationCode"  placeholder="enter code" readonly>
+          </div>
+            <div *ngFor="let validation of validationMessage.destDestinationCode">
+              <div class="error-message position-absolute" style="margin-top: -20px;"
+                *ngIf="destinationForm.get('destDestinationCode').hasError(validation.type) && (destinationForm.get('destDestinationCode').dirty || destinationForm.get('destDestinationCode').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="destName"><span style="color: red;">*</span>Destination Name :</label>
+              <input class="form-control" type="text" formControlName="destDestinationName" [(ngModel)]="destDestinationName" placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.destDestinationName">
+            <div class="error-message position-absolute" style="margin-top: -20px;"
+              *ngIf="destinationForm.get('destDestinationName').hasError(validation.type) && (destinationForm.get('destDestinationName').dirty || destinationForm.get('destDestinationName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Zone Name</label>
+          <ng-select [(ngModel)]="destZoneName" formControlName="destZoneName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of zoneList" [value]="item.Zone_Code" style="font-size: 14px;">{{item.Zone_Name}} &nbsp;({{item.Zone_Code}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.destZoneName">
+          <div class="error-message position-absolute" style="margin-top: -20px;"
+            *ngIf="destinationForm.get('destZoneName').hasError(validation.type) && (destinationForm.get('destZoneName').dirty || destinationForm.get('destZoneName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>State Name</label>
+          <ng-select [(ngModel)]="destStateName" formControlName="destStateName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of stateList" [value]="item.stateCode" style="font-size: 14px;">{{item.stateName}} &nbsp;({{item.stateCode}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.destStateName">
+          <div class="error-message position-absolute" style="margin-top: -20px;"
+            *ngIf="destinationForm.get('destStateName').hasError(validation.type) && (destinationForm.get('destStateName').dirty || destinationForm.get('destStateName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+
+    <!-- <div class="row"> -->
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Country Name</label>
+          <ng-select [(ngModel)]="destCountryName" formControlName="destCountryName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of countryList" [value]="item.countryCode" style="font-size: 14px;">{{item.countryName}} &nbsp;({{item.countryCode}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.destCountryName">
+          <div class="error-message position-absolute" style="margin-top: -20px;"
+            *ngIf="destinationForm.get('destCountryName').hasError(validation.type) && (destinationForm.get('destCountryName').dirty || destinationForm.get('destCountryName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label class="span">Manifest To</label>
+          <ng-select [(ngModel)]="destManifest" formControlName="destManifest" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of destinationList" [value]="item.destinationCode" style="font-size: 14px;">{{item.destinationName}} &nbsp;({{item.destinationCode}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.destManifest">
+          <div class="error-message position-absolute" style="margin-top: -20px;"
+            *ngIf="destinationForm.get('destManifest').hasError(validation.type) && (destinationForm.get('destManifest').dirty || destinationForm.get('destManifest').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+
+    
+    <!-- <div class="row"> -->
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>Product Type</label>
+          <ng-select [(ngModel)]="destProductType" formControlName="destProductType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of productTypeList" [value]="item.value" style="font-size: 14px;">{{item.name}} &nbsp;({{item.value}})</ng-option>
+         </ng-select>
+        </div>
+        <div *ngFor="let validation of validationMessage.destProductType">
+          <div class="error-message position-absolute" style="margin-top: -20px;"
+            *ngIf="destinationForm.get('destProductType').hasError(validation.type) && (destinationForm.get('destProductType').dirty || destinationForm.get('destProductType').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="destName">Delivery Hours :</label>
+              <input class="form-control" type="text" id="destName" formControlName="destDeliveryHours" [(ngModel)]="destDeliveryHours" placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.destDeliveryHours">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="destinationForm.get('destDeliveryHours').hasError(validation.type) && (destinationForm.get('destDeliveryHours').dirty || destinationForm.get('destDeliveryHours').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    <!-- </div> -->
+
+    <!-- <div class="row"> -->
+      <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="destName">POD Hours :</label>
+              <input class="form-control" type="text" id="destName" formControlName="destPodHours" [(ngModel)]="destPodHours" placeholder="enter name">
+          </div>
+          <div *ngFor="let validation of validationMessage.destPodHours">
+            <div class="error-message position-absolute" style="margin-top: -18px;"
+              *ngIf="destinationForm.get('destPodHours').hasError(validation.type) && (destinationForm.get('destPodHours').dirty || destinationForm.get('destPodHours').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+
+    <div *ngIf="destinationMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+
+    <div *ngIf="destinationMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateDestination()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'courierBoyAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Employee mast</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="courierForm" (ngSubmit)="formSubmitCourier(courierForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Name :</label>
+              <input class="form-control" type="text" id="Name" formControlName="courierBoyName" [(ngModel)]="courierBoyName"  placeholder="Enter courier Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.courierBoyName">
+            <div class="error-message"
+              *ngIf="courierForm.get('courierBoyName').hasError(validation.type) && (courierForm.get('courierBoyName').dirty || courierForm.get('courierBoyName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="courierBoyMobNo">Mobile no. :</label>
+              <input class="form-control" type="text" id="Name" formControlName="courierBoyMobNo" [(ngModel)]="courierBoyMobNo"  placeholder="Enter courier Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.courierBoyMobNo">
+            <div class="error-message"
+              *ngIf="courierForm.get('courierBoyMobNo').hasError(validation.type) && (courierForm.get('courierBoyMobNo').dirty || courierForm.get('courierBoyMobNo').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Location">Location :</label>
+          <ng-select formControlName="Location"
+            [items]="branchList"
+            bindLabel="locationName"
+            bindValue="locationCode"
+            class="custom-select1"
+            style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+          </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.Location">
+            <div class="error-message"
+              *ngIf="courierForm.get('Location').hasError(validation.type) && (courierForm.get('Location').dirty || courierForm.get('Location').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="empDept">Department :</label>
+          <ng-select formControlName="empDept"
+            [items]="DepartmentData"
+            bindLabel="Department_name"
+            bindValue="Department_code"
+            class="custom-select1"
+            style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
+          </ng-select>
+          </div>
+          <div *ngFor="let validation of validationMessage.empDept">
+            <div class="error-message"
+              *ngIf="courierForm.get('empDept').hasError(validation.type) && (courierForm.get('empDept').dirty || courierForm.get('empDept').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+   <!-- <select id="Department" formControlName="department" class="custom-select" (change)="onDepartmentChange($event)" required tabindex="-1">
+            <option disabled selected>Select Department</option>
+            <option value="{{item.Department_code}}" *ngFor="let item of DepartmentData">
+              {{ item.Department_name }}
+            </option>
+          </select> -->
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Name">Password :</label>
+              <input class="form-control" type="text" id="Name" formControlName="Password" [(ngModel)]="Password"  placeholder="Enter Password">
+          </div>
+          <div *ngFor="let validation of validationMessage.Password">
+            <div class="error-message"
+              *ngIf="courierForm.get('Password').hasError(validation.type) && (courierForm.get('Password').dirty || courierForm.get('Password').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="courierBoyMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="courierBoyMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateCourier()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'prefixAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Prefix form</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="prefixForm" (ngSubmit)="formSubmitPrefix(prefixForm.value)">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="Code">Code :</label>
+              <input *ngIf="prefixMode !== 'edit'" class="form-control" type="text" id="Code" formControlName="prefixCode" [(ngModel)]="prefixCode"  placeholder="Enter prefix Code">
+              <input *ngIf="prefixMode === 'edit'" class="form-control" type="text" id="Code" formControlName="prefixCode" [(ngModel)]="prefixCode"  placeholder="Enter prefix Code" readonly>
+          </div>
+          <div *ngFor="let validation of validationMessage.prefixCode">
+            <div class="error-message"
+              *ngIf="prefixForm.get('prefixCode').hasError(validation.type) && (prefixForm.get('prefixCode').dirty || prefixForm.get('prefixCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="prefixName">Name :</label>
+              <input class="form-control" type="text" id="prefixName" formControlName="prefixName" [(ngModel)]="prefixName" placeholder="Enter prefix Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.prefixName">
+            <div class="error-message"
+              *ngIf="prefixForm.get('prefixName').hasError(validation.type) && (prefixForm.get('prefixName').dirty || prefixForm.get('prefixName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="prefixMode !== 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="submit" class="btn btn-light other-button" >Submit</button>
+      </div>
+    </div>
+    <div *ngIf="prefixMode === 'edit'" class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="updatePrefix()" >Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'branchMastAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Branch mast</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="branchMastForm">
+   <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-5" style="border-right: 1px solid #d2d2d2;">
+      <div class="row">
+      <div class="col-sm-6">
+        <div class="textOnInput">
+          <label for="branchMaststartNo"><span style="color: red;">*</span>Branch start No :</label>
+          <input class="form-control" type="text" id="branchMaststartNo" 
+                formControlName="branchMaststartNo"  
+                placeholder="Enter Branch startNo">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="textOnInput">
+          <label for="branchMastCode">Branch Code :</label>
+          <input class="form-control" type="text" id="branchMastCode" 
+                formControlName="branchMastCode"
+                placeholder="Enter Branch Code" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+  <div class="col-sm-12">
+    <div class="textOnSelect">
+      <label for="branchMastName"><span style="color: red;">*</span>Branch name :</label>
+         <!-- <ng-select  formControlName="branchMastName" bindLabel="name" bindValue="name" 
+               (change)="onDestinationChange($event)" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of destinationList" [value]="item.destinationName" style="font-size: 14px;">{{item.destinationName}}</ng-option>
+             </ng-select> -->
+             <ng-select  
+  formControlName="branchMastName"
+  [items]="destinationList"
+   bindLabel="destinationName"
+  bindValue="destinationName"
+  [clearable]="true"
+  (change)="onDestinationChange($event)"
+   class="custom-select1"
+           style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+</ng-select>
+
+             <!-- <ng-select formControlName="branchMastName"
+           [items]="destinationList"
+           bindLabel="destinationName"
+           [clearable]="true"
+           (change)="onDestinationChange($event)"
+           class="custom-select1"
+           style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+</ng-select> -->
+
+    </div>
+  </div>
+</div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="branchMastAdd1">Address 1 :</label>
+            <input class="form-control" type="text" id="branchMastAdd1" 
+                formControlName="branchMastAdd1"  
+                placeholder="Enter add1">
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="branchMastAdd2">Address 2 :</label>
+            <input class="form-control" type="text" id="branchMastAdd2" 
+                formControlName="branchMastAdd2"  
+                placeholder="Enter add2">
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="branchMastAdd3">Address 3 :</label>
+            <input class="form-control" type="text" id="branchMastAdd3" 
+                formControlName="branchMastAdd3"
+                placeholder="Enter add3">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- City -->
+      <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label for="branchMastCity"><span style="color: red;">*</span>City :</label>
+              <ng-select  formControlName="branchMastCity" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+                <ng-option *ngFor="let item of destinationList" [value]="item.destinationCode" style="font-size: 14px;">{{item.destinationName}} &nbsp;({{item.destinationCode}})</ng-option>
+             </ng-select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="textOnInput">
+          <label for="branchMastPin">Pin :</label>
+          <input class="form-control" type="text" id="branchMastPin" 
+                formControlName="branchMastPin"  
+                placeholder="Enter Pin Name">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- State -->
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+          <label class="span"><span style="color: red;">*</span>State</label>
+          <ng-select  formControlName="branchMastState" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of stateList" [value]="item.stateCode" style="font-size: 14px;">{{item.stateName}} &nbsp;({{item.stateCode}})</ng-option>
+         </ng-select>
+        </div>
+      </div>
+    </div>
+
+
+
+    </div>
+     <div class="col-sm-4"style="border-right: 1px solid #d2d2d2;">
+      <!-- Branch Master Name -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="textOnInput">
+          <label for="branchMastTel">Phone No :</label>
+          <input class="form-control" type="text" id="branchMastTel" 
+                formControlName="branchMastTel"  
+                placeholder="Enter phone Number">
+        </div>
+      </div>
+       <div class="col-sm-6">
+        <div class="textOnSelect">
+          <label for="branchMastStock">Stock :</label>
+            <select  class="custom-select" formControlName="branchMastStock" >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+        </div>
+      </div>
+    </div>
+
+<!-- Email -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastEmail">Email :</label>
+      <input class="form-control" type="email" id="branchMastEmail"
+             formControlName="branchMastEmail" 
+             placeholder="Enter Email">
+    </div>
+  </div>
+</div>
+
+<!-- Website -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastWeb">Website :</label>
+      <input class="form-control" type="text" id="branchMastWeb"
+             formControlName="branchMastWeb" 
+             placeholder="Enter Website">
+    </div>
+  </div>
+</div>
+
+<!-- GST No -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastGst">GST No :</label>
+      <input class="form-control" type="text" id="branchMastGst"
+             formControlName="branchMastGst" 
+             placeholder="Enter GST No">
+    </div>
+  </div>
+</div>
+
+<!-- HSN No -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastHsn">HSN No :</label>
+      <input class="form-control" type="text" id="branchMastHsn"
+             formControlName="branchMastHsn" 
+             placeholder="Enter HSN No">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastAccNo">Account No :</label>
+      <input class="form-control" type="text" id="branchMastAccNo"
+             formControlName="branchMastAccNo" 
+             placeholder="Enter Account Number">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="textOnInput">
+      <label for="branchMastBank">Bank :</label>
+      <input class="form-control" type="text" id="branchMastBank"
+             formControlName="branchMastBank" 
+             placeholder="Enter Bank Name">
+    </div>
+  </div>
+</div>
+
+    </div>
+    <div class="col-sm-3">
+     <div class="row">
+       <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="branchMastIfsc">IFSC :</label>
+          <input class="form-control" type="text" id="branchMastIfsc"
+                formControlName="branchMastIfsc" 
+                placeholder="Enter IFSC Code">
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="branchMastBranch">Bank branch :</label>
+          <input class="form-control" type="text" id="branchMastBranch"
+                formControlName="branchMastBranch" 
+                placeholder="Enter Branch">
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnSelect">
+          <label class="span">Connecting Hub</label>
+          <ng-select  formControlName="branchConnecting" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+            <ng-option *ngFor="let item of branchList" [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</ng-option>
+         </ng-select>
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="manifestStock">Manifest Stock :</label>
+          <input class="form-control" type="number" min="0" id="manifestStock" 
+                formControlName="manifestStock"  >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="dispatchStock">Dispatch Stock :</label>
+          <input class="form-control" type="number" min="0" id="dispatchStock" 
+                formControlName="dispatchStock" >
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="drsStock">Drs Stock :</label>
+          <input class="form-control" type="number" min="0" id="drsStock" 
+                formControlName="drsStock" >
+        </div>
+      </div>
+    </div>
+    </div>
+   </div> 
+   <div class="row d-flex" style="justify-content: right;" >
+  <div class="row form-group m-0" >
+      <div class="col-sm-12 d-flex" style="justify-content: right;" >
+        <button type="button" class="btn btn-light other-button"  (click)="formSubmitBranchMast(branchMastForm.value)">{{buttonLable}}</button>
+      </div>
+    </div>
+    <!-- <div *ngIf="courierBoyMode === 'edit'" class="row form-group m-0">
+      <div class="col-sm-12 d-flex" style="justify-content: right;" >
+        <button type="button" class="btn btn-light other-button" (click)="updateBranchMast()" >Update</button>
+      </div>
+    </div> -->
+</div>
+    
+  </form>
+</div>
+
+<div class="container" *ngIf="data.action === 'CoCourierMastAdd'">
+  <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="col-sm-6">
+      <h1 style="font-weight: 600;
+      font-size: large;
+      margin-bottom: 0;
+      margin-top: 7px; ">Co-Courier mast</h1>
+    </div>
+      <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      font-weight: 500;
+      font-size: large;
+      background: red;
+      color: white;">X</button>
+  </div>
+</div>
+  <form [formGroup]="CoCourierForm">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-5" style="border-right: 1px solid #d2d2d2;">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerCode">Code :</label>
+              <input class="form-control" type="text" id="CocouirerCode" formControlName="CocouirerCode"   placeholder="Enter Co-courier code">
+          </div>
+          <div *ngFor="let validation of validationMessage.CocouirerCode">
+            <div class="error-message"
+              *ngIf="CoCourierForm.get('CocouirerCode').hasError(validation.type) && (CoCourierForm.get('CocouirerCode').dirty || CoCourierForm.get('CocouirerCode').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+     <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerName">Name :</label>
+              <input class="form-control" type="text" id="CocouirerName" formControlName="CocouirerName"   placeholder="Enter Co-courier Name">
+          </div>
+          <div *ngFor="let validation of validationMessage.CocouirerName">
+            <div class="error-message"
+              *ngIf="CoCourierForm.get('CocouirerName').hasError(validation.type) && (CoCourierForm.get('CocouirerName').dirty || CoCourierForm.get('CocouirerName').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerContper">Contact person :</label>
+         <input class="form-control" type="text" id="Name" formControlName="CocouirerContper"   placeholder="Enter Contact person">
+          </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerAdd">Address :</label>
+              <input class="form-control" type="text" id="CocouirerAdd" formControlName="CocouirerAdd"  placeholder="Enter address">
+          </div>
+          <div *ngFor="let validation of validationMessage.CocouirerAdd">
+            <div class="error-message"
+              *ngIf="CoCourierForm.get('CocouirerAdd').hasError(validation.type) && (CoCourierForm.get('CocouirerAdd').dirty || CoCourierForm.get('CocouirerAdd').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerPin">Pin :</label>
+         <input class="form-control" type="text" id="CocouirerPin" formControlName="CocouirerPin"   placeholder="Enter Pin">
+          </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerTel">Tel :</label>
+         <input class="form-control" type="text" id="CocouirerTel" formControlName="CocouirerTel"   placeholder="Enter Tel">
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-7">
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerMobNo">Mobile no. :</label>
+              <input class="form-control" type="text" id="CocouirerMobNo" formControlName="CocouirerMobNo"   placeholder="Enter mobile no.">
+          </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerEmail">Email :</label>
+              <input class="form-control" type="email" id="CocouirerEmail" formControlName="CocouirerEmail"   placeholder="Enter Email">
+          </div>
+      </div> 
+    </div>
+      <div class="row">
+      <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="CocouirerClientFuel">Client fuel % :</label>
+              <input class="form-control" type="text" id="CocouirerClientFuel" formControlName="CocouirerClientFuel"   placeholder="%">
+          </div>
+      </div>
+         <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="CocouirerFuel"> fuel % :</label>
+              <input class="form-control" type="text" id="CocouirerFuel" formControlName="CocouirerFuel"   placeholder="%">
+          </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-12">
+          <div class="textOnInput">
+              <label for="CocouirerWeb">Web :</label>
+              <input class="form-control" type="text" id="CocouirerWeb" formControlName="CocouirerWeb" >
+          </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="CocouirerGST">GST :</label>
+               <select  class="custom-select" formControlName="CocouirerGST" >
+                <option value="" selected disabled>Select gst</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+          </div>
+      </div>
+         <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="CocouirerGstType">Type :</label>
+            <select  class="custom-select" formControlName="CocouirerGstType" >
+                <option value="Mode">Mode</option>
+                <option value="Client">Client</option>
+              </select>
+        </div>
+      </div>
+        <div class="col-sm-6">
+          <div class="textOnInput">
+              <label for="CocouirerGstper"> GST % :</label>
+              <input class="form-control" type="text" id="CocouirerGstper" formControlName="CocouirerGstper"   placeholder="%">
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12" style="display: flex; justify-content: space-around;">
+          <mat-checkbox formControlName="SMS" class="mb-2">SMS</mat-checkbox>
+          <mat-checkbox formControlName="E-Mail" class="mb-2">E-Mail</mat-checkbox>
+          <mat-checkbox formControlName="Fax" class="mb-2">Fax</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="row form-group d-flex m-0" style="justify-content: right;">
+      <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
+        <button type="button" class="btn btn-light other-button" (click)="submitVendor(CoCourierForm.value)">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

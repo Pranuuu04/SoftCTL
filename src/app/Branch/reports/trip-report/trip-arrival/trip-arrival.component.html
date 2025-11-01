@@ -1,0 +1,498 @@
+<div>
+    <form [formGroup]="createForm" (ngSubmit)="generateTrip(createForm.value)">
+      <div class="row mainrow">
+        <div class="col-sm-5">
+          <div class="textOnSelect">
+              <label for="CustomerName">Customer name :</label>
+                <ng-select
+                  [items]="CustomerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="CustomerName"
+                  (change)="resetPagination()">
+                </ng-select>
+              <div *ngFor="let validation of validationMessage.CustomerName">
+                <div class="error-message"
+                  *ngIf="createForm.get('CustomerName').hasError(validation.type) && (createForm.get('CustomerName').dirty || createForm.get('CustomerName').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+        </div>
+          <div class="col-sm-3">
+            <div class="textOnInput">
+                  <label for="supplierName">Supplier name :</label>
+          <ng-select 
+           class="custom-select1"
+            [items]="supplierList"
+            bindLabel="shipperName"
+            bindValue="shipperCode"
+            formControlName="supplierName"
+            [searchable]="true"
+            [clearable]="true">
+          </ng-select>
+          </div>
+          </div>
+                 <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="VehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
+                 <ng-select
+                  [items]="vehicleNumbers"
+                  class="custom-select1"
+                  bindLabel="vehicleReg"
+                  bindValue="vehicleReg"
+                  formControlName="VehicleNo"
+                  (change)="resetPagination()">
+                </ng-select>
+            <div *ngFor="let validation of validationMessage.VehicleNo">
+              <div class="error-message"
+                *ngIf="createForm.get('VehicleNo').hasError(validation.type) && (createForm.get('VehicleNo').dirty || createForm.get('VehicleNo').touched)">
+                {{ validation.message }}
+              </div>
+            </div>
+          </div>
+          </div>
+          <!-- <div class="col-sm-2"></div> -->
+          <div class="col-sm-1 download-buttons" (click)="generatePdf()">
+            <button type="button" class="btn btn-outline-light pb-0 mt-0"><i class="fa-solid fa-file-pdf"></i>
+              <span class="text">PDF</span></button>
+          </div>
+      </div>
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        
+           <div class="col-sm-2">
+            <div class="textOnInput">
+              <label for="tripNo">Trip No. :</label>
+              <input class="form-control" type="number" formControlName="tripNo" (change)="resetPagination()">
+          </div>
+          </div>
+        <div class="col-sm-2">
+            <div class="textOnInput">
+              <label for="fromDate">From :</label>
+              <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate" (change)="resetPagination()">
+              <div *ngFor="let validation of validationMessage.fromDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('fromDate').hasError(validation.type) && (createForm.get('fromDate').dirty || createForm.get('fromDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="textOnInput">
+              <label for="toDate">To :</label>
+              <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate" (change)="resetPagination()">
+              <div *ngFor="let validation of validationMessage.toDate">
+                <div class="error-message"
+                  *ngIf="createForm.get('toDate').hasError(validation.type) && (createForm.get('toDate').dirty || createForm.get('toDate').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+          </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="textOnInput">
+              <label for="Status"><span style="color: red;">*</span>Status :</label>
+              <select id="Status" class="custom-select" formControlName="Status" (change)="resetPagination()">
+                <option value="All" selected>All</option>
+              <option  value="Pending">Pending</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+          </div>
+             <div class="col-sm-3">
+            <div class="textOnInput">
+              <label for="Time"><span style="color: red;">*</span>Time :</label>
+              <select id="Time" class="custom-select" formControlName="Time" (change)="resetPagination()">
+              <option  value="Reporting" selected>Reporting time</option>
+              <option value="LoadingOut">Loading out</option>
+              <option value="LoadingIn">Loading In</option>
+              <option value="Dispatch">Dispatch time</option>
+              <option  value="InTransit">InTransit</option>
+              <option  value="StoreIn">Store in</option>
+              <option value="StoreOut">Store out</option>
+            </select>
+          </div>
+          </div>
+          <div class="col-sm-1 download-buttons">
+            <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()" [disabled]="!showTable"><i
+                class="fa-solid fa-table"></i>
+              <span class="text">XLs</span></button>
+          </div>
+                
+      </div>
+    
+      <div class="row mainrow" style="border-bottom: 1px solid #e6c6c6; margin: 10px 0;">
+        <div class="col-sm-8">
+        </div>
+         <!-- <div class="col-sm-3 d-flex" style="justify-content: end;" >
+        </div> -->
+        <div class="col-sm-3 d-flex" style="justify-content: end;" >
+          <!-- <i class="fa-regular fa-sliders"></i> -->
+          <!-- <button type="button" class="btn btn-light other-button" (click)="openSetup()">Setup</button> -->
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+        </div>
+         <div class="col-sm-1 download-buttons"> 
+          <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+            <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+            <span class="text">Setup</span></button>
+             <!-- style="background-color:#4a7bd1" -->
+        </div>
+      </div>
+    </form> 
+  </div>
+  <div *ngIf="showTable">
+  <div class="table-responsive text-nowrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ columnMapping[column] || column }}
+      </th>
+
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="column === 'index'">
+          {{ pageIndex * pageSize + i + 1 }}
+        </ng-container>
+
+        <ng-container *ngIf="column === 'Action'">
+          <mat-icon matTooltip="View Image" (click)="viewImage(element.Image1)" style="color: rgb(108, 114, 226)">image</mat-icon>
+          <mat-icon matTooltip="View Image" (click)="viewImage(element.Image2)" style="color: rgb(108, 114, 226)">image</mat-icon>
+          <mat-icon matTooltip="View Image" (click)="viewImage(element.Image3)" style="color: rgb(108, 114, 226)">image</mat-icon>
+        </ng-container>
+
+        <ng-container *ngIf="column !== 'index' && column !== 'Action'">
+          {{ element[column] }}
+        </ng-container>
+      </td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+    <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef> Sr.No </th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ pageIndex * pageSize + i + 1 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripDate">
+      <th mat-header-cell *matHeaderCellDef> Trip Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripNo">
+      <th mat-header-cell *matHeaderCellDef> Trip No </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripNo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="AwbNo">
+      <th mat-header-cell *matHeaderCellDef> AWB No </th>
+      <td mat-cell *matCellDef="let element"> {{ element.AwbNo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Customer_Name">
+      <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.Customer_Name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="supplierName">
+      <th mat-header-cell *matHeaderCellDef> Supplier Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.supplierName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TransportName">
+      <th mat-header-cell *matHeaderCellDef> Vendor Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TransportName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TransportType">
+      <th mat-header-cell *matHeaderCellDef> Vendor Type </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TransportType }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VehicleNo">
+      <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
+      <td mat-cell *matCellDef="let element"> {{ element.VehicleNo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="vehicleType">
+      <th mat-header-cell *matHeaderCellDef> Vehicle Type </th>
+      <td mat-cell *matCellDef="let element"> {{ element.vehicleType }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DriverName">
+      <th mat-header-cell *matHeaderCellDef> Driver Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DriverName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DriverNo">
+      <th mat-header-cell *matHeaderCellDef> Driver No </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DriverNo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Remark">
+      <th mat-header-cell *matHeaderCellDef> Remark </th>
+      <td mat-cell *matCellDef="let element"> {{ element.Remark }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Route">
+      <th mat-header-cell *matHeaderCellDef> Route </th>
+      <td mat-cell *matCellDef="let element"> {{ element.Route }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="OldRoute">
+      <th mat-header-cell *matHeaderCellDef> Old Route </th>
+      <td mat-cell *matCellDef="let element"> {{ element.OldRoute }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="OriginName">
+      <th mat-header-cell *matHeaderCellDef> Origin </th>
+      <td mat-cell *matCellDef="let element"> {{ element.OriginName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DestinationName">
+      <th mat-header-cell *matHeaderCellDef> Destination </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DestinationName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.Status }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripStatus">
+      <th mat-header-cell *matHeaderCellDef> Trip Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="OpeningKM">
+      <th mat-header-cell *matHeaderCellDef> Opening KM </th>
+      <td mat-cell *matCellDef="let element"> {{ element.OpeningKM }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ClosingKM">
+      <th mat-header-cell *matHeaderCellDef> Closing KM </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ClosingKM }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TotalKM">
+      <th mat-header-cell *matHeaderCellDef> Total KM </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TotalKM }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ReciverName">
+      <th mat-header-cell *matHeaderCellDef> Receiver Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ReciverName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ContactNo">
+      <th mat-header-cell *matHeaderCellDef> Contact No </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ContactNo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="OTR">
+      <th mat-header-cell *matHeaderCellDef> Reporting time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.OTR }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VehicleInDate">
+      <th mat-header-cell *matHeaderCellDef> Vehicle In Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.VehicleInDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VehicleInTime">
+      <th mat-header-cell *matHeaderCellDef> Vehicle In Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.VehicleInTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ReportingTimeStatus">
+      <th mat-header-cell *matHeaderCellDef> Reporting Time Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ReportingTimeStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VehicleOutDate">
+      <th mat-header-cell *matHeaderCellDef> Vehicle Out Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.VehicleOutDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VehicleOutTime">
+      <th mat-header-cell *matHeaderCellDef> Vehicle Out Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.VehicleOutTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingIn">
+      <th mat-header-cell *matHeaderCellDef> Loading In </th>
+      <td mat-cell *matCellDef="let element"> {{ element.loadingIn }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingInDate">
+      <th mat-header-cell *matHeaderCellDef> Loading In Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingInDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingInTime">
+      <th mat-header-cell *matHeaderCellDef> Loading In Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingInTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingInTimeStatus">
+      <th mat-header-cell *matHeaderCellDef> Loading In Time Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingInTimeStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingOut">
+      <th mat-header-cell *matHeaderCellDef> Loading Out </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingOut }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingOutDate">
+      <th mat-header-cell *matHeaderCellDef> Loading Out Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingOutDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingOutTime">
+      <th mat-header-cell *matHeaderCellDef> Loading Out Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingOutTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LoadingOutTimeStatus">
+      <th mat-header-cell *matHeaderCellDef> Loading Out Time Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LoadingOutTimeStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripStartDt">
+      <th mat-header-cell *matHeaderCellDef> Trip Start Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripStartDt }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripStartTime">
+      <th mat-header-cell *matHeaderCellDef> Trip Start Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripStartTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="OTA">
+      <th mat-header-cell *matHeaderCellDef> Store In </th>
+      <td mat-cell *matCellDef="let element"> {{ element.OTA }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripcloseInDate">
+      <th mat-header-cell *matHeaderCellDef> Store In Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripcloseInDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripcloseInTime">
+      <th mat-header-cell *matHeaderCellDef> Store In Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripcloseInTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ArrivingTimeStatus">
+      <th mat-header-cell *matHeaderCellDef> Arriving Time Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ArrivingTimeStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="InTransit">
+      <th mat-header-cell *matHeaderCellDef> Transit </th>
+      <td mat-cell *matCellDef="let element"> {{ element.InTransit }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripEndDt">
+      <th mat-header-cell *matHeaderCellDef> Trip end Date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripEndDt }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TripEndTime">
+      <th mat-header-cell *matHeaderCellDef> Trip end Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TripEndTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef> User Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.userName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DeliveredRemark">
+      <th mat-header-cell *matHeaderCellDef> Delivered Remark </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DeliveredRemark }} </td>
+    </ng-container>
+    <ng-container matColumnDef="DispatchTime">
+      <th mat-header-cell *matHeaderCellDef> Dispatch Time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DispatchTime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DispatchTimeStatus">
+      <th mat-header-cell *matHeaderCellDef> Dispatch Time Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DispatchTimeStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ActualInTransit">
+      <th mat-header-cell *matHeaderCellDef> Actual Transit </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ActualInTransit }} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="InTransitStatus">
+      <th mat-header-cell *matHeaderCellDef> Transit status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.InTransitStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="StoreOut">
+      <th mat-header-cell *matHeaderCellDef> Store out </th>
+      <td mat-cell *matCellDef="let element"> {{ element.StoreOut }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="StoreOutDate">
+      <th mat-header-cell *matHeaderCellDef> Store out date </th>
+      <td mat-cell *matCellDef="let element"> {{ element.StoreOutDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="StoreOuttime">
+      <th mat-header-cell *matHeaderCellDef> Store out time </th>
+      <td mat-cell *matCellDef="let element"> {{ element.StoreOuttime }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="StoreOutStatus">
+      <th mat-header-cell *matHeaderCellDef> Store out status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.StoreOutStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TotalTripHrs">
+      <th mat-header-cell *matHeaderCellDef> Total trip Hrs </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TotalTripHrs }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="MHReturnHrs">
+      <th mat-header-cell *matHeaderCellDef> MH return Hrs </th>
+      <td mat-cell *matCellDef="let element"> {{ element.MHReturnHrs }} </td>
+    </ng-container>
+    
+     <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef> Images </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon matTooltip="View Image" class="custom-color" (click)="viewImage(element.Image1)" style="color:  rgb(108, 114, 226);">image</mat-icon>
+            <mat-icon matTooltip="View Image" class="custom1-color" (click)="viewImage(element.Image2)" style="color:  rgb(108, 114, 226);">image</mat-icon>
+            <mat-icon matTooltip="View Image" class="custom1-color" (click)="viewImage(element.Image3)" style="color:  rgb(108, 114, 226);">image</mat-icon>
+          </td>
+        </ng-container>
+  
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> -->
+  </div>
+  <mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [hidePageSize]="hidePageSize"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+</div>
+<div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="">
+</div>

@@ -1,0 +1,848 @@
+<!-- <form #aForm>
+    <div class="container">
+      <div class="row" style="border-bottom: 2px solid">
+        <div class="col-md-5" style="border-right: 1px solid">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >Dest Pincode</label
+            >
+            <div class="col-sm-3">
+              <input
+                type="text"
+                class="form-control"
+                name="dash"
+                id="inputEmail3"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+            <div class="col-sm-6">
+              <h5>Remark:</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <select class="custom-select" data-live-search="true">
+                <option data-tokens="ketchup mustard">Manual</option>
+                <option data-tokens="mustard">Auto</option>
+              </select>
+            </div>
+            <label for="inputEmail3" class="col-sm-3 col-form-label"
+              >AWB No.</label
+            >
+            <div class="col-sm-5">
+              <input
+                type="text"
+                name="AWBNo"
+                class="form-control"
+                id="inputCity"
+                placeholder="AWB No."
+                style="border: 1px solid #d2d2d2; border-radius: 0.25rem"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Book</label>
+            <div class="col-sm-4" lines="none">
+              <input
+                type="date"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+                placeholder="book"
+                max="maxDate"
+                name="book"
+                class="form-control"
+                id="date"
+              />
+            </div>
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >Dispatch</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="date"
+                class="form-control"
+                id="date"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >Consigner</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="search"
+                class="custom-select Consigner"
+                list="Consigner"
+                autocomplete="off"
+                name="Mode"
+                placeholder="Search Mode"
+              />
+              <datalist id="Consigner">
+                <option *ngFor="let item of customerName">
+                  {{ item.CustomerName }} &nbsp; ({{ item.CustomerCode }})
+                </option>
+              </datalist>
+            </div>
+            <div class="col-sm-2">
+              <button class="cust-btnn" data-toggle="modal" data-target="#myModal"  (click)="openConsignerModal()">
+                Dept
+              </button>
+            </div>
+          </div>
+  
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >Shipper</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="search"
+                class="custom-select Shipper"
+                list="Shipper"
+                placeholder="Search Shipper"
+              />
+              <datalist id="Shipper">
+                <option *ngFor="let item of shipperName">
+                  {{ item.shipperName }} &nbsp; ({{ item.shipperCode }})
+                </option>
+              </datalist>
+            </div>
+            <div class="col-sm-2">
+              <button class="cust-btnn" (click)="openShipperModal()">Add</button>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-2 col-form-label">Consignee</label>
+            <div class="col-sm-10">
+              <input
+              type="search"
+              list="browse"
+              name="Consignee"
+              autocomplete="off"
+              id="Consignee1"
+              class="custom-select"
+              placeholder="Search Consignee"
+              (click)="loadConsigneeDetails(item?.ConsigneeName,item?.ConsigneeCode)"
+              />
+              <datalist id="browse">
+                <option *ngFor="let item of Consignee" >{{item.ConsigneeName}} &nbsp; ({{item.ConsigneeCode}})</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Add 1</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                id="Add"
+                placeholder="Add 1"
+                style="border: 1px solid #d2d2d2; border-radius: 0.25rem; padding-left: 10px; padding-top: 10px; font-family: auto;"
+                [(ngModel)]="consigneeAdd1"
+              />
+            </div>
+          </div>
+          
+          
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Add 2</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Add 2"
+                id="inputEmail3"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >Landmark</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="Landmark"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div>
+              </div>
+            </div>
+  
+            <label class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                class="form-control"
+                id="inputpincode"
+                placeholder="City"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >State</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="State"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div>
+              </div>
+            </div>
+  
+            <label class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                class="form-control"
+                id="inputpincode"
+                placeholder="Country"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <label class="col-sm-2 col-form-label">PhoneNo.</label>
+            <div class="col-sm-4">
+              <input
+                type="text"
+                placeholder="Phone No."
+                class="form-control"
+                id="inputCity"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div class="text-danger">
+              </div>
+            </div>
+  
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-4">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="abc@gmail.com"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+              <div class="text-danger">
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <label class="col-sm-2 col-form-label">Cust.Type</label>
+            <div class="col-sm-4">
+              <input
+                type="search"
+                autocomplete="off"
+                list="CusoType"
+                name="CusoType"
+                id="Cuso"
+                class="custom-select"
+                placeholder="Search CustomerType"
+              />
+              <datalist id="CusoType">
+                <option></option>
+              </datalist>
+            </div>
+          
+            <label for="inputEmail3" class="col-sm-2 col-form-label"
+              >GSTNo.</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                style="text-transform: uppercase"
+                placeholder="GSTNo."
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+            <div class="col-sm-12 mt-2 text-right">
+              <button class="cust-btn"> All field</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" style="border-right: 1px solid">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Vendor</label
+            >
+            <div class="col-sm-5">
+              <input
+                type="text"
+                class="form-control Vendor "
+                list="vendor"
+                id="inputCity"
+                placeholder="Vendor name"
+
+              />
+              <datalist id="vendor">
+                <option></option>
+              </datalist>
+            </div>
+            <div class="col-sm-3">
+              <button class="cust-btn1" (click)="openVendorboxModal()">F.Vendor</button>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Forwarding No.</label>
+            <div class="col-sm-5">
+              <input
+                type="email"
+                class="form-control Vendor"
+                id="email"
+                placeholder=""
+                
+              />
+            </div>
+            <div class="col-sm-3">
+              <button class="cust-btn1" (click)="openVendorModal()">V.Vol Cal</button>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Mode</label
+            >
+            <div class="col-sm-5">
+                <input
+                type="search"
+                autocomplete="off"
+                list="Mode"
+                name="Mode"
+                id="Mode1"
+                class="custom-select Vendor"
+                placeholder="Search Mode"
+              />
+              <datalist id="Mode">
+                <option *ngFor="let item of Mode">{{item.Mode_name}}</option>
+              </datalist>
+              </div>
+            <div class="col-sm-3">
+              <button class="cust-btn1">DHL</button>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Product</label
+            >
+            <div class="col-sm-5">
+                <input
+                type="search"
+                autocomplete="off"
+                list="Product"
+                name="Product"
+                id="Product1"
+                class="custom-select Vendor"
+                placeholder="Search Product"
+              />
+              <datalist id="Product">
+                <option *ngFor="let item of Product">{{item.product_name}}</option>
+              </datalist>
+              </div>
+            <div class="col-sm-3">
+              <button class="cust-btn1">Fedex</button>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Service Type</label
+            >
+            <div class="col-sm-5">
+                <input
+                type="search"
+                autocomplete="off"
+                list="Service"
+                name="Product"
+                id="Service1"
+                class="custom-select Vendor"
+                placeholder="Search Service Type"
+              />
+              </div>
+            <div class="col-sm-3">
+              <button class="cust-btn1">NON DG</button>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Package type</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="Package type"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-4 col-form-label">Destination</label>
+            <div class="col-sm-8">
+              <input
+                type="search"
+                autocomplete="off"
+                list="Destination"
+                name="Destination"
+                id="Consignee1"
+                class="custom-select"
+                placeholder="Search Destination"
+              />
+              <datalist id="Destination">
+                <option *ngFor="let item of Destination">{{item.destination_name}}</option>
+              </datalist>
+            </div>
+
+          </div>
+          <div class="row">
+            <label class="col-sm-4 col-form-label">Origin</label>
+            <div class="col-sm-8">
+              <input
+                type="search"
+                autocomplete="off"
+                list="Origin"
+                name="Origin"
+                id="Origin1"
+                class="custom-select"
+                placeholder="Search Origin"
+              />
+              <datalist id="Origin">
+                <option *ngFor="let item of Origin">{{item.destination_name}}</option>
+              </datalist>
+            </div>
+          </div>
+            <div class="row">
+            <div class="col-sm-4">
+              <select name="select" id="" class="custom-select">
+                <option value="" selected>PCS</option>
+                <option value="">BOX</option>
+              </select>
+            </div>
+            <div class="col-sm-8">
+              <input
+                type="number"
+                FormC
+                class="form-control"
+                id="email"
+                placeholder="Pcs/Box"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Invoice Value</label
+            >
+            <div class="col-sm-4">
+              <select id="inputState" class="custom-select1">
+                <option selected value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <button class="cust-btn2" #cust [disabled]="!custbool" (click)="openInvoiceModal()">CustInv</button>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Actual Weight</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="Actual Weight"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Vol.Metric Wt</label
+            >
+            <div class="col-sm-5">
+              <input
+                type="text"
+                class="form-control1"
+                id="email"
+                placeholder="Vol.Metric Wt"
+               
+              />
+            </div>
+            <div class="col-sm-3">
+              <button class="cust-btn3" (click)="openVolumetricModal()">Vol.Cal</button>
+            </div>
+          </div>
+  
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-4 col-form-label"
+              >Charged Wt</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="charged Wt"
+                style="
+                  border: 1px solid #d2d2d2;
+                  border-radius: 0.25rem;
+                  padding-left: 10px;
+                  padding-top: 10px;
+                  font-family: auto;
+                "
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 seconddiv">
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Rate Per/Kg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="Rate Per/Kg"/>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Freight Amount</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="Freight Amount"
+               
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Discount</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="Discount"
+               
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >ODA Chrg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="ODA Chrg"
+               
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >FOV Chrg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="FOV Chrg"
+                
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Docket Chrg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="Docket Chrg"
+              
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Packing Chrg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="package Chrg"
+               
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >DeliveryChrg</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control3"
+                id="email"
+                placeholder="0.0"
+               
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >InsauranceChrg</label
+            >
+            <div class="col-sm-3">
+              <input
+                type="text"
+                class="form-control2"
+                id="email"
+                placeholder="0.0" />
+            </div>
+            <div class="col-md-4">
+              <button class="cust-btn4" (click)="openBluedartModal()">OtherChrg</button>
+            </div>
+          </div>
+  
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Charges1</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control Charges1"
+                placeholder="0.0"
+                id="email"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >OtherChrg</label
+            >
+            <div class="col-sm-3">
+              <input
+                type="text"
+                class="form-control OtherChrg"
+                id="email"
+                placeholder="0.0"
+              
+              />
+            </div>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control Igst"
+                id="inputEmail4"
+                placeholder="IGST%"
+               
+              />
+            </div>
+          </div>
+  
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Fuel Chrg</label
+            >
+            <div class="col-sm-3">
+              <input
+                type="text"
+                class="form-control Fuel"
+                id="email"
+                placeholder="0.0"
+                
+              />
+            </div>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control Igst"
+                id="inputEmail4"
+                placeholder="SGST%"
+                
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label">GST</label>
+            <div class="col-sm-3">
+              <input
+                type="text"
+                class="form-control GST"
+                id="email"
+                placeholder="GST"
+              />
+            </div>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control Igst"
+                id="inputEmail4"
+                placeholder="CGST%"
+               
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmail3" class="col-sm-5 col-form-label"
+              >Total Amount</label
+            >
+            <div class="col-sm-7">
+              <input
+                type="text"
+                class="form-control Total"
+                id="email"
+                placeholder="Total Amount"
+              />
+            </div>
+            <div class="col-sm-12 mt-2 text-right">
+              <button class="cust-btn5" (click)="openChargeReceivedModal()">Chrg R</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6 submitbtn">
+        <button type="button" class="btn btn-outline-secondary">Save</button>
+        <button type="button" class="btn btn-outline-warning" (click)="openCommentDialog()">Label Setup</button>
+        <button type="button" class="btn btn-outline-info">Print</button>
+  
+        <button class="btn btn-outline-danger" (click)="pushMe()">Setup</button>
+  
+        <button class="btn btn-outline-danger" (click)="unPushMe()">Enable Setup</button>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+s  </form>
+   -->
