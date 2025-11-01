@@ -30,4 +30,3 @@ export const environment = {
   // apiUrl: 'https://wheelstrans.com/SoftCTL/SoftCTL/'
   apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
 };
-
