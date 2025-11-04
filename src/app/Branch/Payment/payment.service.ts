@@ -106,7 +106,7 @@ createCashToPay(obj:any): Observable<any> {
 
 
   //Payment Report Api
-
+ 
   walletReport(customerCode:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
     const url = `${environment.apiUrl}Payment/WalletReport?customerCode=${customerCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
