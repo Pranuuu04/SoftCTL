@@ -6,7 +6,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddBillingComponent } from 'app/Branch/Shared/billing/billing-print/add-billing/add-billing.component';
-import { BillingPrintComponent } from 'app/Branch/Shared/billing/billing-print/billing-print.component';
 import { DeleteBillComponent } from 'app/Branch/Shared/billing/billing-print/delete-bill/delete-bill.component';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
@@ -64,9 +63,7 @@ export class BillPrintComponent implements OnInit {
      this.ClientLogo =  localStorage.getItem('ClientLogo');
      this.ClientName = localStorage.getItem('ClientName');
      this.dataSource = new MatTableDataSource<any>(this.billViewTable);
-    //  this.currentDate1 = new Date().toISOString().split('T')[0];
-    //  this.currentDate2 = new Date().toISOString().split('T')[0];
-      const from = this.getDefaultDate(); // 1st of month
+      const from = this.getDefaultDate();
       const to = this.getCurrentDate();
      this.createForm  = this.formbuilder.group({
       fromDate: new FormControl(from, Validators.compose([
@@ -78,9 +75,6 @@ export class BillPrintComponent implements OnInit {
       Customer: new FormControl('All'),
       FromBillingNo: new FormControl(''),
       ToBillingNo: new FormControl(''),
-      // multiplePrintType: new FormControl('', Validators.compose([
-      //   Validators.required
-      // ]))
     });
 
     this.createForm.get('FromBillingNo')?.valueChanges.subscribe((fromBillNo) => {
@@ -140,7 +134,6 @@ export class BillPrintComponent implements OnInit {
    loadCustomerData(): void {
     this.billingService.getCustomer(this.sessionLocationCode).subscribe({
       next: (resp) => {
-        // this.customerData = resp.Data;
         const allCust = { customerName: 'All', customerCode: 'All' };
             this.customerData = [allCust, ...resp.Data];
           this.createForm.patchValue({ CustomerName: 'All' });
@@ -190,17 +183,13 @@ export class BillPrintComponent implements OnInit {
             setTimeout(() => {
               this.dataSource.paginator = this.paginator;
             });
-            // this.createForm.get('deliveryBoy').reset();
             if (!customer && !fromBillNo && !toBillNo) {
-              // this.openSnackBar(response.message + ' by date' , 'custom-snackbar')
               this.createForm.get('Customer')?.reset();
               this.createForm.get('FromBillingNo')?.reset();
               this.createForm.get('ToBillingNo')?.reset();
             } else if (customer && !fromBillNo && !toBillNo) {
-              // this.openSnackBar(response.message + ' by customer' , 'custom-snackbar')
               this.createForm.get('Customer')?.reset();
             } else if (fromBillNo && toBillNo && !customer) {
-              // this.openSnackBar(response.message + ' by invoice number' , 'custom-snackbar')
               this.createForm.get('FromBillingNo')?.reset();
               this.createForm.get('ToBillingNo')?.reset();
             }
@@ -222,17 +211,6 @@ export class BillPrintComponent implements OnInit {
       );
   }
 
-  //  openPrint() {
-  //   const dialogRef = this.dialog.open(BillingPrintComponent, {
-  //     data: {
-  //       action: 'add',
-  //     },
-  //     width: '60rem',
-  //     disableClose: true
-  //   });
-  //   dialogRef.afterClosed().subscribe(res => {
-  //   });
-  // }
    openviewadd(element: any) {
      const dialogRef = this.dialog.open(AddBillingComponent, {
        data: {
@@ -287,7 +265,6 @@ printPDF(element) {
       BillNo: element.BillNo,
       logolink: this.ClientLogo,
       CustomerCode: element.Customer_Code,
-      // companyName: this.ClientName
     };
 
     const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
@@ -321,7 +298,6 @@ printPDF(element) {
       BillNo: element.BillNo,
       logolink: this.ClientLogo,
       CustomerCode: element.Customer_Code
-      // companyName: this.ClientName
     };
 
     const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
@@ -342,7 +318,6 @@ printPDF(element) {
       document.body.removeChild(a);
 
         window.open(blobUrl, '_blank');
-      // setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
       URL.revokeObjectURL(blobUrl);
       },
       (error) => {

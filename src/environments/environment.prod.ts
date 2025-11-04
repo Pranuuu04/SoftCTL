@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
      // for testing
-    apiUrl: 'https://www.softctl.com/SoftCTL/'
+    // apiUrl: 'https://www.softctl.com/SoftCTL/'
 
   // apiUrl: 'https://softctl.uniqueairfreight.com/SoftCTL/'
   // apiUrl: 'https://softctl.uniworldexp.com/SoftCTL/'
@@ -28,6 +28,6 @@ export const environment = {
   // apiUrl: 'https://moonlineexpresscargo.com/softctl.moonlineexpresscargo.com/SoftCTL/'
   // apiUrl: 'https://moonlineexpresscargo.com/SoftCTL/SoftCTL/'
   // apiUrl: 'https://wheelstrans.com/SoftCTL/SoftCTL/'
-  // apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
+  apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
 };
  

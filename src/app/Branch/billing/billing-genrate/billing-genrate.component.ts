@@ -51,8 +51,6 @@ private destroy$ = new Subject<void>();
    ) { }
 
   ngOnInit(): void {
-    // this.sessionLocationCode = localStorage.getItem('originCode');
-    // this.selectedValue = this.sharedService.getSelectedValue();
      this.sessionLocationCode = (localStorage.getItem('userType') === 'Admin')
     ? localStorage.getItem('selectedValue')
     : localStorage.getItem('originCode');
@@ -100,19 +98,9 @@ private destroy$ = new Subject<void>();
     this.AllService.getDestinationData().subscribe((data) => {
       this.destinationList = data.Data;
     });
-    // this.billingService.getCustomer(this.sessionLocationCode).subscribe((data) => {
-    //   this.customerList = data.Data;
-    // });
     this.billingService.getLocation(this.sessionLocationCode).subscribe((data: any) => {
       this.LocationList = data.Data;
     });
-    // this.billingform.get('Location')?.valueChanges.subscribe((selectedLocation: string) => {
-    //   if (selectedLocation) {
-    //       this.billingService.getCustomer(selectedLocation).subscribe((data) => {
-    //       this.customerList = data.Data;
-    //     });
-    //   }
-    // });
      this.billingform.get('Location')?.valueChanges
     .pipe(
       startWith(this.billingform.get('Location')?.value),
@@ -127,7 +115,6 @@ private destroy$ = new Subject<void>();
       }
     });
 
-    
     }
 
 
@@ -192,7 +179,6 @@ private destroy$ = new Subject<void>();
   }
   onSubmit(formValues: any): void {
     if (this.billingform.valid) {
-      // const sessionLocationCode = this.userType !== 'Admin' ? this.sessionLocationCode : this.selectedValue;
 
       const payload = {
         sessionLocationCode: formValues.Location,

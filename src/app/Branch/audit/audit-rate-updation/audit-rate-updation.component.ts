@@ -2,10 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { BillingService } from 'app/Branch/billing/billing.service';
 import { AllServicesService } from 'app/service/all-services.service';
-import { SharedService } from 'app/service/shared.service';
-import { combineLatest } from 'rxjs';
 import { AuditService } from '../audit.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -163,9 +160,4 @@ if (this.filterForm.valid) {
       this.dataSource.paginator.firstPage();
     }
   }
-  // loadPage(event: any) {
-  //   const pageNumber = event.pageIndex + 1;
-  //   const pageSize = event.pageSize;
-  //   this.RateUpdationTable(pageNumber, pageSize);
-  // }
 }

@@ -26,32 +26,7 @@
               <option value="consigneeWise">Consignee wise</option>
               <option value="cNoteWise">CNote wise</option>
             </select>
-            <!-- <label for="invType"><span style="color: red;">*</span>Type :</label>
-            <section class="invType" style="padding-top: 2px;">
-             <div class="row">
-              <div class="col-sm-3">
-                <mat-radio-button value="clientWise" name="invType" [(ngModel)]="selectedType" checked (change)="onTypeChange($event.value)">
-                  Client wise
-                </mat-radio-button>
-              </div>
-              <div class="col-sm-3">
-                <mat-radio-button value="shipperWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
-                  Shipper wise
-                </mat-radio-button>
-              </div>
-              <div class="col-sm-3">
-                <mat-radio-button value="consigneeWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
-                  Consignee wise
-                </mat-radio-button>
-              </div>
-              <div class="col-sm-3">
-                <mat-radio-button value="cNoteWise" name="invType" [(ngModel)]="selectedType" (change)="onTypeChange($event.value)">
-                  CNote wise
-                </mat-radio-button>
-              </div>
-             </div>
-          </section> -->
-          </div>
+         </div>
         </div>
       <div class="col-sm-3">
         <div class="textOnSelect">
@@ -96,27 +71,10 @@
               <option value="All">All</option>
               </select>
             </div>
-            <!-- <div class="textOnInput">
-              <label for="Consigors"><span style="color: red;">*</span>Consigor type :</label>
-              <section class="consignorType" style="padding-top: 2px;">
-                <div class="row">
-                  <div class="col-sm-6 pr-0">
-                    <mat-radio-button name="consignorType" value="all" (change)="onConsignorTypeChange('all')"  >All</mat-radio-button>
                   </div>
-                  <div class="col-sm-6 pl-0">
-                    <mat-radio-button name="consignorType" value="single" (change)="onConsignorTypeChange('single')" checked>Single</mat-radio-button>
-                  </div>
-                </div>
-            </section>
-            </div> -->
-          </div>
             <div class="col-sm-6">
             <div class="textOnSelect">
-                <!-- <label for="Consignor"><span style="color: red;">*</span>Consignor :</label>
-                <select id="Consignor" class="custom-select" (change)="onConsignorChange($event.target.value)" formControlName="Consignor" [disabled]="selectedConsignorType === 'all'">
-                  <option selected disabled>Select Consignor</option>
-                  <option *ngFor="let item of customerList" [value]="item.customerCode">{{ item.customerName }}</option>
-                </select> -->
+              
                 <label for="Consignor"><span style="color: red;">*</span>Consignor :</label>
                 <ng-select 
                   id="Consignor"
@@ -145,37 +103,11 @@
               [multiple]="true"
               [formControl]="billingform.get('destination')">
             </ng-select>
-
-            <!-- <mat-form-field appearance="outline" class="w-100">
-              <mat-select
-                id="destination"
-                formControlName="destination"
-                multiple>
-                <mat-option *ngFor="let item of destinationList" [value]="item.destinationCode">
-                  {{ item.destinationName }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> -->
-          </div>
+         </div>
         </div>
       </div>
       <div class="row mainrow">
-        <!-- <div class="col-sm-3">
-          <div class="textOnInput">
-            <label for="DestinationT"><span style="color: red;">*</span>Destination type :</label>
-            <section class="DestinationType" style="padding-top: 2px;">
-              <div class="row">
-                <div class="col-sm-6 pr-0">
-                  <mat-radio-button name="DestinationType" value="all" (change)="onConsignorTypeChange('all')"  >All</mat-radio-button>
-                </div>
-                <div class="col-sm-6 pl-0">
-                  <mat-radio-button name="DestinationType" value="single" (change)="onConsignorTypeChange('single')" checked>Single</mat-radio-button>
-                </div>
-              </div>
-          </section>
-          </div>
-        </div> -->
-     
+
         <div class="col-sm-3">
           <div class="textOnInput">
             <label for="fromDate"><span style="color: red;">*</span>From :</label>
@@ -215,48 +147,8 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row mainrow">
-       
-         <div class="col-sm-3"> -->
-            <!-- <div class="textOnSelect">
-                <label for="multiDest">Destination :</label>
-                <ng-select 
-                    [items]="areaOptions"
-                    class="custom-select1"
-                    bindLabel="label"
-                    bindValue="value"
-                    [multiple]="true"
-                    formControlName="multiDest">
-                </ng-select>
-          </div> -->
-          <!-- <div class="textOnSelect">
-            <label for="RateProduct">Product name :</label>
-            <ul class="small-checkbox">
-              <li *ngFor="let product of destinationList">
-                <mat-checkbox>{{ product.destinationName }}</mat-checkbox>
-              </li>
-             </ul>
-        </div> -->
-        <!-- </div>
-      </div> -->
       <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
-        <!-- <div class="col-sm-3">
-          <div class="textOnSelect">
-            <label for="destination" style="top: -10px;">Destination :</label>
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-select
-                id="destination"
-                formControlName="destination"
-                multiple>
-                <mat-option *ngFor="let item of destinationList" [value]="item.destinationCode">
-                  {{ item.destinationName }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div> -->
-     
-       
+ 
         <div class="col-sm-9">
           <div class="row">
             <div class="col-sm-6" *ngIf="selectedType === 'shipperWise'" >
@@ -309,148 +201,5 @@
           <button type="submit" class="btn btn-light other-button" style="margin-left: 29px;">Submit</button>
         </div>
      </div>
-     <!-- <div class="row mainrow d-flex" style="justify-content: end;">
-      <div class="col-sm-3 d-flex" style="justify-content: end;">
-        <button matTooltip="Invoice Description" (click)="openDescription()" type="button" class="btn btn-light form-icon"><i class="fa-solid fa-file-invoice"></i></button>
-        <button type="submit" class="btn btn-light other-button" style="margin-left: 29px;">Submit</button>
-      </div>
-     </div> -->
-    </form>
-    <!-- <div class="row">
-      <div class="col-sm-12">
-        <div *ngIf="listData.length > 0">
-          <div class="table-responsive text-nowrap mt-2">
-            <table class="table table-bordered table-striped"  style="background-color: #e2e9f1">
-              <thead style="background-color:#a3b8d4; color: black;">
-                <tr>
-                    <th>Awb No</th>
-                    <th>Booking Date</th>
-                    <th>Conginer</th>
-                    <th>Conginee</th>
-                    <th>Qty</th>
-                    <th>Weight</th>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of listData;" >
-                  <td >awbNo</td>
-                  <td >bookDate</td>
-                  <td >conginer</td>
-                  <td >conginee</td>
-                  <td >qty</td>
-                  <td >weight</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-      </div>
-      </div>
-    </div> -->
-    <!-- <div class="row">
-      <div class="col-sm-12">
-        <div *ngIf="showTable && dataSource.data.length > 0">
-          <div class="table-responsive">
-            <div class="row d-flex m-0" style="justify-content: right;" >
-              <div class="form-group has-search col-sm-3">
-                <button class="btn btn-secondary" type="button" style="z-index: 1001;
-                position: absolute;
-                background: none;
-                top: -3px;
-                width: 38px;
-                height: 30px;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-                background-color: #2e3f55;">
-                  <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
-                </button>
-                <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
-              </div>
-            </div>
-          </div>
-          <div class="table-responsive text-nowrap">
-            <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
-
-              <ng-container matColumnDef="shipment">
-                <th mat-header-cell *matHeaderCellDef> Shipment </th>
-                <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="dispatchNo">
-                <th mat-header-cell *matHeaderCellDef> Dispatch No</th>
-                <td mat-cell *matCellDef="let element"> {{element.dispatchNo}} </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="dispatchDt">
-                <th mat-header-cell *matHeaderCellDef> Dispatch Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.dispatchDt | date:'dd/MM/yyyy'}} </td>
-              </ng-container>
-        
-              <ng-container matColumnDef="todest">
-                <th mat-header-cell *matHeaderCellDef>Destination </th>
-                <td mat-cell *matCellDef="let element"> {{element.todest}} </td>
-              </ng-container>
-        
-              <ng-container matColumnDef="mode">
-                <th mat-header-cell *matHeaderCellDef> Mode </th>
-                <td mat-cell *matCellDef="let element"> {{element.mode}} </td>
-              </ng-container>
-          
-              <ng-container matColumnDef="SumQty">
-                <th mat-header-cell *matHeaderCellDef> Qty </th>
-                <td mat-cell *matCellDef="let element"> {{element.SumQty}} </td>
-              </ng-container>
-          
-              <ng-container matColumnDef="sumActualWt">
-                <th mat-header-cell *matHeaderCellDef>Actual Wt </th>
-                <td mat-cell *matCellDef="let element"> {{element.sumActualWt}} </td>
-              </ng-container>
-        
-              <ng-container matColumnDef="vehicleNo">
-                <th mat-header-cell *matHeaderCellDef> Vehicle No </th>
-                <td mat-cell *matCellDef="let element"> {{element.vehicleNo}} </td>
-              </ng-container>
-          
-              <ng-container matColumnDef="driverName">
-                <th mat-header-cell *matHeaderCellDef> Driver Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.driverName}} </td>
-              </ng-container>
-        
-              <ng-container matColumnDef="Action">
-                <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element">
-                  <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
-                  <mat-icon matTooltip="Add" class="custom1-color" (click)="openviewadd(element)">add</mat-icon>
-                  <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon>
-                  <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
-                </td>
-              </ng-container>
-        
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
-              <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-              </tr>
-            </table>
-         </div>
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-        </div>
-        <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
-          <img src="./assets/images/NOdata.png" alt="">
-        </div>
-      </div>
-    </div> -->
-      <!-- <div class="col-sm-3">
-            <div class="textOnSelect">
-                <label for="Areas">Areas:</label>
-                <ng-select 
-                    [items]="areaOptions"
-                    class="custom-select1"
-                    bindLabel="label"
-                    bindValue="value"
-                    [multiple]="true"
-                    formControlName="Areas">
-                </ng-select>
-          </div>
-        </div> -->
+      </form>
   </div>
