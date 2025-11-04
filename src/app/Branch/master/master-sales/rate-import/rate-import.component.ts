@@ -91,7 +91,7 @@ length = 0;
       fromDate: [from, Validators.required ],
       toDate: [to, Validators.required ],
       Origin: ['', Validators.required],
-      Zone: [''],
+      Zone: ['', Validators.required],
       Mode: ['', Validators.required],
       product: [[], Validators.required],
       trainFlight: [''],
@@ -380,8 +380,8 @@ this.isExcelValid = false;
           Lower_Wt: Number(row['Lower Wt'] || 0),
           Upper_Wt: Number(row['Upper Wt'] || 0),
           Rate: Number(row['Rate'] || 0),
-          Active_Date: '2025-12-31',
-          Closing_Date: '2025-12-31',
+          Active_Date: this.createForm.get('fromDate')?.value || '',
+          Closing_Date: this.createForm.get('fromDate')?.value || '',
         };
 
         if (type === 'Zone') {
