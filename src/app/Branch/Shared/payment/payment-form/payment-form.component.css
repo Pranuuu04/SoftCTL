@@ -394,9 +394,9 @@ select.ng-invalid.ng-touched, select.ng-invalid.ng-dirty,
   box-sizing: border-box;
 }
 
-input::-webkit-calendar-picker-indicator {
+/* input::-webkit-calendar-picker-indicator {
   display: none !important;
-}
+} */
 
 datalist {
   max-height: 150px; 
@@ -419,3 +419,7 @@ table.equal-table input.form-control {
   text-overflow: ellipsis;
 }
 
+input::-webkit-calendar-picker-indicator {
+  opacity: 1 !important;
+  display: block !important;
+}

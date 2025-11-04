@@ -58,6 +58,19 @@
       padding-top: 10px; 
       font-family: auto;
   }
+
+  .custom-select{
+    height: 28px;
+    line-height: 15px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-top: 5px; 
+    font-size: 14px;
+    font-family: auto;
+}
   
   .custom-select1{
         height: 28px;
@@ -301,4 +314,51 @@ table th, table td {
     line-height: 30px;
     color: white;
     text-transform: capitalize;
+  }
+
+
+
+  /* Excel Pdf */
+
+.download-buttons{
+  display: flex;
+  justify-content: center;
+  
+  }
+  
+  .download-buttons button{
+  background-color: white; 
+  height: 33px;
+  width: 33px;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  }
+  
+  .download-buttons button .fa-file-pdf{
+  color: #e53935;
+   font-size: large;
+  }
+  
+  .download-buttons button .text {
+  visibility: hidden;
+  border: 1px solid #d2d2d2;
+  border-radius: 6px;
+  width: 60px;
+  position: absolute;
+   color: #4caf50;
+  z-index: 10;
+  top: 100%;
+  left: -50%;
+  }
+  
+  .download-buttons button:hover .text {
+  visibility: visible;
+  }
+  
+  .download-buttons button .fa-table{
+  color: #4caf50;
+   font-size: large;
   }

@@ -104,4 +104,28 @@ createCashToPay(obj:any): Observable<any> {
     return this.http.get(url);
   }
 
+
+  //Payment Report Api
+ 
+  walletReport(customerCode:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/WalletReport?customerCode=${customerCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+cashToPayReport(sessionLocationCode:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+  creditNotReport(sessionLocationCode:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/CreditNoteReport?customerCode=${customerCode || ''}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+  PaymentEntryReport(sessionLocationCode:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/PaymentEntryReport?customerCode=${customerCode || ''}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+
 }

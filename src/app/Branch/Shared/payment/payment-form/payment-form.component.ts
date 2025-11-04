@@ -219,8 +219,8 @@ bankList = [
       transactionID: ['', Validators.required],
       receivedBy: ['', Validators.required],
       depositedBank: ['', Validators.required],
-      receivedDate: ['', Validators.required],
-      totalAmt: ['', Validators.required],
+      receivedDate: [this.currentDate, Validators.required],
+      totalAmt: [this.cashToPayData?.PaymentOutstand, Validators.required],
       receivedAmt: [0, Validators.required],
       TDS: [0],
       debitNote: [0],
@@ -273,7 +273,7 @@ addRateDetail() {
   if (this.tempRateDetailForm.invalid) return;
 
  const payload = {
-        awbNo:this.cashToPayData.AwbNo,
+        awbNo:this.cashToPayData?.AwbNo,
         paymentMode: this.tempRateDetailForm.get('paymentMode')?.value,
         transactionId: this.tempRateDetailForm.get('transactionID')?.value,  
         receivedBy: this.tempRateDetailForm.get('receivedBy')?.value,
@@ -314,7 +314,7 @@ addRateDetail() {
 latestRecordTempId: number | null = null;
 
 getCashToPayData(){
-   this.paymentService.getCashToPay(this.cashToPayData.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
+   this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
@@ -328,11 +328,11 @@ getCashToPayData(){
         }
 
         // Compute remaining total for form
-        if (resp.getDetails?.length > 0) {
-          const last = resp.getDetails[0];
-          const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
-          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
-        }
+        // if (resp.getDetails?.length > 0) {
+        //   const last = resp.getDetails[0];
+        //   const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+        //   this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+        // }
 
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');

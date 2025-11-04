@@ -105,21 +105,15 @@
      <td mat-cell *matCellDef="let element">{{ element.BookDate | date:'dd/MM/yyyy'  }}</td>
    </ng-container>
 
-  <ng-container matColumnDef="SubTotal">
+  <!-- <ng-container matColumnDef="SubTotal">
      <th mat-header-cell *matHeaderCellDef>Sub Total</th>
      <td mat-cell *matCellDef="let element">{{ element.SubTotal}}</td>
-   </ng-container>
+   </ng-container> -->
   
   <ng-container matColumnDef="SGSTAmt">
     <th mat-header-cell *matHeaderCellDef> GST Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.SGST }}</td>
   </ng-container>
-
-  <!-- Service Tax -->
-  <!-- <ng-container matColumnDef="ServiceTax">
-    <th mat-header-cell *matHeaderCellDef>Gst total</th>
-    <td mat-cell *matCellDef="let element">{{ element.ServiceTax }}</td>
-  </ng-container> -->
 
   <!-- Total Amt -->
   <ng-container matColumnDef="TotalAmt">

@@ -1,1 +1,265 @@
-<p>cast-topay-report works!</p>
+<form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
+    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
+
+      <div *ngIf="userType === 'Admin'" class="col-sm">
+        <div class="textOnSelect">
+          <label for="branch"><span style="color: red;">*</span>Branch :</label>
+          <ng-select
+            [items]="branchName"
+            class="custom-select1"
+            bindLabel="locationName"
+            bindValue="locationCode"
+            formControlName="branch">
+          </ng-select>
+        </div>
+       </div>
+
+    <!-- <div class="col-sm-2">
+      <div class="textOnSelect">
+        <label for="branch"><span style="color: red;">* </span>Branch :</label>
+        <ng-select
+          *ngIf="userType === 'Admin'; else nonAdmin"
+          [items]="branchName"
+          bindLabel="locationName"
+          bindValue="locationCode"
+          formControlName="branch"
+          class="custom-select1"
+          [searchable]="true">
+        </ng-select>
+
+        <ng-template #nonAdmin>
+           <input type="text" class="form-control mb-1" [value]="sessionLocationName" readonly/>
+           <select formControlName="branch" style="display: none;">
+             <option [ngValue]="sessionLocationCode"></option>
+           </select>
+        </ng-template>
+      </div>
+    </div> -->
+
+      <div class="col-sm">
+        <div class="textOnSelect">
+          <label for="customerType"><span style="color: red;">*</span>Customer Type :</label>
+          <select class="custom-select" formControlName="customerType">
+             <!-- <option selected disabled value="">Select Customer Type</option> -->
+             <option selected value="Customer">Customer</option>
+             <option value="Shipper">Shipper</option>
+             <option value="Consignee">Consignee</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label for="name"><span style="color: red;">*</span>Name :</label>
+          <ng-select *ngIf="filterForm.get('customerType').value ===  'Customer'"
+            [items]="customerList"
+            class="custom-select1"
+            bindLabel="customerName"
+            bindValue="customerCode"
+            formControlName="name">
+          </ng-select>
+          <ng-select *ngIf="filterForm.get('customerType').value ===  'Consignee'"
+            [items]="consigneeList"
+            class="custom-select1"
+            bindLabel="Consignee_Name"
+            bindValue="Consignee_Name"
+            formControlName="name">
+          </ng-select>
+          <ng-select *ngIf="filterForm.get('customerType').value ===  'Shipper'"
+            [items]="shipperList"
+            class="custom-select1"
+            bindLabel="shipper_Name"
+            bindValue="shipper_Name"
+            formControlName="name">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-sm">
+        <div class="textOnInput">
+          <label for="fromDate"><span style="color: red;">*</span>From date :</label>
+          <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
+        </div>
+      </div>
+
+       <div class="col-sm">
+        <div class="textOnInput">
+          <label for="fromDate"><span style="color: red;">*</span>To date :</label>
+          <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
+        </div>
+      </div> 
+
+        <div class="col-sm-2 d-flex" style="justify-content: right;" >
+          <button type="submit" class="btn btn-light other-button">Submit</button>
+       </div>
+
+    </div>
+  </form>
+
+<div *ngIf="showTable && dataSource.data.length > 0">
+      <div class="table-responsive">
+
+        <div class="row d-flex m-0" style="justify-content: space-between; align-items: center;">
+
+          <div class="col-sm-4 d-flex pl-3 download-buttons" style="justify-content: start;">
+            <button type="button" class="btn btn-outline-light mt-0 d-flex align-items-center justify-content-center" (click)="downloadExcel()">
+              <i class="fa-solid fa-table"></i>
+              <span class="text" style="margin-top: -5px;">XLs</span>
+            </button>
+
+            <button type="button" class="btn btn-outline-light mt-0 ml-3 d-flex align-items-center justify-content-center" (click)="downloadPdf()">
+              <i class="fa-solid fa-file-pdf"></i>
+              <span class="text" style="margin-top: -5px;">PDF</span>
+            </button>
+          </div>
+
+          <div class="form-group has-search col-sm-3" style="margin: 14px 0 0;">
+            <button class="btn btn-secondary" type="button"
+              style="z-index: 1001; position: absolute; background: none; top: -4px; width: 38px; height: 30px;
+                    border-top-left-radius: 10px; border-bottom-left-radius: 10px; background-color: #2e3f55;">
+              <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px; margin-left: 1px;"></i>
+            </button>
+
+            <input type="text" class="form-control"
+              #input (keyup)="applyFilter($event.target.value)" placeholder="Search.." id="Filter"
+              style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+          </div>
+
+        </div>
+
+      </div>
+      
+  <div class="table-responsive text-nowrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: #e2e9f1;" matSort>
+      
+   
+    <!-- Customer Code -->
+      <ng-container matColumnDef="Customer_Code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Code</th>
+        <td mat-cell *matCellDef="let row">{{ row.Customer_Code }}</td>
+      </ng-container>
+
+      <!-- Customer Name -->
+      <ng-container matColumnDef="Customer_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.Customer_Name }}</td>
+      </ng-container>
+
+      <!-- Shipper Name -->
+      <ng-container matColumnDef="Shipper_Name">
+        <th mat-header-cell *matHeaderCellDef>Shipper Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.Shipper_Name }}</td>
+      </ng-container>
+
+      <!-- Consignee Name -->
+      <ng-container matColumnDef="Consignee_Name">
+        <th mat-header-cell *matHeaderCellDef>Consignee Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.Consignee_Name }}</td>
+      </ng-container>
+
+      <!-- BookDate -->
+      <ng-container matColumnDef="BookDate">
+        <th mat-header-cell *matHeaderCellDef>Book Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.BookDate | date }}</td>
+      </ng-container>
+
+      <!-- Location_Code -->
+      <ng-container matColumnDef="Location_Code">
+        <th mat-header-cell *matHeaderCellDef>Location Code</th>
+        <td mat-cell *matCellDef="let row">{{ row.Location_Code }}</td>
+      </ng-container>
+
+      <!-- AwbNo -->
+      <ng-container matColumnDef="AwbNo">
+        <th mat-header-cell *matHeaderCellDef>AWB No</th>
+        <td mat-cell *matCellDef="let row">{{ row.AwbNo }}</td>
+      </ng-container>
+
+      <!-- Payment_mode -->
+      <ng-container matColumnDef="Payment_mode">
+        <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
+        <td mat-cell *matCellDef="let row">{{ row.Payment_mode }}</td>
+      </ng-container>
+
+      <!-- TransactionId -->
+      <ng-container matColumnDef="TransactionId">
+        <th mat-header-cell *matHeaderCellDef>Txn ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.TransactionId }}</td>
+      </ng-container>
+
+      <!-- Received_by -->
+      <ng-container matColumnDef="Received_by">
+        <th mat-header-cell *matHeaderCellDef>Received By</th>
+        <td mat-cell *matCellDef="let row">{{ row.Received_by }}</td>
+      </ng-container>
+
+      <!-- Desposited_bank -->
+      <ng-container matColumnDef="Desposited_bank">
+        <th mat-header-cell *matHeaderCellDef>Bank</th>
+        <td mat-cell *matCellDef="let row">{{ row.Desposited_bank }}</td>
+      </ng-container>
+
+      <!-- Received_date -->
+      <ng-container matColumnDef="Received_date">
+        <th mat-header-cell *matHeaderCellDef>Received Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.Received_date | date }}</td>
+      </ng-container>
+
+      <!-- Total_amt -->
+      <ng-container matColumnDef="Total_amt">
+        <th mat-header-cell *matHeaderCellDef>Total Amt</th>
+        <td mat-cell *matCellDef="let row">{{ row.Total_amt }}</td>
+      </ng-container>
+
+      <!-- Received_amt -->
+      <ng-container matColumnDef="Received_amt">
+        <th mat-header-cell *matHeaderCellDef>Received Amt</th>
+        <td mat-cell *matCellDef="let row">{{ row.Received_amt }}</td>
+      </ng-container>
+
+      <!-- TDS -->
+      <ng-container matColumnDef="TDS">
+        <th mat-header-cell *matHeaderCellDef>TDS</th>
+        <td mat-cell *matCellDef="let row">{{ row.TDS }}</td>
+      </ng-container>
+
+      <!-- Debit_note -->
+      <ng-container matColumnDef="Debit_note">
+        <th mat-header-cell *matHeaderCellDef>Debit Note</th>
+        <td mat-cell *matCellDef="let row">{{ row.Debit_note }}</td>
+      </ng-container>
+
+      <!-- Outstanding -->
+      <ng-container matColumnDef="Outstanding">
+        <th mat-header-cell *matHeaderCellDef>Outstanding</th>
+        <td mat-cell *matCellDef="let row">{{ row.Outstanding }}</td>
+      </ng-container>
+
+      <!-- Remark -->
+      <ng-container matColumnDef="Remark">
+        <th mat-header-cell *matHeaderCellDef>Remark</th>
+        <td mat-cell *matCellDef="let row">{{ row.Remark }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      </div>
+   <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="true"
+    (page)="handlePageEvent($event)">
+  </mat-paginator>
+      <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="pageSize"
+      [length]="totalPending"
+      (page)="loadPage($event)"
+      aria-label="Select page of pending DRS records">
+    </mat-paginator> -->
+   </div>
+  <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+    <img src="./assets/images/NOdata.png" alt="">
+  </div> 
