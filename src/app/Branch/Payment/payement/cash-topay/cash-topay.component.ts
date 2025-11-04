@@ -17,7 +17,7 @@ import { PaymentService } from '../../payment.service';
 export class CashTopayComponent implements OnInit {
 
   sessionLocationCode: any;
-  pageSizeOptions: number[] = [15, 50, 100, 1000];
+  pageSizeOptions: number[] = [10,15, 50, 100, 1000];
   totalountPages: any;
   totalPending: number;
   showTable = false;
@@ -33,8 +33,8 @@ export class CashTopayComponent implements OnInit {
   showPageSizeOptions = false;
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];
-  displayedColumns: string[] = ['action','AwbNo','BookDate','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
+  // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];'SubTotal',
+  displayedColumns: string[] = ['action','AwbNo','BookDate','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
 
   userType: any;
   selectedValue = 'All';
@@ -136,35 +136,14 @@ calculatePageCount() {
     this.pageIndex = e.pageIndex;
     this.pageNumber = this.pageIndex + 1;
       this.calculatePageCount();
-    // this.RateUpdationTable(pageNumber, this.pageSize);
-  }
-
-// RateUpdationTable(pageNumber: number, pageSize: number) {
-//   const sessionLocationCode = this.sessionLocationCode;
-//   const customerCode = this.filterForm.get('rateCustomer')?.value;
-//   const fromDate = this.filterForm.get('fromDate')?.value;
-//   const toDate = this.filterForm.get('toDate')?.value;
-//   this.auditService.RateUpdation(sessionLocationCode, customerCode, fromDate, toDate, pageNumber, pageSize)
-//     .subscribe((resp: any) => {
-//       if (resp.status === 1) {
-//         this.openSnackBar(resp.message, 'custom-snackbar');
-//         this.showTable = true;
-//         this.rateViewData = resp.data;
-//         this.dataSource.data = this.rateViewData;
-//         this.length = resp.count;
-//         this.calculatePageCount();
-//       } else {
-//         this.openSnackBar(resp.message, 'error-snackbar');
-//         this.showTable = false;
-//         this.rateViewData = [];
-//       }
-//     });
-// }
+    this.onFilterSubmit();
+ }
 
 onFilterSubmit(): void {
 if (this.filterForm.valid) {
     // this.RateUpdationTable(1, this.pageSize);
-
+       const pageNumber = this.pageNumber;
+       const pageSize = this.pageSize;
       const sessionLocationCode = this.sessionLocationCode;
       const customerCode = this.filterForm.get('rateCustomer')?.value;
       const fromDate = this.filterForm.get('fromDate')?.value;
@@ -173,19 +152,17 @@ if (this.filterForm.valid) {
       // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
       // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
       console.log("AwbNo>>>",AwbNo);
-  this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, this.pageNumber, this.pageSize)
+  this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, pageNumber, pageSize)
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
         // this.showTable = true;
-        // this.rateViewData = resp.data;
         this.dataSource = resp.Data;
         this.length = resp.count;
         this.calculatePageCount();
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');
         // this.showTable = false;
-        // this.rateViewData = [];
       }
     });
 

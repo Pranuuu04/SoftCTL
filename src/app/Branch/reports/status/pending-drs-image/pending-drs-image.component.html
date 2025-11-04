@@ -1,0 +1,127 @@
+<div>
+  <form [formGroup]="drsForm" (ngSubmit)="formSubmit(drsForm.value)">
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+
+       <div class="col-sm-3">
+          <div class="textOnSelect">
+              <label for="customerName">DRS Type :</label>
+                <!-- <ng-select
+                  [items]="destinationList"
+                  class="custom-select1"
+                  bindLabel="destinationName"
+                  bindValue="destinationCode"
+                  formControlName="destination"
+                  (change)="resetPagination()">
+                </ng-select> -->
+                <select class="custom-select" formControlName="drsType">
+                   <option selected disabled value="">Select Drs</option>
+                   <option  value="Pending">Pending</option>
+                   <option  value="Uploaded">Uploaded</option>
+                   <option  value="All">All</option>
+                </select>
+            </div>
+        </div>
+
+           <div class="col-sm-2">
+                <div class="textOnInput">
+                  <label for="fromDate">From :</label>
+                  <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="textOnInput">
+                    <label for="toDate">To :</label>
+                    <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate">
+                </div>
+            </div>
+
+      </div>
+
+      <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-5">
+            <div class="row mb-2 mt-1">              
+                  <div class="col-sm-11 d-flex  pr-0" style="justify-content: end;">
+                    <button type="submit" class="btn btn-light other-button">Submit</button>
+                  </div>
+                  </div>
+                </div>
+            </div>
+            
+    </form>
+</div>
+
+<div class="table-wrapper">
+
+  <!--  Loader -->
+  <div class="loader-overlay" *ngIf="isLoading">
+    <mat-spinner diameter="35"></mat-spinner>
+     <!-- <mat-progress-spinner mode="indeterminate" diameter="28"></mat-progress-spinner> -->
+  </div>
+
+
+  <div *ngIf="dataSource.data.length>0"  class="table-responsive text-nowrap">
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" class="table-bordered table-striped" matSort>
+
+        <ng-container matColumnDef="srNo">
+          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="DrsNo">
+          <th mat-header-cell *matHeaderCellDef> Drs No</th>
+          <td mat-cell *matCellDef="let element">{{ element.DrsNo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="DrsDate">
+          <th mat-header-cell *matHeaderCellDef> Brs Date </th>
+          <td mat-cell *matCellDef="let element">{{ element.DrsDate }}</td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="delv_Dt">
+          <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+          <td mat-cell *matCellDef="let element">{{ element.delv_Dt }}</td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="Image">
+          <th mat-header-cell *matHeaderCellDef> Drs Image </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.Image; else noImg">
+              <img [src]="element.Image" width="60" height="25">
+            </span>
+            <ng-template #noImg>No Image</ng-template>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">No Data Found</td>
+        </tr>
+
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+    <mat-paginator 
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSize]="pageSize"
+        [disabled]="disabled"
+        [showFirstLastButtons]="showFirstLastButtons"
+        [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : [5, 10, 20]"
+        [hidePageSize]="hidePageSize"
+        [pageIndex]="pageIndex">
+    </mat-paginator>
+
+    <div style="justify-content: right; display: flex; margin-right: 16px; color: black; font-size: 12px;">Page: {{ pageIndex + 1 }} of {{ pageCount }}</div>
+
+
+<div *ngIf="dataSource.data.length===0" class="d-flex" style="justify-content: center;">
+  <img src="./assets/images/NOdata.png" alt="No data">
+</div>
