@@ -40,17 +40,16 @@ export class CreditNoteReportComponent implements OnInit {
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     displayedColumns: string[] = [
-          'Customer_Code',
+          'SrNO',
           'Customer_Name',
           'Shipper_Name',
           'Consignee_Name',
           'BookDate',
-          'Location_Code',
           'NoteNo',
           'NoteDate',
           'Particulars',
-          'Remark',
-          'Amount'
+          'Amount',
+          'Remark',  
         ];
   
     userType: any;
@@ -246,18 +245,63 @@ export class CreditNoteReportComponent implements OnInit {
 
 
 
-    downloadExcel() {
-      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+    // downloadExcel() {
+    //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
+    //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
     
-      XLSX.writeFile(wb, 'CreditEntryReport.xlsx');
-    }
+    //   XLSX.writeFile(wb, 'CreditEntryReport.xlsx');
+    // }
+
+downloadExcel() {
+
+  const displayedColumns = [
+    'SrNO',
+    'Customer_Name',
+    'Shipper_Name',
+    'Consignee_Name',
+    'BookDate',
+    'NoteNo',
+    'NoteDate',
+    'Particulars',
+    'Amount',
+    'Remark'
+  ];
+
+  const excelData = this.dataSource.data.map((row: any, index: number) => {
+
+    const temp: any = {
+      SrNO: index + 1,
+      Customer_Name: row.Customer_Name,
+      Shipper_Name: row.Shipper_Name,
+      Consignee_Name: row.Consignee_Name,
+      BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+      NoteNo: row.NoteNo,
+      NoteDate: row.NoteDate ? new Date(row.NoteDate).toLocaleDateString() : '',
+      Particulars: row.Particulars,
+      Amount: row.Amount,
+      Remark: row.Remark
+    };
+
+    const ordered: any = {};
+    displayedColumns.forEach(col => {
+      ordered[col] = temp[col] ?? '';
+    });
+
+    return ordered;
+  });
+
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'CreditNote Report');
+
+  XLSX.writeFile(wb, 'CreditNoteReport.xlsx');
+}
+
     
 downloadPdf() {
 
   const header = [
-    'Customer Code',
     'Customer Name',
     'Shipper',
     'Consignee',
@@ -270,10 +314,10 @@ downloadPdf() {
     'Amount'
   ];
 
+  // Build table body
   const tableBody = [
     header,
     ...this.dataSource.data.map((e: any) => [
-      e.Customer_Code || '',
       e.Customer_Name || '',
       e.Shipper_Name || '',
       e.Consignee_Name || '',
@@ -287,32 +331,44 @@ downloadPdf() {
     ])
   ];
 
+  const columnWidths = header.map(() => '*');  
+
   const docDefinition: any = {
     pageOrientation: 'landscape',
+    pageSize: 'A4',
+    pageMargins: [10, 10, 10, 10],
+
     content: [
       { text: 'Note Report', style: 'header' },
+
       {
         table: {
           headerRows: 1,
-          widths: Array(header.length).fill('*'),
+          widths: columnWidths,  
           body: tableBody
+        },
+        layout: {
+          fillColor: (rowIndex: any) => rowIndex === 0 ? '#e8e8e8' : null
         }
       }
     ],
+
     styles: {
       header: {
-        fontSize: 20,
+        fontSize: 16,
         bold: true,
         alignment: 'center',
-        margin: [0, 0, 0, 10]
+        margin: [0, 0, 0, 8]
       }
+    },
+
+    defaultStyle: {
+      fontSize: 8
     }
   };
 
   pdfMake.createPdf(docDefinition).download('NoteData.pdf');
 }
-
-
   
     applyFilter(filterValue: string) {
       this.dataSource.filter = filterValue.trim().toLowerCase();

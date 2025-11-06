@@ -38,7 +38,7 @@ export class WalletEntryReportComponent implements OnInit {
       showPageSizeOptions = false;
       dataSource: MatTableDataSource<any>;
       @ViewChild(MatPaginator) paginator: MatPaginator;
-      displayedColumns: string[] = ['Customer_Code','Date','Customer_Name','Amount','PaymentMode','Remark'];
+      displayedColumns: string[] = ['SrNO', 'Customer_Name','Date','Amount','PaymentMode','Remark'];
 
       userType: any;
       selectedValue = 'All';
@@ -84,6 +84,12 @@ export class WalletEntryReportComponent implements OnInit {
                 this.customerList = [allCust, ...data.Data];
               this.filterForm.patchValue({ CustomerName: 'All' });
         });
+
+        // this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+        //   const allCust = { customerName: 'All', customerCode: 'All' };
+        //         this.customerList = [allCust, ...data.Data];
+        //       this.filterForm.patchValue({ CustomerName: 'All' });
+        // });
    
       
       this.filterForm = this.formBuilder.group({
@@ -205,44 +211,61 @@ onFilterSubmit(): void {
   }
 
 
-  downloadPdf() {
+ downloadPdf() {
 
-    const tableBody = [
-      ['Customer Code', 'Date', 'Customer Name', 'Amount', 'Payment Mode','Remark'],
-      ...this.dataSource.data.map((item: any) => [
-        item.Customer_Code,
-        new Date(item.Date).toLocaleDateString(),
-        item.Customer_Name,
-        item.Amount,
-        item.PaymentMode,
-        item.Remark
-      ])
-    ];
+  const header = ['SrNo', 'Customer Name', 'Date', 'Amount', 'Payment Mode', 'Remark'];
 
-    const docDefinition: any = {
-      pageOrientation: 'landscape',
-      content: [
-        { text: 'WalletEntry Report', style: 'header' },
-        {
-          table: {
-            headerRows: 1,
-            widths: ['auto','auto','*','auto','auto','*'],
-            body: tableBody
-          }
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center',
-          margin: [0, 0, 0, 10]
+  const tableBody = [
+    header,
+    ...this.dataSource.data.map((item: any, index: number) => [
+      index + 1,
+      item.Customer_Name || '',
+      item.Date ? new Date(item.Date).toLocaleDateString() : '',
+      item.Amount ?? '',
+      item.PaymentMode ?? '',
+      item.Remark ?? ''
+    ])
+  ];
+
+  const columnWidths = header.map(() => '*'); 
+
+  const docDefinition: any = {
+    pageOrientation: 'landscape',
+    pageSize: 'A4',
+    pageMargins: [10, 10, 10, 10],
+
+    content: [
+      { text: 'WalletEntry Report', style: 'header' },
+
+      {
+        table: {
+          headerRows: 1,
+          widths: columnWidths, 
+          body: tableBody
+        },
+        layout: {
+          fillColor: (rowIndex: any) => rowIndex === 0 ? '#e8e8e8' : null
         }
       }
-    };
+    ],
 
-    pdfMake.createPdf(docDefinition).download('WalletEntry.pdf');
-  }
+    styles: {
+      header: {
+        fontSize: 18,
+        bold: true,
+        alignment: 'center',
+        margin: [0, 0, 0, 10]
+      }
+    },
+
+    defaultStyle: {
+      fontSize: 9
+    }
+  };
+
+  pdfMake.createPdf(docDefinition).download('WalletEntry.pdf');
+}
+
 
 
 

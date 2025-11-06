@@ -39,8 +39,28 @@ export class CashTopayReportComponent implements OnInit {
    showPageSizeOptions = false;
    dataSource: MatTableDataSource<any>;
    @ViewChild(MatPaginator) paginator: MatPaginator;
-   displayedColumns: string[] = ['Customer_Code','Customer_Name','Shipper_Name','Consignee_Name','BookDate','Location_Code','AwbNo','Payment_mode',
-  'TransactionId','Received_by','Desposited_bank','Received_date','Total_amt','Received_amt','TDS','Debit_note','Outstanding','Remark'];
+  //  displayedColumns: string[] = ['SrNO','Customer_Name','Shipper_Name','Consignee_Name','BookDate','Location_Code','AwbNo','Payment_mode',
+  // 'TransactionId','Received_by','Desposited_bank','Received_date','Total_amt','Received_amt','TDS','Debit_note','Outstanding','Remark'];
+  displayedColumns: string[] = [
+        'SrNO',
+        'AwbNo',
+        'BookDate',
+        'Customer_Name',
+        'Shipper_Name',
+        'Consignee_Name',
+        'Total_amt',
+        'Received_amt',
+        'Outstanding',
+        'Payment_mode',
+        'Received_by',
+        'Received_date',
+        'Desposited_bank',
+        'TransactionId',
+        'TDS',
+        'Debit_note',
+        'Remark',
+        'Location_Code'
+      ];
  
    userType: any;
    selectedValue = 'All';
@@ -233,91 +253,209 @@ export class CashTopayReportComponent implements OnInit {
  }
 
 
-  // downloadExcel() {
+//  downloadExcel() {
+//     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
+//     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
   
-  //     const exportData = this.dataSource.data.map(row => ({
-  //       Customer_Code: row.Customer_Code,
-  //       Date: row.Date,
-  //       Customer_Name: row.Customer_Name,
-  //       Amount: row.Amount,
-  //       PaymentMode: row.PaymentMode,
-  //       Remark: row.Remark,
-  //     }));
-  
-  //     const worksheet = XLSX.utils.json_to_sheet(exportData);
-  //     const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-  
-  //     XLSX.writeFile(workbook, 'CashToPay.xlsx');
-  //   }
+//     XLSX.writeFile(wb, 'CashToPay.xlsx');
+//   }
 
-  downloadExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+downloadExcel() {
+
+  const displayedColumns = [
+    'SrNO',
+    'AwbNo',
+    'BookDate',
+    'Customer_Name',
+    'Shipper_Name',
+    'Consignee_Name',
+    'Total_amt',
+    'Received_amt',
+    'Outstanding',
+    'Payment_mode',
+    'Received_by',
+    'Received_date',
+    'Desposited_bank',
+    'TransactionId',
+    'TDS',
+    'Debit_note',
+    'Remark',
+    'Location_Code'
+  ];
+
+  const excelData = this.dataSource.data.map((row: any, index: number) => {
+    const temp: any = {
+      SrNO: index + 1,
+      AwbNo: row.AwbNo,
+      BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+      Customer_Name: row.Customer_Name,
+      Shipper_Name: row.Shipper_Name,
+      Consignee_Name: row.Consignee_Name,
+      Total_amt: row.Total_amt,
+      Received_amt: row.Received_amt,
+      Outstanding: row.Outstanding,
+      Payment_mode: row.Payment_mode,
+      Received_by: row.Received_by,
+      Received_date: row.Received_date
+        ? new Date(row.Received_date).toLocaleDateString()
+        : '',
+      Desposited_bank: row.Desposited_bank,
+      TransactionId: row.TransactionId,
+      TDS: row.TDS,
+      Debit_note: row.Debit_note,
+      Remark: row.Remark,
+      Location_Code: row.Location_Code
+    };
+
+    // Apply order
+    const ordered: any = {};
+    displayedColumns.forEach(col => (ordered[col] = temp[col] ?? ''));
+
+    return ordered;
+  });
+
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+
+  XLSX.writeFile(wb, 'CashToPay.xlsx');
+}
   
-    XLSX.writeFile(wb, 'CashToPay.xlsx');
-  }
-  
-  
+// downloadPdf() {
+
+//   const headers = [
+//     'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
+//     'Total Amt', 'Received Amt', 'Outstanding', 'Payment Mode', 'Received By',
+//     'Bank', 'Received Date', 'Txn ID', 'TDS', 'Debit Note', 'Remark', 'Location'
+//   ];
+
+//   const tableBody = [
+//     headers,
+//     ...this.dataSource.data.map((item: any, index: number) => [
+//       index + 1,
+//       item.AwbNo || '',
+//       item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
+//       item.Customer_Name || '',
+//       item.Shipper_Name || '',
+//       item.Consignee_Name || '',
+//       item.Total_amt ?? '',
+//       item.Received_amt ?? '',
+//       item.Outstanding ?? '',
+//       item.Payment_mode || '',
+//       item.Received_by || '',
+//       item.Desposited_bank || '',
+//       item.Received_date ? new Date(item.Received_date).toLocaleDateString() : '',
+//       item.TransactionId || '',
+//       item.TDS ?? '',
+//       item.Debit_note ?? '',
+//       item.Remark || '',
+//       item.Location_Code || ''
+//     ])
+//   ];
+
+//   const docDefinition: any = {
+//     pageOrientation: 'landscape',
+//     content: [
+//       { text: 'CashToPay Report', style: 'header' },
+//       {
+//         table: {
+//           headerRows: 1,
+//           widths: [
+//             'auto','auto','auto','*','*','*',
+//             'auto','auto','auto','auto','auto',
+//             'auto','auto','auto','auto','auto','*','auto'
+//           ],
+//           body: tableBody
+//         }
+//       }
+//     ],
+//     styles: {
+//       header: {
+//         fontSize: 18,
+//         bold: true,
+//         alignment: 'center',
+//         margin: [0, 0, 0, 10]
+//       }
+//     }
+//   };
+
+//   pdfMake.createPdf(docDefinition).download('CashToPay.pdf');
+// }
+
+
+
 downloadPdf() {
 
-  const tableBody = [
-    [
-      'Customer Code',
-      'Book Date',
-      'Customer Name',
-      'AWB No',
-      'Payment Mode',
-      'Total Amount',
-      'Received Amount',
-      'TDS',
-      'Debit Note',
-      'Outstanding',
-      'Remark'
-    ],
+  const headers = [
+    'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
+    'Total Amt', 'Received Amt', 'Outstanding', 'Payment Mode', 'Received By',
+    'Bank', 'Received Date', 'Txn ID', 'TDS', 'Debit Note', 'Remark'
+  ];
 
-    ...this.dataSource.data.map((item: any) => [
-      item.Customer_Code || '',
+  const tableBody = [
+    headers,
+    ...this.dataSource.data.map((item: any, index: number) => [
+      index + 1,
+      item.AwbNo || '',
       item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
       item.Customer_Name || '',
-      item.AwbNo || '',
-      item.Payment_mode || '',
+      item.Shipper_Name || '',
+      item.Consignee_Name || '',
       item.Total_amt ?? '',
       item.Received_amt ?? '',
+      item.Outstanding ?? '',
+      item.Payment_mode || '',
+      item.Received_by || '',
+      item.Desposited_bank || '',
+      item.Received_date
+        ? new Date(item.Received_date).toLocaleDateString()
+        : '',
+      item.TransactionId || '',
       item.TDS ?? '',
       item.Debit_note ?? '',
-      item.Outstanding ?? '',
       item.Remark || ''
     ])
   ];
 
+  // Dynamic Widths — AUTO SIZE
+  const colCount = headers.length;
+  const dynamicWidths = Array(colCount).fill('auto');   
+
   const docDefinition: any = {
     pageOrientation: 'landscape',
+    pageSize: 'A4',
+    pageMargins: [10, 10, 10, 10],
+
     content: [
       { text: 'CashToPay Report', style: 'header' },
       {
         table: {
           headerRows: 1,
-          widths: [
-            'auto','auto','*','auto','auto',
-            'auto','auto','auto','auto','auto','*'
-          ],
+          widths: dynamicWidths,   // set dynamic widths
           body: tableBody
+        },
+        layout: {
+          fillColor: (rowIndex: any) => (rowIndex === 0 ? '#e8e8e8' : null)
         }
       }
     ],
     styles: {
       header: {
-        fontSize: 18,
+        fontSize: 16,
         bold: true,
         alignment: 'center',
-        margin: [0, 0, 0, 10]
+        margin: [0, 0, 0, 8]
       }
+    },
+    defaultStyle: {
+      fontSize: 8
     }
   };
 
   pdfMake.createPdf(docDefinition).download('CashToPay.pdf');
 }
+
 
    applyFilter(filterValue: string) {
      this.dataSource.filter = filterValue.trim().toLowerCase();

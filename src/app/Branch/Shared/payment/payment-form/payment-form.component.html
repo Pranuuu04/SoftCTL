@@ -405,7 +405,7 @@
 
 
 
-  <div style="padding: 0 13px;" *ngIf="data.action === 'CashTopayEntry'">
+<div style="padding: 0 13px;" *ngIf="data.action === 'CashTopayEntry1'">
     <div class="row" style="border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-6">
         <h1 style="font-weight: 600;
@@ -429,8 +429,8 @@
           <table class="table table-bordered table-striped equal-table"  style="background-color: #e2e9f1;">
             <thead style=" background-color:  #a3b8d4; color: black;">
 
-              <tr>
-                <th style="width: 9%;">Paym Mode</th>
+              <!-- <tr>
+                <th style="width: 9%;">Pay Mode</th>
                 <th style="width: 11%;">TransID/UpiID</th>
                 <th style="width: 10%;">Received By</th>
                 <th style="width: 12%;">Deposit Bank</th>
@@ -442,16 +442,30 @@
                 <th style="width: 9%;">Outstanding</th>
                 <th style="width: 9%;">Remark</th>
                 <th style="width: 7%;">Action</th>
-              </tr>
+              </tr> -->
+             <tr>
+              <th>Pay Mode</th>
+              <th>TransID/UpiID</th>
+              <th>Received By</th>
+              <th>Deposit Bank</th>
+              <th>Received Date</th>
+              <th>Total Amt</th>
+              <th>Received Amt</th>
+              <th>TDS</th>
+              <th>Debit Note</th>
+              <th>Outstanding</th>
+              <th>Remark</th>
+              <th>Action</th>
+            </tr>
 
             </thead>
             <tbody>
-             <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
-               <!-- <td>
+             <!-- <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
+               <td>
                 <input formControlName="SrNo" class="form-control" type="number" min="1">
-              </td> -->
+              </td>
               <td>
-                <!-- <input formControlName="paymentMode" class="form-control" type="text"> -->
+                <input formControlName="paymentMode" class="form-control" type="text">
                   <input list="paymentModes" formControlName="paymentMode" class="form-control">
                   <datalist id="paymentModes">
                      <option *ngFor="let mode of paymentModes" [value]="mode.name"></option>
@@ -495,10 +509,72 @@
                   <mat-icon matTooltip="Add" style=" color: white;">add</mat-icon>
                 </button>
               </td>
-            </tr>
+            </tr> -->
 
-              <tr *ngFor="let detail of rateDetails; let i = index">
-                <!-- <td>{{ detail.SrNo }}</td> -->
+                   <tr [formGroup]="tempRateDetailForm" style="position: sticky; top: 25px; z-index: 1;">
+
+                    <td data-label="Paym Mode">
+                      <input list="paymentModes" formControlName="paymentMode" class="form-control">
+                      <datalist id="paymentModes">
+                        <option *ngFor="let mode of paymentModes" [value]="mode.name"></option>
+                      </datalist>
+                    </td>
+
+                    <td data-label="TransID/UpiID">
+                      <input formControlName="transactionID" class="form-control" type="text">
+                    </td>
+
+                    <td data-label="Received By">
+                      <input formControlName="receivedBy" class="form-control" type="text">
+                    </td>
+
+                    <td data-label="Deposit Bank">
+                      <input list="BankList" formControlName="depositedBank" class="form-control" type="text">
+                      <datalist id="BankList" style="max-height: 150px;">
+                        <option *ngFor="let bank of bankList" [value]="bank.name"></option>
+                      </datalist>
+                    </td>
+
+                    <td data-label="Received Date">
+                      <input formControlName="receivedDate" class="form-control" type="date">
+                    </td>
+
+                    <td data-label="Total Amt">
+                      <input formControlName="totalAmt" class="form-control" type="text" readonly>
+                    </td>
+
+                    <td data-label="Received Amt">
+                      <input formControlName="receivedAmt" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+                    </td>
+
+                    <td data-label="TDS">
+                      <input formControlName="TDS" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+                    </td>
+
+                    <td data-label="Debit Note">
+                      <input formControlName="debitNote" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0">
+                    </td>
+
+                    <td data-label="Outstanding">
+                      <input formControlName="outstandingAmt" class="form-control" type="number" min="0" readonly>
+                    </td>
+
+                    <td data-label="Remark">
+                      <input formControlName="Remark" class="form-control" type="text">
+                    </td>
+
+                    <td data-label="Action">
+                      <button type="button" class="btn btn-light check"
+                              (click)="addRateDetail()"
+                              [disabled]="tempRateDetailForm.invalid">
+                        <mat-icon matTooltip="Add" style="color: white;">add</mat-icon>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+              <!-- <tr *ngFor="let detail of rateDetails; let i = index">
                   <td>{{ detail.Payment_mode }}</td>
                   <td>{{ detail.TransactionId }}</td>
                   <td>{{ detail.Received_by }}</td>
@@ -511,17 +587,167 @@
                   <td>{{ detail.Outstanding }}</td>
                   <td>{{ detail.Remark }}</td>
                 <td>
-                  <!-- <button *ngIf="i === 0" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                  <button *ngIf="i === 0" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
                     <i class="fa-solid fa-trash"></i>
-                  </button> -->
+                  </button>
                   <button *ngIf="detail.id === latestRecordTempId" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
-              </tr>
+              </tr> -->
+              
+              <tr *ngFor="let detail of rateDetails; let i = index">
+                  <td data-label="Paym Mode">{{ detail.Payment_mode }}</td>
+                  <td data-label="TransID/UpiID">{{ detail.TransactionId }}</td>
+                  <td data-label="Received By">{{ detail.Received_by }}</td>
+                  <td data-label="Deposit Bank">{{ detail.Desposited_bank }}</td>
+                  <td data-label="Received Date">{{ detail.Received_date | date: 'dd/MM/yyyy' }}</td>
+                  <td data-label="Total Amt">{{ detail.Total_amt }}</td>
+                  <td data-label="Received Amt">{{ detail.Received_amt }}</td>
+                  <td data-label="TDS">{{ detail.TDS }}</td>
+                  <td data-label="Debit Note">{{ detail.Debit_note }}</td>
+                  <td data-label="Outstanding">{{ detail.Outstanding }}</td>
+                  <td data-label="Remark">{{ detail.Remark }}</td>
+                  <td data-label="Action">
+                    <button *ngIf="detail.id === latestRecordTempId" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
             </tbody>
 
           </table>
-        </div>
+      </div>
   </form>
 </div>
+
+
+<div class="cashTopay-wrapper" style="padding: 0 13px;" *ngIf="data.action === 'CashTopayEntry'">
+
+  <div class="header" style="display: flex;align-items: center;justify-content: space-between; 
+                border-bottom: 1px solid #d2d2d2; padding: 6px 10px;">
+    <h1 style="
+        font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px;">Cash Topay entry</h1>
+
+     <button
+        type="button"
+        class="btn btn-light"
+        (click)="CloseDialog()"
+        style="width: 30px; text-align: center; line-height: 30px;
+          height: 30px; font-weight: 500; font-size: large; background: red; color: white;"> X
+      </button>
+  </div>
+
+  <form>
+    <div class="cashTopaytable">
+      <table style="background-color: #e2e9f1;">
+        <thead style=" background-color:  #a3b8d4; color: black;">
+          <tr>
+            <th>Pay Mode</th>
+            <th>TransID/UpiID</th>
+            <th>Received By</th>
+            <th>Deposit Bank</th>
+            <th>Received Date</th>
+            <th>Total Amt</th>
+            <th>Received Amt</th>
+            <th>TDS</th>
+            <th>Debit Note</th>
+            <th>Outstanding</th>
+            <th>Remark</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr [formGroup]="tempRateDetailForm" class="top-sticky">
+
+            <td data-label="Pay Mode">
+              <input list="paymentModes" formControlName="paymentMode" class="form-control" />
+              <datalist id="paymentModes">
+                <option *ngFor="let mode of paymentModes" [value]="mode.name"></option>
+              </datalist>
+            </td>
+
+            <td data-label="TransID/UpiID">
+              <input formControlName="transactionID" class="form-control" type="text" />
+            </td>
+
+            <td data-label="Received By">
+              <input formControlName="receivedBy" class="form-control" type="text" />
+            </td>
+
+            <td data-label="Deposit Bank">
+              <input list="BankList" formControlName="depositedBank" class="form-control" type="text" />
+              <datalist id="BankList" style="max-height: 150px;">
+                <option *ngFor="let bank of bankList" [value]="bank.name"></option>
+              </datalist>
+            </td>
+
+            <td data-label="Received Date">
+              <input formControlName="receivedDate" class="form-control" type="date" />
+            </td>
+
+            <td data-label="Total Amt">
+              <input formControlName="totalAmt" class="form-control" type="text" readonly />
+            </td>
+
+            <td data-label="Received Amt">
+              <input formControlName="receivedAmt" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0" />
+            </td>
+
+            <td data-label="TDS">
+              <input formControlName="TDS" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0" />
+            </td>
+
+            <td data-label="Debit Note">
+              <input formControlName="debitNote" class="form-control" type="number" (keyup)="calculateOutstandingAmt()" min="0" />
+            </td>
+
+            <td data-label="Outstanding">
+              <input formControlName="outstandingAmt" class="form-control" type="number" readonly />
+            </td>
+
+            <td data-label="Remark">
+              <input formControlName="Remark" class="form-control" type="text" />
+            </td>
+
+            <td data-label="Action">
+              <button type="button" class="btn btn-light check" (click)="addRateDetail()" [disabled]="tempRateDetailForm.invalid || tempRateDetailForm.get('outstandingAmt')?.value < 0">
+                <mat-icon matTooltip="Add" style="color: white;">add</mat-icon>
+              </button>
+            </td>
+
+          </tr>
+
+          <tr *ngFor="let detail of rateDetails; let i = index">
+            <td data-label="Pay Mode">{{ detail.Payment_mode }}</td>
+            <td data-label="TransID/UpiID">{{ detail.TransactionId }}</td>
+            <td data-label="Received By">{{ detail.Received_by }}</td>
+            <td data-label="Deposit Bank">{{ detail.Desposited_bank }}</td>
+            <td data-label="Received Date">{{ detail.Received_date | date: 'dd/MM/yyyy' }}</td>
+            <td data-label="Total Amt">{{ detail.Total_amt }}</td>
+            <td data-label="Received Amt">{{ detail.Received_amt }}</td>
+            <td data-label="TDS">{{ detail.TDS }}</td>
+            <td data-label="Debit Note">{{ detail.Debit_note }}</td>
+            <td data-label="Outstanding">{{ detail.Outstanding }}</td>
+            <td data-label="Remark">{{ detail.Remark }}</td>
+            <td data-label="Action">
+              <button *ngIf="detail.id === latestRecordTempId" type="button" class="btn btn-light delete" (click)="removeRateDetail(i)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+  </form>
+</div>
+
+

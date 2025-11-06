@@ -1,3 +1,51 @@
+ <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
+    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
+          <ng-select
+            [items]="customerList"
+            class="custom-select1"
+            bindLabel="customerName"
+            bindValue="customerCode"
+            formControlName="customer">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="textOnInput">
+          <label for="fromDate"><span style="color: red;">*</span>From date :</label>
+          <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
+        </div>
+      </div>
+
+       <div class="col-sm-2">
+        <div class="textOnInput">
+          <label for="fromDate"><span style="color: red;">*</span>To date :</label>
+          <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
+        </div>
+      </div> 
+
+      <div class="col-sm-2">
+        <div class="textOnInput">
+          <label for="AwbNo">AwbNo :</label> <!--<span style="color: red;">*</span>-->
+          <input class="form-control" type="text" formControlName="AwbNo">
+        </div>
+      </div>
+       <!-- <div class="col-sm-2">
+        <div class="textOnInput">
+          <label for="Amount">Amount :</label>
+          <input class="form-control" type="number" min="0" formControlName="Amount">
+        </div>
+      </div> -->
+        <div class="col-sm-2 d-flex" style="justify-content: right;" >
+        <button type="submit" class="btn btn-light other-button">Submit</button>
+      </div>
+    </div>
+  </form>
+ 
+ 
  <!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
     <div class="table-responsive">
         <div class="row d-flex m-0" style="justify-content: right;" >
@@ -22,18 +70,21 @@
             
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> 
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openPaymentForm(element)">
+                <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openPaymentForm(element)">
                   <mat-icon>add</mat-icon>
-                </button> </th>
+                </button>  -->
+                Action</th>
+
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <!-- <button mat-menu-item>
+                  <button mat-menu-item>
                     <mat-icon>copy</mat-icon>
                     <span>copy</span>
-                  </button> -->
+                  </button>
                   <button mat-menu-item  (click)="openPaymentForm(element)">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
@@ -41,9 +92,17 @@
                   <button mat-menu-item  (click)="deletePayment(element)">
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>
-                  </button>
-                </mat-menu>
-                
+                  </button> 
+                </mat-menu>-->
+                  
+
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openPaymentForm()" style="font-size: 16px;text-align: center;">
+                  <mat-icon class="small-icon" >add</mat-icon>
+                </button> 
+                <button mat-mini-fab color="warn" aria-label="Download PDF" (click)="downloadPdf()" style="font-size: 16px; margin-left: 5px; text-align: center;">
+                     <mat-icon class="small-icon" >picture_as_pdf</mat-icon>
+                 </button>
+
               </td>
             </ng-container>
             
@@ -128,12 +187,12 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-    <!-- ✅ Data rows (only if showTable and has data) -->
+    <!-- Data rows (only if showTable and has data) -->
     <ng-container *ngIf="showTable && dataSource.data.length > 0">
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </ng-container>
 
-    <!-- ✅ No data row -->
+    <!--  No data row -->
     <ng-container *ngIf="!showTable || dataSource.data.length === 0">
       <tr>
         <td [attr.colspan]="displayedColumns.length" class="text-center">

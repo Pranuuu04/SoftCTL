@@ -34,7 +34,7 @@ export class CashTopayComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];'SubTotal',
-  displayedColumns: string[] = ['action','AwbNo','BookDate','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
+  displayedColumns: string[] = ['action','AwbNo','BookDate','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
 
   userType: any;
   selectedValue = 'All';
@@ -141,7 +141,6 @@ calculatePageCount() {
 
 onFilterSubmit(): void {
 if (this.filterForm.valid) {
-    // this.RateUpdationTable(1, this.pageSize);
        const pageNumber = this.pageNumber;
        const pageSize = this.pageSize;
       const sessionLocationCode = this.sessionLocationCode;
@@ -156,13 +155,13 @@ if (this.filterForm.valid) {
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
-        // this.showTable = true;
+        this.showTable = true;
         this.dataSource = resp.Data;
         this.length = resp.count;
         this.calculatePageCount();
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');
-        // this.showTable = false;
+        this.showTable = false;
       }
     });
 
@@ -171,7 +170,6 @@ if (this.filterForm.valid) {
      this.openSnackBar('Please fill out all required fields.', 'error-snackbar');
   }
 }
-
 
 
 openCashTopayForm(action: 'add' | 'edit', element?: any) {
@@ -185,7 +183,10 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
       toDate: this.toDate,
       customerCode:this.filterForm.get('rateCustomer')?.value
     },
-    width: '95rem',
+    // width: '95rem',
+    width: '95vw',
+    maxWidth: '95vw',
+    panelClass: 'cashTopay-dialog' ,
     disableClose: true
   });
 
