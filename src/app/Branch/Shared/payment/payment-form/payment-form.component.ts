@@ -178,11 +178,11 @@ bankList = [
 
      this.creditNoteForm  = this.formbuilder.group({
       // noteNo: [''],
-      Date: ['', Validators.required],
-      Customer: [''],
-      Particulars: [''],
+      Date: [this.currentDate, Validators.required],
+      Customer: ['',Validators.required],
+      Particulars: ['',Validators.required],
       Remark: [''],
-      Amount: ['']
+      Amount: ['',Validators.required]
     });
     this.getCreditNoteByCustomerCode();
 
@@ -192,7 +192,7 @@ bankList = [
       paymentType: [''],
       receiptNo: ['', Validators.required],
       receiptDt: ['', Validators.required],
-      receiveDt: ['', Validators.required],
+      receiveDt: [this.currentDate, Validators.required],
       receiverName: ['', Validators.required],
       Amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       TDS: [''],
@@ -204,10 +204,10 @@ bankList = [
     this.getPaymentEntryByCustomerCode();
 
     this.WalletEntryForm  = this.formbuilder.group({
-      WalletDate: ['', Validators.required],
-      WalletCustomer: [''],
-      WalletAmount: [''],
-      paymentMode: [''],
+      WalletDate: [this.currentDate, Validators.required],
+      WalletCustomer: ['',Validators.required],
+      WalletAmount: ['',Validators.required],
+      paymentMode: ['',Validators.required],
       walletRemark: [''],
     });
 
@@ -343,13 +343,24 @@ getCashToPayData(){
 
 calculateOutstandingAmt() {
   const totalAmt = Number(this.tempRateDetailForm.get('totalAmt')?.value) || 0;
-  const receivedAmt = Number(this.tempRateDetailForm.get('receivedAmt')?.value) || 0;
+  let receivedAmt = Number(this.tempRateDetailForm.get('receivedAmt')?.value) || 0;
   const tds = Number(this.tempRateDetailForm.get('TDS')?.value) || 0;
   const debitNote = Number(this.tempRateDetailForm.get('debitNote')?.value) || 0;
 
+  const totalEntered = receivedAmt + tds + debitNote;
+
+  if(totalEntered>totalAmt){
+    const allowedReceived = totalAmt - (tds + debitNote);
+    this.openSnackBar('Received amount cannot exceed Total Amount','error-snackbar');
+    this.tempRateDetailForm.get('receivedAmt')?.setValue(allowedReceived > 0 ? allowedReceived : 0);
+     receivedAmt = allowedReceived > 0 ? allowedReceived : 0;
+  }
+
   const outstandingAmt = totalAmt - (receivedAmt + tds + debitNote);
-  this.tempRateDetailForm.get('outstandingAmt')?.setValue(outstandingAmt);
+  this.tempRateDetailForm.get('outstandingAmt')?.setValue(parseFloat(outstandingAmt.toFixed(2)));
 }
+
+
 
 getLatestRecordId(): number | null {
   if (!this.rateDetails || this.rateDetails.length === 0) return null;
