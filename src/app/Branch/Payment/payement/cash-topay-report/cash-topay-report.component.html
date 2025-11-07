@@ -182,6 +182,18 @@
               <td mat-cell *matCellDef="let row">{{ row.Received_amt }}</td>
             </ng-container>
 
+            <!-- TDS -->
+            <ng-container matColumnDef="TDS">
+              <th mat-header-cell *matHeaderCellDef>TDS</th>
+              <td mat-cell *matCellDef="let row">{{ row.TDS }}</td>
+            </ng-container>
+
+            <!-- Debit_note -->
+            <ng-container matColumnDef="Debit_note">
+              <th mat-header-cell *matHeaderCellDef>Debit Note</th>
+              <td mat-cell *matCellDef="let row">{{ row.Debit_note }}</td>
+            </ng-container>
+
             <!-- Outstanding -->
             <ng-container matColumnDef="Outstanding">
               <th mat-header-cell *matHeaderCellDef>Outstanding</th>
@@ -219,17 +231,6 @@
               <td mat-cell *matCellDef="let row">{{ row.TransactionId }}</td>
             </ng-container>
 
-            <!-- TDS -->
-            <ng-container matColumnDef="TDS">
-              <th mat-header-cell *matHeaderCellDef>TDS</th>
-              <td mat-cell *matCellDef="let row">{{ row.TDS }}</td>
-            </ng-container>
-
-            <!-- Debit_note -->
-            <ng-container matColumnDef="Debit_note">
-              <th mat-header-cell *matHeaderCellDef>Debit Note</th>
-              <td mat-cell *matCellDef="let row">{{ row.Debit_note }}</td>
-            </ng-container>
 
             <!-- Remark -->
             <ng-container matColumnDef="Remark">
@@ -238,10 +239,10 @@
             </ng-container>
 
             <!-- Location_Code -->
-            <ng-container matColumnDef="Location_Code">
+            <!-- <ng-container matColumnDef="Location_Code">
               <th mat-header-cell *matHeaderCellDef>Location Code</th>
               <td mat-cell *matCellDef="let row">{{ row.Location_Code }}</td>
-            </ng-container>
+            </ng-container> -->
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -266,3 +267,6 @@
   <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
     <img src="./assets/images/NOdata.png" alt="">
   </div> 
+
+
+

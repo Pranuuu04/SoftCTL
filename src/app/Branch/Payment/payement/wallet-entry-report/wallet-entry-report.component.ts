@@ -79,17 +79,17 @@ export class WalletEntryReportComponent implements OnInit {
          : localStorage.getItem('selectedValue');
           this.sessionLocationName = localStorage.getItem('originName');
     
-        this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
-          const allCust = { customerName: 'All', customerCode: 'All' };
-                this.customerList = [allCust, ...data.Data];
-              this.filterForm.patchValue({ CustomerName: 'All' });
-        });
-
-        // this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+        // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
         //   const allCust = { customerName: 'All', customerCode: 'All' };
         //         this.customerList = [allCust, ...data.Data];
         //       this.filterForm.patchValue({ CustomerName: 'All' });
         // });
+
+        this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+          const allCust = { customerName: 'All', customerCode: 'All' };
+                this.customerList = [allCust, ...data.Data];
+              this.filterForm.patchValue({ CustomerName: 'All' });
+        });
    
       
       this.filterForm = this.formBuilder.group({

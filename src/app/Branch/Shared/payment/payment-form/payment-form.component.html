@@ -155,11 +155,18 @@
          <div class="col-sm-3">
           <div class="textOnSelect">
             <label for="BankName">Bank name :</label>
-             <ng-select
+             <!-- <ng-select
                   [items]="BankList"
                   class="custom-select1"
                   bindLabel="Bank_Name"
                   bindValue="Bank_Name"
+                  formControlName="BankName">
+                </ng-select> -->
+                <ng-select
+                  [items]="bankList"
+                  class="custom-select1"
+                  bindLabel="name"
+                  bindValue="name"
                   formControlName="BankName">
                 </ng-select>
         </div>
@@ -231,11 +238,18 @@
          <div class="col-sm-3">
           <div class="textOnSelect">
             <label for="DepositeBank">Deposite bank :</label>
-             <ng-select
+             <!-- <ng-select
                   [items]="BankList"
                   class="custom-select1"
                   bindLabel="Bank_Name"
                   bindValue="Bank_Name"
+                  formControlName="DepositeBank">
+                </ng-select> -->
+                <ng-select
+                  [items]="bankList"
+                  class="custom-select1"
+                  bindLabel="name"
+                  bindValue="name"
                   formControlName="DepositeBank">
                 </ng-select>
         </div>
@@ -684,7 +698,7 @@
             <td data-label="Deposit Bank">
               <input list="BankList" formControlName="depositedBank" class="form-control" type="text" />
               <datalist id="BankList" style="max-height: 150px;">
-                <option *ngFor="let bank of bankList" [value]="bank.name"></option>
+                <option *ngFor="let bank of bankList | slice:0:10" [value]="bank.name"></option>
               </datalist>
             </td>
 

@@ -57,6 +57,7 @@
     "ngx-filter-pipe": "^2.1.2",
     "ngx-mat-timepicker": "^14.0.8",
     "ngx-pagination": "^6.0.3",
+    "number-to-words": "^1.2.4",
     "pdfmake": "^0.2.12",
     "pdfmake-unicode": "^0.0.1",
     "perfect-scrollbar": "1.5.5",

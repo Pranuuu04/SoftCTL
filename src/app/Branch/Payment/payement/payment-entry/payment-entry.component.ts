@@ -116,37 +116,37 @@ export class PaymentEntryComponent implements OnInit {
   }
 
 
-onFilterSubmit(): void {
- if (this.filterForm.valid) {
-       const pageNumber = this.pageIndex+1;
-       const pageSize = this.pageSize;
-      const sessionLocationCode = this.sessionLocationCode;
-      const customerCode = this.filterForm.get('customer')?.value;
-      const fromDate = this.filterForm.get('fromDate')?.value;
-      const toDate = this.filterForm.get('toDate')?.value;
-      const AwbNo = this.filterForm.get('AwbNo')?.value;
-      // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
-      // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
-      console.log("AwbNo>>>",AwbNo);
-  this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, pageNumber, pageSize)
-    .subscribe((resp: any) => {
-      if (resp.status === 1) {
-        this.openSnackBar(resp.message, 'custom-snackbar');
-        this.showTable = true;
-        // this.dataSource = resp.Data;
-        this.length = resp.count;
-        this.calculatePageCount();
-      } else {
-        this.openSnackBar(resp.message, 'error-snackbar');
-        this.showTable = false;
-      }
-    });
+// onFilterSubmit(): void {
+//  if (this.filterForm.valid) {
+//        const pageNumber = this.pageIndex+1;
+//        const pageSize = this.pageSize;
+//       const sessionLocationCode = this.sessionLocationCode;
+//       const customerCode = this.filterForm.get('customer')?.value;
+//       const fromDate = this.filterForm.get('fromDate')?.value;
+//       const toDate = this.filterForm.get('toDate')?.value;
+//       const AwbNo = this.filterForm.get('AwbNo')?.value;
+//       // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
+//       // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
+//       console.log("AwbNo>>>",AwbNo);
+//   this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, pageNumber, pageSize)
+//     .subscribe((resp: any) => {
+//       if (resp.status === 1) {
+//         this.openSnackBar(resp.message, 'custom-snackbar');
+//         this.showTable = true;
+//         // this.dataSource = resp.Data;
+//         this.length = resp.count;
+//         this.calculatePageCount();
+//       } else {
+//         this.openSnackBar(resp.message, 'error-snackbar');
+//         this.showTable = false;
+//       }
+//     });
 
-  } else {
-    this.filterForm.markAllAsTouched();
-     this.openSnackBar('Please fill out all required fields.', 'error-snackbar');
-  }
-}
+//   } else {
+//     this.filterForm.markAllAsTouched();
+//      this.openSnackBar('Please fill out all required fields.', 'error-snackbar');
+//   }
+// }
 
 
 
