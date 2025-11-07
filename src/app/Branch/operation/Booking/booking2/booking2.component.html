@@ -1,8 +1,8 @@
 
 <div class="container">
-  <form action="" [formGroup]="bookingForm" (keydown.enter)="disableEnter($event)" (ngSubmit)="formSubmit(bookingForm.value)">
-    <div class="row">
-      <div [ngClass]="selectedCustType === 'Credit' ? 'col-sm-6' : 'col-sm-5'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
+  <form action="" [formGroup]="bookingForm" (keydown.enter)="disableEnter($event)" (ngSubmit)="formSubmit(bookingForm.value)" class="mb-0">
+    <div class="row" style="height: 430px; overflow: auto;">
+      <div [ngClass]="bookingForm.get('custType')?.value === 'Credit' ? 'col-sm-6' : 'col-sm-5'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
         <div class="form-group row">
           <div class="col-sm-6">
             <div class="textOnSelect">
@@ -96,7 +96,24 @@
           <div class="col-sm-8">
           <div class="textOnSelect">
             <label class="span">Shipper</label>
-            <input
+                 <ng-select
+              [items]="shipperNameList"
+              bindLabel="shipperName"
+              bindValue="shipperName"
+              formControlName="shipperName"
+              (change)="onShipperSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
+              style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.shipperName }} | {{ item.shipperCode }}
+              </ng-template>
+            </ng-select>
+
+            <!-- <input
               list="shipperNameList"
               class="form-control"
               formControlName="shipperName"
@@ -108,7 +125,7 @@
               <option *ngFor="let item of shipperNameList" [value]="item.shipperName">
                 {{item.shipperName}} ({{item.Shipper_GSTNo}})
               </option>
-            </datalist>
+            </datalist> -->
           </div>
         </div>
         <div class="col-sm-4">
@@ -131,7 +148,25 @@
           <div class="col-sm-12">
             <div class="textOnSelect">
               <label for="inputText">Consignee</label>
-              <input
+            <ng-select
+              id="consigneeSelect"
+              [items]="consigneeList"
+              bindLabel="ConsigneeName"
+              bindValue="ConsigneeName"
+              formControlName="consigneeName"
+              (change)="onConsigneeSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
+              style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.ConsigneeName }} | {{ item.ConsigneeCode }}
+              </ng-template>
+            </ng-select>
+
+              <!-- <input
               list="consigneeList"
               id="consigneeInput"
               class="form-control"
@@ -144,7 +179,7 @@
               <option *ngFor="let item of consigneeList" [value]="item.ConsigneeName + ' | ' + item.ConsigneeCode">
                 {{item.ConsigneeName}} ({{item.ConsigneeGSTNo}})
               </option>
-            </datalist>
+            </datalist> -->
             </div>
           </div>
 
@@ -354,7 +389,7 @@
         </div> -->
       </div>
 
-      <div [ngClass]="selectedCustType === 'Credit' ? 'col-sm-6' : 'col-sm-4'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
+      <div [ngClass]="bookingForm.get('custType')?.value === 'Credit' ? 'col-sm-6' : 'col-sm-4'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
 
         <div class="form-group row">
           <div class="col-sm-8">
@@ -621,7 +656,7 @@
           <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText"><span style="color: red;">*</span>Actual Wt</label>
-              <input class="form-control" type="number"  min="0" formControlName="actualWt" [value]="actualWt" [(ngModel)]="actualWt" (ngModelChange)="compareWeights()">
+              <input class="form-control" type="number"  min="0" formControlName="actualWt" [value]="actualWt" [(ngModel)]="actualWt" (input)="compareWeights()">
               <div *ngFor="let validation of validationMessage.actualWt">
                 <div class="error-message"
                   *ngIf="bookingForm.get('actualWt').hasError(validation.type) && (bookingForm.get('actualWt').dirty || bookingForm.get('actualWt').touched)">
@@ -633,7 +668,7 @@
           <div class="col-sm-4">
             <div class="textOnInput">
               <label for="inputText">Vol Wt</label>
-              <input class="form-control" type="number"  min="0" (ngModelChange)="compareWeights()" placeholder="Enter Volumetric Weight" formControlName="volumetricWt" [(ngModel)]="volumetricWt">
+              <input class="form-control" type="number"  min="0" (input)="compareWeights()" placeholder="Enter Volumetric Weight" formControlName="volumetricWt" [(ngModel)]="volumetricWt">
             </div>
           </div>
            <div class="col-sm-2" style="display: flex; justify-content: right;">
@@ -648,14 +683,14 @@
           <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText">Charge Wt</label>
-              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [(ngModel)]="chargedWt" [value]="chargedWt" (input)="freightCharge()">
+              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [(ngModel)]="chargedWt" [value]="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
             </div>
           </div>
         
         </div>
       </div>
 
-      <div class="col-sm-3 p-0 mt-2" *ngIf="selectedCustType !== 'Credit'">
+      <div class="col-sm-3 p-0 mt-2" *ngIf="bookingForm.get('custType')?.value !== 'Credit'">
         <div class="col-sm-12">
           <div class="textOnInput">
             <label for="inputText">Rate/Kg</label>
@@ -862,7 +897,17 @@
       </div>
 
     </div>
-    <div class="row form-group" style="border-top: 2px solid  #d2d2d2;">
+       <div class="row " style="border-top: 2px solid  #d2d2d2; padding: 10px;">
+      <div class="col-sm-12 d-flex form-group" style=" justify-content: center;">
+        <button *ngIf="!updateEnabled"  type="submit" class="custom-btn btn-14 mr-2" [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Save</button>
+        <button *ngIf="updateEnabled" type="button" class="custom-btn btn-14 mr-2" (click)="updateForm()"  [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Update</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openEnableDialog()"><i class="fa-solid fa-check"></i> Setup</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openPrintDialog(awbNo)"><i class="fa-solid fa-print"></i>Print</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openDeleteDialog()" [disabled]="deleteDisabled">Delete</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-14"  (click)="openLabelDialog()"><i class="fa-solid fa-tag"></i> label</button>
+      </div>
+    </div>
+    <!-- <div class="row form-group" style="border-top: 2px solid  #d2d2d2; padding: 10px;">
       <div class="col-sm-12 d-flex" style=" justify-content: center;">
         <button *ngIf="!updateEnabled"  type="submit" class="btn btn-light other-button" [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Save</button>
         <button *ngIf="updateEnabled" type="button" class="btn btn-light other-button" (click)="updateForm()"  [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Update</button>
@@ -871,6 +916,6 @@
         <button tabindex="-1" type="button" class="btn btn-light other-button" (click)="openDeleteDialog()" [disabled]="deleteDisabled">Delete</button>
         <button tabindex="-1" type="button" class="btn btn-light other-button"  (click)="openLabelDialog()"><i class="fa-solid fa-tag"></i> label</button>
       </div>
-    </div>
+    </div> -->
   </form>
 </div>

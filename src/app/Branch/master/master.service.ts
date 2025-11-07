@@ -617,4 +617,8 @@ getCompany(companyCode: string): Observable<any> {
     importRate(payload: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}Master/importRate`, payload);
   }
+
+  getCustomerData(code: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}Master/AllMasters?operation=getCustomer&masterName=Customer&code=${code}`);
+  }
 }

@@ -388,8 +388,8 @@ $opacity-2:                  rgba(255,255,255, .2) !default;
 .custom-btn {
   width: 100px;
   height: 30px;
-  color: #fff;
-  border-radius: 5px;
+  color: #b2bcff !important;
+  border-radius: 10px;
   // padding: 10px 25px;
   font-family: 'Lato', sans-serif;
   font-size: 13px;
@@ -403,6 +403,9 @@ $opacity-2:                  rgba(255,255,255, .2) !default;
    7px 7px 20px 0px rgba(0,0,0,.1),
    4px 4px 5px 0px rgba(0,0,0,.1);
   outline: none;
+  i{
+    color: #b2bcff;
+  }
 }
 
 /* 14 */
@@ -419,16 +422,20 @@ $opacity-2:                  rgba(255,255,255, .2) !default;
   top: 0;
   left: 0;
   z-index: -1;
-  border-radius: 5px;
-  background-color: #89b6ee;
-  background-image: linear-gradient(315deg, #2e3f55 0%, #89b6ee 74%);
+  border-radius: 10px;
+  background-color: #70a4e4;
+  background-image: linear-gradient(315deg, #2e3f55 0%, #70a4e4 74%);
    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
    7px 7px 20px 0px rgba(0,0,0,.1),
    4px 4px 5px 0px rgba(0,0,0,.1);
   transition: all 0.3s ease;
 }
 .btn-14:hover {
-  color: #000;
+  // color: #000;
+  color: #2e3f55 !important;
+  i{
+    color: #2e3f55;
+  }
 }
 .btn-14:hover:after {
   top: auto;

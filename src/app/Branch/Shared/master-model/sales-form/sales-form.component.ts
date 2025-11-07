@@ -128,7 +128,7 @@ this.currentDate1 = this.formatDateLocal(new Date(currentYear, currentMonth, 1))
 
 this.currentDate2 = this.formatDateLocal(new Date(currentYear, 11, 31));
 
-       this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+       this.masterService.getCustomerData(this.sessionLocationCode).subscribe((data: any) => {
       this.customerList = data.Data;
     });
     this.AllService.getOriginData().subscribe((data) => {
