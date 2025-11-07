@@ -17,7 +17,7 @@ import { MasterService } from 'app/Branch/master/master.service';
 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { toWords } from 'number-to-words';
+// import { toWords } from 'number-to-words';
 
 @Component({
   selector: 'app-credit-note-report',
@@ -385,156 +385,156 @@ downloadPdf() {
 }
 
 
-downloadPdfForOne(element: any) {
+// downloadPdfForOne(element: any) {
 
-    const b = this.branchDetails || {};
-    const gstNo = this.branchDetails?.GSTNo || '';
-    const panNo = gstNo.length >= 12 ? gstNo.substring(2, 12) : 'N/A';
+//     const b = this.branchDetails || {};
+//     const gstNo = this.branchDetails?.GSTNo || '';
+//     const panNo = gstNo.length >= 12 ? gstNo.substring(2, 12) : 'N/A';
 
-  const docDefinition: any = {
-    pageMargins: [30, 20, 30, 20],
-    content: [
-      {
-        table: {
-          widths: ['*'],
-          body: [[
-            {
-              // stack: [
-              //   { text: 'A-ONE CARRIERS', style: 'title' },
-              //   { text: 'E1-101, KAILASH ESPLANADE, OPP. SHREYAS CINEMA, L.B.S. MARG, GHATKOPAR (WEST), MUMBAI - 400086.', style: 'subText' },
-              //   { text: 'Contact: 022 25004420 / 9820430332 | Email: aone_carriers@rediffmail.com', style: 'subText' },
-              //   { text: 'GSTIN/UIN: 27ACQPA9420Q1ZO | State: Maharashtra, Code: 27', style: 'subText' },
-              // ],
-              stack: [
-                { text: b.CompanyName || 'SOFTCTL IT SERVICES', style: 'title' },
-                { text: `${b.Location_Add1 || ''}${b.Location_Add2 ? ', ' + b.Location_Add2 : ''}${b.Location_Add3 ? ', ' + b.Location_Add3 : ''}${
-                    b.Location_PIN ? ' - ' + b.Location_PIN : ''}`,
-                 style: 'subText'
-                },
-                {text: `Contact: ${b.Location_Tel || ''}${b.Location_eMail ? ' | Email: ' + b.Location_eMail : ''}`,
-                  style: 'subText'
-                },
-                {text: `GSTIN/UIN: ${gstNo || ''} | State: ${b.Location_Name || ''}, Code: ${b.State_Code || ''}`,
-                  style: 'subText'
-                },
-                b.Location_web? { text: `Website: ${b.Location_web}`, style: 'subText' } : ''
-              ],
-              border: [true, true, true, false],
-              margin: [0, 5, 0, 5]
-            }
-          ]]
-        },
-        layout: 'noBorders'
-      },
+//   const docDefinition: any = {
+//     pageMargins: [30, 20, 30, 20],
+//     content: [
+//       {
+//         table: {
+//           widths: ['*'],
+//           body: [[
+//             {
+//               // stack: [
+//               //   { text: 'A-ONE CARRIERS', style: 'title' },
+//               //   { text: 'E1-101, KAILASH ESPLANADE, OPP. SHREYAS CINEMA, L.B.S. MARG, GHATKOPAR (WEST), MUMBAI - 400086.', style: 'subText' },
+//               //   { text: 'Contact: 022 25004420 / 9820430332 | Email: aone_carriers@rediffmail.com', style: 'subText' },
+//               //   { text: 'GSTIN/UIN: 27ACQPA9420Q1ZO | State: Maharashtra, Code: 27', style: 'subText' },
+//               // ],
+//               stack: [
+//                 { text: b.CompanyName || 'SOFTCTL IT SERVICES', style: 'title' },
+//                 { text: `${b.Location_Add1 || ''}${b.Location_Add2 ? ', ' + b.Location_Add2 : ''}${b.Location_Add3 ? ', ' + b.Location_Add3 : ''}${
+//                     b.Location_PIN ? ' - ' + b.Location_PIN : ''}`,
+//                  style: 'subText'
+//                 },
+//                 {text: `Contact: ${b.Location_Tel || ''}${b.Location_eMail ? ' | Email: ' + b.Location_eMail : ''}`,
+//                   style: 'subText'
+//                 },
+//                 {text: `GSTIN/UIN: ${gstNo || ''} | State: ${b.Location_Name || ''}, Code: ${b.State_Code || ''}`,
+//                   style: 'subText'
+//                 },
+//                 b.Location_web? { text: `Website: ${b.Location_web}`, style: 'subText' } : ''
+//               ],
+//               border: [true, true, true, false],
+//               margin: [0, 5, 0, 5]
+//             }
+//           ]]
+//         },
+//         layout: 'noBorders'
+//       },
 
-      { text: 'TAX INVOICE / CREDIT NOTE', style: 'header', margin: [0, 10, 0, 0] },
+//       { text: 'TAX INVOICE / CREDIT NOTE', style: 'header', margin: [0, 10, 0, 0] },
 
-      {
-        columns: [
-          { text: `No.: ${element.NoteNo || '-'}`, width: '50%' },
-          { text: `Dated: ${element.NoteDate ? new Date(element.NoteDate).toLocaleDateString() : '-'}`, alignment: 'right', width: '50%' }
-        ],
-        style: 'boldText',
-        margin: [0, 0, 0, 8]
-      },
+//       {
+//         columns: [
+//           { text: `No.: ${element.NoteNo || '-'}`, width: '50%' },
+//           { text: `Dated: ${element.NoteDate ? new Date(element.NoteDate).toLocaleDateString() : '-'}`, alignment: 'right', width: '50%' }
+//         ],
+//         style: 'boldText',
+//         margin: [0, 0, 0, 8]
+//       },
 
-      {
-        table: {
-          widths: ['25%', '75%'],
-          body: [
-            [
-              { text: "Party's Name", bold: true },
-              {
-                stack: [
-                  { text: element.Customer_Name || '' },
-                  { text: element.Customer_Address || 'PRINT WORLD INDUSTRIAL COMPLEX, BLDG NO. A-4, 1st FLOOR, GALA 109 TO 113, BHIWANDI 421302' },
-                ]
-              }
-            ],
-            [{ text: 'GSTIN/UIN.:', bold: true }, { text: element.GSTIN || '27ABHFS0951L1ZU' }]
-          ]
-        },
-        margin: [0, 0, 0, 10]
-      },
+//       {
+//         table: {
+//           widths: ['25%', '75%'],
+//           body: [
+//             [
+//               { text: "Party's Name", bold: true },
+//               {
+//                 stack: [
+//                   { text: element.Customer_Name || '' },
+//                   { text: element.Customer_Address || 'PRINT WORLD INDUSTRIAL COMPLEX, BLDG NO. A-4, 1st FLOOR, GALA 109 TO 113, BHIWANDI 421302' },
+//                 ]
+//               }
+//             ],
+//             [{ text: 'GSTIN/UIN.:', bold: true }, { text: element.GSTIN || '27ABHFS0951L1ZU' }]
+//           ]
+//         },
+//         margin: [0, 0, 0, 10]
+//       },
 
-      {
-        table: {
-          headerRows: 1,
-          widths: ['*', '*', 80],
-          body: [
-            [
-              { text: 'Particulars', bold: true },
-              { text: 'Remark', bold: true },
-              { text: 'Amount', bold: true, alignment: 'right' }
-            ],
-            [
-              { text: element.Particulars || '', margin: [0, 3, 0, 3] },
-              { text: element.Remark || '', margin: [0, 3, 0, 3] },
-              { text: (element.Amount || 0).toFixed(2), alignment: 'right' }
-            ]
-          ]
-        },
-        layout: 'lightHorizontalLines',
-        margin: [0, 0, 0, 8]
-      },
+//       {
+//         table: {
+//           headerRows: 1,
+//           widths: ['*', '*', 80],
+//           body: [
+//             [
+//               { text: 'Particulars', bold: true },
+//               { text: 'Remark', bold: true },
+//               { text: 'Amount', bold: true, alignment: 'right' }
+//             ],
+//             [
+//               { text: element.Particulars || '', margin: [0, 3, 0, 3] },
+//               { text: element.Remark || '', margin: [0, 3, 0, 3] },
+//               { text: (element.Amount || 0).toFixed(2), alignment: 'right' }
+//             ]
+//           ]
+//         },
+//         layout: 'lightHorizontalLines',
+//         margin: [0, 0, 0, 8]
+//       },
 
-      {
-        columns: [
-          { text: 'Amount (in words):', bold: true, width: '40%' },
-          { text: this.convertAmountToWords(element.Amount) || 0, italics: true, width: '60%' }
-        ],
-        margin: [0, 5, 0, 10]
-      },
+//       {
+//         columns: [
+//           { text: 'Amount (in words):', bold: true, width: '40%' },
+//           { text: this.convertAmountToWords(element.Amount) || 0, italics: true, width: '60%' }
+//         ],
+//         margin: [0, 5, 0, 10]
+//       },
 
-      {
-        columns: [
-          {
-            width: '60%',
-            stack: [
-              // { text: `Company's PAN: ACQPA9420Q`, bold: true, margin: [0, 5, 0, 5] }
-              { text: `Company's PAN: ${panNo}`, bold: true, margin: [0, 5, 0, 5] }
-            ]
-          },
-          {
-            width: '40%',
-            stack: [
-              {
-                table: {
-                  widths: ['*', 60],
-                  body: [
-                    ['Total Amount', { text: (element.Amount || 0).toFixed(2), alignment: 'right' }],
-                    ['GST 18%', { text: ((element.Amount || 0) * 0.18).toFixed(2), alignment: 'right' }],
-                    ['Grand Total', { text: ((element.Amount || 0) * 1.18).toFixed(2), alignment: 'right', bold: true }]
-                  ]
-                },
-                layout: 'lightHorizontalLines'
-              },
-              { text: '\nFOR '+b.CompanyName, alignment: 'right', bold: true, margin: [0, 20, 0, 0] },
-              { text: 'Authorised Signatory', alignment: 'right', margin: [0, 5, 0, 0] }
-            ]
-          }
-        ]
-      }
-    ],
+//       {
+//         columns: [
+//           {
+//             width: '60%',
+//             stack: [
+//               // { text: `Company's PAN: ACQPA9420Q`, bold: true, margin: [0, 5, 0, 5] }
+//               { text: `Company's PAN: ${panNo}`, bold: true, margin: [0, 5, 0, 5] }
+//             ]
+//           },
+//           {
+//             width: '40%',
+//             stack: [
+//               {
+//                 table: {
+//                   widths: ['*', 60],
+//                   body: [
+//                     ['Total Amount', { text: (element.Amount || 0).toFixed(2), alignment: 'right' }],
+//                     ['GST 18%', { text: ((element.Amount || 0) * 0.18).toFixed(2), alignment: 'right' }],
+//                     ['Grand Total', { text: ((element.Amount || 0) * 1.18).toFixed(2), alignment: 'right', bold: true }]
+//                   ]
+//                 },
+//                 layout: 'lightHorizontalLines'
+//               },
+//               { text: '\nFOR '+b.CompanyName, alignment: 'right', bold: true, margin: [0, 20, 0, 0] },
+//               { text: 'Authorised Signatory', alignment: 'right', margin: [0, 5, 0, 0] }
+//             ]
+//           }
+//         ]
+//       }
+//     ],
 
-    styles: {
-      title: { fontSize: 14, bold: true, alignment: 'center' },
-      header: { fontSize: 12, bold: true, alignment: 'center' },
-      subText: { fontSize: 9, alignment: 'center' },
-      boldText: { bold: true, fontSize: 10 }
-    },
+//     styles: {
+//       title: { fontSize: 14, bold: true, alignment: 'center' },
+//       header: { fontSize: 12, bold: true, alignment: 'center' },
+//       subText: { fontSize: 9, alignment: 'center' },
+//       boldText: { bold: true, fontSize: 10 }
+//     },
 
-    defaultStyle: { fontSize: 9 }
-  };
+//     defaultStyle: { fontSize: 9 }
+//   };
 
-  pdfMake.createPdf(docDefinition).download(`CreditNote_${element.NoteNo || 'Note'}.pdf`);
-}
+//   pdfMake.createPdf(docDefinition).download(`CreditNote_${element.NoteNo || 'Note'}.pdf`);
+// }
 
 
-convertAmountToWords(amount: number): string {
-  const words = require('number-to-words');
-  return words.toWords(amount).toUpperCase() + ' ONLY';
-}
+// convertAmountToWords(amount: number): string {
+//   const words = require('number-to-words');
+//   return words.toWords(amount).toUpperCase() + ' ONLY';
+// }
 
 
 // downloadPdfForOne(element: any) {
