@@ -50,16 +50,15 @@ export class CashTopayReportComponent implements OnInit {
         'Consignee_Name',
         'Total_amt',
         'Received_amt',
+        'TDS',
+        'Debit_note',
         'Outstanding',
         'Payment_mode',
         'Received_by',
         'Received_date',
         'Desposited_bank',
         'TransactionId',
-        'TDS',
-        'Debit_note',
         'Remark',
-        'Location_Code'
       ];
  
    userType: any;
@@ -103,18 +102,19 @@ export class CashTopayReportComponent implements OnInit {
       ? localStorage.getItem('originCode')
       : localStorage.getItem('selectedValue');
        this.sessionLocationName = localStorage.getItem('originName');
- 
-    //  this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
-    //    const allCust = { customerName: 'All', customerCode: 'All' };
-    //          this.customerList = [allCust, ...data.Data];
-    //        this.filterForm.patchValue({ CustomerName: 'All' });
-    //  });
 
-    this.AllService.getConsignerData(this.sessionLocationCode)
-    .subscribe((data: any) => {
-      const all = { customerName: 'All', customerCode: 'All' };
-      this.customerList = [all, ...data.Data];
-    });
+    // this.AllService.getConsignerData(this.sessionLocationCode)
+    // .subscribe((data: any) => {
+    //   const all = { customerName: 'All', customerCode: 'All' };
+    //   this.customerList = [all, ...data.Data];
+    //        this.filterForm.patchValue({ CustomerName: 'All' });
+    // });
+
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+            const allCust = { customerName: 'All', customerCode: 'All' };
+                  this.customerList = [allCust, ...data.Data];
+                this.filterForm.patchValue({ CustomerName: 'All' });
+          });
 
   this.masterService.getAndDeleteShipperConsig('getConsignee')
     .subscribe((data: any) => {
@@ -272,16 +272,15 @@ downloadExcel() {
     'Consignee_Name',
     'Total_amt',
     'Received_amt',
+    'TDS',
+    'Debit_note',
     'Outstanding',
     'Payment_mode',
     'Received_by',
     'Received_date',
     'Desposited_bank',
     'TransactionId',
-    'TDS',
-    'Debit_note',
     'Remark',
-    'Location_Code'
   ];
 
   const excelData = this.dataSource.data.map((row: any, index: number) => {
@@ -305,7 +304,7 @@ downloadExcel() {
       TDS: row.TDS,
       Debit_note: row.Debit_note,
       Remark: row.Remark,
-      Location_Code: row.Location_Code
+      // Location_Code: row.Location_Code
     };
 
     // Apply order
@@ -389,8 +388,8 @@ downloadPdf() {
 
   const headers = [
     'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
-    'Total Amt', 'Received Amt', 'Outstanding', 'Payment Mode', 'Received By',
-    'Bank', 'Received Date', 'Txn ID', 'TDS', 'Debit Note', 'Remark'
+    'Total Amt', 'Received Amt', 'TDS', 'Debit Note', 'Outstanding', 'Payment Mode', 'Received By',
+    'Bank', 'Received Date', 'Txn ID', 'Remark'
   ];
 
   const tableBody = [
@@ -404,6 +403,8 @@ downloadPdf() {
       item.Consignee_Name || '',
       item.Total_amt ?? '',
       item.Received_amt ?? '',
+      item.TDS ?? '',
+      item.Debit_note ?? '',
       item.Outstanding ?? '',
       item.Payment_mode || '',
       item.Received_by || '',
@@ -412,8 +413,6 @@ downloadPdf() {
         ? new Date(item.Received_date).toLocaleDateString()
         : '',
       item.TransactionId || '',
-      item.TDS ?? '',
-      item.Debit_note ?? '',
       item.Remark || ''
     ])
   ];

@@ -168,12 +168,20 @@ bankList = [
    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
-    this.AllService.getWalletConsigner(this.sessionLocationCode).subscribe((data: any) => {
-      this.customerList = data.Data;
-    });
+
+    // this.AllService.getWalletConsigner(this.sessionLocationCode).subscribe((data: any) => {
+    //   this.customerList = data.Data;
+    // });
+
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+            this.customerList = data.Data;      
+        });
+
+    
      this.paymentService.getByBankName().subscribe((data: any) => {
       this.BankList = data.Data;
     });
+
      this.currentDate = new Date().toISOString().split('T')[0];
 
      this.creditNoteForm  = this.formbuilder.group({
@@ -328,11 +336,11 @@ getCashToPayData(){
         }
 
         // Compute remaining total for form
-        // if (resp.getDetails?.length > 0) {
-        //   const last = resp.getDetails[0];
-        //   const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
-        //   this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
-        // }
+        if (resp.getDetails?.length > 0) {
+          const last = resp.getDetails[0];
+          const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+        }
 
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');

@@ -1272,7 +1272,7 @@ saveReportSetup(apiName: string, data: any) {
 
 
 getAllCustomer(masterName: string, code: any) {
-  return this.http.get(`${environment.apiUrl}AllMasters?operation=getCustomer&masterName=${masterName}&code=${code}`);
+  return this.http.get(`${environment.apiUrl}Master/allMasters?operation=getCustomer&masterName=${masterName}&code=${code}`);
 }
 
 

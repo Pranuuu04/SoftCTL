@@ -79,11 +79,17 @@ export class CashTopayComponent implements OnInit {
      : localStorage.getItem('selectedValue');
       this.sessionLocationName = localStorage.getItem('originName');
 
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
-      const allCust = { customerName: 'All', customerCode: 'All' };
-            this.customerList = [allCust, ...data.Data];
-          this.filterForm.patchValue({ CustomerName: 'All' });
-    });
+    // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+    //   const allCust = { customerName: 'All', customerCode: 'All' };
+    //         this.customerList = [allCust, ...data.Data];
+    //       this.filterForm.patchValue({ CustomerName: 'All' });
+    // });
+
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+          const allCust = { customerName: 'All', customerCode: 'All' };
+              this.customerList = [allCust, ...data.Data];
+              this.filterForm.patchValue({ CustomerName: 'All' });
+        });
 
      this.filterForm = this.formBuilder.group({
     rateCustomer: ['All', Validators.required],
@@ -91,9 +97,6 @@ export class CashTopayComponent implements OnInit {
     toDate: [this.currentDate2, Validators.required],
     AwbNo:['']
   });
-
-     // this.RateUpdationTable(1, this.pageSize);
-    // this.dataSource = new MatTableDataSource<any>(this.rateViewData);
 
   }
 
