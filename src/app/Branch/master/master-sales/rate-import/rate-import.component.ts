@@ -75,7 +75,7 @@ length = 0;
     ? localStorage.getItem('originCode')
     : localStorage.getItem('selectedValue');
 
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+    this.masterService.getCustomerData(this.sessionLocationCode).subscribe((resp: any) => {
       this.CustomerList = resp.Data;
     });
       this.AllService.getOriginData().subscribe((data) => {

@@ -323,7 +323,7 @@ private formatDateToInput(dateStr: string): string {
   // Fetch relevant customer data based on location
   fetchReleventData(event: any) {
     console.log(event, 'event');
-    this.masterService.getConsignerData(event).subscribe(
+    this.masterService.getCustomerData(event).subscribe(
       (resp) => {
         this.customerList = resp.Data;
       },

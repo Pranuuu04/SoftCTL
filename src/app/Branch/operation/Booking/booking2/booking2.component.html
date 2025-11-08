@@ -1,7 +1,7 @@
 
 <div class="container">
   <form action="" [formGroup]="bookingForm" (keydown.enter)="disableEnter($event)" (ngSubmit)="formSubmit(bookingForm.value)" class="mb-0">
-    <div class="row" style="height: 430px; overflow: auto;">
+    <div class="row" style="height: 73vh; overflow: auto;">
       <div [ngClass]="bookingForm.get('custType')?.value === 'Credit' ? 'col-sm-6' : 'col-sm-5'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
         <div class="form-group row">
           <div class="col-sm-6">
@@ -683,7 +683,7 @@
           <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText">Charge Wt</label>
-              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [(ngModel)]="chargedWt" [value]="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
+              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [value]="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
             </div>
           </div>
         

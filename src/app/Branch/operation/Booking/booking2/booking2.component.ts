@@ -203,7 +203,7 @@ export class Booking2Component implements OnInit, AfterViewInit, OnDestroy  {
   vendorNames: string;
   ewayBillData: string;
 
-  chargedWt = 0;
+  chargedWt = 1;
   freightAmt = 0;
   newFreightAmt = 0;
   GSTPer = 0;
@@ -740,7 +740,7 @@ freightCharge() {
       invoiceValue: new FormControl('', Validators.compose([])),
       actualWt: new FormControl(this.actualWt, Validators.compose([Validators.required])),
       volumetricWt: new FormControl('', Validators.compose([])),
-      chargedWt: new FormControl('', Validators.compose([])),
+      chargedWt: new FormControl(this.chargedWt, Validators.compose([])),
       actaulWeightType: new FormControl('', Validators.compose([])),
       ratePerKg: new FormControl('', Validators.compose([])),
       freightAmt: new FormControl('', Validators.compose([])),
