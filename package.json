@@ -3,14 +3,14 @@
   "version": "2.8.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && ng serve -o"
-  },
+  "ng": "ng",
+  "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve",
+  "build": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build",
+  "test": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng test",
+  "lint": "ng lint",
+  "e2e": "ng e2e",
+  "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+},
   "engines": {
     "node": "6.11.1",
     "npm": "3.10.9"

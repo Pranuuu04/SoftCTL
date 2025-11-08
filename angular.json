@@ -38,7 +38,14 @@
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
               "jquery",
-              "chartist"
+              "chartist",
+              "pdfmake/build/pdfmake",
+              "pdfmake/build/vfs_fonts",
+              "html2canvas",
+              "jspdf-autotable",
+              "exceljs",
+              "file-saver",
+              "rgbcolor"
             ]
           },
           "configurations": {
