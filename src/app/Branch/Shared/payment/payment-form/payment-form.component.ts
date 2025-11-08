@@ -199,7 +199,7 @@ bankList = [
       BankName: ['', Validators.required],
       paymentType: [''],
       receiptNo: ['', Validators.required],
-      receiptDt: ['', Validators.required],
+      receiptDt: [this.currentDate, Validators.required],
       receiveDt: [this.currentDate, Validators.required],
       receiverName: ['', Validators.required],
       Amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],

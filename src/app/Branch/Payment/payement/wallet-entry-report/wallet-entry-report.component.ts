@@ -194,8 +194,12 @@ onFilterSubmit(): void {
 
 
   downloadExcel() {
+    
+     const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
 
-    const exportData = this.dataSource.data.map(row => ({
+    const excelData = exportData.map(row => ({
       Customer_Code: row.Customer_Code,
       Date: row.Date,
       Customer_Name: row.Customer_Name,
@@ -204,7 +208,7 @@ onFilterSubmit(): void {
       Remark: row.Remark,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
     const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
 
     XLSX.writeFile(workbook, 'WalletEntry.xlsx');
@@ -215,9 +219,13 @@ onFilterSubmit(): void {
 
   const header = ['SrNo', 'Customer Name', 'Date', 'Amount', 'Payment Mode', 'Remark'];
 
+ const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
   const tableBody = [
     header,
-    ...this.dataSource.data.map((item: any, index: number) => [
+    ...exportData.map((item: any, index: number) => [
       index + 1,
       item.Customer_Name || '',
       item.Date ? new Date(item.Date).toLocaleDateString() : '',

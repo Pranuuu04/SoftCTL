@@ -167,6 +167,7 @@
                   class="custom-select1"
                   bindLabel="name"
                   bindValue="name"
+                  [addTag]="true"
                   formControlName="BankName">
                 </ng-select>
         </div>
@@ -178,6 +179,14 @@
                 <option value="" selected disabled>Select payment type</option>
                 <option value="Cash">Cash</option>
                 <option value="Credit">Credit</option>
+                <option value="Credit">UPI</option>
+                <option value="Credit">TOPAY</option>
+                <option value="Credit">Cheque</option>
+                <option value="Credit">COD</option>
+                <option value="Credit">FOC</option>
+                <option value="Credit">NEFT</option>
+                <option value="Credit">RTGS</option>
+                <option value="Credit">IMPS</option>
               </select>
           </div>
         </div>
@@ -250,7 +259,8 @@
                   class="custom-select1"
                   bindLabel="name"
                   bindValue="name"
-                  formControlName="DepositeBank">
+                  formControlName="DepositeBank"
+                  [addTag]="true">
                 </ng-select>
         </div>
         </div>
@@ -415,7 +425,7 @@
         </div>
 
     </form>
-  </div>
+</div>
 
 
 
