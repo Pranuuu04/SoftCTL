@@ -184,3 +184,7 @@ thead {
 ::ng-deep .mat-simple-snackbar-action button  {
   color: white;
 }
+ .mainrow{
+      margin-left: 0;
+      margin-right: 0;
+    }

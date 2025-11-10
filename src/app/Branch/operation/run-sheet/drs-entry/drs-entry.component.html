@@ -1,8 +1,8 @@
 <div>
     <!-- <div class="card"> -->
         <!-- <div class="card-body table-responsive "> -->
-                    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)" class="mainrow">
-                  <div class="row">
+                    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
+                  <div class="row mainrow ">
                     <label id="DRSDates" for="DRSDate" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
                     <div class="col-sm-3 col-md-4 col-lg-3">
                         <input type="date" class="form-control" id="DRSDate" formControlName="DrsDate">
@@ -25,7 +25,7 @@
                       </select>
                     </div>
                 </div>
-                <div class="row ">
+                <div class="row mainrow">
                     <label for="employeeMobile" class="col-sm-1 col-lg-1 col-md-2 form-label"><span style="color: red;">*</span>Mobile No.</label>
                   <div class="col-sm-3 col-md-4 col-lg-3">
                     <input type="tel" class="form-control" id="employeeMobile" placeholder="Enter Mobile No" formControlName="employeeMobile"
@@ -60,7 +60,7 @@
                     </div>
               </div>
               
-              <div class="row" style="justify-content: right;">
+              <div class="row mainrow" style="justify-content: right;">
                 <div class="col-sm-4 d-flex" style=" justify-content: right;">
                   <button type="button" class="btn btn-light"  style="background-color: #2e3f55;color: white;" (click)="openDrsBulkModal()">Bulk</button>
                   <button type="button" class="btn btn-light" style="background-color: #2e3f55;color: white;" [disabled]="!Drsentryform.get('AwbNo').value" (click)="submitDrsForm(Drsentryform.value)">Find</button>
@@ -101,7 +101,7 @@
   <div class="table-responsive">
     <div class="row d-flex m-0" style="justify-content: right;" >
       <div class="form-group has-search col-sm-3">
-        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+        <button class="btn btn-secondary p-0" type="button" style="z-index: 1001;
         position: absolute;
         background: none;
         top: -4px;

@@ -109,10 +109,16 @@ export class PaymentEntryReportComponent implements OnInit {
        : localStorage.getItem('selectedValue');
         this.sessionLocationName = localStorage.getItem('originName');
   
-       this.AllService.getConsignerData(this.sessionLocationCode)
-          .subscribe((data: any) => {
-            const all = { customerName: 'All', customerCode: 'All' };
-            this.customerList = [all, ...data.Data];
+      //  this.AllService.getConsignerData(this.sessionLocationCode)
+      //     .subscribe((data: any) => {
+      //       const all = { customerName: 'All', customerCode: 'All' };
+      //       this.customerList = [all, ...data.Data];
+      //     });
+
+        this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+            const allCust = { customerName: 'All', customerCode: 'All' };
+                  this.customerList = [allCust, ...data.Data];
+                this.filterForm.patchValue({ CustomerName: 'All' });
           });
 
         this.masterService.getAndDeleteShipperConsig('getConsignee')
@@ -271,7 +277,12 @@ export class PaymentEntryReportComponent implements OnInit {
   //   }
 
 downloadExcel() {
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
+
+  const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
   const wb: XLSX.WorkBook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
 
@@ -297,9 +308,14 @@ downloadPdf() {
     'Adjustment'
   ];
 
+    const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
   const tableBody = [
     header,
-    ...this.dataSource.data.map((e: any) => [
+    // ...this.dataSource.data.map((e: any) => [
+    ...exportData.map((e: any) => [
       e.Customer_Code || '',
       e.Customer_Name || '',
       e.Shipper_Name || '',

@@ -102,17 +102,19 @@ export class CreditNoteReportComponent implements OnInit {
        ? localStorage.getItem('originCode')
        : localStorage.getItem('selectedValue');
         this.sessionLocationName = localStorage.getItem('originName');
-  
-      // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
-      //   const allCust = { customerName: 'All', customerCode: 'All' };
-      //         this.customerList = [allCust, ...data.Data];
-      //       this.filterForm.patchValue({ CustomerName: 'All' });
-      // });
 
-          this.AllService.getConsignerData(this.sessionLocationCode)
-          .subscribe((data: any) => {
-            const all = { customerName: 'All', customerCode: 'All' };
-            this.customerList = [all, ...data.Data];
+
+          // this.AllService.getConsignerData(this.sessionLocationCode)
+          // .subscribe((data: any) => {
+          //   const all = { customerName: 'All', customerCode: 'All' };
+          //   this.customerList = [all, ...data.Data];
+          //   this.filterForm.patchValue({ CustomerName: 'All' });
+          // });
+
+        this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+            const allCust = { customerName: 'All', customerCode: 'All' };
+                  this.customerList = [allCust, ...data.Data];
+                this.filterForm.patchValue({ CustomerName: 'All' });
           });
 
         this.masterService.getAndDeleteShipperConsig('getConsignee')
@@ -282,8 +284,12 @@ downloadExcel() {
     'Remark'
   ];
 
-  const excelData = this.dataSource.data.map((row: any, index: number) => {
+    const exportData = this.dataSource.filteredData.length
+      ? this.dataSource.filteredData
+      : this.dataSource.data;
 
+  // const excelData = this.dataSource.data.map((row: any, index: number) => {
+    const excelData = exportData.map((row: any, index: number) => {
     const temp: any = {
       SrNO: index + 1,
       Customer_Name: row.Customer_Name,
@@ -328,10 +334,15 @@ downloadPdf() {
     'Amount'
   ];
 
+     const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
   // Build table body
   const tableBody = [
     header,
-    ...this.dataSource.data.map((e: any) => [
+    // ...this.dataSource.data.map((e: any) => [
+      ...exportData.map((e: any) => [
       e.Customer_Name || '',
       e.Shipper_Name || '',
       e.Consignee_Name || '',
@@ -535,6 +546,9 @@ downloadPdf() {
 //   const words = require('number-to-words');
 //   return words.toWords(amount).toUpperCase() + ' ONLY';
 // }
+
+
+
 
 
 // downloadPdfForOne(element: any) {

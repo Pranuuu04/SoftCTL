@@ -283,7 +283,13 @@ downloadExcel() {
     'Remark',
   ];
 
-  const excelData = this.dataSource.data.map((row: any, index: number) => {
+  const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
+
+  // const excelData = this.dataSource.data.map((row: any, index: number) => {
+  const excelData = exportData.map((row: any, index: number) => {
     const temp: any = {
       SrNO: index + 1,
       AwbNo: row.AwbNo,
@@ -392,9 +398,14 @@ downloadPdf() {
     'Bank', 'Received Date', 'Txn ID', 'Remark'
   ];
 
+   const exportData = this.dataSource.filteredData.length
+    ? this.dataSource.filteredData
+    : this.dataSource.data;
+
   const tableBody = [
     headers,
-    ...this.dataSource.data.map((item: any, index: number) => [
+    // ...this.dataSource.data.map((item: any, index: number) => [
+    ...exportData.map((item: any, index: number) => [
       index + 1,
       item.AwbNo || '',
       item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
