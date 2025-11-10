@@ -170,22 +170,20 @@ input{
     border-radius: 0.25rem;
     padding-left: 10px; 
     padding-top: 10px; 
-    font-family: auto;
-    height: 26px;
   }
   table {
     width: 100%;
   }
   th.mat-header-cell {
-    text-align: center;
-    padding: 0 11px;
+    text-align: center !important;
+    padding: 0 11px !important;
   }
   table ,th {
-    color: black;
+    color: black !important;
   }
   table th{ 
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 15px !important;
+    font-weight: 600 !important;
   }
   th.mat-header-cell:first-of-type,td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
     padding-left: 0;
@@ -194,7 +192,7 @@ input{
     padding-right: 0;
   }
   table , td ,th {
-    border: 1px Solid #9b9898;
+    border: 1px Solid #9b9898 !important;
   }
   .mat-cell {
     font-size: 13px;
@@ -202,7 +200,7 @@ input{
     font-weight: 400;
   }
   tr.mat-row {
-    height: 26px;
+    height: 26px !important;
   }
   tr.mat-header-row {
     height: 30px;
