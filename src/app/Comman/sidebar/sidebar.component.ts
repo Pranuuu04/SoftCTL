@@ -61,6 +61,7 @@ FrenchiseeMenuItems = [
   { path: '/table-list', title: 'MIS',  icon: 'content_paste', class: '' },
   { path: '/user-profile', title: 'Logout',  icon: 'person', class: '' },
 ]
+  adminMaster: string;
 
 constructor(
             public httpService: HttpService,
@@ -78,8 +79,16 @@ constructor(
     this.groupName = localStorage.getItem('groupName');
     this.captionType = localStorage.getItem('captionType');
     this.ClientLogo = localStorage.getItem('ClientLogo');
+     this.adminMaster = localStorage.getItem('AdminMaster');
+     this.filterMenus();
   }
-
+filterMenus() {
+  if (this.userType === 'Admin' && this.adminMaster === '0') {
+    this.dynamicMenus = this.dynamicMenus.filter(menu =>
+      menu.captionName !== 'Sales' && menu.captionName !== 'CustomerCharges'
+    );
+  }
+}
     navigateTo(path: string) {
       this.router.navigate([path]);
     }

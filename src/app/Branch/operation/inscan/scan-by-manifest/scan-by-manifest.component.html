@@ -1,69 +1,76 @@
-<div class="col-lg-12 col-md-12" style="display: flex;
-justify-content: center;">
-    <div class="card">
-        <div class="card-body table-responsive">
-                <div class="row">
+<div>
+    <!-- <div class="card">
+        <div class="card-body table-responsive"> -->
+                <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
                   <div class="col-sm-5">
                     <p (click)="openPendingManfModal()">Pending Scan: {{totalPending}} </p>&nbsp;&nbsp;
                     <p (click)="DoneManfModal()">Done Scan: {{totalDone}}</p>
                   </div>
                 </div>  
                   <form [formGroup]="manifestform" (ngSubmit)="submitmanifest(manifestform.value)">
-                  <div class="row">
-                    <label for="inputEmail3" class="col-sm-1 col-form-label">date</label>
-                    <div class="col-sm-3">
+                  <div class="row mainrow mt-3">
+                      <div class="col-sm-2">
+                        <div class="textOnInput">
+                            <label for="date">Date :</label>
                       <input class="form-control" type="date" formControlName="manfDate">
-                        <!-- <input type="date" placeholder="date" value="{{currentDate}}"  class="form-control" id="inputCity" [(ngModel)]="currentDate" readonly/> -->
-                    </div>
-                    <label for="inputEmail3" class="col-sm-1 col-form-label">Status</label>
-                    <div class="col-sm-3">
+                        </div>
+                      </div>
+                     <div class="col-sm-3">
+                        <div class="textOnInput">
+                            <label for="Status">Status :</label>
                       <input type="text" placeholder="status" [(ngModel)]="Status" 
                       value="Arrived"  class="form-control" id="" value="Arrived" readonly />
-
-                    </div>
-                    <label for="inputEmail3" class="col-sm-1 col-form-label">Remark</label>
-                    <div class="col-sm-3">
-                      <input type="text" placeholder="remarks" formControlName="remark" class="form-control" id="" />
-                      <div *ngFor="let validation of validationMessage.remark">
+                        </div>
+                      </div>
+                       <div class="col-sm-3">
+                        <div class="textOnInput">
+                            <label for="remark">Remark :</label>
+                      <input type="text" placeholder="remarks" formControlName="remark"  class="form-control" id="remark" /> <div *ngFor="let validation of validationMessage.remark">
                         <div class="error-message"
                           *ngIf="manifestform.get('remark').hasError(validation.type) && (manifestform.get('remark').dirty || manifestform.get('remark').touched)">
                           {{ validation.message }}
                         </div>
                     </div>
-                  </div>
-                </div>
-                  <div class="row ">
-                    <label for="inputEmail3" *ngIf="this.dispatch === '0'" class="col-sm-1 col-form-label">Manifest no :</label>
-                    <label for="inputEmail3" *ngIf="this.dispatch === '1'" class="col-sm-1 col-form-label">Dispatch</label>
-                    <div class="col-sm-3" *ngIf="this.dispatch === '0'">
-                      <input type="text" placeholder="Enter Manifest no." formControlName="manifest" class="form-control" id="" required [(ngModel)]="ManfNo" />
+                        </div>
+                      </div>
+                        <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-8" *ngIf="this.dispatch === '0'" >
+                        <div class="textOnInput">
+                           <label for="inputEmail3">Manifest no :</label>
+                            <input type="text" placeholder="Enter Manifest no." formControlName="manifest" class="form-control" id="" required [(ngModel)]="ManfNo" />
                       <div *ngFor="let validation of validationMessage.manifest">
                         <div class="error-message"
                           *ngIf="manifestform.get('manifest').hasError(validation.type) && (manifestform.get('manifest').dirty || manifestform.get('manifest').touched)">
                           {{ validation.message }}
                         </div>
                       </div>
-                    </div>
-                    <div class="col-sm-3" *ngIf="this.dispatch === '1'">
-                      <input type="text" placeholder="Enter Dispatch no." formControlName="manifest" class="form-control" id="" required [(ngModel)]="ManfNo" />
-                      <div *ngFor="let validation of validationMessage.manifest">
-                        <!-- <div class="error-message"
-                          *ngIf="manifestform.get('manifest').hasError(validation.type) && (manifestform.get('manifest').dirty || manifestform.get('manifest').touched)">
-                          {{ validation.message }}
-                        </div> -->
+                        </div>
                       </div>
+
+                       <div class="col-sm-8" *ngIf="this.dispatch === '1'" >
+                        <div class="textOnInput">
+                           <label for="inputEmail3">Dispatch :</label>
+                            
+                      <input type="text" placeholder="Enter Dispatch no." formControlName="manifest" class="form-control" id="" required [(ngModel)]="ManfNo" />
+                        </div>
+                      </div>
+
+                      <div class="col-sm-4"  style="display: flex; justify-content: right;">
+                         <button type="button" class="btn btn-light form-icon" [disabled]="!manifestform.get('manifest').value" (click)="findManfNo(manifestform.value)"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
-                  <div class="col-sm-6 d-flex">
-                    <button type="button" class="btn btn-info" [disabled]="!manifestform.get('manifest').value" (click)="findManfNo(manifestform.value)">Find</button>
+                        </div>
+                      </div>
+                </div>
+                  <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2; justify-content: right;">
+                  <div class="col-sm-4 d-flex submitbtn">
+                    <button type="submit" class="btn btn-light">Inscan</button> 
                     <button type="button" class="btn btn-warning" (click)="openManifestBulkModal()" >Bulk</button>
-                  </div>
-                  <div class="col-sm-2 d-flex submitbtn">
-                    <button type="submit" class="btn btn-info">Inscan</button>
                   </div>
               </div>
            </form>
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 </div>
 
 <div *ngIf="showTable && listData.length > 0">

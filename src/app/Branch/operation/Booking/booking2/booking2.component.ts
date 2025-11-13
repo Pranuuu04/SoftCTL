@@ -73,6 +73,7 @@ export class Booking2Component implements OnInit, AfterViewInit, OnDestroy  {
   cityName: string;
   stateName: string;
   trainFlightOptions: any[] = [];
+  trainFlightNoOptions: any[] = [];   
   countryName: string;
   cityList: any[] = [];
   stateList: any[] = [];
@@ -308,7 +309,8 @@ chargeMap = {
     CAFMast: 'cafCharge'
   };
   bluedartChargeCache: any;
-
+  autoRateFlag: boolean;
+rateFetchFailed = false;
 constructor(public httpService: HttpService,
               public AllService: AllServicesService,
               public bookingService: BookingService,
@@ -357,6 +359,8 @@ constructor(public httpService: HttpService,
     this.customerName = localStorage.getItem('customerName');
     const gstFlag = localStorage.getItem('GstVerify');
     this.isGstVerified = gstFlag === '1';
+    const RateFlag = localStorage.getItem('AutoRate');
+     this.autoRateFlag = RateFlag === '1';
     this.checkBranchSelection();
     if (this.userType === 'Admin') {
       this.selectedOrigin = this.sharedService.getBranchType();
@@ -484,7 +488,7 @@ constructor(public httpService: HttpService,
   //         this.calculateTotalAmount();
   //     }
   // }
-      getRatePerKg() {
+  getRatePerKg() {
  if (this.rateLockedFromAwb && !this.userHasEditedRate) {
     return;
   }
@@ -500,8 +504,12 @@ constructor(public httpService: HttpService,
   if ( customerCode && modeCode && productCode && originCode && destinationCode && actualWt && bookDate ) {
    this.bookingService.getAllRate(customerCode, modeCode, productCode, originCode, destinationCode, actualWt, bookDate, invValue)
       .subscribe((resp: any) => {
-     if (resp) {
-       this.bluedartChargeCache = {
+         const rateFlag = localStorage.getItem('AutoRate');
+
+     if (resp.status === 1) {
+      this.rateFetchFailed = false;
+      // this.openSnackBar(resp.message, 'custom-snackbar');
+      this.bluedartChargeCache = {
             cafCharges: resp.data.CAFCharge,
             hdpCharges: resp.data.HDPCharge,
             essCharges: resp.data.ESSCharge,
@@ -529,6 +537,9 @@ constructor(public httpService: HttpService,
         });
         // this.bluedartChargeCache = resp.data;
         this.freightCharge();
+      }else if (rateFlag === '1' && resp?.status === 0) {
+        this.rateFetchFailed = true;
+        this.openSnackBar(resp.message, 'error-snackbar');
       }
     }, error => {
       console.error('Error fetching rate:', error);
@@ -1175,50 +1186,122 @@ verifyGST() {
     }
   );
 }
+// handleModeChange(modeCode: string) {
+//   this.selectedMode = modeCode;
+
+//   if (modeCode === 'AI') {
+//     this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
+//     this.getFlightData();
+//   } else if (modeCode === 'T') {
+//     this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
+//     this.getTrain();
+//   } else {
+//     this.trainFlightOptions = [];
+//     this.trainFlightNoOptions = [];
+//     this.bookingForm.patchValue({ trainFlight: null, trainFlightNo: null });
+//   }
+// }
 handleModeChange(modeCode: string) {
   this.selectedMode = modeCode;
 
+  // Clear both dropdown values FIRST
+  this.bookingForm.patchValue({
+    trainFlight: null,
+    trainFlightNo: null
+  });
+
+  // Clear options
+  this.trainFlightOptions = [];
+  this.trainFlightNoOptions = [];  // ✅ Clear second dropdown options also
+
+  // Load new options based on mode
   if (modeCode === 'AI') {
-    this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
     this.getFlightData();
-  } else if (modeCode === 'T') {
-    this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
+  } 
+  else if (modeCode === 'T') {
     this.getTrain();
-  } else {
-    this.trainFlightOptions = [];
-    this.bookingForm.patchValue({ trainFlight: null, trainFlightNo: '' });
   }
 }
 
 getFlightData(): void {
-  this.httpclient.get(`${environment.apiUrl}Master/FlightMast?masterName=Flight&operation=getFlight`)
+  this.httpclient.get(`${environment.apiUrl}Master/allMasters?masterName=AirLine&operation=getAirLine`)
     .subscribe((response: any) => {
       this.flightData = response.Data;
       this.trainFlightOptions = this.flightData.map(item => ({
         name: item.AirLine_Name,
         code: item.AirLine_Code,
-        displayNo: item.Flight_Code
       }));
+          this.trainFlightNoOptions = [];
+          this.bookingForm.patchValue({
+            trainFlight: null,
+            trainFlightNo: null
+          });
     });
 }
 
 getTrain(): void {
-  this.httpclient.get(`${environment.apiUrl}Master/TrainNo?masterName=TrainNo&operation=getTrainNo`)
+  this.httpclient.get(`${environment.apiUrl}Master/allMasters?masterName=Train&operation=getTrain`)
     .subscribe((response: any) => {
       this.trainData = response.Data;
       this.trainFlightOptions = this.trainData.map(item => ({
         name: item.Train_Name,
         code: item.Train_Code,
-        displayNo: item.TrainNo_Code
       }));
+        this.trainFlightNoOptions = [];
+        this.bookingForm.patchValue({
+          trainFlight: null,
+          trainFlightNo: null
+        });
     });
 }
-onTrainFlightSelect(selectedCode: any) {
-  const selected = this.trainFlightOptions.find(item => item.code === selectedCode.code);
-  this.bookingForm.patchValue({
-    trainFlightNo: selected?.displayNo
+getFlightByCode(code: string) {
+  this.httpclient.get(
+    `${environment.apiUrl}Master/allMasters?masterName=AirLine&operation=getByAirLineCode&code=${code}`
+  ).subscribe((res: any) => {
+
+    this.trainFlightNoOptions = res.Data.map((item: any) => ({
+      name: item.Flight_Name,
+      code: item.Flight_Code
+    }));
+
+    this.bookingForm.patchValue({ trainFlightNo: null });
   });
 }
+
+
+getTrainByCode(code: string) {
+  this.httpclient.get(
+    `${environment.apiUrl}Master/allMasters?masterName=Train&operation=getByTrainCode&code=${code}`
+  ).subscribe((res: any) => {
+
+    this.trainFlightNoOptions = res.Data.map((item: any) => ({
+      name: item.TrainNo_Name,
+      code: item.TrainNo_Code
+    }));
+
+    this.bookingForm.patchValue({ trainFlightNo: null });
+  });
+}
+
+
+
+onTrainFlightSelect(event: any) {
+    const selectedCode = event?.code;
+
+  if (!selectedCode) return;
+  // Clear second dropdown before new load
+  this.trainFlightNoOptions = [];
+  
+  this.bookingForm.patchValue({ trainFlightNo: null });
+  if (this.selectedMode === 'AI') {
+    this.getFlightByCode(selectedCode);
+  } 
+  else if (this.selectedMode === 'T') {
+    this.getTrainByCode(selectedCode);
+  }
+}
+
+
 
 
 // handleModeChange(modeCode: string) {
@@ -2041,6 +2124,13 @@ disableEnter(event: KeyboardEvent) {
       if (this.awbType === 'Manual' && awbNo === '') {        this.openSnackBar('AWB Number is required', 'error-snackbar');
         return;
       }
+
+      const rateFlag = localStorage.getItem('AutoRate');
+      if (rateFlag === '1' && this.rateFetchFailed) {
+        this.openSnackBar('Rate is required', 'error-snackbar');
+        return;
+      }
+
       const obj = {
         Session_LocationCode: this.sessionLocationCode,
         AwbNo: awbNo,
@@ -2170,13 +2260,13 @@ disableEnter(event: KeyboardEvent) {
       localStorage.setItem('consignerCode', this.consignerCode);
       localStorage.setItem('selectedMode', this.selectedMode);
       localStorage.setItem('selectedProduct', this.selectedProduct);
-      const freightAmt = formData.freightAmt || this.newFreightAmt || this.freightAmt;
+      // const freightAmt = formData.freightAmt || this.newFreightAmt || this.freightAmt;
 
-      // Prevent submission if freightAmt is 0 and custType is not 'Credit'
-      if (freightAmt === 0 && formData.custType !== 'Credit') {
-        this.openSnackBar('Freight Amount is required', 'error-snackbar');
-        return;
-      }
+      // // Prevent submission if freightAmt is 0 and custType is not 'Credit'
+      // if (freightAmt === 0) {
+      //   this.openSnackBar('Freight Amount is required', 'error-snackbar');
+      //   return;
+      // }
 
       if (this.awbType === 'Manual') {
         // tslint:disable-next-line:max-line-length
@@ -2381,7 +2471,7 @@ disableEnter(event: KeyboardEvent) {
             (error) => {
               console.error('Error fetching Awb details:', error);
             })
-            this.formSubmit(this.bookingForm.value);
+            // this.formSubmit(this.bookingForm.value);
           }
         })
     }

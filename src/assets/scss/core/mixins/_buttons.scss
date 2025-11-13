@@ -409,12 +409,12 @@ $opacity-2:                  rgba(255,255,255, .2) !default;
 }
 
 /* 14 */
-.btn-14 {
+.btn-submit {
   background: #2e3f55;
   border: none;
   z-index: 1;
 }
-.btn-14:after {
+.btn-submit:after {
   position: absolute;
   content: "";
   width: 100%;
@@ -430,18 +430,18 @@ $opacity-2:                  rgba(255,255,255, .2) !default;
    4px 4px 5px 0px rgba(0,0,0,.1);
   transition: all 0.3s ease;
 }
-.btn-14:hover {
+.btn-submit:hover {
   // color: #000;
   color: #2e3f55 !important;
   i{
     color: #2e3f55;
   }
 }
-.btn-14:hover:after {
+.btn-submit:hover:after {
   top: auto;
   bottom: 0;
   height: 100%;
 }
-.btn-14:active {
+.btn-submit:active {
   top: 2px;
 }

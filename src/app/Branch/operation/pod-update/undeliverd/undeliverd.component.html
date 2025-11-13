@@ -1,51 +1,43 @@
 <div class="container">
     <form [formGroup]="undeliverdform">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4 leftSide">
        <div class="row">
         <div class="col-sm-12">
-          <div class="form-group row mb-3">
-            <label for="inputEmail3" class="col-sm-3 col-form-label">Awb No.</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" (change)="getDeleiveredData()" [(ngModel)]="awbNo"  id="exampleFormControlInput1" placeholder="ENTER AIRWAYBILL NUMBER" formControlName="awb">
-              <div *ngFor="let validation of validationMessage.awb">
-                <div class="error-message"
-                  *ngIf="undeliverdform.get('awb').hasError(validation.type) && (undeliverdform.get('awb').dirty ||undeliverdform.get('awb').touched)">
-                  {{ validation.message }}
-                </div>
-              </div>
+          <div class="textOnInput">
+          <label for="driverNumber">AWB Number :</label>
+          <input class="form-control" type="text" (change)="getDeleiveredData()" [(ngModel)]="awbNo"  id="exampleFormControlInput1" placeholder="Enter Airwaybill number." formControlName="awb">
+          <div *ngFor="let validation of validationMessage.awb">
+            <div class="error-message"
+              *ngIf="undeliverdform.get('awb').hasError(validation.type) && (undeliverdform.get('awb').dirty || undeliverdform.get('awb').touched)">
+              {{ validation.message }}
             </div>
           </div>
-          <div class="form-group row mb-3">
-            <label for="inputEmail3" class="col-sm-3 col-form-label">Status</label>
-              <div class="col-sm-9">
-                <select class="selectpicker form-select custom-select" data-live-search="true" formControlName="status">
+        </div>
+         <div class="textOnSelect">
+          <label for="status">Status :</label>
+          <select class="selectpicker form-select custom-select" data-live-search="true" formControlName="status">
                   <option data-tokens="Undeliverd mustard" value="UnDelivered">UnDelivered</option>
               </select>
-              <div *ngFor="let validation of validationMessage.status">
+           <div *ngFor="let validation of validationMessage.status">
                 <div class="error-message"
                   *ngIf="undeliverdform.get('status').hasError(validation.type) && (undeliverdform.get('status').dirty ||undeliverdform.get('status').touched)">
                   {{ validation.message }}
                 </div>
               </div>
-              </div>
-          </div>
-          <div class="form-group row mb-3">
-            <label for="Date" class="col-sm-3 col-form-label">Date</label>
-              <div class="col-sm-9">
-                  <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date">
-              <div *ngFor="let validation of validationMessage.date">
-                <div class="error-message"
-                  *ngIf="undeliverdform.get('date').hasError(validation.type) && (undeliverdform.get('date').dirty ||undeliverdform.get('date').touched)">
-                  {{ validation.message }}
-                </div>
-              </div>
+      </div>
+       <div class="textOnInput">
+        <label for="Date">Date :</label>
+        <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date">
+          <div *ngFor="let validation of validationMessage.date">
+            <div class="error-message"
+              *ngIf="undeliverdform.get('date').hasError(validation.type) && (undeliverdform.get('date').dirty ||undeliverdform.get('date').touched)">
+              {{ validation.message }}
             </div>
           </div>
-       
-       <div class="form-group row mb-3">
-        <label for="Time" class="col-sm-3 col-form-label">Time</label>
-          <div class="col-sm-9">
+      </div>
+       <div class="textOnInput">
+          <label for="Time">Time :</label>
               <input type="Time" placeholder="Time" class="form-control" id="Time" formControlName="time" />
               <div *ngFor="let validation of validationMessage.time">
                 <div class="error-message"
@@ -53,13 +45,10 @@
                   {{ validation.message }}
                 </div>
               </div>
-          </div>
-      </div>
-
-      <div class="form-group row mb-3">
-        <label for="Time" class="col-sm-3 col-form-label">Reason</label>
-          <div class="col-sm-9">
-            <select id="userName" class="custom-select" formControlName="reason">
+        </div>
+         <div class="textOnSelect">
+      <label>Reason :</label>
+        <select id="userName" class="custom-select" formControlName="reason">
               <option value="" selected disabled>Select Reason</option>
               <option value="{{item.ReasonCode}}"  *ngFor="let item of reasonList" >{{item.ReasonName}}</option>
             </select>
@@ -70,8 +59,8 @@
               {{ validation.message }}
             </div>
           </div>
-          </div>
-      </div>
+  </div>
+  
       <div class="form-group row mb-3">
         <label for="remark" class="col-sm-3 col-form-label">Remark</label>
           <div class="col-sm-9">
@@ -104,8 +93,8 @@
         </div>
        </div>
       </div>
-      <div class="col-md-6">
-        <div class="row right-side">
+      <div class="col-md-8 rightSide" style="border-left: 1px solid #d2d2d2;">
+        <div class="row">
         <div class="col-sm-6 mb-3">
           <input type="text" class="form-control" id="Status" placeholder="Awb No." value="Awb No. : {{itemData?.awbNo}}" readonly>
         </div>

@@ -1,72 +1,78 @@
 <div>
     <!-- <div class="card"> -->
         <!-- <div class="card-body table-responsive "> -->
-                    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
-                  <div class="row mainrow ">
-                    <label id="DRSDates" for="DRSDate" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                        <input type="date" class="form-control" id="DRSDate" formControlName="DrsDate">
-                    </div>
-                    <label for="area" class="col-sm-1 col-lg-1 col-md-2 form-label"><span style="color: red;">*</span>Area</label>
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                        <input type="text" placeholder="Leave a comment here" formControlName="area" class="form-control" id="area" required />
-                        <div *ngFor="let validation of validationMessage.area">
-                          <div class="error-message"
-                            *ngIf="Drsentryform.get('area').hasError(validation.type) && (Drsentryform.get('area').dirty || Drsentryform.get('area').touched)">
-                            {{ validation.message }}
-                          </div>
-                        </div>
-                    </div>
-                    <label for="userName" class="col-sm-1 col-lg-1 col-md-2 form-label">Name</label>
-                    <div class="col-sm-3 col-md-4 col-lg-3" >
-                      <select id="userName" class="custom-select" formControlName="userName" (change)="onEmployeeSelect($event)">
+    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
+      
+    <div class="row mainrow ">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="DRSDate">Date :</label>
+              <input type="date" class="form-control" id="DRSDate" formControlName="DrsDate">
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="area"><span style="color: red;">*</span>Area :</label>
+              <input type="text" class="form-control" id="area" formControlName="area"  placeholder="Leave a comment here">
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="userName">Name :</label>
+              <select id="userName" class="custom-select" formControlName="userName" (change)="onEmployeeSelect($event)">
                         <option value="" selected disabled>Select pickup boy</option>
                         <option value="{{item.employeeCode}}"  *ngFor="let item of nameList" >{{item.employeeName}}</option>
                       </select>
-                    </div>
-                </div>
-                <div class="row mainrow">
-                    <label for="employeeMobile" class="col-sm-1 col-lg-1 col-md-2 form-label"><span style="color: red;">*</span>Mobile No.</label>
-                  <div class="col-sm-3 col-md-4 col-lg-3">
-                    <input type="tel" class="form-control" id="employeeMobile" placeholder="Enter Mobile No" formControlName="employeeMobile"
-                    aria-describedby="emailHelp" required>
-                    <div *ngFor="let validation of validationMessage.employeeMobile">
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="employeeMobile"><span style="color: red;">*</span>Mobile No. :</label>
+              <input type="text" class="form-control" id="employeeMobile" formControlName="employeeMobile">
+                <div *ngFor="let validation of validationMessage.employeeMobile">
                       <div class="error-message"
                         *ngIf="Drsentryform.get('employeeMobile').hasError(validation.type) && (Drsentryform.get('employeeMobile').dirty || Drsentryform.get('employeeMobile').touched)">
                         {{ validation.message }}
                       </div>
                     </div>
-                  </div>
-                  <label for="vehicleNo" class="col-sm-1 col-lg-1 col-md-2 form-label"><span style="color: red;">*</span>Vehicle No.</label>
-                  <div class="col-sm-3 col-md-4 col-lg-3">
-                    <input type="text" class="form-control" id="vehicleNo" placeholder="Vechile No." formControlName="vehicleNo"
-                    aria-describedby="emailHelp">
-                    <div *ngFor="let validation of validationMessage.vehicleNo">
+          </div>
+        </div>          
+      </div>
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+        <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="vehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
+              <input type="text" class="form-control" id="vehicleNo" formControlName="vehicleNo"  placeholder="Vechile No.">
+               <div *ngFor="let validation of validationMessage.vehicleNo">
                       <div class="error-message"
                         *ngIf="Drsentryform.get('vehicleNo').hasError(validation.type) && (Drsentryform.get('vehicleNo').dirty || Drsentryform.get('vehicleNo').touched)">
                         {{ validation.message }}
                       </div>
                     </div>
-                  </div>
-                  <label for="AwbNo" class="col-sm-1 col-lg-1 col-md-2 form-label"><span style="color: red;">*</span>Awb No.</label>
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                      <input type="text" class="form-control" id="AwbNo" placeholder="Enter Awb No" formControlName="AwbNo" [(ngModel)]="AwbNo" aria-describedby="emailHelp">
-                      <div *ngFor="let validation of validationMessage.AwbNo">
-                        <div class="error-message"
-                          *ngIf="Drsentryform.get('AwbNo').hasError(validation.type) && (Drsentryform.get('AwbNo').dirty || Drsentryform.get('AwbNo').touched)">
-                          {{ validation.message }}
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              
-              <div class="row mainrow" style="justify-content: right;">
-                <div class="col-sm-4 d-flex" style=" justify-content: right;">
-                  <button type="button" class="btn btn-light"  style="background-color: #2e3f55;color: white;" (click)="openDrsBulkModal()">Bulk</button>
-                  <button type="button" class="btn btn-light" style="background-color: #2e3f55;color: white;" [disabled]="!Drsentryform.get('AwbNo').value" (click)="submitDrsForm(Drsentryform.value)">Find</button>
-                  <button type="button" class="btn btn-warning" (click)="generateData()" >Generate</button>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="area"><span style="color: red;">*</span>Awb No. :</label>
+             <input type="text" class="form-control" id="AwbNo" placeholder="Enter Awb No" formControlName="AwbNo" [(ngModel)]="AwbNo" aria-describedby="emailHelp">
+                <div *ngFor="let validation of validationMessage.AwbNo">
+                <div class="error-message"
+                  *ngIf="Drsentryform.get('AwbNo').hasError(validation.type) && (Drsentryform.get('AwbNo').dirty || Drsentryform.get('AwbNo').touched)">
+                  {{ validation.message }}
                 </div>
               </div>
+          </div>
+        </div>
+            <div class="col-sm-6 d-flex" style=" justify-content: right;">
+                  <button type="button" class="btn btn-light"  style="background-color: #2e3f55;color: white;" (click)="openDrsBulkModal()">Bulk</button>
+                  <button type="button" class="btn btn-light" style="background-color: #2e3f55;color: white;" [disabled]="!Drsentryform.get('AwbNo').value" (click)="submitDrsForm(Drsentryform.value)">Find</button>
+                  <button type="button" class="btn btn-light" (click)="generateData()" >Generate</button>
+                </div>
+              </div>
+              
+              <!-- <div class="row mainrow" style="justify-content: right;">
+            
+              </div> -->
             </form>
         <!-- </div> -->
       <div *ngIf="listData.length > 0">

@@ -889,11 +889,10 @@ onConsigneeSelected() {
     this.consigneeEmail = '';
     this.consigneeGST = '';
     this.CustomerName = '';
-
-    // Clear form controls
-    this.bookingForm.controls.cityName.setValue('');
-    this.bookingForm.controls.stateName.setValue('');
-    this.bookingForm.controls.countryName.setValue('');
+    this.bookingForm.patchValue({
+    cityName: '',
+    stateName: '',
+  });
     return;
   }
  const selected = this.consigneeList.find(item =>
@@ -916,10 +915,15 @@ onConsigneeSelected() {
         this.consigneeEmail = data.consigneeEmail;
         this.consigneeGST = data.GSTNo;
         this.CustomerName = data.CustomerName;
-
-        this.bookingForm.controls.cityName.setValue(data.Destination_Code);
-        this.bookingForm.controls.stateName.setValue(data.stateCode);
-        this.bookingForm.controls.countryName.setValue(data.country_code);
+         this.bookingForm.patchValue({
+              // gstNo: data.GSTNo,
+              cityName: data.destinationCode,
+              stateName: data.stateCode,
+              countryName: data.countryCode
+            });
+        // this.bookingForm.controls.cityName.setValue(data.Destination_Code);
+        // this.bookingForm.controls.stateName.setValue(data.stateCode);
+        // this.bookingForm.controls.countryName.setValue(data.country_code);
       },
       (error) => {
         console.error('Error in getConsigneeDetail:', error);

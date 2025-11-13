@@ -1,7 +1,7 @@
  <!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
     <div class="table-responsive">
         <div class="row d-flex m-0" style="justify-content: right;" >
-          <div class="form-group has-search col-sm-3">
+          <div class="form-group has-search col-sm-4">
             <button class="btn btn-secondary" type="button" style="z-index: 1001;
             position: absolute;
             background: none;
@@ -13,7 +13,7 @@
             background-color: #2e3f55;">
               <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -24px;"></i>
             </button>
-            <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+            <input type="text" class="form-control" placeholder="Search by Code, Name or Destination.."  id="Filter" #input (keyup.enter)="searchSubject.next($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
           </div>
         </div>
       </div>

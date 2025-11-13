@@ -546,9 +546,17 @@
           </div>
 
           <div class="col-sm-6">
-           <div class="textOnInput">
+           <div class="textOnSelect">
               <label for="inputText">Train/Flight no.</label>
-              <input class="form-control" type="text" formControlName="trainFlightNo" readonly>
+              <ng-select
+                [items]="trainFlightNoOptions"
+                bindLabel="name"
+                bindValue="code"
+                [clearable]="false"
+                formControlName="trainFlightNo"
+                class="custom-select1">
+              </ng-select>
+              <!-- <input class="form-control" type="text" formControlName="trainFlightNo"> -->
             </div>
           </div>
         </div>
@@ -899,12 +907,12 @@
     </div>
        <div class="row " style="border-top: 2px solid  #d2d2d2; padding: 10px;">
       <div class="col-sm-12 d-flex form-group" style=" justify-content: center;">
-        <button *ngIf="!updateEnabled"  type="submit" class="custom-btn btn-14 mr-2" [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Save</button>
-        <button *ngIf="updateEnabled" type="button" class="custom-btn btn-14 mr-2" (click)="updateForm()"  [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Update</button>
-        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openEnableDialog()"><i class="fa-solid fa-check"></i> Setup</button>
-        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openPrintDialog(awbNo)"><i class="fa-solid fa-print"></i>Print</button>
-        <button tabindex="-1" type="button" class="custom-btn btn-14 mr-2" (click)="openDeleteDialog()" [disabled]="deleteDisabled">Delete</button>
-        <button tabindex="-1" type="button" class="custom-btn btn-14"  (click)="openLabelDialog()"><i class="fa-solid fa-tag"></i> label</button>
+        <button *ngIf="!updateEnabled"  type="submit" class="custom-btn btn-submit mr-2" [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Save</button>
+        <button *ngIf="updateEnabled" type="button" class="custom-btn btn-submit mr-2" (click)="updateForm()"  [disabled]="disableButtons"><i class="fa-solid fa-floppy-disk"></i>Update</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-submit mr-2" (click)="openEnableDialog()"><i class="fa-solid fa-check"></i> Setup</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-submit mr-2" (click)="openPrintDialog(awbNo)"><i class="fa-solid fa-print"></i>Print</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-submit mr-2" (click)="openDeleteDialog()" [disabled]="deleteDisabled">Delete</button>
+        <button tabindex="-1" type="button" class="custom-btn btn-submit"  (click)="openLabelDialog()"><i class="fa-solid fa-tag"></i> label</button>
       </div>
     </div>
     <!-- <div class="row form-group" style="border-top: 2px solid  #d2d2d2; padding: 10px;">

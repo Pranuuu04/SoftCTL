@@ -6,6 +6,7 @@ import { SalesFormComponent } from 'app/Branch/Shared/master-model/sales-form/sa
 import { MasterService } from '../../master.service';
 import { ConfirmationDialogComponent } from 'app/Comman/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-sale-consignor',
@@ -30,6 +31,8 @@ export class SaleConsignorComponent implements OnInit {
   displayedColumns: any[] = [ 'index', 'action', 'Customer_Name', 'LocationName', 'GSTNo', 'T_Flag', 'Customer_Pin',
     'Destination_Name', 'State_Name', 'Client_Status'];
   customerViewData: any[] = [];
+  searchValue: string = ''; 
+  searchSubject = new Subject<string>();
 
   constructor(public dialog: MatDialog,
               public masterService: MasterService,
@@ -38,8 +41,22 @@ export class SaleConsignorComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<any>(this.customerViewData);
-    this.sessionLocationCode = localStorage.getItem('originCode');
+    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+    ? localStorage.getItem('originCode')
+    : localStorage.getItem('selectedValue');
+
     this.customerData(this.pageIndex + 1, this.pageSize);
+    this.searchSubject
+  .pipe(
+    debounceTime(500),
+    distinctUntilChanged()
+  )
+  .subscribe(searchTerm => {
+    this.searchValue = searchTerm;
+    this.pageIndex = 0;
+    this.customerData(1, this.pageSize, searchTerm);
+  });
+
   }
 
    calculatePageCount() {
@@ -50,12 +67,14 @@ export class SaleConsignorComponent implements OnInit {
   this.pageSize = e.pageSize;
   this.pageIndex = e.pageIndex;
   const pageNumber = this.pageIndex + 1;
+    const searchValue = (document.getElementById('Filter') as HTMLInputElement)?.value || '';
+
     this.calculatePageCount();
-  this.customerData(pageNumber, this.pageSize);
+  this.customerData(pageNumber, this.pageSize, searchValue);
 }
 
-  customerData(pageNumber: number, pageSize: number) {
-     this.masterService.getCustomer(pageNumber, pageSize).subscribe((resp: any) => {
+  customerData(pageNumber: number, pageSize: number, Search: string = this.searchValue ) {
+     this.masterService.getCustomer(this.sessionLocationCode, Search, pageNumber, pageSize).subscribe((resp: any) => {
        if (resp.status === 1) {
          this.showTable = true;
          this.customerViewData = resp.Data.customerDetails;
@@ -125,10 +144,9 @@ export class SaleConsignorComponent implements OnInit {
     });
   }
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    const pageNumber = 1; // reset to first page when searching
+  this.pageIndex = 0;
+  this.customerData(pageNumber, this.pageSize, filterValue.trim());
   }
 
 }

@@ -118,7 +118,10 @@ isCompanySelected = false;
      this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
-      this.sessionLocationName = localStorage.getItem('originName');
+     this.sessionLocationName = localStorage.getItem('userType') !== 'Admin' ?
+     localStorage.getItem('originName')
+     : localStorage.getItem('selectedLocationName');
+      // this.sessionLocationName = localStorage.getItem('originName');
     const gstFlag = localStorage.getItem('GstVerify');
     this.isGstVerified = gstFlag === '1';
 const now = new Date();

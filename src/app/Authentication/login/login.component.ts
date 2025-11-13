@@ -148,7 +148,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('utilies', resp.Data[1].utilies);
       localStorage.setItem('CompanyPrint', resp.Data[1].CompanyPrint);
       localStorage.setItem('GstVerify', resp.Data[1].GstVerify);
-
+      localStorage.setItem('AutoRate', resp.Data[1].AutoRate);
+      localStorage.setItem('AdminMaster', resp.Data[1].AdminMaster);
     }, (error) => {
       console.error(error);
     });
