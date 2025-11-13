@@ -127,5 +127,12 @@ cashToPayReport(sessionLocationCode:any,customerCode:any,shipperName:any,consign
     return this.http.get(url);
   }
 
+PaymentCreditNotePrint(noteNo: any): Observable<Blob> {
+  const url = `${environment.apiUrl}Payment/creditNotePrint?NoteNo=${noteNo}`;
+  return this.http.get(url, {responseType: 'blob'});
+}
+
+
+
 
 }

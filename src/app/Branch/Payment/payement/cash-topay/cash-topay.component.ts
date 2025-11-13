@@ -201,11 +201,12 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
 }
  
 
-  applyFilter(filterValue: string) {
+applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+
   
 }
