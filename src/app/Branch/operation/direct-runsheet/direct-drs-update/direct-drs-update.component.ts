@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AllServicesService } from 'app/service/all-services.service';
 
 @Component({
   selector: 'app-direct-drs-update',
@@ -14,16 +15,19 @@ export class DirectDrsUpdateComponent implements OnInit {
   pendingDrsCount = 0;
   previewImage: string | null = null;
   currentDate:any;
+  sessionLocationCode: string;
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar,private allServices:AllServicesService) {
     this.currentDate = this.getCurrentDate();
   }
 
   ngOnInit() {
+
+    this.sessionLocationCode = localStorage.getItem('originCode');
     
     this.drsForm = this.fb.group({
       drsNumber: ['', Validators.required],
-      drsDate: [this.currentDate, Validators.required],
+      // drsDate: [this.currentDate, Validators.required],
       drsImage: ['',Validators.required]
     });
 
@@ -64,12 +68,22 @@ export class DirectDrsUpdateComponent implements OnInit {
   onSubmit() {
     if (this.drsForm.valid) {
       console.log(this.drsForm.value);
-      this.http.post('api/drs/update', this.drsForm.value).subscribe((res) => {
-        // alert('DRS Updated Successfully!');
-        this.openSnackBar('DRS Updated Successfully!', 'custom-snackbar');
-        this.drsForm.reset();
-        this.previewImage = null;
-        this.fetchPendingCount();
+      const payload ={
+            "sessionLocationCode": this.sessionLocationCode,
+            "DrsNo": this.drsForm.get('drsNumber').value,
+            "Image": this.drsForm.get('drsImage').value
+      }
+      this.allServices.drsImageUpload(payload).subscribe((res:any) => {
+        if(res.status === 1){
+           this.openSnackBar(res.message, 'custom-snackbar');
+            this.drsForm.reset();
+            this.previewImage = null;
+            this.fetchPendingCount();
+        }
+        else{
+           this.openSnackBar(res.message, 'error-snackbar');
+        }
+        
       });
     }
     else{

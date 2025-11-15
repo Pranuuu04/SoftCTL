@@ -15,9 +15,9 @@
                 </ng-select> -->
                 <select class="custom-select" formControlName="drsType">
                    <option selected disabled value="">Select Pod</option>
+                   <option  value="All">All</option>
                    <option  value="Pending">Pending</option>
                    <option  value="Uploaded">Uploaded</option>
-                   <option  value="All">All</option>
                 </select>
             </div>
         </div>
@@ -135,10 +135,10 @@
           <td mat-cell *matCellDef="let element">{{ element.BookDate }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="delv_Dt">
+        <!-- <ng-container matColumnDef="delv_Dt">
           <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
           <td mat-cell *matCellDef="let element">{{ element.delv_Dt }}</td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="pod_Img">
           <th mat-header-cell *matHeaderCellDef> POD Image </th>

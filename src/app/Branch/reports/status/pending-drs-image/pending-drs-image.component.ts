@@ -24,7 +24,7 @@ export class PendingDrsImageComponent implements OnInit {
   length: any;
   pageSize = 10;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 20];
+  pageSizeOptions = [10, 20,50];
   pageEvent: PageEvent;
   showPageSizeOptions = false;
   showFirstLastButtons = true;
@@ -38,11 +38,12 @@ export class PendingDrsImageComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  formData: any = {
-    drsType: '',
-    fromDate: '',
-    toDate: '',
-  };
+  formData: any;
+  // formData: any = {
+  //   drsType: '',
+  //   fromDate: '',
+  //   toDate: '',
+  // };
 
   pageCount = 1;
   userType: string;
@@ -119,30 +120,33 @@ export class PendingDrsImageComponent implements OnInit {
 
   
 formSubmit(formData: any) {
-
+  this.formData = formData
   this.isLoading = true; 
 
-  this.httpService
-    .get(`${environment.apiUrl}runsheet/pendingDrsImage?fromDate=${formData.fromDate}&toDate=${formData.toDate}&drsPending=${formData.drsType || 'All'}`)
-    .then(resp => {
-
-      this.isLoading = false; 
-
-      if (resp.status === 1 && resp.Data) {
-        this.dataSource.data = resp.Data;
-      } else {
-        this.dataSource.data = [];
-        this.openSnackBar(resp.message, 'error-snackbar');
-      }
-
-    })
-    .catch(err => {
-      this.isLoading = false;   
-      this.dataSource.data = [];
-    });
+  // this.httpService
+  //   .get(`${environment.apiUrl}runsheet/pendingDrsImage?fromDate=${formData.fromDate}&toDate=${formData.toDate}&drsPending=${formData.drsType || 'All'}`)
+  //   .then(resp => {
+      this.AllService.getDrsPodReport(this.sessionLocationCode,'DrsImageReport',formData.drsType || 'All',formData.fromDate,formData.toDate, this.pageIndex+1,this.pageSize).subscribe({
+        next: (resp: any) => {
+          this.isLoading = false;
+          if (resp?.status === 1 && resp?.Data) {
+            this.dataSource.data = resp.Data;
+            this.length = resp.count;
+          } else {
+            this.dataSource.data = [];
+            this.openSnackBar(resp?.message, 'error-snackbar');
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false;
+          this.dataSource.data = [];
+          this.openSnackBar("Something went wrong!", 'error-snackbar');
+        }
+      });
 }
 
-  openprogressbar(): MatDialogRef<ProgressBarComponent> {
+openprogressbar(): MatDialogRef<ProgressBarComponent> {
     const dialogRef = this.dialog.open(ProgressBarComponent, {
       data: {
           action: 'docketPrint',
@@ -163,15 +167,15 @@ formSubmit(formData: any) {
     });
   }
 
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.handlePageEvent({
-        pageIndex: this.paginator.pageIndex,
-        pageSize: this.paginator.pageSize,
-        length: this.length
-      });
-    });
-  }
+  // ngAfterViewInit() {
+  //   this.paginator.page.subscribe(() => {
+  //     this.handlePageEvent({
+  //       pageIndex: this.paginator.pageIndex,
+  //       pageSize: this.paginator.pageSize,
+  //       length: this.length
+  //     });
+  //   });
+  // }
 
 
   applyFilter(event: Event) {

@@ -1276,6 +1276,21 @@ getAllCustomer(masterName: string, code: any) {
 }
 
 
+drsImageUpload(obj: any) {
+  return this.http.post(`${environment.apiUrl}runsheet/drsImageUpload`,obj);
+}
+
+
+// Reports/getImageReport?sessionLocationCode=MUM&input=DrsImageReport&status=All&fromDate=2025-08-14&toDate=2025-11-14&pageNumber=0&pageSize=10
+getDrsPodReport(sessionLocationCode:any,input:any,status:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any) {
+  return this.http.get(`${environment.apiUrl}Reports/getImageReport?sessionLocationCode=${sessionLocationCode}&input=${input}&status=${status}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+
+
+
+
+
+
 
 }
 
