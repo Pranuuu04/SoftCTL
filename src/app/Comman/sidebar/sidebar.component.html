@@ -53,19 +53,23 @@
   <mat-sidenav-content class="mat-drawer-container">    
     <div class="content mat-elevation-z8 mat-nav">
 
-      <button mat-button class="menu-button dash" routerLink="/dashboard" [ngClass]="{ 'active-button': isRouteActive('/dashboard') }">
+      <button mat-button class="menu-button dash" routerLink="/dashboard" routerLinkActive="active-main" [ngClass]="{ 'active-button': isRouteActive('/dashboard') }">
         <mat-icon>dashboard</mat-icon>
         <span>Admin Dashboard</span>
       </button>  
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="{{menu.Routing}}" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="menu.Routing" [ngClass]="{ 'active-main': isParentActive(menu.captionName) }">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>
+          <mat-icon *ngIf="hasSubMenu(menu.captionName)" class="arrow-right">
+            arrow_right
+          </mat-icon>
         </button>
         <mat-menu #menuMenu="matMenu" class="sideMenu" >
           <ng-container  *ngFor="let item of dynamicMenus">
-            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}" (click)="OpenAdminhModal(item)">
+            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " [routerLink]="item.Routing"  [routerLinkActiveOptions]="{ exact: true }"
+                    routerLinkActive="active-sub" (click)="OpenAdminhModal(item)">
               {{ item.captionName }}
             </button>
           </ng-container>         
@@ -203,19 +207,26 @@
   <mat-sidenav-content class="mat-drawer-container">    
     <div class="content mat-elevation-z8 mat-nav">
 
-      <button mat-button class="menu-button dash" [routerLink]="'/branch-dashboard'" [ngClass]="{ 'active-button': isRouteActive('/branch-dashboard') }">
+      <button mat-button class="menu-button dash" [routerLink]="'/branch-dashboard'" routerLinkActive="active-main"  [ngClass]="{ 'active-button': isRouteActive('/branch-dashboard') }">
         <mat-icon>dashboard</mat-icon>
         <span>Branch Dashboard</span>
-      </button>  
+      </button>
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="menu.Routing" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }">
+        <button mat-button class="menu-button dash"  [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [ngClass]="{
+          'active-main': isParentActive(menu.captionName)
+        }">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>
+          <mat-icon *ngIf="hasSubMenu(menu.captionName)" class="arrow-right">
+            arrow_right
+          </mat-icon>
         </button>
         <mat-menu #menuMenu="matMenu" class="sideMenu" >
           <ng-container  *ngFor="let item of dynamicMenus">
-            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}"  (click)="OpenBranchModal(item)">
+            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName "  [routerLink]="item.Routing" 
+        [routerLinkActiveOptions]="{ exact: true }"
+                    routerLinkActive="active-sub"  (click)="OpenBranchModal(item)">
               {{ item.captionName }}
             </button>
           </ng-container>
@@ -225,7 +236,7 @@
         </mat-menu>
       </ng-container>
       
-      <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
+      <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }" >
         <mat-icon>logout</mat-icon>
         <span>Logout</span>
       </button>
@@ -288,13 +299,13 @@
   <mat-sidenav-content class="mat-drawer-container">    
     <div class="content mat-elevation-z8 mat-nav">
 
-      <button mat-button class="menu-button dash" routerLink="/customer-dashboard" [ngClass]="{ 'active-button': isRouteActive('/customer-dashboard') }">
+      <button mat-button class="menu-button dash" routerLink="/customer-dashboard" routerLinkActive="active-main" [ngClass]="{ 'active-button': isRouteActive('/customer-dashboard') }">
         <mat-icon>dashboard</mat-icon>
         <span>Customer Dashboard</span>
       </button>  
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="{{menu.Routing}}" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }"  (click)="OpenCustomerModal(menu)">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="menu.Routing" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }"  (click)="OpenCustomerModal(menu)">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>
         </button>

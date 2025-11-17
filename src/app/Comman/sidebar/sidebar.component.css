@@ -68,6 +68,7 @@
     background-color: white;
   }
   .mat-nav button{
+    cursor: pointer;
    width:  168px;
   height: 49px;
   float: left;

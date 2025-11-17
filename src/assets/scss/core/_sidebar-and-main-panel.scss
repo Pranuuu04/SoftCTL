@@ -504,15 +504,55 @@
 }
 
 
-.mat-nav .menu-button.active,
-.mat-nav .menu-button:focus
- {
-    background-color: #28bbf5!important;
-    span,
-    mat-icon{
-        color: white !important;
-    }
+// .mat-nav .menu-button.active,
+// .mat-nav .menu-button:focus
+//  {
+//     background-color: #2e3f55!important;
+//     span,
+//     mat-icon{
+//         color: white !important;
+//     }
+// }
+.menu-button.active-main {
+    background-color: #2e3f55 !important;
+    color: #c0cddf !important;
+    border-right: 12px solid #c0cddf !important;
+    border-top-right-radius: 34px !important;
+    border-bottom-left-radius: 10px !important;
 }
+
+.menu-button.active-main span,
+.menu-button.active-main mat-icon {
+    color: #c0cddf !important;
+}
+.mat-menu-item.active-sub {
+    background-color: #e3e7ed  !important;
+    color: #2e3f55 !important;
+    border-top-right-radius: 20px !important;
+    border-bottom-left-radius: 13px !important;
+    border-left: 6px solid #1a2635 !important;
+}
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-right: 35px !important; /* space for the arrow on right */
+}
+
+.arrow-right {
+  position: absolute;
+  right: 10px;     /* 🔥 this puts arrow at far right */
+  font-size: 22px;
+  color: #c0cddf;
+}
+
+.menu-button.active-main .arrow-right {
+  color: #c0cddf !important;
+}
+
+
+
 // .mat-nav button.active-button{
 //     background-color: #28bbf5!important;
 //     span,

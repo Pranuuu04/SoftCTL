@@ -754,7 +754,7 @@ freightCharge() {
       chargedWt: new FormControl(this.chargedWt, Validators.compose([])),
       actaulWeightType: new FormControl('', Validators.compose([])),
       ratePerKg: new FormControl('', Validators.compose([])),
-      freightAmt: new FormControl('', Validators.compose([])),
+      freightAmt: new FormControl(this.freightAmt, Validators.compose([])),
       discountAmt: new FormControl('', Validators.compose([])),
       docketCharge: new FormControl('', Validators.compose([])),
       fovCharge: new FormControl('', Validators.compose([])),
@@ -2235,7 +2235,7 @@ disableEnter(event: KeyboardEvent) {
         ensCharges: this.encCharges || 0,
         scCharges: this.scCharges || 0,
         hdpCharges: this.hdpCharges || 0,
-        Rate: formData.freightAmt || this.newFreightAmt || this.freightAmt || 0,
+        Rate: formData.freightAmt || this.newFreightAmt || 0,
         FuelPer: 0,
         ServiceTax: this.gstAmount || 0,
         CustInvoice: this.invoiceListData || '',
@@ -2391,7 +2391,7 @@ disableEnter(event: KeyboardEvent) {
 
             this.volumetricWt = resp.Data.data.VolumetricWt;
             this.totalAmount = resp.Data.data.TotalAmt;
-            this.ratePerKg = resp.Data.data.RatePerkg;
+            // this.ratePerKg = resp.Data.data.RatePerkg;
             this.docketCharges = resp.Data.data.DocketChrgs;
             this.fovCharge = resp.Data.data.FOV_Chrgs;
             this.odaCharge = resp.Data.data.ODA_Chrgs;
@@ -2408,7 +2408,7 @@ disableEnter(event: KeyboardEvent) {
             this.invoiceNo = resp.Data.data.InvoiceNo;
             this.invoiceValue = resp.Data.data.InvValue;
             this.eWayBill = resp.Data.data.EwayBill;
-            this.freightAmt = resp.Data.data.Rate;
+            // this.freightAmt = resp.Data.data.Rate;
             this.discountAmt = resp.Data.data.Discount;
             this.gstAmount = resp.Data.data.ServiceTax;
             this.expectedDeliveryDate = resp.Data.data.dispatchDate;
@@ -2449,6 +2449,8 @@ disableEnter(event: KeyboardEvent) {
               gstNo: resp.Data.data.Consignee_GST,
               trainFlight: resp.Data.data.Train_Flight,
               trainFlightNo: resp.Data.data.Train_Flight_No,
+              ratePerKg: resp.Data.data.RatePerkg,
+              freightAmt: resp.Data.data.Rate,
             });
             this.pinCode = resp.Data.data.Consignee_Pin;
             // this.stateName = resp.Data.data.Consignee_State;
@@ -2628,7 +2630,7 @@ disableEnter(event: KeyboardEvent) {
         VendorCode3: this.vendor3 || '',
         VendorAwbNo3: this.forwarding3 || '',
         VendorChargewt: this.vendorChargedWt || 0,
-        RatePerkg: this.ratePerKg || this.bookingForm.value.ratePerKg || this.ratePerKg || 0,
+        RatePerkg: this.bookingForm.value.ratePerKg || this.ratePerKg || 0,
         fovChrgs: this.fovCharge || this.bookingForm.value.fovCharge || 0,
         FuelCharges: this.fuelCharge || this.bookingForm.value.fuelCharge || 0,
         DocketChrgs: this.docketCharges || this.bookingForm.value.docketCharge || 0,
@@ -2663,7 +2665,7 @@ disableEnter(event: KeyboardEvent) {
         ensCharges: this.encCharges || 0,
         scCharges: this.scCharges || 0,
         hdpCharges: this.hdpCharges || 0,
-        Rate: this.freightAmt || this.newFreightAmt || this.bookingForm.value.freightAmt || 0 ,
+        Rate: this.bookingForm.value.freightAmt || this.newFreightAmt || 0 ,
         FuelPer: 0,
         ServiceTax:  this.gstAmount || 0,
         // KYCimage: 'dddrfs',
@@ -2715,7 +2717,7 @@ disableEnter(event: KeyboardEvent) {
       localStorage.setItem('selectedMode', this.selectedMode);
       localStorage.setItem('selectedProduct', this.selectedProduct);
 
-      const freightAmt = this.bookingForm.value.freightAmt || this.newFreightAmt || this.freightAmt;
+      const freightAmt = this.bookingForm.value.freightAmt || this.newFreightAmt;
 
       // Prevent submission if freightAmt is 0 and custType is not 'Credit'
       if (freightAmt === 0 && this.bookingForm.value.custType !== 'Credit') {

@@ -89,6 +89,24 @@ filterMenus() {
     );
   }
 }
+
+hasSubMenu(parentName: string): boolean {
+  return this.dynamicMenus.some(
+    item => item.captionType === 'Sub_Menu' && item.groupName === parentName
+  );
+}
+isParentActive(parentName: string): boolean {
+  const currentRoute = this.router.url;
+
+  return this.dynamicMenus.some(
+    item =>
+      item.captionType === 'Sub_Menu' &&
+      item.groupName === parentName &&
+      currentRoute.endsWith(item.Routing)
+
+  );
+}
+
     navigateTo(path: string) {
       this.router.navigate([path]);
     }
