@@ -47,11 +47,18 @@ export class DirectDrsUpdateComponent implements OnInit {
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     }
 
-  fetchPendingCount() {
-    this.http.get<number>('api/drs/pending-count').subscribe((count) => {
-      this.pendingDrsCount = count;
-    });
+fetchPendingCount() {
+    //  this.allServices.getDrsPodReport(this.sessionLocationCode,'DrsImageReport', '','','', 1,25).subscribe((res:any) => {
+    //   if(res.status === 1){
+    //      this.pendingDrsCount = res.count;
+    //   }else{
+    //     this.openSnackBar(res.message,'error-snackbar')
+    //   }  
+    // });
+
+     this.pendingDrsCount = 37
   }
+  
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -73,6 +80,7 @@ export class DirectDrsUpdateComponent implements OnInit {
             "DrsNo": this.drsForm.get('drsNumber').value,
             "Image": this.drsForm.get('drsImage').value
       }
+
       this.allServices.drsImageUpload(payload).subscribe((res:any) => {
         if(res.status === 1){
            this.openSnackBar(res.message, 'custom-snackbar');
@@ -99,6 +107,6 @@ export class DirectDrsUpdateComponent implements OnInit {
         verticalPosition: 'top',
         panelClass: [panelClass]
       });
-    }
+   }
 
 }
