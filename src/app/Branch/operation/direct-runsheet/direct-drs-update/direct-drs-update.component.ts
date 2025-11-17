@@ -11,7 +11,7 @@ import { AllServicesService } from 'app/service/all-services.service';
 })
 export class DirectDrsUpdateComponent implements OnInit {
 
- drsForm!: FormGroup;
+  drsForm!: FormGroup;
   pendingDrsCount = 0;
   previewImage: string | null = null;
   currentDate:any;
@@ -91,7 +91,6 @@ export class DirectDrsUpdateComponent implements OnInit {
       this.openSnackBar('All fields are required!', 'error-snackbar');
     }
   }
-
 
   openSnackBar(message: string, panelClass: string) {
       this.snackBar.open(message, 'Close', {
