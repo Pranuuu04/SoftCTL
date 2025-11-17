@@ -6,6 +6,7 @@ import { DirectDrsPendingComponent } from './direct-drs-pending/direct-drs-pendi
 import { DirectRunsheetComponent } from './direct-runsheet.component';
 import { MaterialModule } from 'app/angularMaterial/angularMaterial';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DirectDrsUpdateComponent } from './direct-drs-update/direct-drs-update.component';
 
 
 
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DirectRunsheetComponent,
     DirectDrsEntryComponent,
     DirectDrsViewComponent,
-    DirectDrsPendingComponent
+    DirectDrsPendingComponent,
+    DirectDrsUpdateComponent
   ],
   imports: [
     CommonModule,

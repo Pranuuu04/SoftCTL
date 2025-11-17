@@ -77,7 +77,7 @@ export class CreditNoteReportComponent implements OnInit {
     branchDetails: any;
     
     selectedElement: any;
-  // element: any;
+    isLoadingPdf = false;
   
     constructor(private auditService: AuditService,
                 public dialog: MatDialog,
@@ -188,6 +188,7 @@ export class CreditNoteReportComponent implements OnInit {
   
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     }
+    
     openSnackBar(message: string, panelClass: string) {
       this.snackBar.open(message, 'Close', {
         duration: 3000,
@@ -259,15 +260,6 @@ export class CreditNoteReportComponent implements OnInit {
    }
  }
 
-
-
-    // downloadExcel() {
-    //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
-    //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    //   XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
-    
-    //   XLSX.writeFile(wb, 'CreditEntryReport.xlsx');
-    // }
 
 downloadExcel() {
 
@@ -550,7 +542,6 @@ downloadPdf() {
 
 
 
-
 // downloadPdfForOne(element: any) {
 //  this.selectedElement= element; 
 //   setTimeout(() => this.generatePdf(), 100); 
@@ -569,6 +560,29 @@ downloadPdf() {
 //     pdf.save(`CreditNote_${this.selectedElement?.NoteNo || 'Note'}.pdf`);
 //   });
 // }
+
+
+generatePdf(element: any) {
+  const noteNo = element.NoteNo;
+  this.isLoadingPdf = true; 
+
+  this.paymentService.PaymentCreditNotePrint(noteNo).subscribe({
+    next: (response: Blob) => {
+      const fileURL = URL.createObjectURL(response);
+      setTimeout(() => {
+        window.open(fileURL, '_blank');
+        this.isLoadingPdf = false; 
+        setTimeout(() => URL.revokeObjectURL(fileURL), 10000);
+      }, 200); 
+    },
+    error: (err) => {
+      console.error('PDF generation failed:', err);
+      this.openSnackBar('Unable to open PDF', 'error-snackbar');
+      this.isLoadingPdf = false;
+    }
+  });
+}
+
 
 
     applyFilter(filterValue: string) {
