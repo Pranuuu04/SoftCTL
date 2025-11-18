@@ -138,25 +138,6 @@ formSubmit(formData: any) {
 
   this.isLoading = true; 
 
-  // this.httpService
-  //   .get(`${environment.apiUrl}pod/pendingPodImage?fromDate=${formData.fromDate}&toDate=${formData.toDate}&podPending=${formData.drsType || 'All'}`)
-  //   .then(resp => {
-
-  //     this.isLoading = false; 
-
-  //     if (resp.status === 1 && resp.Data) {
-  //       this.dataSource.data = resp.Data;
-  //     } else {
-  //       this.dataSource.data = [];
-  //       this.openSnackBar(resp.message, 'error-snackbar');
-  //     }
-
-  //   })
-  //   .catch(err => {
-  //     this.isLoading = false;   
-  //     this.dataSource.data = [];
-  //   });
-
    this.AllService.getDrsPodReport(this.sessionLocationCode,'PodImageReport',formData.drsType || 'All',formData.fromDate,formData.toDate, this.pageIndex+1,this.pageSize).subscribe({
         next: (resp: any) => {
           this.isLoading = false;

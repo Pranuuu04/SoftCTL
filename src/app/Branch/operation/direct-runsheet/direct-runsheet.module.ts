@@ -23,6 +23,9 @@ import { DirectDrsUpdateComponent } from './direct-drs-update/direct-drs-update.
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+  ],
+exports: [
+  DirectDrsUpdateComponent
   ]
 })
 export class DirectRunsheetModule { }
