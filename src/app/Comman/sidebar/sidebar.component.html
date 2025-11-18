@@ -50,7 +50,9 @@
   </ul>
 </div>
 <mat-sidenav-container>
-  <mat-sidenav-content class="mat-drawer-container">    
+  
+  <mat-sidenav #sidenav mode="side" opened class="side-nav">
+  <!-- <mat-sidenav-content class="mat-drawer-container">     -->
     <div class="content mat-elevation-z8 mat-nav">
 
       <button mat-button class="menu-button dash" routerLink="/dashboard" routerLinkActive="active-main" [ngClass]="{ 'active-button': isRouteActive('/dashboard') }">
@@ -59,7 +61,7 @@
       </button>  
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="menu.Routing" [ngClass]="{ 'active-main': isParentActive(menu.captionName) }">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="hasSubMenu(menu.captionName) ? null : menu.Routing" [ngClass]="{ 'active-main': isParentActive(menu.captionName) }"(menuOpened)="onMenuOpened(menu)">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>
           <mat-icon *ngIf="hasSubMenu(menu.captionName)" class="arrow-right">
@@ -81,7 +83,7 @@
         <span>Logout</span>
       </button>
     </div>
-  </mat-sidenav-content>
+  </mat-sidenav>
 </mat-sidenav-container>
 <!-- <mat-sidenav-container>
   <mat-sidenav-content class="mat-drawer-container">

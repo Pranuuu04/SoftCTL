@@ -11,7 +11,7 @@ import { environment } from 'environments/environment';
 })
 export class EnableLabelComponent implements OnInit {
 
-  originCode: any;
+  sessionLocationCode: any;
   originName: any;
   username: any;
 
@@ -71,15 +71,17 @@ export class EnableLabelComponent implements OnInit {
               private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any
               ) {
-                this.originCode = localStorage.getItem('originCode');
-                this.originName = localStorage.getItem('originName');
-                this.getPermission();
               }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+        this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+    ? localStorage.getItem('originCode')
+    : localStorage.getItem('selectedValue');
+this.getPermission();
+  }
 
   getPermission() {
-    this.httpService.get(`${environment.apiUrl}Booking/getInputpermission?SessionLocationCode=${this.originCode}`).then(resp => {
+    this.httpService.get(`${environment.apiUrl}Booking/getInputpermission?SessionLocationCode=${this.sessionLocationCode}`).then(resp => {
       console.log(resp);
       this.edd = resp.Data[0].EDD;
       this.isEddChecked = this.edd === 1;
@@ -228,7 +230,7 @@ export class EnableLabelComponent implements OnInit {
 
   submitValue() {
     const obj = {
-      sessionLocationCode: this.originCode,
+      sessionLocationCode: this.sessionLocationCode,
       bookDate: 1,
       EDD: this.isEddChecked ? 1 : 0,
       shipper: this.isShipperChecked ? 1 : 0,

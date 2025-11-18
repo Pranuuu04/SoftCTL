@@ -1820,21 +1820,21 @@ getGstDataWithoutModal(subTotalAmt: any, consignerCode: any) {
       this.forwardingNo = resp.Data[0].ForwadingNo;
       this.isForwardNoChecked = this.forwardingNo === 1;
 
-      // this.delVType = resp.Data[0].DelvType;
-      // this.isDelvTypeChecked = this.delVType === 1;
-      // if (!this.isDelvTypeChecked) {
-      //   this.bookingForm.get('deliveryType')?.disable();
-      // } else {
-      //   this.bookingForm.get('deliveryType')?.enable();
-      // }
+      this.delVType = resp.Data[0].DelvType;
+      this.isDelvTypeChecked = this.delVType === 1;
+      if (!this.isDelvTypeChecked) {
+        this.bookingForm.get('deliveryType')?.disable();
+      } else {
+        this.bookingForm.get('deliveryType')?.enable();
+      }
 
-      // this.pkgType = resp.Data[0].PkgType;
-      // this.isPkgTypeChecked = this.pkgType === 1;
-      // if (!this.isPkgTypeChecked) {
-      //   this.bookingForm.get('packageType')?.disable();
-      // } else {
-      //   this.bookingForm.get('packageType')?.enable();
-      // }
+      this.pkgType = resp.Data[0].PkgType;
+      this.isPkgTypeChecked = this.pkgType === 1;
+      if (!this.isPkgTypeChecked) {
+        this.bookingForm.get('packageType')?.disable();
+      } else {
+        this.bookingForm.get('packageType')?.enable();
+      }
 
       this.discount = resp.Data[0].Discount;
       this.isDiscountChecked = this.discount === 1;

@@ -1,24 +1,28 @@
-.sidebar{
-    width: 206px;
+.sidebar {
+  width: 206px;/* default desktop */
 }
-::ng-deep .main-panel{
-    width: 85% !important;
-}
-@media (min-width: 1441px){
-    ::ng-deep .main-panel{
-      width: 86% !important;
+
+@media (max-width: 991px) {
+  .sidebar {
+    width: 80%;   /* take 80% screen on tablet */
+    max-width: 260px;
   }
 }
-@media (min-width: 991px) and (max-width: 1024px) {
-    ::ng-deep .main-panel{
-        width: 80% !important;  
-    }
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 100%;
+    position: absolute;
+    z-index: 1200;
+    height: 100vh;
+  }
 }
-@media (min-width: 320px) and (max-width: 991px) {
-    ::ng-deep .main-panel{
-        width: 100% !important;  
-    }
-    .sidebar{
-        width: 259px;
-    }
+::ng-deep .main-panel {
+  width: calc(100% - 206px);
+}
+
+@media (max-width: 991px) {
+  ::ng-deep .main-panel {
+    width: 100% !important;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,6 +32,8 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
+
+  @Output() closeMenu = new EventEmitter<void>();
   menuItems: RouteInfo[] = [];
   userType: any;
   ClientLogo: any;
@@ -106,16 +108,32 @@ isParentActive(parentName: string): boolean {
 
   );
 }
-
-    navigateTo(path: string) {
-      this.router.navigate([path]);
+closeSidebarOnMobile(route?: string) {
+  if (route && this.router.url === route) {
+      this.openSnackBar('You are already on this page.', 'info-snackbar');
+    } else if (route) {
+      this.router.navigate([route]);
     }
-    isMobileMenu() {
+  if (this.isMobileMenu()) {
+    this.closeMenu.emit();
+  }
+}
+ isMobileMenu() {
         if ($(window).width() > 991) {
             return false;
         }
         return true;
     };
+    navigateTo(path: string) {
+      this.router.navigate([path]);
+    }
+onMenuOpened(menu: any) {
+  // When submenu opens → DO NOT close sidebar (mobile or desktop)
+  if (this.hasSubMenu(menu.captionName)) {
+    return;  // Prevent any sidebar closing
+  }
+}
+
     preventLogout(event: Event): void {
       event.preventDefault();
       event.stopPropagation();

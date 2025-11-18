@@ -28,7 +28,7 @@ export class SaleConsignorComponent implements OnInit {
   showPageSizeOptions = false;
   pageSizeOptions: number[] = [15, 50, 100, 1000];
   dataSource: MatTableDataSource<any>;
-  displayedColumns: any[] = [ 'index', 'action', 'Customer_Name', 'LocationName', 'GSTNo', 'T_Flag', 'Customer_Pin',
+  displayedColumns: any[] = [ 'index', 'action', 'Customer_Code', 'Customer_Name', 'LocationName', 'GSTNo', 'T_Flag', 'Customer_Pin',
     'Destination_Name', 'State_Name', 'Client_Status'];
   customerViewData: any[] = [];
   searchValue: string = ''; 
