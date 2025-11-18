@@ -56,7 +56,7 @@ fetchPendingCount() {
     //   }  
     // });
 
-     this.pendingDrsCount = 37
+     this.pendingDrsCount = 0;
   }
   
 

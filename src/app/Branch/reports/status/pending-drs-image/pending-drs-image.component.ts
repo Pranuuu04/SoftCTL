@@ -117,7 +117,6 @@ export class PendingDrsImageComponent implements OnInit {
     this.formSubmit(this.formData);
   }
   
-
   
 formSubmit(formData: any) {
   this.formData = formData

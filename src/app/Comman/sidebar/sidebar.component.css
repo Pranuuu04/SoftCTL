@@ -67,9 +67,10 @@
     list-style: none;
     background-color: white;
   }
-  .mat-nav button{
-    cursor: pointer;
-   width:  168px;
+
+.mat-nav button{
+  cursor: pointer;
+  width:  168px;
   height: 49px;
   float: left;
   display: flex;
@@ -78,12 +79,15 @@
   line-height: 30px;
   font-size: 13px;
   }
+
   .menu-button{
     box-shadow: rgba(99, 99, 99, 0.2) 3px 6px 9px -1px;
   }
+
   .sidebtn{
     box-shadow:rgba(99, 99, 99, 0.2) 2px 4px 7px -1px;
   }
+
   .mat-menu-item{
     line-height: 43px;
       height: 44px;
@@ -247,7 +251,8 @@
     width: 259px !important;
   }
 }
-    ::ng-deep .cdk-overlay-container, 
+
+::ng-deep .cdk-overlay-container, 
 ::ng-deep .cdk-overlay-pane {
   z-index: 10000 !important;
 }
@@ -256,10 +261,12 @@
 }
 
 ::ng-deep .sideMenu {
-  left: auto !important;
+  left: 180px !important;
   right: auto !important;
   margin-top: 0 !important;
 }
+
+
 ::ng-deep .mat-drawer-inner-container {
       height: auto !important;
 }
