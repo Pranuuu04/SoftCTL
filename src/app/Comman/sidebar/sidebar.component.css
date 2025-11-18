@@ -251,11 +251,6 @@
 ::ng-deep .cdk-overlay-pane {
   z-index: 10000 !important;
 }
-/* @media (min-width:1024px) {
-    ::ng-deep .cdk-overlay-connected-position-bounding-box{
-      left: 160px !important;
-    }
-} */
 .mat-sidenav, .mat-drawer-container, .mat-nav {
   overflow: visible !important;
 }
