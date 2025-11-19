@@ -2717,13 +2717,13 @@ disableEnter(event: KeyboardEvent) {
       localStorage.setItem('selectedMode', this.selectedMode);
       localStorage.setItem('selectedProduct', this.selectedProduct);
 
-      const freightAmt = this.bookingForm.value.freightAmt || this.newFreightAmt;
+      // const freightAmt = this.bookingForm.value.freightAmt || this.newFreightAmt;
 
       // Prevent submission if freightAmt is 0 and custType is not 'Credit'
-      if (freightAmt === 0 && this.bookingForm.value.custType !== 'Credit') {
-        this.openSnackBar('Freight Amount is required', 'error-snackbar');
-        return;
-      }
+      // if (freightAmt === 0 && this.bookingForm.value.custType !== 'Credit') {
+      //   this.openSnackBar('Freight Amount is required', 'error-snackbar');
+      //   return;
+      // }
       this.bookingService.updateBooking(obj).subscribe(
         (response) => {
           if (response.Status === 1) {

@@ -22,20 +22,20 @@ export class CrmComplainComponent implements OnInit{
    ComplainFORM: FormGroup;
   dataSource = new MatTableDataSource<any>(this.complainTableData);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  selectType= 'Awb';
+  selectType: string;
   awbNo: string;
   Complain:string;
   RefNo:string;
   showTable = false;
   showTable2 =false;
-  
+    displayedColumns: string[] = ['Date', 'AwbNo', 'RefNo', 'ComplainNo', 'Name', 'MobileNo', 'Type', 'Detail', 'Action', 'Status'];
+
   constructor(
     public httpService: HttpService,
     private formbuilder: FormBuilder,
      private snackBar: MatSnackBar,
   ) {
   }
-  displayedColumns: string[] = ['Date', 'AwbNo', 'RefNo', 'ComplainNo', 'Name', 'MobileNo', 'Type', 'Detail', 'Action', 'Status'];
 
   ngOnInit(): void {
     this.currentDate = new Date().toISOString().split('T')[0];
@@ -66,6 +66,7 @@ export class CrmComplainComponent implements OnInit{
       ]
     };
 
+    this.selectType = 'Awb';
     this.ComplainFORM = this.formbuilder.group({
       awbNo: new FormControl('',Validators.compose([
         Validators.required

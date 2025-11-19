@@ -1,106 +1,132 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-9 col-md-9"  style="display: flex; border-right: 1px solid  #d2d2d2; justify-content: center;">
-      <div class="card">
-        <div class="card-body">
-          <div class="container" style=" padding: 1px 1px;">
-
-            <div class="row">
-                  <select class="custom-select col-sm-1 col-md-1 form-label select" data-live-search="true" [(ngModel)]="selectType">
-                    <option value="Awb" selected>Awb No.</option>
-                    <option value="Complain">Complain No.</option>
-                    <option value="RefNo">Ref No.</option>
-                </select>
-                
-                  <div class="col-sm-3 col-md-3">
-                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control" id="awb." required />
-                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control" id="awb." required />    
-                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" id="awb." required />   
-                  </div>
-                  <div class="col-sm-8 col-md-8 d-flex action" style="justify-content: space-between;">
-                    <button (click)="checkAwbData()" class="btn btn-success">
-                      Find
-                    </button>
-                  </div>
-                </div>
+<!-- <div class="container">
+  <div class="row"> -->
+    <!-- <div class="col-lg-9 col-md-9"  style="display: flex; border-right: 1px solid  #d2d2d2; justify-content: center;"> -->
+      <!-- <div class="card"> -->
+        <!-- <div class="card-body"> -->
+          <div>
                 <form [formGroup]="ComplainFORM" (ngSubmit)="formSubmit(ComplainFORM.value)">
-                  <div class="row mt-1">
-                    <label for="Date" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
+                  <div class="row mainrow">
+                      <div class="col-sm-3">
+                        <div class="textOnInput">
+                          <label for="ManfDate"><span style="color: red;">*</span>Date :</label>
+                          <input class="form-control" type="date" [(ngModel)]="currentDate" readonly>
+                        </div>
+                      </div>
+                    <!-- <label for="Date" class="col-sm-1 col-lg-1 col-md-2 form-label">Date</label>
                     <div class="col-sm-3 col-md-4 col-lg-3">
                         <input type="date" value="{{currentDate}}" id="Date" class="form-control" [(ngModel)]="currentDate" readonly>
-                    </div>
-                    <label for="Name" class="col-sm-1 col-lg-1 col-md-2 form-label">Name</label>
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                        <input type="text" placeholder="Leave a comment here" formControlName="Name" class="form-control" id="Name" required />
+                    </div> -->
+                    <div class="col-sm-3">
+                      <div class="textOnInput">
+                          <label for="Name"> Name :</label>
+                          <input class="form-control" type="text" id="Name" formControlName="Name"  placeholder="Enter name here"> 
                         <div *ngFor="let validation of validationMessage.Name">
                           <div class="error-message"
                             *ngIf="ComplainFORM.get('Name').hasError(validation.type) && (ComplainFORM.get('Name').dirty || ComplainFORM.get('Name').touched)">
                             {{ validation.message }}
                           </div>
                         </div>
+                        </div>
                     </div>
-                    <label for="MobileNo" class="col-sm-1 col-lg-1 col-md-2 form-label">No.</label>
+                    <div class="col-sm-3">
+                      <div class="textOnInput">
+                          <label for="MobileNo"> MobileNo :</label>
+                          <input class="form-control" type="text" id="MobileNo" formControlName="MobileNo"  placeholder="Enter mobile no.">
+                        </div>
+                    </div>
+                    <!-- <label for="Name" class="col-sm-1 col-lg-1 col-md-2 form-label">Name</label>
+                    <div class="col-sm-3 col-md-4 col-lg-3">
+                        <input type="text" placeholder="Leave a comment here" formControlName="Name" class="form-control" id="Name" required />
+                       
+                    </div> -->
+                    <!-- <label for="MobileNo" class="col-sm-1 col-lg-1 col-md-2 form-label">No.</label>
                     <div class="col-sm-3 col-md-4 col-lg-3">
                       <input type="text" placeholder="enter mobile no." formControlName="MobileNo" class="form-control" id="MobileNo" required />
+                        </div> -->
+                    <div class="col-sm-3">
+                      <div class="textOnInput">
+                          <label for="Email"> Email :</label>
+                          <input class="form-control" type="email" id="Email" formControlName="Email"  placeholder="abc@gmail.com">
                         </div>
-                </div>
-                <div class="row mt-1">
-                    <label for="Email" class="col-sm-1 col-lg-1 col-md-2 form-label">Email</label>
-                  <div class="col-sm-3 col-md-4 col-lg-3">
-                    <input type="email" class="form-control" id="Email" placeholder="abc@gmail.com " formControlName="Email"
-                    aria-describedby="emailHelp">
-                  </div>
-                  <label for="Type" class="col-sm-1 col-lg-1 col-md-2 form-label">Selection</label>
-                  <div class="col-sm-3 col-md-4 col-lg-3">
-                    <select class="custom-select" data-live-search="true" formControlName="Type">
-                      <option value="Urgent" selected>Urgent</option>
-                      <option value="Normal">Normal</option>
-                  </select>
-                  </div>
-                
-                  <label for="Status" class="col-sm-1 col-lg-1 col-md-2 form-label">Status</label>
-                  <div class="col-sm-3 col-md-4 col-lg-3">
-                    <select class="custom-select" data-live-search="true" formControlName="Status">
-                      <option value="Unsolved" selected>Unsolved</option>
-                      <option value="Solved">Solved</option>
-                  </select>
-                </div>
-                  
-              </div>
-              <div class="row mt-1">
-                <label for="Detail" class="col-sm-1 col-md-2 col-lg-1 form-label">Complain</label>
-                  <div class="col-sm-3 col-md-10 col-lg-11">
-                    <input type="text" class="form-control" id="Detail" placeholder="Enter Complain details" formControlName="Detail"
-                    aria-describedby="emailHelp" required>
-                    <div *ngFor="let validation of validationMessage.Detail">
-                      <div class="error-message"
-                        *ngIf="ComplainFORM.get('Detail').hasError(validation.type) && (ComplainFORM.get('Detail').dirty || ComplainFORM.get('Detail').touched)">
-                        {{ validation.message }}
-                      </div>
                     </div>
-                  </div>
-              </div>
-              <div class="row mt-1">
-                <label for="Action" class="col-sm-1 col-md-2 col-lg-1 form-label">Action</label>
-              <div class="col-sm-3 col-md-10 col-lg-11">
-                <input type="text" class="form-control" id="Action" placeholder="" formControlName="Action"
-                aria-describedby="emailHelp">
-                <div *ngFor="let validation of validationMessage.Action">
-                  <div class="error-message"
-                    *ngIf="ComplainFORM.get('Action').hasError(validation.type) && (ComplainFORM.get('Action').dirty || ComplainFORM.get('Action').touched)">
-                    {{ validation.message }}
-                  </div>
                 </div>
+                <div class="row mainrow">
+                    <div class="col-sm-3">
+                      <div class="textOnInput">
+                          <label for="Type"> Selection :</label>
+                          <select class="custom-select" data-live-search="true" formControlName="Type">
+                            <option value="Urgent" selected>Urgent</option>
+                            <option value="Normal">Normal</option>
+                          </select>
+                        </div>
+                    </div>
+                <div class="col-sm-3">
+                  <div class="textOnInput">
+                      <label for="Status"> Status :</label>
+                      <select class="custom-select" data-live-search="true" formControlName="Status">
+                        <option value="Unsolved" selected>Unsolved</option>
+                        <option value="Solved">Solved</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="textOnInput">
+                        <label for="Detail"> Complain :</label>
+                        <input class="form-control" type="text" id="Detail" formControlName="Detail"  placeholder="Enter Complain details">
+                        <div *ngFor="let validation of validationMessage.Detail">
+                          <div class="error-message"
+                            *ngIf="ComplainFORM.get('Detail').hasError(validation.type) && (ComplainFORM.get('Detail').dirty || ComplainFORM.get('Detail').touched)">
+                            {{ validation.message }}
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="textOnInput">
+                        <label for="Action"> Action :</label>
+                        <input class="form-control" type="text" id="Action" formControlName="Action"  placeholder="Enter Action details">
+                        <div *ngFor="let validation of validationMessage.Action">
+                          <div class="error-message"
+                            *ngIf="ComplainFORM.get('Action').hasError(validation.type) && (ComplainFORM.get('Action').dirty || ComplainFORM.get('Action').touched)">
+                            {{ validation.message }}
+                          </div>
+                        </div>
+                      </div>
+                  </div>
               </div>
+              <div class="row mainrow form-group d-flex m-0" style="justify-content: space-between; border-bottom: 1px solid #d2d2d2;">
+                 <!-- <div class="row mainrow"> -->
+                <div class="col-sm-3">
+                    <select class="custom-select" [(ngModel)]="selectType" >
+                      <option value="'Awb'">Awb No.</option>
+                      <option value="'Complain'">Complain No.</option>
+                      <option value="'RefNo'">Ref No.</option>
+                  </select>
+                </div>
+                
+                  <div class="col-sm-2">
+                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control" id="awb." required />
+                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control" id="awb." required />    
+                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" id="awb." required />   
+                  </div>
+                  <div class="col-sm-1 d-flex action" style="justify-content: space-between;">
+                     <button matTooltip="Find" type="button" class="btn btn-light form-icon" width="auto" (click)="checkAwbData()">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                  </div>
+                <!-- </div> -->
+                  <div class="col-sm-6 d-flex" style="justify-content: right; padding-right: 0;" >
+                    <button type="submit" class="btn btn-light other-button">Submit</button>
+                  </div>
               </div>
-              <div class="row mt-1">
+              <!-- <div class="row mt-1">
               <div class="col-sm-12 d-flex submit" style="justify-content: right;">
                   <button type="submit"  class="btn btn-warning">Submit</button>
               </div>
-          </div>
+          </div> -->
          </form>
       </div>
-     </div>
+     <!-- </div> -->
 <div *ngIf="showTable && dataSource.data.length > 0">
   <div class="table-responsive">
     <div class="row d-flex m-0" style="justify-content: right;" >
@@ -183,9 +209,9 @@
     <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
       <img src="./../../../../../assets/images/NOdata.png" alt="">
       </div>
-  </div>
+  <!-- </div> -->
   
-</div>
+<!-- </div> -->
 
 <div class="col-sm-3 tracking">
 
@@ -269,5 +295,5 @@
     </div>
 
 </div>
-</div>
-</div> 
+<!-- </div>
+</div>  -->
