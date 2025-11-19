@@ -3,6 +3,7 @@
   display: flex;
   justify-content: start;
   align-items: center;
+  font-weight: bold;
   font-size: 1rem;
   margin-left: -12px;
   margin-right: -12px;
@@ -164,7 +165,7 @@
 
 
 .submit-btn {
-  height: 34px !important;
+  height: 32px !important;
   padding: 0 15px !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
