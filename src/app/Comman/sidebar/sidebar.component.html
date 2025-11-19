@@ -236,12 +236,12 @@
               {{ item.captionName }}
             </button>
           </ng-container>
-          <!-- <button mat-menu-item class="sidebtn" routerLink="/destination">
+          <button mat-menu-item class="sidebtn" routerLink="/destination">
             destination
-          </button> -->
+          </button>
         </mat-menu>
       </ng-container>
-      
+
       <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }" >
         <mat-icon>logout</mat-icon>
         <span>Logout</span>
