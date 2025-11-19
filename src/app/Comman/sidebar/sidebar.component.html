@@ -14,6 +14,7 @@
       </div>
     </span>
   </form>
+
   <ul class="nav navbar-nav nav-mobile-menu">
       <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)">
@@ -49,6 +50,7 @@
       </li>
   </ul>
 </div>
+
 <mat-sidenav-container>
   
   <mat-sidenav #sidenav mode="side" opened class="side-nav">
@@ -68,6 +70,7 @@
             arrow_right
           </mat-icon>
         </button>
+
         <mat-menu #menuMenu="matMenu" class="sideMenu" >
           <ng-container  *ngFor="let item of dynamicMenus">
             <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " [routerLink]="item.Routing"  [routerLinkActiveOptions]="{ exact: true }"
@@ -76,6 +79,7 @@
             </button>
           </ng-container>         
         </mat-menu>
+        
       </ng-container>
       
       <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
