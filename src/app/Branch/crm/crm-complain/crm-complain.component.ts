@@ -22,7 +22,7 @@ export class CrmComplainComponent implements OnInit{
    ComplainFORM: FormGroup;
   dataSource = new MatTableDataSource<any>(this.complainTableData);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  selectType: string;
+  selectType: string = 'Awb';
   awbNo: string;
   Complain:string;
   RefNo:string;
@@ -65,8 +65,6 @@ export class CrmComplainComponent implements OnInit{
         {type: 'required', message: 'Please enter Action'}
       ]
     };
-
-    this.selectType = 'Awb';
     this.ComplainFORM = this.formbuilder.group({
       awbNo: new FormControl('',Validators.compose([
         Validators.required

@@ -4,6 +4,26 @@
       <!-- <div class="card"> -->
         <!-- <div class="card-body"> -->
           <div>
+            <div class="row mainrow mt-2">
+               <div class="col-sm-3">
+                    <select class="custom-select" [(ngModel)]="selectType"  name="selectType" data-live-search="true">
+                      <option value="Awb" selected>Awb No.</option>
+                      <option value="Complain">Complain No.</option>
+                      <option value="RefNo">Ref No.</option>
+                  </select>
+                </div>
+                
+                  <div class="col-sm-2">
+                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control"  name="awbNo" required />
+                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control"  name="Complain" required />    
+                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" name="RefNo" required />   
+                  </div>
+                  <div class="col-sm-1 d-flex action" style="justify-content: space-between;">
+                     <button matTooltip="Find" type="button" class="btn btn-light form-icon" width="auto" (click)="checkAwbData()">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                  </div>
+                  </div>
                 <form [formGroup]="ComplainFORM" (ngSubmit)="formSubmit(ComplainFORM.value)">
                   <div class="row mainrow">
                       <div class="col-sm-3">
@@ -96,26 +116,26 @@
               </div>
               <div class="row mainrow form-group d-flex m-0" style="justify-content: space-between; border-bottom: 1px solid #d2d2d2;">
                  <!-- <div class="row mainrow"> -->
-                <div class="col-sm-3">
-                    <select class="custom-select" [(ngModel)]="selectType" >
-                      <option value="'Awb'">Awb No.</option>
-                      <option value="'Complain'">Complain No.</option>
-                      <option value="'RefNo'">Ref No.</option>
+                <!-- <div class="col-sm-3">
+                    <select class="custom-select" [(ngModel)]="selectType"  name="selectType" data-live-search="true">
+                      <option value="Awb" selected>Awb No.</option>
+                      <option value="Complain">Complain No.</option>
+                      <option value="RefNo">Ref No.</option>
                   </select>
                 </div>
                 
                   <div class="col-sm-2">
-                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control" id="awb." required />
-                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control" id="awb." required />    
-                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" id="awb." required />   
-                  </div>
-                  <div class="col-sm-1 d-flex action" style="justify-content: space-between;">
+                    <input type="number" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control"  name="awbNo" required />
+                    <input type="number" *ngIf="selectType === 'Complain'" placeholder="Enter Complain no" [(ngModel)]="Complain"  class="form-control"  name="Complain" required />    
+                    <input type="number" *ngIf="selectType === 'RefNo'" placeholder="Enter Refference no" [(ngModel)]="RefNo"  class="form-control" name="RefNo" required />   
+                  </div> -->
+                  <!-- <div class="col-sm-1 d-flex action" style="justify-content: space-between;">
                      <button matTooltip="Find" type="button" class="btn btn-light form-icon" width="auto" (click)="checkAwbData()">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </button>
-                  </div>
+                  </div> -->
                 <!-- </div> -->
-                  <div class="col-sm-6 d-flex" style="justify-content: right; padding-right: 0;" >
+                  <div class="col-sm-12 d-flex" style="justify-content: right; padding-right: 0;" >
                     <button type="submit" class="btn btn-light other-button">Submit</button>
                   </div>
               </div>
@@ -126,12 +146,95 @@
           </div> -->
          </form>
       </div>
-     <!-- </div> -->
+
+    <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./assets/images/NOdata.png" alt="">
+      </div>
+<div class="row mainrow mt-2" *ngIf="showTable2">
+  <div class="col-sm-6 tracking">
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered table-striped" style="border-collapse: collapse;
+  width: 100%; background-color: rgb(223 233 237 / 87%);">
+        <thead>
+          <tr style="background-color:#2e3f55;">
+            <th colspan="3" style="color: #d7dee7 !important;">Tracking Details</th>
+          </tr>
+          <tr style="background-color:#a3b8d4;">
+              <th>AwbNo</th>
+              <th>RefNo</th>
+              <th>Bookdate</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of trackingTableData">
+              <td>{{item.AwbNo}}</td>
+              <td>{{item.RefNo}}</td>
+              <td>{{item.BookDate | date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#a3b8d4;">
+          <tr>
+            <th>Consignee</th>
+            <th>Destination</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of trackingTableData">
+              <td class="text-ellipsis" matTooltip="{{ item.Consignee }}">{{item.Consignee}}</td>
+              <td>{{item.Destination}}</td>
+              <td>{{item.Status}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#a3b8d4;">
+          <tr>
+              <th>Deliverydate</th>
+              <th>ReceiverName</th>
+              <th>PodImage</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of trackingTableData">
+              <td>{{item.DelvDt | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.recvname}}</td>
+              <td>{{item.Date}}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+<div class="col-sm-6">
+    <div class="table-responsive text-nowrap" style="height: 176px;">
+      <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
+        <thead style="background-color:#a3b8d4;">
+           <tr style="background-color:#2e3f55;">
+            <th colspan="4" style="color: #d7dee7 !important;">Shipping History</th>
+          </tr>
+          <tr>
+              <th>StatusDate</th>
+              <th>Time</th>
+              <th>Location</th>
+              <th>ShipmentHistory</th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let item of trackingTableData2">
+              <td>{{item.DelvDt | date:'dd/MM/yyyy' }}</td>
+              <td>{{item.DelvTime }}</td>
+              <td>{{item.Destinationname }}</td>
+              <td class="text-ellipsis" matTooltip="{{ item.ShipmentHistory }}">{{item.ShipmentHistory }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+</div>
 <div *ngIf="showTable && dataSource.data.length > 0">
-  <div class="table-responsive">
+   <!-- <div class="table-responsive">
     <div class="row d-flex m-0" style="justify-content: right;" >
       <div class="form-group has-search col-sm-3">
-        <button class="btn btn-secondary" type="button" style="z-index: 1001;
+        <button class="btn btn-secondary p-0" type="button" style="z-index: 1001;
         position: absolute;
         background: none;
         top: -4px;
@@ -139,13 +242,13 @@
         height: 32px;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
-        background-color: orange;">
-          <i class="fa fa-search" style="color: white; margin-top: -4px;"></i>
+        background-color: #2e3f55;">
+          <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px;"></i>
         </button>
         <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
       </div>
      </div>
-  </div>
+  </div> -->
     <div class="table-responsive text-nowrap">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
         
@@ -204,96 +307,4 @@
       </table>
 
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </div >
-    <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
-      <img src="./../../../../../assets/images/NOdata.png" alt="">
-      </div>
-  <!-- </div> -->
-  
-<!-- </div> -->
-
-<div class="col-sm-3 tracking">
-
-  <div class="row">
-      <div class="col-sm-12">
-          <h1 class="text-center" style="font-size: large; font-weight: 600;">Tracking Details</h1>
-      </div>
-  </div>
- 
-  <div *ngIf="showTable2">
-    <div class="table-responsive text-nowrap">
-      <table class="table table-bordered table-striped" style="border-collapse: collapse;
-  width: 100%; background-color: rgb(223 233 237 / 87%);">
-        <thead style="background-color:#afdadf;">
-          <tr>
-              <th>AwbNo</th>
-              <th>RefNo</th>
-              <th>Bookdate</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let item of trackingTableData">
-              <td>{{item.AwbNo}}</td>
-              <td>{{item.RefNo}}</td>
-              <td>{{item.BookDate | date:'dd/MM/yyyy'}}</td>
-            </tr>
-        </tbody>
-        <thead style="background-color:#afdadf;">
-          <tr>
-            <th>Consignee</th>
-            <th>Destination</th>
-            <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of trackingTableData">
-              <td>{{item.Consignee}}</td>
-              <td>{{item.Destination}}</td>
-              <td>{{item.Status}}</td>
-            </tr>
-        </tbody>
-        <thead style="background-color:#afdadf;">
-          <tr>
-              <th>Deliverydate</th>
-              <th>ReceiverName</th>
-              <th>PodImage</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of trackingTableData">
-              <td>{{item.DelvDt | date:'dd/MM/yyyy'}}</td>
-              <td>{{item.recvname}}</td>
-              <td>{{item.Date}}</td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-responsive text-nowrap">
-      <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
-        <thead style="background-color:#afdadf; color: white;">
-          <tr>
-              <th>StatusDate</th>
-              <th>Time</th>
-              <th>Location</th>
-              <th>ShipmentHistory</th>
-            </tr>
-        </thead>
-          <tbody>
-            <tr *ngFor="let item of trackingTableData2">
-              <td>{{item.DelvDt | date:'dd/MM/yyyy' }}</td>
-              <td>{{item.DelvTime }}</td>
-              <td>{{item.Destinationname }}</td>
-              <td>{{item.ShipmentHistory }}</td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
-  </div>
-  <div *ngIf="!showTable2" class="d-flex" style="justify-content: center;">
-    <img src="./../../../../assets/images/tracking.png" style="width: 100%;">
-    </div>
-
-</div>
-<!-- </div>
-</div>  -->

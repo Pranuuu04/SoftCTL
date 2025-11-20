@@ -62,7 +62,7 @@
         <span>Admin Dashboard</span>
       </button>  
 
-      <ng-container *ngFor="let menu of dynamicMenus">
+      <ng-container *ngFor="let menu of dynamicMenus" class="dynamicMenus">
         <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="hasSubMenu(menu.captionName) ? null : menu.Routing" [ngClass]="{ 'active-main': isParentActive(menu.captionName) }"(menuOpened)="onMenuOpened(menu)">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>

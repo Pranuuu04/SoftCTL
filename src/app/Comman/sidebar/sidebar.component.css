@@ -260,13 +260,17 @@
   overflow: visible !important;
 }
 
-::ng-deep .sideMenu {
+/* ::ng-deep .sideMenu {
   left: 180px !important;
   right: auto !important;
   margin-top: 0 !important;
-}
+} */
 
-
+/* @media (min-width:1024px) { 
+  .dynamicMenus ::ng-deep .cdk-overlay-connected-position-bounding-box{
+     left: 160px !important; 
+    } 
+} */
 ::ng-deep .mat-drawer-inner-container {
       height: auto !important;
 }

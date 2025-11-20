@@ -204,3 +204,14 @@
       margin-left: 0;
       margin-right: 0;
     }
+    .text-ellipsis {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+::ng-deep .mat-tooltip {
+ font-size: 12px !important;
+    font-weight: 500 !important;
+    color: black  !important;
+}
