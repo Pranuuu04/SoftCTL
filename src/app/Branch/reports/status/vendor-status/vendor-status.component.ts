@@ -60,33 +60,120 @@ export class VendorStatusComponent implements OnInit {
   };
 
   displayedColumns: any [] = [ 'index' ];
-customerColumnMapping: { [key: string]: string } = {
-  AwbNo: 'AWB No',
+  customerColumnMapping: { [key: string]: string } = {
   BookDate: 'Book Date',
+  ManifestDate: 'Manifest Date',
+  AwbNo: 'AWB No',
+  manifestNo: 'Manifest No',
   customer_name: 'Customer Name',
-  Consignee_Name: 'Consignee Name',
   shipperName: 'Shipper Name',
+  Consignee_Name: 'Consignee Name',
   Origin: 'Origin',
   destination_name: 'Destination',
-  Consignee_Pin: 'Consignee Pin',
+  consigneePin: 'Consignee Pin',
   mode_name: 'Mode',
-  Typeofdelivery: 'Delivery Type',
+  product_name: 'Product',
+  T_flag: 'Customer Type',
   Qty: 'Quantity',
   ActualWt: 'Actual Weight',
+  VolumetricWt: 'Volumetric Weight',
   Status: 'Status',
+  DelvDT: 'Delivery Date',
+  DelvTime: 'Delivery Time',
+  ExptDateOfDelvDt: 'Expected Delivery',
+  RecvName: 'Receiver Name',
+  ContactNo: 'Contact Number',
+  RecvNature: 'Nature Of Receipt',
+  recvremark: 'Remark',
+  DrsNo: 'DRS No',
+  drsdt: 'DRS Date',
+  Pickup_Boy: 'Delivery Name',
   InvoiceNo: 'Invoice No',
   InvValue: 'Invoice Value',
   EwayBill: 'E-way Bill',
   Consignee_Tel: 'Consignee Tel',
   vendor_name: 'Vendor Name',
-  Ref_No: 'Vendor Ref No',
-  DelvDT: 'Delivery Date',
-  DelvTime: 'Delivery Time',
-  Remark: 'Remark',
-  ExptDateOfDelvDt: 'Expected Delivery',
-  T_flag: 'Customer Type',
-  TotalAmt: 'Amount'
+  Ref_No: 'Vendor Ref No'
 };
+alwaysVisibleColumns: string[] = [
+  'BookDate',
+  'AwbNo',
+  'customer_name',
+  'shipperName',
+  'Consignee_Name',
+  'Origin',
+  'destination_name',
+  'mode_name',
+  'product_name',
+  'T_flag',
+  'Qty',
+  'Status',
+  'DelvDT'
+];
+masterColumnOrder: string[] = [
+  'index',
+  'BookDate',
+  'ManifestDate',
+  'AwbNo',
+  'manifestNo',
+  'customer_name',
+  'shipperName',
+  'Consignee_Name',
+  'Origin',
+  'destination_name',
+  'consigneePin',
+  'mode_name',
+  'product_name',
+  'T_flag',
+  'Qty',
+  'ActualWt',
+  'VolumetricWt',
+  'Status',
+  'DelvDT',
+  'DelvTime',
+  'ExptDateOfDelvDt',
+  'RecvName',
+  'ContactNo',
+  'RecvNature',
+  'recvremark',
+  'DrsNo',
+  'drsdt',
+  'Pickup_Boy',
+  'InvoiceNo',
+  'InvValue',
+  'EwayBill',
+  'Consignee_Tel',
+  'vendor_name',
+  'Ref_No'
+];
+
+// customerColumnMapping: { [key: string]: string } = {
+//   AwbNo: 'AWB No',
+//   BookDate: 'Book Date',
+//   customer_name: 'Customer Name',
+//   Consignee_Name: 'Consignee Name',
+//   shipperName: 'Shipper Name',
+//   Origin: 'Origin',
+//   destination_name: 'Destination',
+//   Consignee_Pin: 'Consignee Pin',
+//   mode_name: 'Mode',
+//   Typeofdelivery: 'Delivery Type',
+//   Qty: 'Quantity',
+//   ActualWt: 'Actual Weight',
+//   Status: 'Status',
+//   InvoiceNo: 'Invoice No',
+//   InvValue: 'Invoice Value',
+//   EwayBill: 'E-way Bill',
+//   Consignee_Tel: 'Consignee Tel',
+//   vendor_name: 'Vendor Name',
+//   Ref_No: 'Vendor Ref No',
+//   DelvDT: 'Delivery Date',
+//   DelvTime: 'Delivery Time',
+//   Remark: 'Remark',
+//   ExptDateOfDelvDt: 'Expected Delivery',
+//   T_flag: 'Customer Type',
+//   TotalAmt: 'Amount'
+// };
   displayedColumnsSummary: any [] = [ 'srNo', 'vendor_name', 'status', 'TotalAwbno', 'total_qty', 'total_actualwt', 'StatusCount' ];
   dataSource  = new MatTableDataSource();
   dataSourceSummary  = new MatTableDataSource();
@@ -220,7 +307,16 @@ customerColumnMapping: { [key: string]: string } = {
       if (setupResp.status === 1 && setupResp.Data.length) {
         const setup = setupResp.Data[0];
         const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
-        this.displayedColumns = ['index', ...selectedKeys];
+        // this.displayedColumns = ['index', ...selectedKeys];
+          let finalCols = [
+          'index',
+          ...this.alwaysVisibleColumns,
+          ...selectedKeys
+        ];
+
+        this.displayedColumns = finalCols.sort(
+          (a, b) => this.masterColumnOrder.indexOf(a) - this.masterColumnOrder.indexOf(b)
+        );
       }
     });
   }
@@ -245,22 +341,42 @@ customerColumnMapping: { [key: string]: string } = {
       }
     });
   }
+  getConfigurableColumns() {
+  return this.masterColumnOrder.filter(
+    key => !this.alwaysVisibleColumns.includes(key) && key !== 'index'
+  );
+}
+getConfigurableColumnMapping() {
+  const obj: any = {};
+  this.getConfigurableColumns().forEach(col => {
+    if (this.customerColumnMapping[col]) {
+      obj[col] = this.customerColumnMapping[col];
+    }
+  });
+  return obj;
+}
   openSetup() {
   const dialogRef = this.dialog.open(SetupReportComponent, {
     data: {
       action: 'add',
       inputName: 'getstatusReportSetup',
-      columnMapping: this.customerColumnMapping,
+      columnMapping: this.getConfigurableColumnMapping(),
       saveApi: 'StatusReportSetup'
     },
     width: '85rem',
     disableClose: true
   });
 
-  dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
-    if (selectedKeys && selectedKeys.length) {
-      this.displayedColumns = ['index', ...selectedKeys];
-    }
+  dialogRef.afterClosed().subscribe(selected => {
+    let finalList = [
+      'index',
+      ...this.alwaysVisibleColumns,
+      ...(selected || [])
+    ];
+
+    this.displayedColumns = finalList.sort(
+      (a, b) => this.masterColumnOrder.indexOf(a) - this.masterColumnOrder.indexOf(b)
+    );
   });
 }
   openprogressbar(): MatDialogRef<ProgressBarComponent> {

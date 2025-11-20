@@ -421,15 +421,12 @@ openSetup() {
   });
 
   dialogRef.afterClosed().subscribe(selected => {
-
-    // FINAL visible columns = always-visible + selected
     let finalList = [
       'index',
       ...this.alwaysVisibleColumns,
       ...(selected || [])
     ];
 
-    // Sort based on masterColumnOrder
     this.displayedColumns = finalList.sort(
       (a, b) => this.masterColumnOrder.indexOf(a) - this.masterColumnOrder.indexOf(b)
     );
