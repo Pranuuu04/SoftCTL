@@ -10,8 +10,8 @@
   <div class="row ">
     <div class="col-sm-4 mt-1">
         <div class="custom-field">
+           <label for="drsNumber">DRS Number:</label>
          <input type="text" id="drsNumber" formControlName="drsNumber" required placeholder=" "/>
-         <label for="drsNumber">DRS Number</label>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
 
   <div class="col-sm-4 mt-3 d-flex justify-content-start" style="padding-left: 20px;">
     <div class="file-upload w-100">
-      <!-- <label class="upload-label">DRS Upload (Image)</label> -->
+      <label for="drsNumber">DRS Image:</label>
       <button mat-stroked-button color="primary" (click)="fileInput.click()" type="button">
         <mat-icon>upload</mat-icon>DRS Upload (Image)
       </button>
@@ -36,8 +36,8 @@
    </div>
 
    <div class="col-sm-4 mt-3 d-flex justify-content-end align-items-center">
-    <button mat-raised-button color="accent" type="submit" class="submit-btn">
-      SUBMIT
+    <button mat-raised-button  type="submit" class="submit-btn" style="background-color: #2e3f55;color: #ffff;">
+      Submit
     </button>
   </div>
 

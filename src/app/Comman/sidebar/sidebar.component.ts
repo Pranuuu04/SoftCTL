@@ -54,6 +54,7 @@ export class SidebarComponent implements OnInit {
   dynamicMenus: any[] = [];
   storedValue: string;
 
+
 FrenchiseeMenuItems = [
   { path: '/dashboard', title: 'Frenchisee Dashboard',  icon: 'dashboard', class: '' },
   { path: '/user-profile', title: 'Shipping Status',  icon: 'person', class: '' },
@@ -84,6 +85,8 @@ constructor(
      this.adminMaster = localStorage.getItem('AdminMaster');
      this.filterMenus();
   }
+
+
 filterMenus() {
   if (this.userType === 'Admin' && this.adminMaster === '0') {
     this.dynamicMenus = this.dynamicMenus.filter(menu =>
@@ -97,6 +100,7 @@ hasSubMenu(parentName: string): boolean {
     item => item.captionType === 'Sub_Menu' && item.groupName === parentName
   );
 }
+
 isParentActive(parentName: string): boolean {
   const currentRoute = this.router.url;
 
@@ -108,6 +112,7 @@ isParentActive(parentName: string): boolean {
 
   );
 }
+
 closeSidebarOnMobile(route?: string) {
   if (route && this.router.url === route) {
       this.openSnackBar('You are already on this page.', 'info-snackbar');

@@ -3,6 +3,7 @@
   display: flex;
   justify-content: start;
   align-items: center;
+  font-weight: bold;
   font-size: 1rem;
   margin-left: -12px;
   margin-right: -12px;
@@ -45,7 +46,7 @@
   transition: all 0.2s ease;
 }
 
-.custom-field label {
+/* .custom-field label {
   position: absolute;
   top: 50%;
   left: 14px;
@@ -56,9 +57,31 @@
   pointer-events: none;
   padding: 0 4px;
   transition: 0.2s ease all;
+} */
+
+.custom-field label {
+  position: absolute;
+  top: -11px;
+  font-weight: bold;
+  left: 14px;
+  background-color: #fff;
+  color: #000000;
+  font-size: 14px;
+  z-index: 1000;
 }
 
-/* floating label when focused or value entered */
+.file-upload label {
+  position: absolute;
+  top: -11px;
+  font-weight: bold;
+  left: 32px;
+  background-color: #fff;
+  color: #000000;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/* floating label when focused or value entered
 .custom-field input:focus,
 .custom-field input:not(:placeholder-shown) {
   border: 1px solid #ccc;
@@ -70,13 +93,12 @@
   transform: translateY(-50%) scale(0.9);
   font-size: 13px;
    color: #666;
-}
+} */
 
 
 .custom-field input:hover {
  border: 1px solid #ccc;
 }
-
 
 
 
@@ -143,7 +165,7 @@
 
 
 .submit-btn {
-  height: 34px !important;
+  height: 32px !important;
   padding: 0 15px !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
