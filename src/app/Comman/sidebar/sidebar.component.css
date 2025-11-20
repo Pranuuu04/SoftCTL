@@ -271,7 +271,14 @@
 /* ::ng-deep .cdk-overlay-pane {
   transform: translateX(180px) !important; 
   margin-top: -5px !important;          
+} */
+
+::ng-deep .cdk-overlay-pane .mat-menu-panel.sidebar-submenu {
+  /* transform: translateX(180px) !important; */
+  margin-top: -5px !important;
+  left: 180px !important;
 }
+
 
 ::ng-deep .mat-menu-panel {
   margin: 0 !important;

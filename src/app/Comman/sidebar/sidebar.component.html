@@ -71,7 +71,7 @@
           </mat-icon>
         </button>
 
-        <mat-menu #menuMenu="matMenu" class="sideMenu" >
+        <mat-menu #menuMenu="matMenu" class="sideMenu sidebar-submenu" (menuOpened)="menuOpened(menuMenu)">
           <ng-container  *ngFor="let item of dynamicMenus">
             <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " [routerLink]="item.Routing"  [routerLinkActiveOptions]="{ exact: true }"
                     routerLinkActive="active-sub" (click)="OpenAdminhModal(item)">
@@ -228,7 +228,7 @@
             arrow_right
           </mat-icon>
         </button>
-        <mat-menu #menuMenu="matMenu" class="sideMenu" >
+        <mat-menu #menuMenu="matMenu" class="sideMenu sidebar-submenu" (menuOpened)="menuOpened(menuMenu)">
           <ng-container  *ngFor="let item of dynamicMenus">
             <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName "  [routerLink]="item.Routing" 
         [routerLinkActiveOptions]="{ exact: true }"

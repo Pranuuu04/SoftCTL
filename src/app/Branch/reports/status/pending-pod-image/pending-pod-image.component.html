@@ -120,42 +120,162 @@
 
       <table mat-table [dataSource]="dataSource" class="table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);" matSort >
 
-        <ng-container matColumnDef="srNo">
-          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
-          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-        </ng-container>
+      <!-- Sr No -->
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef>Sr No</th>
+        <td mat-cell *matCellDef="let e; let i = index">{{ i + 1 }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="AwbNo">
-          <th mat-header-cell *matHeaderCellDef> AWB No </th>
-          <td mat-cell *matCellDef="let element">{{ element.AwbNo }}</td>
-        </ng-container>
+      <!-- Book Date -->
+      <ng-container matColumnDef="BookDate">
+        <th mat-header-cell *matHeaderCellDef>Book Date</th>
+        <td mat-cell *matCellDef="let e">{{ e.BookDate }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="BookDate">
-          <th mat-header-cell *matHeaderCellDef> Book Date </th>
-          <td mat-cell *matCellDef="let element">{{ element.BookDate }}</td>
-        </ng-container>
+      <!-- AWB No -->
+      <ng-container matColumnDef="AwbNo">
+        <th mat-header-cell *matHeaderCellDef>AWB No</th>
+        <td mat-cell *matCellDef="let e">{{ e.AwbNo }}</td>
+      </ng-container>
 
-        <!-- <ng-container matColumnDef="delv_Dt">
-          <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
-          <td mat-cell *matCellDef="let element">{{ element.delv_Dt }}</td>
-        </ng-container> -->
+      <!-- Origin -->
+      <ng-container matColumnDef="Origin">
+        <th mat-header-cell *matHeaderCellDef>Origin</th>
+        <td mat-cell *matCellDef="let e">{{ e.Origin }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="pod_Img">
-          <th mat-header-cell *matHeaderCellDef> POD Image </th>
-          <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.pod_Img; else noImg">
-              <img [src]="element.pod_Img" width="60" height="25">
-            </span>
-            <ng-template #noImg>No Image</ng-template>
-          </td>
-        </ng-container>
+      <!-- Destination -->
+      <ng-container matColumnDef="destination_name">
+        <th mat-header-cell *matHeaderCellDef>Destination</th>
+        <td mat-cell *matCellDef="let e">{{ e.destination_name }}</td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- Status -->
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let e">{{ e.Status }}</td>
+      </ng-container>
 
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="5">No Data Found</td>
-        </tr>
+      <!-- Delivery Date -->
+      <ng-container matColumnDef="DelvDT">
+        <th mat-header-cell *matHeaderCellDef>Delivery Date</th>
+        <td mat-cell *matCellDef="let e">{{ e.DelvDT }}</td>
+      </ng-container>
+
+      <!-- POD Image -->
+      <ng-container matColumnDef="POD_Img">
+        <th mat-header-cell *matHeaderCellDef>POD Img</th>
+        <td mat-cell *matCellDef="let e">
+          <ng-container *ngIf="e.POD_Img; else noPOD">
+            <img [src]="e.POD_Img" width="60" height="30">
+          </ng-container>
+          <ng-template #noPOD>No Image</ng-template>
+        </td>
+      </ng-container>
+
+      <!-- Delivery Time -->
+      <ng-container matColumnDef="DelvTime">
+        <th mat-header-cell *matHeaderCellDef>Delivery Time</th>
+        <td mat-cell *matCellDef="let e">{{ e.DelvTime }}</td>
+      </ng-container>
+
+      <!-- Expected Delivery -->
+      <ng-container matColumnDef="ExptDateOfDelvDt">
+        <th mat-header-cell *matHeaderCellDef>Expected Delivery</th>
+        <td mat-cell *matCellDef="let e">{{ e.ExptDateOfDelvDt }}</td>
+      </ng-container>
+
+      <!-- Receiver Name -->
+      <ng-container matColumnDef="RecvName">
+        <th mat-header-cell *matHeaderCellDef>Receiver Name</th>
+        <td mat-cell *matCellDef="let e">{{ e.RecvName }}</td>
+      </ng-container>
+
+      <!-- Contact Number -->
+      <ng-container matColumnDef="ContactNo">
+        <th mat-header-cell *matHeaderCellDef>Contact</th>
+        <td mat-cell *matCellDef="let e">{{ e.ContactNo }}</td>
+      </ng-container>
+
+      <!-- Nature Of Rcpt -->
+      <ng-container matColumnDef="RecvNature">
+        <th mat-header-cell *matHeaderCellDef>Nature Of Rcpt</th>
+        <td mat-cell *matCellDef="let e">{{ e.RecvNature }}</td>
+      </ng-container>
+
+      <!-- Remark -->
+      <ng-container matColumnDef="recvremark">
+        <th mat-header-cell *matHeaderCellDef>Remark</th>
+        <td mat-cell *matCellDef="let e">{{ e.recvremark }}</td>
+      </ng-container>
+
+      <!-- Customer Name -->
+      <ng-container matColumnDef="customer_name">
+        <th mat-header-cell *matHeaderCellDef>Customer</th>
+        <td mat-cell *matCellDef="let e">{{ e.customer_name }}</td>
+      </ng-container>
+
+      <!-- Shipper Name -->
+      <ng-container matColumnDef="shipperName">
+        <th mat-header-cell *matHeaderCellDef>Shipper</th>
+        <td mat-cell *matCellDef="let e">{{ e.shipperName }}</td>
+      </ng-container>
+
+      <!-- Consignee Name -->
+      <ng-container matColumnDef="Consignee_Name">
+        <th mat-header-cell *matHeaderCellDef>Consignee</th>
+        <td mat-cell *matCellDef="let e">{{ e.Consignee_Name }}</td>
+      </ng-container>
+
+      <!-- Mode -->
+      <ng-container matColumnDef="mode_name">
+        <th mat-header-cell *matHeaderCellDef>Mode</th>
+        <td mat-cell *matCellDef="let e">{{ e.mode_name }}</td>
+      </ng-container>
+
+      <!-- Product -->
+      <ng-container matColumnDef="product_name">
+        <th mat-header-cell *matHeaderCellDef>Product</th>
+        <td mat-cell *matCellDef="let e">{{ e.product_name }}</td>
+      </ng-container>
+
+      <!-- Forwarding Name -->
+      <ng-container matColumnDef="vendor_name">
+        <th mat-header-cell *matHeaderCellDef>Forwarding Name</th>
+        <td mat-cell *matCellDef="let e">{{ e.vendor_name }}</td>
+      </ng-container>
+
+      <!-- Forwarding No -->
+      <ng-container matColumnDef="Ref_No">
+        <th mat-header-cell *matHeaderCellDef>Forwarding No</th>
+        <td mat-cell *matCellDef="let e">{{ e.Ref_No }}</td>
+      </ng-container>
+
+      <!-- DRS No -->
+      <ng-container matColumnDef="DrsNo">
+        <th mat-header-cell *matHeaderCellDef>DRS No</th>
+        <td mat-cell *matCellDef="let e">{{ e.DrsNo }}</td>
+      </ng-container>
+
+      <!-- DRS DT -->
+      <ng-container matColumnDef="drsdt">
+        <th mat-header-cell *matHeaderCellDef>DRS Date</th>
+        <td mat-cell *matCellDef="let e">{{ e.drsdt }}</td>
+      </ng-container>
+
+      <!-- Delivery Name -->
+      <ng-container matColumnDef="Pickup_Boy">
+        <th mat-header-cell *matHeaderCellDef>Delivery Name</th>
+        <td mat-cell *matCellDef="let e">{{ e.Pickup_Boy }}</td>
+      </ng-container>
+
+      <!-- HEADER + ROWS -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="25">No Data Found</td>
+      </tr>
 
       </table>
 

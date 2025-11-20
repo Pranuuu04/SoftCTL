@@ -34,7 +34,34 @@ podForm: FormGroup;
 
   isLoading = false;
 
-  displayedColumns: string[] = ['srNo','AwbNo','BookDate','pod_Img'];//'delv_Dt',
+  // displayedColumns: string[] = ['srNo','AwbNo','BookDate','pod_Img'];//'delv_Dt',
+displayedColumns: string[] = [
+      'srNo',
+      'BookDate',
+      'AwbNo',
+      'Origin',
+      'destination_name',
+      'Status',
+      'DelvDT',
+      'POD_Img',
+      'DelvTime',
+      'ExptDateOfDelvDt',
+      'RecvName',
+      'ContactNo',
+      'RecvNature',
+      'recvremark',
+      'customer_name',
+      'shipperName',
+      'Consignee_Name',
+      'mode_name',
+      'product_name',
+      'vendor_name',
+      'Ref_No',
+      'DrsNo',
+      'drsdt',
+      'Pickup_Boy'
+    ];
+
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

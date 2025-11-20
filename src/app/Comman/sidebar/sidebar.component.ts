@@ -54,6 +54,8 @@ export class SidebarComponent implements OnInit {
   dynamicMenus: any[] = [];
   storedValue: string;
 
+  openedMenus: any[] = [];
+
 
 FrenchiseeMenuItems = [
   { path: '/dashboard', title: 'Frenchisee Dashboard',  icon: 'dashboard', class: '' },
@@ -85,6 +87,18 @@ constructor(
      this.adminMaster = localStorage.getItem('AdminMaster');
      this.filterMenus();
   }
+
+menuOpened(currentMenu: any) {
+  this.openedMenus.forEach(menu => {
+    if (menu !== currentMenu) {
+      menu.close();
+    }
+  });
+
+  if (!this.openedMenus.includes(currentMenu)) {
+    this.openedMenus.push(currentMenu);
+  }
+}
 
 
 filterMenus() {
