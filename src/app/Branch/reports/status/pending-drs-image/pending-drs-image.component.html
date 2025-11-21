@@ -14,8 +14,7 @@
                   (change)="resetPagination()">
                 </ng-select> -->
                 <select class="custom-select" formControlName="drsType">
-                   <option selected disabled value="">Select Drs</option>
-                   <option  value="All">All</option>
+                   <option selected value="All">All</option>
                    <option  value="Pending">Pending</option>
                    <option  value="Uploaded">Uploaded</option>
                 </select>
@@ -40,9 +39,21 @@
       <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
           <div class="col-sm-5">
             <div class="row mb-2 mt-1">              
-                  <div class="col-sm-11 d-flex  pr-0" style="justify-content: end;">
+                  <div class="col-sm-9 d-flex  pr-0" style="justify-content: end;">
                     <button type="submit" class="btn btn-light other-button">Submit</button>
                   </div>
+
+                    <div class="col-sm-3 download-buttons d-flex pl-0" style="justify-content: end;">
+                     <!-- <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                        <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                        <span class="text">Setup</span></button> -->
+                      <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                          class="fa-solid fa-table"></i>
+                        <span class="text">XLs</span></button>
+                          <button type="button" class="btn btn-outline-light pb-0 mt-0" disabled><i class="fa-solid fa-file-pdf"></i>
+                        <span class="text">PDF</span></button>
+                    </div>
+
                   </div>
                 </div>
             </div>
@@ -64,25 +75,53 @@
 
       <table mat-table [dataSource]="dataSource" class="table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);" matSort >
 
-        <ng-container matColumnDef="srNo">
-          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
-          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-        </ng-container>
+         <!-- Sr No -->
+          <ng-container matColumnDef="srNo">
+            <th mat-header-cell *matHeaderCellDef> Sr No </th>
+            <td mat-cell *matCellDef="let e; let i = index">{{ i + 1 }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="DrsNo">
-          <th mat-header-cell *matHeaderCellDef> Drs No</th>
-          <td mat-cell *matCellDef="let element">{{ element.DrsNo }}</td>
-        </ng-container>
+          <!-- DRS No -->
+          <ng-container matColumnDef="DrsNo">
+            <th mat-header-cell *matHeaderCellDef> DRS No </th>
+            <td mat-cell *matCellDef="let e">{{ e.DrsNo }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="DrsDate">
-          <th mat-header-cell *matHeaderCellDef> Drs Date </th>
-          <td mat-cell *matCellDef="let element">{{ element.DrsDate }}</td>
-        </ng-container>
+          <!-- DRS Date -->
+          <ng-container matColumnDef="DrsDate">
+            <th mat-header-cell *matHeaderCellDef> DRS DT </th>
+            <td mat-cell *matCellDef="let e">{{ e.DrsDate }}</td>
+          </ng-container>
 
-        <!-- <ng-container matColumnDef="delv_Dt">
-          <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
-          <td mat-cell *matCellDef="let element">{{ element.delv_Dt }}</td>
-        </ng-container> -->
+          <!-- Delivery Name -->
+          <ng-container matColumnDef="Employee_Name">
+            <th mat-header-cell *matHeaderCellDef> Delivery Name </th>
+            <td mat-cell *matCellDef="let e">{{ e.Employee_Name }}</td>
+          </ng-container>
+
+          <!-- Area Name -->
+          <ng-container matColumnDef="Area">
+            <th mat-header-cell *matHeaderCellDef> Area Name </th>
+            <td mat-cell *matCellDef="let e">{{ e.Area }}</td>
+          </ng-container>
+
+          <!-- Vehicle Number -->
+          <ng-container matColumnDef="VehicleNo">
+            <th mat-header-cell *matHeaderCellDef> Vehicle Number </th>
+            <td mat-cell *matCellDef="let e">{{ e.VehicleNo }}</td>
+          </ng-container>
+
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let e">{{ e.status }}</td>
+          </ng-container>
+
+          <!-- Delivery Date -->
+          <ng-container matColumnDef="DelvDT">
+            <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+            <td mat-cell *matCellDef="let e">{{ e.DelvDT }}</td>
+          </ng-container>
 
         <ng-container matColumnDef="Image">
           <th mat-header-cell *matHeaderCellDef> Drs Image </th>
@@ -94,12 +133,14 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- HEADER & ROWS -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="5">No Data Found</td>
-        </tr>
+          <!-- NO DATA -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="9">No Data Found</td>
+          </tr>
 
       </table>
 

@@ -4,7 +4,7 @@
             <div class="container m-0" style=" padding: 1px 1px; width: 100%;">
                     <form [formGroup]="checkListForm" (ngSubmit)="formSubmit(checkListForm.value)">
                       <div class="row">
-                        <label id="Customer" for="DRSDate" class="col-sm-1 form-label" *ngIf="this.bookingType === 'Checklistcust'">Cust Name</label>
+                        <label id="Customer" for="DRSDate" class="col-sm-1 form-label" *ngIf="this.bookingType === 'Checklistcust'" style=" text-wrap: nowrap;">Cust Name</label>
                         <div class="col-sm-2" *ngIf="this.bookingType === 'Checklistcust'">
                           <select id="userName" class="custom-select" formControlName="customerName" [(ngModel)]="customerName" (change)="resetPagination()">
                             <option value="All">All Customer</option>
@@ -37,18 +37,18 @@
                           <mat-option></mat-option>
                       </mat-autocomplete>
                     </div>
-                    <div class="col-sm-1 d-flex" style="height: 30px; justify-content: center; ">
+                    <div class="col-sm d-flex" style="height: 30px; justify-content: center; ">
                       <input type="radio" id="Booking" name="DATE" value="Checklistcust" [(ngModel)]="bookingType" formControlName="bookingType" (change)="resetPagination()">
                       <label for="Booking" class="Booking" style="font-size: small;">Customer</label>
                   </div>
-                    <div class="col-sm-1 d-flex" style="height: 30px; justify-content: center; ">
+                    <div class="col-sm d-flex" style="height: 30px; justify-content: center; ">
                       <input type="radio" id="details" name="fav_language" value="StatementDetails" formControlName="reportType"  [(ngModel)]="reportType" checked >
                       <label for="details" class="details" style="font-size: small;"> Details</label>
                   </div>
-                  <div class="col-sm-1 download-buttons">
+                  <!-- <div class="col-sm-1 download-buttons">
                     <button type="button" class="btn btn-outline-light" disabled><i class="fa-solid fa-file-pdf"></i>
                       <span class="text">PDF</span></button>
-                  </div>
+                  </div> -->
 
                 </div>
                 <div class="row">
@@ -64,28 +64,55 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-1 d-flex" style="height: 30px; justify-content: center;">
                       <input type="radio" id="ManifestD" name="DATE"  value="Checklistvendor" formControlName="bookingType" [(ngModel)]="bookingType" (change)="resetPagination()">
-                      <label for="ManifestD" class="ManifestD" style="font-size: small;">Co-Corrier</label>
+                      <label for="ManifestD" class="ManifestD" style="font-size: small; text-wrap: nowrap;">Co-Corrier</label>
                   </div>
                       <div class="col-sm-1 d-flex" style="height: 30px; justify-content: center; left: 10px;">
                         <input type="radio" id="summery" name="fav_language" value="StatementSummary" formControlName="reportType" [(ngModel)]="reportType">
                         <label for="summery" class="summery" style="font-size: small;">Summary</label>
                       </div>
-                    <div class="col-sm-1 download-buttons" >
+                      <!-- <div class="col-sm-1"></div> -->
+                    <!-- <div class="col-sm-1 download-buttons" >
                       <button type="button" class="btn btn-outline-light" (click)="downloadSample()"><i class="fa-solid fa-table"></i>
                         <span class="text">XLs</span></button>
-                    </div>
+                    </div> -->
                   </div>
-                    <div class="row" style="justify-content: right;">
-                      <div class="col-sm-3 d-flex" style="justify-content: space-evenly;">
+
+                    <!-- <div class="row mt-2">
+                      <div class="col-sm-10 d-flex   pr-0" style="justify-content: end;">
                         <button type="submit"  class="btn btn-info"  >Search</button>
                       </div>
                       
-                       <div class="col-sm-1 download-buttons">
+                      <div class="col-sm-2 download-buttons d-flex pl-0" style="justify-content: end;">
+                        <button type="button" class="btn btn-outline-light" (click)="downloadSample()"><i class="fa-solid fa-table"></i>
+                        <span class="text">XLs</span></button>
+
                         <button type="button" class="btn btn-outline-light" (click)="openSetup()">
                         <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
                         <span class="text">Setup</span></button>
+
+                          <button type="button" class="btn btn-outline-light" disabled><i class="fa-solid fa-file-pdf"></i>
+                         <span class="text">PDF</span></button>
+                      </div>
+                      
+                    </div> -->
+                   
+                  <div class="row mt-2" style="border-top: 1px solid #d2d2d2; border-bottom: 1px solid #d2d2d2;">              
+                    <div class="col-sm-9 d-flex  pr-0" style="justify-content: end;">
+                      <button type="submit" class="btn btn-light other-button">Search</button>
                     </div>
+                    <div class="col-sm-3 mt-1 download-buttons d-flex pl-0" style="justify-content: end;">
+                        <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                            <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                            <span class="text">Setup</span></button>
+                        <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                            class="fa-solid fa-table"></i>
+                          <span class="text">XLs</span></button>
+                            <button type="button" class="btn btn-outline-light pb-0 mt-0" disabled><i class="fa-solid fa-file-pdf"></i>
+                          <span class="text">PDF</span></button>
+                      </div>
                     </div>
+
+
                </form>
             </div>
         </div>

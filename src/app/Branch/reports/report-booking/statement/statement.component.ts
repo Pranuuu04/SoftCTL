@@ -351,7 +351,7 @@ columnHeaderMap: { [key: string]: string } = {
           action: 'add',
           inputName: 'getStatementReportSetup',
           columnMapping: this.columnHeaderMap,
-        saveApi: 'StatementReportSetup'
+          saveApi: 'StatementReportSetup'
         },
         width: '85rem',
         disableClose: true

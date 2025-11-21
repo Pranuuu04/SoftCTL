@@ -9,6 +9,11 @@ import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.compo
 import { AllServicesService } from 'app/service/all-services.service';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment.prod';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 
 @Component({
   selector: 'app-pending-drs-image',
@@ -34,7 +39,19 @@ export class PendingDrsImageComponent implements OnInit {
 
  isLoading = false;
 
-  displayedColumns: string[] = ['srNo','DrsNo','DrsDate','Image'];
+  // displayedColumns: string[] = ['srNo','DrsNo','DrsDate','Image'];
+    displayedColumns: string[] = [
+      'srNo',
+      'DrsNo',
+      'DrsDate',
+      'Employee_Name',
+      'Area',
+      'VehicleNo',
+      'status',
+      'DelvDT',
+      'Image'
+    ];
+
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -68,7 +85,7 @@ export class PendingDrsImageComponent implements OnInit {
     
 
   this.drsForm  = this.formBuilder.group({
-      drsType: new FormControl('', Validators.compose([ ])),
+      drsType: new FormControl('All', Validators.compose([ ])),
       fromDate: new FormControl('', Validators.compose([ ])),
       toDate: new FormControl('', Validators.compose([ ])),
     });
@@ -144,6 +161,105 @@ formSubmit(formData: any) {
         }
       });
 }
+
+
+headerMapping: any = {
+  srNo: 'Sr No',
+  DrsNo: 'DRS No',
+  DrsDate: 'DRS Date',
+  Employee_Name: 'Delivery Name',
+  Area: 'Area Name',
+  VehicleNo: 'Vehicle Number',
+  status: 'Status',
+  DelvDT: 'Delivery Date',
+  Image: 'DRS Image'
+};
+
+// downloadSample() {
+//   const isConfirmed = window.confirm('Do you want to download the Excel file?');
+//   if (!isConfirmed) return;
+//   const progressBar = this.openprogressbar();
+//   this.AllService.getDrsPodReport(this.sessionLocationCode,'DrsImageReport',this.formData.drsType || 'All',this.formData.fromDate,this.formData.toDate,1,this.length)
+//   .subscribe({
+//     next: (response: any) => {
+//       if (response.status === 1) {
+//         const excelData = response.Data.map((row: any, index: number) => {
+//           const excelRow: any = {};
+//           this.displayedColumns.forEach(col => {
+//             const header = this.headerMapping[col] || col;
+//             if (col === 'srNo') {
+//               excelRow[header] = index + 1;
+//             } else {
+//               excelRow[header] = row[col] ?? '';
+//             }
+//           });
+//           return excelRow;
+//         });
+//         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+//         const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//         XLSX.utils.book_append_sheet(wb, ws, 'DRS Image');
+//         XLSX.writeFile(wb, 'DrsImageDetails.xlsx');
+//       } else {
+//         this.openSnackBar(response.message, 'error-snackbar');
+//       }
+//       progressBar.close();
+//     },
+//     error: () => {
+//       progressBar.close();
+//       this.openSnackBar("Something went wrong!", 'error-snackbar');
+//     }
+//   });
+// }
+
+downloadSample() {
+  const isConfirmed = window.confirm('Do you want to download the Excel file?');
+  if (!isConfirmed) return;
+  const progressBar = this.openprogressbar();
+  this.AllService.getDrsPodReport(this.sessionLocationCode,'DrsImageReport',this.formData.drsType || 'All',this.formData.fromDate,this.formData.toDate,1,this.length)
+  .subscribe({
+    next: (response: any) => {
+      try {
+        if (response?.status === 1 && Array.isArray(response.Data)) {
+          const mapping = this.headerMapping || {};
+          const excelData = response.Data.map((row: any, index: number) => {
+            const excelRow: any = {};
+            (this.displayedColumns && this.displayedColumns.length ? this.displayedColumns : Object.keys(mapping)).forEach(col => {
+              const header = mapping[col] || col;
+              if (col === 'index' || col === 'srNo') {
+                excelRow[header] = index + 1;
+                return;
+              }
+              if (col === 'POD_Img' || col === 'Image' || col === 'Sign_Img') {
+                const val = row[col];
+                excelRow[header] = val ? 'Yes' : 'No';
+                return;
+              }
+              excelRow[header] = (row && row[col] !== null && row[col] !== undefined) ? row[col] : '';
+            });
+            return excelRow;
+          });
+          const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, 'DRS Image');
+          XLSX.writeFile(wb, 'DrsImageDetails.xlsx');
+        } else {
+          this.openSnackBar(response?.message || 'No data to export', 'error-snackbar');
+        }
+      } catch (err) {
+        console.error('Export error', err);
+        this.openSnackBar('Error while preparing export', 'error-snackbar');
+      } finally {
+        progressBar.close();
+      }
+    },
+    error: (err) => {
+      console.error(err);
+      progressBar.close();
+      this.openSnackBar('Something went wrong!', 'error-snackbar');
+    }
+  });
+}
+
 
 openprogressbar(): MatDialogRef<ProgressBarComponent> {
     const dialogRef = this.dialog.open(ProgressBarComponent, {

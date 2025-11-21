@@ -191,9 +191,9 @@
         margin-right: 28px;
       }
     }
-    /* ::ng-deep .sideMenu{
+    ::ng-deep .sideMenu{
       left: 187px !important;
-  } */
+  }
   @media screen and (max-width: 425px){
       ::ng-deep .sideMenu{
       left: 0 !important;
@@ -238,6 +238,8 @@
 ::ng-deep mat-sidenav {
   transition: transform 0.3s ease-in-out;
 }
+
+
 /* === New styles for MatSidenav Sidebar support === */
 
 ::ng-deep mat-sidenav {
@@ -252,8 +254,12 @@
   }
 }
 
-::ng-deep .cdk-overlay-container, 
+/* ::ng-deep .cdk-overlay-container, 
 ::ng-deep .cdk-overlay-pane {
+  z-index: 10000 !important;
+} */
+
+::ng-deep .cdk-overlay-container {
   z-index: 10000 !important;
 }
 
@@ -261,29 +267,24 @@
   overflow: visible !important;
 }
 
-::ng-deep .sideMenu {
+/* ::ng-deep .sideMenu {
   left: 180px !important;
   right: auto !important;
   margin-top: 0 !important;
-}
+} */
+
+/* ::ng-deep .mat-menu-panel.sidebar-submenu {
+  margin-left: 180px !important;
+  margin-top: -5px !important;
+} */
 
 
 /* ::ng-deep .cdk-overlay-pane {
   transform: translateX(180px) !important; 
+  transform: none;
   margin-top: -5px !important;          
 } */
 
-::ng-deep .cdk-overlay-pane .mat-menu-panel.sidebar-submenu {
-  /* transform: translateX(180px) !important; */
-  margin-top: -5px !important;
-  left: 180px !important;
-}
-
-
-::ng-deep .mat-menu-panel {
-  margin: 0 !important;
-  padding: 0 !important;
-} */
 
 
 ::ng-deep .mat-drawer-inner-container {
