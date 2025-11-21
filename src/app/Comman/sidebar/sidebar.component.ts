@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,6 +40,7 @@ export class SidebarComponent implements OnInit {
   customerMenuItems: any;
   booking: any;
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
+  @ViewChildren(MatMenuTrigger) allTriggers: QueryList<MatMenuTrigger>;
   captionName: any;
   groupName: string;
   captionType: string;
@@ -53,6 +54,9 @@ export class SidebarComponent implements OnInit {
   sideMenu: any;
   dynamicMenus: any[] = [];
   storedValue: string;
+
+  openedTriggers: MatMenuTrigger[] = [];
+
 
 
 FrenchiseeMenuItems = [
@@ -82,9 +86,13 @@ constructor(
     this.groupName = localStorage.getItem('groupName');
     this.captionType = localStorage.getItem('captionType');
     this.ClientLogo = localStorage.getItem('ClientLogo');
-     this.adminMaster = localStorage.getItem('AdminMaster');
+    this.adminMaster = localStorage.getItem('AdminMaster');
+
+     this.dynamicMenus = JSON.parse(localStorage.getItem('responseData')) || [];
+
      this.filterMenus();
   }
+
 
 
 filterMenus() {
@@ -130,14 +138,27 @@ closeSidebarOnMobile(route?: string) {
         return true;
     };
     navigateTo(path: string) {
+      if (!path) return;
       this.router.navigate([path]);
     }
-onMenuOpened(menu: any) {
-  // When submenu opens → DO NOT close sidebar (mobile or desktop)
-  if (this.hasSubMenu(menu.captionName)) {
-    return;  // Prevent any sidebar closing
-  }
-}
+
+  onMenuOpened(menu: any) {
+      // When submenu opens → DO NOT close sidebar (mobile or desktop)
+      if (this.hasSubMenu(menu.captionName)) {
+        return;  // Prevent any sidebar closing
+      }
+    }
+
+  // onMenuOpened(opened: MatMenuTrigger) {
+  //     this.allTriggers.forEach(trigger => {
+  //       if (trigger !== opened) {
+  //         try {
+  //           trigger.closeMenu();
+  //         } catch (e) {}
+  //       }
+  //     });
+  //   }
+
 
     preventLogout(event: Event): void {
       event.preventDefault();

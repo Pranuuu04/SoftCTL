@@ -16,6 +16,7 @@ export class DirectDrsUpdateComponent implements OnInit {
   previewImage: string | null = null;
   currentDate:any;
   sessionLocationCode: string;
+  selectedFileName: string = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar,private allServices:AllServicesService) {
     this.currentDate = this.getCurrentDate();
@@ -48,38 +49,80 @@ export class DirectDrsUpdateComponent implements OnInit {
     }
 
 fetchPendingCount() {
-    //  this.allServices.getDrsPodReport(this.sessionLocationCode,'DrsImageReport', '','','', 1,25).subscribe((res:any) => {
-    //   if(res.status === 1){
-    //      this.pendingDrsCount = res.count;
-    //   }else{
-    //     this.openSnackBar(res.message,'error-snackbar')
-    //   }  
-    // });
-
-     this.pendingDrsCount = 0;
+     this.allServices.getDrsPodReport(this.sessionLocationCode, 'Count','','','','','').subscribe((res:any) => {
+      if(res.status === 1){
+         this.pendingDrsCount = res.count;
+      }else{
+        this.openSnackBar(res.message,'error-snackbar')
+      }  
+    });
   }
   
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewImage = reader.result as string;
-        this.drsForm.patchValue({ drsImage: this.previewImage });
-      };
-      reader.readAsDataURL(file);
-    }
+// onFileSelected(event: any) {
+//     const file = event.target.files[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onload = () => {
+//         this.previewImage = reader.result as string;
+//         this.drsForm.patchValue({ drsImage: this.previewImage });
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   }
+
+
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const maxSize = 30 * 1024; // 30 KB
+  if (file.size > maxSize) {
+    this.openSnackBar('File size must be less than 30 KB!', 'error-snackbar');
+    event.target.value = '';
+    return;
   }
 
-  onSubmit() {
+  const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+  if (!allowedTypes.includes(file.type)) {
+    this.openSnackBar('Only JPG, PNG, or PDF files are allowed!', 'error-snackbar');
+    event.target.value = '';
+    return;
+  }
+
+  this.selectedFileName = file.name;
+  this.previewImage = null;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const base64String = reader.result as string; 
+
+    this.drsForm.patchValue({ drsImage: base64String });
+
+    if (file.type !== 'application/pdf') {
+      this.previewImage = base64String;
+    }
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+onSubmit() {
     if (this.drsForm.valid) {
       console.log(this.drsForm.value);
-      const payload ={
-            "sessionLocationCode": this.sessionLocationCode,
-            "DrsNo": this.drsForm.get('drsNumber').value,
-            "Image": this.drsForm.get('drsImage').value
-      }
+      // const payload ={
+      //       "sessionLocationCode": this.sessionLocationCode,
+      //       "DrsNo": this.drsForm.get('drsNumber').value,
+      //       "Image": this.drsForm.get('drsImage').value
+      // }
+
+        const payload = new FormData();
+
+        payload.append('sessionLocationCode', this.sessionLocationCode);
+        payload.append('DrsNo', this.drsForm.get('drsNumber')?.value);
+        payload.append('Image', this.drsForm.get('drsImage')?.value); 
 
       this.allServices.drsImageUpload(payload).subscribe((res:any) => {
         if(res.status === 1){
@@ -108,5 +151,6 @@ fetchPendingCount() {
         panelClass: [panelClass]
       });
    }
+
 
 }

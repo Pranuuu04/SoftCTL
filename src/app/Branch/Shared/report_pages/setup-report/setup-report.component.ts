@@ -121,5 +121,5 @@ saveAndClose() {
       alert('Failed to save setup!');
     }
   });
-}
+ }
 }

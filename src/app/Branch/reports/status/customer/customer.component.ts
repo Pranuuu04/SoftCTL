@@ -351,7 +351,7 @@ masterColumnOrder: string[] = [
     //   const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
     //   this.displayedColumns = ['index', ...selectedKeys];
     // }
-     if (formData.reportType === 'StatusDetail') {
+ if (formData.reportType === 'StatusDetail') {
     this.AllService.getReportSetup('getstatusReportSetup').subscribe((setupResp: any) => {
       if (setupResp.status === 1 && setupResp.Data.length) {
         const setup = setupResp.Data[0];
