@@ -192,19 +192,20 @@ podImageColumnMapping: { [key: string]: string } = {
 //     });
 // }
 
-
-formSubmit(formData: any) {
-  this.formData = formData
-  this.isLoading = true; 
-
-  this.AllService.getReportSetup('getPodImgReportSetup').subscribe((setupResp: any) => {
+getReportSetupKey(){
+   this.AllService.getReportSetup('getPodImgReportSetup').subscribe((setupResp: any) => {
     if (setupResp.status === 1 && setupResp.Data.length) {
       const setup = setupResp.Data[0];
       const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
       this.displayedColumns = ['index','BookDate', 'AwbNo', 'Origin', 'destination_name','Status',' DelvDT','POD_Img', ...selectedKeys];
     }
   });
+}
 
+formSubmit(formData: any) {
+  this.formData = formData
+  this.isLoading = true; 
+  this.getReportSetupKey();
    this.AllService.getDrsPodReport(this.sessionLocationCode,'PodImageReport',formData.drsType || 'All',formData.fromDate,formData.toDate, this.pageIndex+1,this.pageSize).subscribe({
         next: (resp: any) => {
           this.isLoading = false;
@@ -242,6 +243,7 @@ openSetup(){
       if (selectedKeys && selectedKeys.length) {
         this.displayedColumns = ['index', ...selectedKeys];
        }
+        this.getReportSetupKey();
       }); 
    }
 

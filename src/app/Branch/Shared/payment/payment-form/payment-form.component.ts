@@ -314,9 +314,23 @@ addRateDetail() {
       }
     });
 
-  const newDetail = this.tempRateDetailForm.value;
-  this.rateDetails.unshift(newDetail);
-
+  // const newDetail = this.tempRateDetailForm.value;
+      const newDetail = {
+        Payment_mode: this.tempRateDetailForm.value.paymentMode,
+        TransactionId: this.tempRateDetailForm.value.transactionID,
+        Received_by: this.tempRateDetailForm.value.receivedBy,
+        Desposited_bank: this.tempRateDetailForm.value.depositedBank,
+        Received_date: this.tempRateDetailForm.value.receivedDate,
+        Total_amt: this.tempRateDetailForm.value.totalAmt,
+        Received_amt: this.tempRateDetailForm.value.receivedAmt,
+        TDS: this.tempRateDetailForm.value.TDS,
+        Debit_note: this.tempRateDetailForm.value.debitNote,
+        Outstanding: this.tempRateDetailForm.value.outstandingAmt,
+        Remark: this.tempRateDetailForm.value.Remark,
+        id: 1
+      };
+    this.rateDetails.unshift(newDetail);
+    this.latestRecordTempId = 1;
 }
 
 latestRecordTempId: number | null = null;
@@ -324,27 +338,38 @@ latestRecordTempId: number | null = null;
 getCashToPayData(){
    this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
     .subscribe((resp: any) => {
-      if (resp.status === 1) {
-        this.openSnackBar(resp.message, 'custom-snackbar');
-        
-      // Reverse to show newest on top (if API returns old-first)
-        this.rateDetails = (resp.getDetails || []).reverse();
+      // if (resp.status === 1) {
+      //   this.openSnackBar(resp.message, 'custom-snackbar');
 
-        // Mark the latest record for delete button
-        if (this.rateDetails.length > 0) {
+      //   this.rateDetails = (resp.getDetails || this.tempRateDetailForm.value).reverse();
+      //   if (this.rateDetails.length > 0) {
+      //     this.latestRecordTempId = this.rateDetails[0].id;
+      //   }
+      //   if (resp.getDetails?.length > 0) {
+      //     const last = resp.getDetails[0];
+      //     const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+      //     this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+      //   }
+      // } else {
+      //   this.openSnackBar(resp.message, 'error-snackbar');
+      // }
+
+       if (resp.status === 1) {
+        if (resp.getDetails && resp.getDetails.length > 0) {
+
+          this.rateDetails = resp.getDetails.reverse();
           this.latestRecordTempId = this.rateDetails[0].id;
-        }
-
-        // Compute remaining total for form
-        if (resp.getDetails?.length > 0) {
           const last = resp.getDetails[0];
-          const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
-          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+          const remaining = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining);
         }
-
+        else {
+          console.warn("API returned no data, keeping local rateDetails");
+        }
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');
       }
+
     });
 }
  

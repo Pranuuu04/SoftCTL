@@ -194,9 +194,9 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
   });
 
   dialogRef.afterClosed().subscribe(res => {
-    if (res) {
+    // if (res) {
       this.onFilterSubmit();
-    }
+    // }
   });
 }
  

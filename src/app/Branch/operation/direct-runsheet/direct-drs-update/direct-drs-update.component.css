@@ -103,7 +103,7 @@
 
 
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
   height: 50px !important;
   align-items: center !important;
 }
@@ -145,7 +145,7 @@
 
 ::ng-deep .mat-datepicker-toggle {
   margin-right: 6px;
-}
+} */
 
 
 /* .file-upload button {
