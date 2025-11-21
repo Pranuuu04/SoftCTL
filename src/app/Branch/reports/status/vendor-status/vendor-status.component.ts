@@ -213,7 +213,7 @@ masterColumnOrder: string[] = [
     });
     this.bookingService.getVendor().subscribe((resp: any) => {
       if (this.userType === 'Admin') {
-      this.vendorList = [{ vendor_CODE: 'All', vendor_NAME: 'All' }, ...resp.Data];
+      this.vendorList = [{ vendorCode: 'All', vendorName: 'All' }, ...resp.Data];
       this.customerForm.patchValue({ vendorName: 'All' });
     } else {
       this.vendorList = resp.Data;

@@ -219,7 +219,7 @@
       </button>
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash"  [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [ngClass]="{
+        <button mat-button class="menu-button dash"  [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="hasSubMenu(menu.captionName) ? null : menu.Routing" [ngClass]="{
           'active-main': isParentActive(menu.captionName)
         }">
           <mat-icon>{{menu.icon}}</mat-icon>
@@ -236,9 +236,6 @@
               {{ item.captionName }}
             </button>
           </ng-container>
-          <button mat-menu-item class="sidebtn" routerLink="/destination">
-            destination
-          </button>
         </mat-menu>
       </ng-container>
 
@@ -311,18 +308,14 @@
       </button>  
 
       <ng-container *ngFor="let menu of dynamicMenus">
-        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" routerLink="menu.Routing" [ngClass]="{ 'active-button': isRouteActive(menu.Routing) }"  (click)="OpenCustomerModal(menu)">
+        <button mat-button class="menu-button dash" [matMenuTriggerFor]="menuMenu" *ngIf="menu.captionType === 'Menu'" [routerLink]="hasSubMenu(menu.captionName) ? null : menu.Routing" [ngClass]="{ 'active-main': isRouteActive(menu.Routing) }"  (click)="OpenCustomerModal(menu)">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{ menu.captionName }}</span>
+            <mat-icon *ngIf="hasSubMenu(menu.captionName)" class="arrow-right">
+            arrow_right
+          </mat-icon>
         </button>
-        <!-- <mat-menu #menuMenu="matMenu" class="sideMenu" >
-          <ng-container  *ngFor="let item of dynamicMenus">
-            <button mat-menu-item class="sidebtn" *ngIf="item.captionType === 'Sub_Menu' && item.groupName === menu.captionName " routerLink="{{item.Routing}}">
-              {{ item.captionName }}
-            </button>
-          </ng-container>         
-        </mat-menu> -->
-      </ng-container>
+     </ng-container>
       
       <button mat-button class="menu-button" (click)="logOut()" [ngClass]="{ 'active-button': isRouteActive('/auth/login') }">
         <mat-icon>logout</mat-icon>

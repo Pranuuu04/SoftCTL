@@ -38,7 +38,6 @@ export class CrmComplainComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.currentDate = new Date().toISOString().split('T')[0];
     this.validationMessage = {
       awbNo:[
         {type: 'required', message: 'Please select AwbNo'}
@@ -65,6 +64,8 @@ export class CrmComplainComponent implements OnInit{
         {type: 'required', message: 'Please enter Action'}
       ]
     };
+        this.currentDate = new Date().toISOString().split('T')[0];
+
     this.ComplainFORM = this.formbuilder.group({
       awbNo: new FormControl('',Validators.compose([
         Validators.required
@@ -261,13 +262,15 @@ formSubmit(formData: any){
       this.httpService.post(`${environment.apiUrl}Crm/GetComplain`,obj).then(resp=>{
         if(resp.status === 1){
           this.openSnackBar( resp.msg, 'custom-snackbar')
-          this.showTable = true;
-          this.showTable2 = true;
+          // this.showTable = true;
+          // this.showTable2 = true;
           this.ComplainFORM.reset();
-          this.complainTableData = [];
-          this.trackingTableData = [];
-          this.trackingTableData2 = [];
+          this.showTable = false;
+          // this.complainTableData = [];
+          // this.trackingTableData = [];
+          // this.trackingTableData2 = [];
           this.awbNo = ''; 
+          this.currentDate = new Date().toISOString().split('T')[0];
         }
         else{
           this.openSnackBar(resp.msg, 'error-snackbar')

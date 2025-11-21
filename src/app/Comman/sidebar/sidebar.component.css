@@ -251,12 +251,6 @@
     width: 259px !important;
   }
 }
-
-::ng-deep .cdk-overlay-container, 
-::ng-deep .cdk-overlay-pane {
-  z-index: 10000 !important;
-}
-
 .mat-sidenav, .mat-drawer-container, .mat-nav {
   overflow: visible !important;
 }
