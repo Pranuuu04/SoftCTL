@@ -98,119 +98,12 @@
     <div class="table-responsive text-nowrap" >
       <div class="mat-elevation-z8" >
         <table  id="genPDF" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
-
-          <!-- <ng-container matColumnDef="srNo">
-            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="AwbNo">
-            <th mat-header-cell *matHeaderCellDef>Awb No </th>
-            <td mat-cell *matCellDef="let element"> {{element.AwbNo}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="BookDate">
-            <th mat-header-cell *matHeaderCellDef> Booked Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.BookDate}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="customer_name">
-            <th mat-header-cell *matHeaderCellDef> Customer Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.customer_name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Consignee_Name">
-            <th mat-header-cell *matHeaderCellDef>  Consignee Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.Consignee_Name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="shipperName">
-            <th mat-header-cell *matHeaderCellDef>  Shipper Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.shipperName}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Origin">
-            <th mat-header-cell *matHeaderCellDef> Origin </th>
-            <td mat-cell *matCellDef="let element"> {{element.Origin}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="destination_name">
-            <th mat-header-cell *matHeaderCellDef> Destination </th>
-            <td mat-cell *matCellDef="let element"> {{element.destination_name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Consignee_Pin">
-            <th mat-header-cell *matHeaderCellDef> PinCode </th>
-            <td mat-cell *matCellDef="let element"> {{element.Consignee_Pin}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="mode_name">
-            <th mat-header-cell *matHeaderCellDef> Mode</th>
-            <td mat-cell *matCellDef="let element"> {{element.mode_name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Typeofdelivery">
-            <th mat-header-cell *matHeaderCellDef> Delivery Type</th>
-            <td mat-cell *matCellDef="let element"> {{element.Typeofdelivery}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Qty">
-            <th mat-header-cell *matHeaderCellDef> Pcs </th>
-            <td mat-cell *matCellDef="let element"> {{element.Qty}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="ActualWt">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.ActualWt}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="Consignee_Tel">
-            <th mat-header-cell *matHeaderCellDef> ContactNo </th>
-            <td mat-cell *matCellDef="let element"> {{element.Consignee_Tel}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="vendor_name">
-            <th mat-header-cell *matHeaderCellDef> Vendor Name  </th>
-            <td mat-cell *matCellDef="let element"> {{element.vendor_name}} </td>
-          </ng-container> 
-  
-          <ng-container matColumnDef="Ref_No">
-            <th mat-header-cell *matHeaderCellDef> Vendor Ref-No </th>
-            <td mat-cell *matCellDef="let element"> {{element.Ref_No}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="DelvDT">
-            <th mat-header-cell *matHeaderCellDef> Delivery Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.DelvDT}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="DelvTime">
-            <th mat-header-cell *matHeaderCellDef> Delivery Time</th>
-            <td mat-cell *matCellDef="let element"> {{element.DelvTime}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="ExptDateOfDelvDt">
-            <th mat-header-cell *matHeaderCellDef> Exp. Delivery </th>
-            <td mat-cell *matCellDef="let element"> {{element.ExptDateOfDelvDt}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="T_flag">
-            <th mat-header-cell *matHeaderCellDef> CustomerType </th>
-            <td mat-cell *matCellDef="let element"> {{element.T_flag}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="TotalAmt">
-            <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let element"> {{element.TotalAmt}} </td>
-          </ng-container>   -->
-          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+         <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef>
-              {{ customerColumnMapping[column] || column }}
+                <span *ngIf="column === 'index'">Sr No</span>
+                <span *ngIf="column !== 'index'">
+                  {{ customerColumnMapping[column] || column }}
+                </span>
             </th>
 
             <td mat-cell *matCellDef="let element; let i = index">

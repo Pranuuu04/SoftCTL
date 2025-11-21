@@ -45,15 +45,16 @@ export class SalesRateComponent implements OnInit {
     ? localStorage.getItem('originCode')
     : localStorage.getItem('selectedValue');
     this.searchSubject
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-      )
-      .subscribe(searchTerm => {
-        this.searchValue = searchTerm;
-        this.pageIndex = 0;
-        this.rateData(1, this.pageSize, searchTerm);
-      });
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    )
+    .subscribe(searchTerm => {
+      this.searchValue = searchTerm;
+      this.pageIndex = 0;
+      this.rateData(1, this.pageSize, searchTerm);
+    });
+
   }
  refresh() {
     this.rateData(this.pageIndex + 1, this.pageSize);

@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
 
-
 @Component({
   selector: 'app-crm-complain',
   templateUrl: './crm-complain.component.html',
@@ -88,87 +87,6 @@ export class CrmComplainComponent implements OnInit{
     })
   }
 
-  // checkAwbData(){
-  //     if(this.selectType === 'Awb'){
-  //       if (!this.awbNo) {
-  //         alert("Please enter AWB number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno=${this.awbNo} &RefNo&ComplainNo`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid AWB number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }else if(this.selectType === 'Complain'){
-  //       if (!this.Complain) {
-  //         alert("Please enter Complain number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno&RefNo&ComplainNo= ${this.Complain}`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid Complain number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }else{
-  //       if (!this.RefNo) {
-  //         alert("Please enter Reference number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno&RefNo=${ this.RefNo} &ComplainNo`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid Refrance number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }
-  // }
     openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Close', {
       duration: 3000,

@@ -45,16 +45,16 @@ export class RateMaster2Component implements OnInit {
     this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
     ? localStorage.getItem('originCode')
     : localStorage.getItem('selectedValue');
-      this.searchSubject
-          .pipe(
-            debounceTime(500),
-            distinctUntilChanged()
-          )
-          .subscribe(searchTerm => {
-            this.searchValue = searchTerm;
-            this.pageIndex = 0;
-            this.rateData(1, this.pageSize, searchTerm);
-          });
+     this.searchSubject
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    )
+    .subscribe(searchTerm => {
+      this.searchValue = searchTerm;
+      this.pageIndex = 0;
+      this.rateData(1, this.pageSize, searchTerm);
+    });
   }
  refresh() {
     this.rateData(this.pageIndex + 1, this.pageSize);

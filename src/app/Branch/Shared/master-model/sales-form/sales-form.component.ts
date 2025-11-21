@@ -217,9 +217,6 @@ this.customerData();
 this.RateForm = this.formBuilder.group({
   fromDate: [this.currentDate1, Validators.required],
   toDate: [this.currentDate2, Validators.required],
-  // fromDate: [''],
-  // toDate: [''],
-  rateLocation: ['', Validators.required],
   rateCustomer: ['', Validators.required],
   RateOrigin: ['', Validators.required],
   Zone: [''],
@@ -484,7 +481,6 @@ if (rateDetails.Country_Codes?.length) {
         this.RateForm.patchValue({
           fromDate: this.parseDateString(rateDetails.Active_Date),
           toDate: this.parseDateString(rateDetails.Closing_Date),
-          rateLocation: rateDetails,
           rateCustomer: rateDetails.Cust_Code,
           RateOrigin: rateDetails.Orgin_Code,
           Zone: rateDetails.OrginZone_Code?.trim() || '',

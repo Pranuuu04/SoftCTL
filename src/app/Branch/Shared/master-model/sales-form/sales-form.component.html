@@ -1010,14 +1010,9 @@
         </div>
         <div class="row pb-1">
           <div class="col-sm-4">
-            <div class="textOnSelect">
-              <label for="rateLocation"><span style="color: red;">*</span>Location :</label>
-              <select id="rateLocation" class="custom-select" formControlName="rateLocation">
-                <option value="" selected disabled>Select Location</option>
-                <option *ngFor="let item of LocationList" value="{{item.locationCode}}">
-                  {{item.locationName}}
-                </option>
-              </select>
+            <div class="textOnInput">
+              <label for="rateLocation">Location :</label>
+              <input type="text" class="form-control" [value]="sessionLocationName" readonly>
             </div>
           </div>
           <div class="col-sm-8">
