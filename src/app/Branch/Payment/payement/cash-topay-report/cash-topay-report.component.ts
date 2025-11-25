@@ -13,6 +13,7 @@ import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MasterService } from 'app/Branch/master/master.service';
+import { PaymentFormComponent } from 'app/Branch/Shared/payment/payment-form/payment-form.component';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -42,6 +43,7 @@ export class CashTopayReportComponent implements OnInit {
   //  displayedColumns: string[] = ['SrNO','Customer_Name','Shipper_Name','Consignee_Name','BookDate','Location_Code','AwbNo','Payment_mode',
   // 'TransactionId','Received_by','Desposited_bank','Received_date','Total_amt','Received_amt','TDS','Debit_note','Outstanding','Remark'];
   displayedColumns: string[] = [
+        'action',
         'SrNO',
         'AwbNo',
         'BookDate',
@@ -53,12 +55,12 @@ export class CashTopayReportComponent implements OnInit {
         'TDS',
         'Debit_note',
         'Outstanding',
-        'Payment_mode',
-        'Received_by',
-        'Received_date',
-        'Desposited_bank',
-        'TransactionId',
-        'Remark',
+        // 'Payment_mode',
+        // 'Received_by',
+        // 'Received_date',
+        // 'Desposited_bank',
+        // 'TransactionId',
+        // 'Remark',
       ];
  
    userType: any;
@@ -211,7 +213,7 @@ export class CashTopayReportComponent implements OnInit {
        if(this.userType!=='Admin'){
         sessionLocationCode = this.sessionLocationCode;
        }else{
-        sessionLocationCode = this.filterForm.get('locationCode')?.value;
+        sessionLocationCode = this.filterForm.get('branch')?.value;
        }
         const customerType = this.filterForm.get('customerType')?.value;
         let customerCode;
@@ -231,7 +233,7 @@ export class CashTopayReportComponent implements OnInit {
        const toDate = this.filterForm.get('toDate')?.value;
       
 
-   this.paymentService.cashToPayReport(sessionLocationCode, customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
+   this.paymentService.cashToPayReport(sessionLocationCode,'', customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
      .subscribe((resp: any) => {
        if (resp.status === 1) {
          this.openSnackBar(resp.message, 'custom-snackbar');
@@ -250,6 +252,33 @@ export class CashTopayReportComponent implements OnInit {
      this.filterForm.markAllAsTouched();
       this.openSnackBar('Please fill out all required fields.', 'error-snackbar');
    }
+ }
+
+
+ openCashTopayForm(action: 'add' | 'edit', element?: any) {
+ 
+   const dialogRef = this.dialog.open(PaymentFormComponent, {
+     data: {
+       action: 'CashTopayEntry',
+       mode: action,
+       responseData: element,
+       fromDate: this.fromDate,
+       toDate: this.toDate,
+       customerCode:'All',
+       CashPayReport:true,
+     },
+     // width: '95rem',
+     width: '95vw',
+     maxWidth: '95vw',
+     panelClass: 'cashTopay-dialog' ,
+     disableClose: true
+   });
+ 
+   dialogRef.afterClosed().subscribe(res => {
+     // if (res) {
+       this.onFilterSubmit();
+     // }
+   });
  }
 
 

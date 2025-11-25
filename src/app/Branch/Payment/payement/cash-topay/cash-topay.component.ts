@@ -79,6 +79,8 @@ export class CashTopayComponent implements OnInit {
      : localStorage.getItem('selectedValue');
       this.sessionLocationName = localStorage.getItem('originName');
 
+      console.log(">>>>>>",this.sessionLocationCode)
+
     // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
     //   const allCust = { customerName: 'All', customerCode: 'All' };
     //         this.customerList = [allCust, ...data.Data];
@@ -184,7 +186,8 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
       responseData: element,
       fromDate: this.fromDate,
       toDate: this.toDate,
-      customerCode:this.filterForm.get('rateCustomer')?.value
+      customerCode:this.filterForm.get('rateCustomer')?.value,
+      CashPayReport:false
     },
     // width: '95rem',
     width: '95vw',

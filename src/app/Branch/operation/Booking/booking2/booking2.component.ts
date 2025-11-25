@@ -346,7 +346,7 @@ constructor(public httpService: HttpService,
 
 //  this.consignerCode = localStorage.getItem('consignerCode') || '';
   this.selectedCustType = localStorage.getItem('custType') || '';
-  this.loadConsignerData();
+  // this.loadConsignerData();
     this.renderForm();
     const savedAwbType = localStorage.getItem('awbType');
     if (savedAwbType) {
@@ -364,8 +364,14 @@ constructor(public httpService: HttpService,
     this.checkBranchSelection();
     if (this.userType === 'Admin') {
       this.selectedOrigin = this.sharedService.getBranchType();
-      this.sessionLocationCode = this.selectedOrigin;
-      this.getPermission();
+      // this.sessionLocationCode = this.selectedOrigin;
+      // this.getPermission();
+        this.sharedService.selectedValue$.subscribe(value => {
+          this.sessionLocationCode = value;
+          this.loadConsignerData();
+          this.getPermission();
+         console.log('sessionLocationCode updated from sharedService:', value);
+    });
     } else {
       this.sessionLocationCode = localStorage.getItem('originCode');
       this.sessionLocationName = localStorage.getItem('originName');

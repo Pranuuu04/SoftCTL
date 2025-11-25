@@ -323,8 +323,9 @@ export class BookingTabComponent implements OnInit, AfterViewInit, OnDestroy {
   //    ? localStorage.getItem('originCode')
   //    : this.sharedService.getSelectedValue();
  this.userType = localStorage.getItem('userType');
+ console.log("userType >>>>>",this.userType)
 
-    if (this.userType === 'Admin') {
+  if (this.userType === 'Admin') {
     this.sharedService.selectedValue$.subscribe(value => {
       this.sessionLocationCode = value;
       this.loadConsignerData();

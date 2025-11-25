@@ -1,4 +1,4 @@
-<div class="col-lg-12 col-md-12" style="display: flex;
+<!-- <div class="col-lg-12 col-md-12" style="display: flex;
 justify-content: center;">
     <div class="card">
         <div class="card-body table-responsive">
@@ -63,7 +63,103 @@ justify-content: center;">
             </div>
         </div>
     </div>
+</div> -->
+
+
+<div class="container statement-box">
+  <form [formGroup]="serviceForm" (ngSubmit)="formSubmit(serviceForm.value)">
+    <div class="row mainrow">
+
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label>Mode :</label>
+          <select class="custom-select" formControlName="modeName" [(ngModel)]="modeName" (change)="resetPagination()">
+            <option value="All">All Mode</option>
+            <option *ngFor="let item of modeList" [value]="item.Mode_code">
+              {{ item.Mode_name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Product -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label>Product :</label>
+          <select class="custom-select" formControlName="productName" [(ngModel)]="productName" (change)="resetPagination()">
+            <option value="All">All Product</option>
+            <option *ngFor="let item of vendorList" [value]="item.productCode">
+              {{ item.productName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Report Type (Details) -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label>Report Type</label>
+          <select class="custom-select" formControlName="reportType" [(ngModel)]="reportType">
+            <option value="StatementDetails">Details</option>
+            <option value="StatementSummary">Summary</option>
+          </select>
+        </div>
+      </div>
+
+      
+      <!-- <div class="col-sm-2 d-flex align-items-end justify-content-end">
+        <button type="button" class="btn btn-outline-light" disabled>
+          <i class="fa-solid fa-file-pdf"></i> PDF
+        </button>
+      </div> -->
+
+    </div>
+
+
+    <div class="row mainrow border-row" style="border-bottom: 1px solid #d2d2d2;">
+
+      <!-- From Date -->
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>From :</label>
+          <input type="date" class="form-control" [(ngModel)]="fromDate" formControlName="fromDate" (change)="resetPagination()">
+        </div>
+      </div>
+
+      <!-- To Date -->
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>To :</label>
+          <input type="date" class="form-control" [(ngModel)]="toDate" formControlName="toDate" (change)="resetPagination()">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================= ROW 3 — BUTTON ROW ======================= -->
+      <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-5">
+            <div class="row">              
+            <div class="col-sm-8 d-flex  pr-0" style="justify-content: end;">
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+            </div>
+            <div class="col-sm-4 download-buttons d-flex pl-0" style="justify-content: end;">
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                    <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                    <span class="text">Setup</span></button>
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                    class="fa-solid fa-table"></i>
+                  <span class="text">XLs</span></button>
+                    <button type="button" class="btn btn-outline-light pb-0 mt-0" disabled><i class="fa-solid fa-file-pdf"></i>
+                  <span class="text">PDF</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </form>
 </div>
+
 
 <div *ngIf="enabledTableDetails">
   <div class="table-responsive text-nowrap" >

@@ -15,6 +15,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { TransportImagesComponent } from 'app/Branch/master/transport/transport-images/transport-images.component';
 
 @Component({
   selector: 'app-pending-pod-image',
@@ -196,10 +197,15 @@ getReportSetupKey(){
    this.AllService.getReportSetup('getPodImgReportSetup').subscribe((setupResp: any) => {
     if (setupResp.status === 1 && setupResp.Data.length) {
       const setup = setupResp.Data[0];
-      const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
-      this.displayedColumns = ['index','BookDate', 'AwbNo', 'Origin', 'destination_name','Status',' DelvDT','POD_Img', ...selectedKeys];
+      const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1 && k !== 'POD_Img');
+      this.displayedColumns = ['index','BookDate', 'AwbNo', 'Origin', 'destination_name','Status','DelvDT','POD_Img', ...selectedKeys];
     }
   });
+}
+
+logColumn(col: string) {
+  console.log("COLUMN FOUND:", `"${col}"`);
+  return '';
 }
 
 formSubmit(formData: any) {
@@ -246,6 +252,21 @@ openSetup(){
         this.getReportSetupKey();
       }); 
    }
+
+
+    onImageIconClick(images:string) {
+       console.log("POD IMG CLICKED:", images);
+       const dialogRef = this.dialog.open(TransportImagesComponent, {
+         data: {
+           ImageData: images,
+         },
+         width: '600px',
+         disableClose: true
+       });
+       dialogRef.afterClosed().subscribe(() => {
+   
+       });
+     }
 
 // downloadSample(){
 //    const isConfirmed = window.confirm('Do you want to download the Excel file?');

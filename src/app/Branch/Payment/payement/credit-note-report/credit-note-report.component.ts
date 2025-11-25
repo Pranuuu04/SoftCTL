@@ -219,7 +219,7 @@ export class CreditNoteReportComponent implements OnInit {
        if(this.userType!=='Admin'){
         sessionLocationCode = this.sessionLocationCode;
        }else{
-        sessionLocationCode = this.filterForm.get('locationCode')?.value;
+        sessionLocationCode = this.filterForm.get('branch')?.value;
        }
         const customerType = this.filterForm.get('customerType')?.value;
         let customerCode;
@@ -239,7 +239,7 @@ export class CreditNoteReportComponent implements OnInit {
        const toDate = this.filterForm.get('toDate')?.value;
       
 
-   this.paymentService.creditNotReport(sessionLocationCode, customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
+   this.paymentService.creditNotReport(this.sessionLocationCode, customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
      .subscribe((resp: any) => {
        if (resp.status === 1) {
          this.openSnackBar(resp.message, 'custom-snackbar');

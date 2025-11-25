@@ -51,6 +51,7 @@ export class ScanByAbwNoComponent implements OnInit {
       this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
+
     this.dispatch = localStorage.getItem('dispatch');
     // this.destinationName = this.sharedService.getSelectedValue();
 
@@ -75,6 +76,7 @@ export class ScanByAbwNoComponent implements OnInit {
         ])),
     });
   }
+
   refresh() {
     this.getScanAwbDone();
      this.getScanAwbPeding();
@@ -108,7 +110,7 @@ export class ScanByAbwNoComponent implements OnInit {
   async getDoneScan() {
     if (this.userType === 'Admin') {
       try {
-        const resp: any = await  this.httpService.get(`${environment.apiUrl}inscan/viewInscanByAwbNo?SessionLocationCode=${this.destinationName}&dispatchFlag=${this.dispatch}`);
+        const resp: any = await  this.httpService.get(`${environment.apiUrl}inscan/viewInscanByAwbNo?SessionLocationCode=${this.sessionLocationCode}&dispatchFlag=${this.dispatch}`);
         this.totalDone = resp.Count;
       } catch (error) {
         this.openSnackBar( 'Error fetching pending data:', 'error-snackbar')
