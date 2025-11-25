@@ -298,7 +298,7 @@ getVehicleNumbers() {
      Remark: formData.Remark || '',
      Vehicletype: formData.Vehicletype || '',
      VehicleNo: formData.VehicleNo || '',
-     via: formData.destination,
+     via: formData.via || '',
      route: formData.Route || '',
      AwbNo: this.AwbNoDatalist || '',
      VendorCode: formData.ColoaderName || '',

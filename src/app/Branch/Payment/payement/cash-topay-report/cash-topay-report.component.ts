@@ -118,13 +118,13 @@ export class CashTopayReportComponent implements OnInit {
                 this.filterForm.patchValue({ CustomerName: 'All' });
           });
 
-  this.masterService.getAndDeleteShipperConsig('getConsignee')
+  this.masterService.getAndDeleteShipperConsig('getConsignee', this.sessionLocationCode)
     .subscribe((data: any) => {
       const all = { Consignee_Name: 'All', Consignee_Code: 'All' };
       this.consigneeList = [all, ...data.Data];
     });
 
-  this.masterService.getAndDeleteShipperConsig('getShipper')
+  this.masterService.getAndDeleteShipperConsig('getShipper', this.sessionLocationCode)
     .subscribe((data: any) => {
       const all = { shipper_Name: 'All', shipper_Code: 'All' };
       this.shipperList = [all, ...data.Data];

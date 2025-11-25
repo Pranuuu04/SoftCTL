@@ -798,11 +798,12 @@ fetchReleventData(event: any) {
   //     }
   //   })
   // }
-onShipperSelected() {
-  // const input = this.selectedShipper?.trim();
-  const shipperName = this.bookingForm.get('shipperName')?.value?.trim();
-
-  if (!shipperName) {
+onShipperSelected(selected: any) {
+  const rawValue = this.bookingForm.get('shipperName')?.value?.trim();
+  if (!rawValue) {
+    return;
+  }
+  if (!selected) {
     // Clear all shipper-related fields
     this.shipperAdd1 = '';
     this.shipperAdd2 = '';
@@ -823,9 +824,9 @@ onShipperSelected() {
     return;
   }
 
-  const selected = this.shipperNameList.find(item =>
-    item.shipperName === shipperName
-  );
+  // const selected = this.shipperNameList.find(item =>
+  //   item.shipperName === shipperName
+  // );
 
   if (selected) {
     this.bookingService.getShipperDetail(selected.shipperCode).subscribe(
@@ -844,7 +845,6 @@ onShipperSelected() {
           this.DestinationCode = data.countryCode;
           this.ShipperSave = data.ShipperAdd1;
 
-          // Optional: patch reactive form controls if needed
           this.bookingForm.controls.cityName.setValue(data.CityCode);
           this.bookingForm.controls.stateName.setValue(data.stateCode);
           this.bookingForm.controls.countryName.setValue(data.countryCode);
@@ -873,11 +873,17 @@ onShipperSelected() {
   //     }
   //   });
   // }
-onConsigneeSelected() {
-  const consigneeName = this.bookingForm.get('consigneeName')?.value?.trim();
+onConsigneeSelected(selected: any) {
+  // const consigneeName = this.bookingForm.get('consigneeName')?.value?.trim();
+  const rawValue = this.bookingForm.get('consigneeName')?.value?.trim();
 
-  if (!consigneeName) {
-    // Clear all consignee-related fields
+  if (!rawValue) {
+    return;
+  }
+  const [consigneeName, consigneeCode] = rawValue.split(' | ');
+  this.selectedConsignee = consigneeName?.trim();
+
+  if (!selected) {
     this.conAddress1 = '';
     this.consigneeAddress2 = '';
     this.consigneeLandmark = '';
@@ -896,9 +902,9 @@ onConsigneeSelected() {
   });
     return;
   }
- const selected = this.consigneeList.find(item =>
-    item.ConsigneeName === consigneeName
-  );
+//  const selected = this.consigneeList.find(item =>
+//     item.ConsigneeName === consigneeName
+//   );
 
   if (selected) {
     this.bookingService.getConsigneeDetail(selected.ConsigneeCode).subscribe(
@@ -917,14 +923,10 @@ onConsigneeSelected() {
         this.consigneeGST = data.GSTNo;
         this.CustomerName = data.CustomerName;
          this.bookingForm.patchValue({
-              // gstNo: data.GSTNo,
               cityName: data.destinationCode,
               stateName: data.stateCode,
               countryName: data.countryCode
             });
-        // this.bookingForm.controls.cityName.setValue(data.Destination_Code);
-        // this.bookingForm.controls.stateName.setValue(data.stateCode);
-        // this.bookingForm.controls.countryName.setValue(data.country_code);
       },
       (error) => {
         console.error('Error in getConsigneeDetail:', error);
@@ -935,7 +937,7 @@ onConsigneeSelected() {
   // tslint:disable-next-line:no-shadowed-variable
   getPinCode(event: any) {
     this.pinCode = event.target.value;
-    if (this.pinCode) {
+    if (this.pinCode.length >= 4 && this.pinCode.length <= 6) {
       this.bookingService.getPincodeData(this.pinCode).subscribe(
         (resp) => {
           const data = resp.Data[0];

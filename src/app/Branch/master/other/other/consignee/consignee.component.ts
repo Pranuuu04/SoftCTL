@@ -32,12 +32,17 @@ displayedColumns: string[] = [
   'State_Name',
   'Customer_Name'
 ];
+  sessionLocationCode: any;
 
    constructor(private dialog: MatDialog,private snackBar:MatSnackBar,
                public masterService: MasterService
               ) { }
 
    ngOnInit(): void {
+         this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
+
     this.getConsignee();
    }
 
@@ -104,7 +109,7 @@ displayedColumns: string[] = [
 
 
   getConsignee() {
-      this.masterService.getAndDeleteShipperConsig('getConsignee').subscribe((resp: any) => {
+      this.masterService.getAndDeleteShipperConsig('getConsignee', this.sessionLocationCode).subscribe((resp: any) => {
         if (resp.status === 1) {
           this.showTable = true;
           this.ConsigneeViewData = resp.Data;

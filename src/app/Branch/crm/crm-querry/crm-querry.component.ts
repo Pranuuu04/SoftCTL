@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
   templateUrl: './crm-querry.component.html',
   styleUrls: ['./crm-querry.component.css']
 })
-export class CrmQuerryComponent implements OnInit {
+export class CrmQuerryComponent implements OnInit, AfterViewInit {
 
   awbNo: any;
   refNo: any;
@@ -31,6 +31,18 @@ export class CrmQuerryComponent implements OnInit {
 
   ngOnInit(): void {
   }
+ngAfterViewInit() {
+  const buttons = document.querySelectorAll('.accordion-card .btn');
+
+  buttons.forEach((btn: any) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.accordion-card') as HTMLElement;
+      const parent = document.getElementById('accordionExample');
+
+      parent?.prepend(card);   // move clicked accordion to top
+    });
+  });
+}
 
    openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Close', {

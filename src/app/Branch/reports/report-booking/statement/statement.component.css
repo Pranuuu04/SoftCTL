@@ -230,8 +230,8 @@ th.mat-header-cell {
 table ,th {
   color: black;
 }
-table th{ 
-  font-size: 17px;
+table th span{ 
+  font-size: 15px;
   font-weight: 600;
   padding: 0 11px;
 }

@@ -253,16 +253,6 @@
     width: 259px !important;
   }
 }
-
-/* ::ng-deep .cdk-overlay-container, 
-::ng-deep .cdk-overlay-pane {
-  z-index: 10000 !important;
-} */
-
-::ng-deep .cdk-overlay-container {
-  z-index: 10000 !important;
-}
-
 .mat-sidenav, .mat-drawer-container, .mat-nav {
   overflow: visible !important;
 }
@@ -272,12 +262,6 @@
   right: auto !important;
   margin-top: 0 !important;
 } */
-
-/* ::ng-deep .mat-menu-panel.sidebar-submenu {
-  margin-left: 180px !important;
-  margin-top: -5px !important;
-} */
-
 
 /* ::ng-deep .cdk-overlay-pane {
   transform: translateX(180px) !important; 

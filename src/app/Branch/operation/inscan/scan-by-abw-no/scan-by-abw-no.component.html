@@ -1,6 +1,4 @@
  <div>
-    <!-- <div class="card">
-        <div class="card-body table-responsive"> -->
                 <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
                     <div class="col-sm-5">
                         <p (click)="openPendingAWBModal()">Pending Scan: {{totalPending}} </p>&nbsp;&nbsp;
@@ -51,23 +49,20 @@
                 
                 </div>
                   <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;justify-content: right;">
-                  <!-- <div class="col-sm-2 d-flex">
-                  </div> -->
+
                   <div class="col-sm-4 d-flex submitbtn">
                     <button type="submit" class="btn btn-light">Inscan</button>
                     <button type="button" class="btn btn-warning" (click)="openAwbBulkModal()">Bulk</button>
                   </div>
               </div>
             </form>
-        <!-- </div>
-    </div> -->
 </div>   
 
 
 <div *ngIf="showTable && listData.length > 0">
   <div class="table-responsive text-nowrap">
-    <table class="table table-bordered table-striped"  style="background-color: rgb(223 233 237 / 87%);">
-      <thead style="background-color:#afdadf; color: black;">
+    <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+      <thead style="background-color:#a3b8d4; color: black;">
         <tr>
             <th>Awb no.</th>
             <th>Booking Date</th>

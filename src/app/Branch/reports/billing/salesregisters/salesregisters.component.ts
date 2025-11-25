@@ -10,6 +10,7 @@ import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment.prod';
 import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.component';
 import { AllServicesService } from 'app/service/all-services.service';
+import { SetupReportComponent } from 'app/Branch/Shared/report_pages/setup-report/setup-report.component';
 
 @Component({
   selector: 'app-salesregisters',
@@ -49,8 +50,12 @@ import { AllServicesService } from 'app/service/all-services.service';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: any [] = [ 'srNo' , 'Invno' , 'BillDate' , 'customer_name' , 'Typeofcustomer' , 'FromDate' , 'ToDate' , 'CustomerGst' , 'HsnNo' , 'TotaDockets' , 'Amount' , 'TotalCGST' , 'TotalIGST' , 'TotalSGST' , 'TotalAmount' ];
+  // displayedColumns: any [] = [ 'srNo' , 'Invno' , 'BillDate' , 'customer_name' , 'Typeofcustomer' , 'FromDate' , 'ToDate' , 'CustomerGst' , 'HsnNo' , 'TotaDockets' , 'Amount' , 'TotalCGST' , 'TotalIGST' , 'TotalSGST' , 'TotalAmount' ];
+  displayedColumns: any [] = [];
+  displayedColumnsSalesRegister: { [key: string]: string } = {
+     index: 'Sr No',
 
+    }
   dataSource  = new MatTableDataSource();
   
 
@@ -154,6 +159,25 @@ import { AllServicesService } from 'app/service/all-services.service';
           this.enabledTable = false;
         }
       });
+  }
+
+  openSetup(){
+     const dialogRef = this.dialog.open(SetupReportComponent, {
+        data: {
+          action: 'add',
+          inputName: 'getSalesRegisterSetup',
+          columnMapping: this.displayedColumnsSalesRegister,
+          saveApi: 'SalesRegisterSetup'
+        },
+        width: '85rem',
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
+      if (selectedKeys && selectedKeys.length) {
+        this.displayedColumns = ['index', ...selectedKeys];
+       }
+        // this.getReportSetupKey();
+      }); 
   }
 
   openprogressbar(): MatDialogRef<ProgressBarComponent> {

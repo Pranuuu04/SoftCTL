@@ -47,15 +47,15 @@ export class SaleConsignorComponent implements OnInit {
 
     this.customerData(this.pageIndex + 1, this.pageSize);
     this.searchSubject
-  .pipe(
-    debounceTime(500),
-    distinctUntilChanged()
-  )
-  .subscribe(searchTerm => {
-    this.searchValue = searchTerm;
-    this.pageIndex = 0;
-    this.customerData(1, this.pageSize, searchTerm);
-  });
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged()
+        )
+        .subscribe(searchTerm => {
+          this.searchValue = searchTerm;
+          this.pageIndex = 0;
+          this.customerData(1, this.pageSize, searchTerm);
+        });
 
   }
 

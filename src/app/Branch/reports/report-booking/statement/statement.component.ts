@@ -52,109 +52,100 @@ export class StatementComponent implements OnInit {
   disabled = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumnsBookingDetails: string[] = ['index'
-  //   , 'ModeName',
-  // 'locationName',
-  // 'ProductName',
-  // 'Bookdate',
-  // 'awbno',
-  // 'customer_name',
-  // 'consignee_name',
-  // 'consigneePin',
-  // 'consigneeState',
-  // 'manifestNo',
-  // 'ManifestDate',
-  // 'vendor_name',
-  // 'Ref_No',
-  // 'Origin',
-  // 'Destination',
-  // 'Customer_type',
-  // 'ActualWeight',
-  // 'sgst',
-  // 'cgst',
-  // 'igst',
-  // 'Pcs',
-  // 'chargedwt',
-  // 'billno',
-  // 'rateperkg',
-  // 'fuelcharges',
-  // 'volumetricwt',
-  // 'rate',
-  // 'fov_chrgs',
-  // 'docketchrgs',
-  // 'essamt',
-  // 'vtc_chrgs',
-  // 'oda_chrgs',
-  // 'idccharges',
-  // 'cafcharges',
-  // 'othercharges',
-  // 'cod_charges',
-  // 'charges1',
-  // 'charges2',
-  // 'charges3',
-  // 'charges4',
-  // 'charges5',
-  // 'charges6',
-  // 'charges7',
-  // 'charges8',
-  // 'charges9',
-  // 'charges10',
-  // 'servicetax',
-  // 'txtother',
-  // 'vcharges1',
-  // 'vcharges2',
-  // 'vcharges3',
-  // 'vcharges4',
-  // 'vcharges5',
-  // 'vcharges6',
-  // 'vendorwt',
-  // 'vendorchargewt',
-  // 'receivedamt',
-  // 'receivedtotal',
-  // 'invvalue',
-  // 'shipper_name',
-  // 'actualshipper',// 'TotalAmt'
+  displayedColumnsBookingDetails: string[] = ['index'];
+statementMasterOrder = [
+  'Bookdate',
+  'ManifestDate',
+  'awbno',
+  'manifestNo',
+  'customer_name',
+  'GSTNo',
+  'shipper_name',
+  'Shipper_gstNo',
+  'consignee_name',
+  'Consignee_GST',
+  'Origin',
+  'Destination',
+  'Customer_type',
+  'ModeName',
+  'ProductName',
+  'Pcs',
+  'ActualWeight',
+  'volumetricwt',
+  'chargedwt',
+  'rateperkg',
+  'rate',
+  'docketchrgs',
+  'fov_chrgs',
+  'oda_chrgs',
+  'charges1',
+  'charges2',
+  'charges3',
+  'FuelPer',
+  'fuelcharges',
+  'othercharges',
+  'cafcharges',
+  'HDP_Chrgs',
+  'essamt',
+  'idccharges',
+  'ENS_Chrgs',
+  'SC_Chrgs',
+  'charges4',
+  'charges5',
+  'charges6',
+  'charges7',
+  'charges8',
+  'charges9',
+  'charges10',
+  'GSTPer',
+  'igst',
+  'cgst',
+  'sgst',
+  'TotalAmt',
+  'vendor_name',
+  'Ref_No',
+  'InvoiceNo',
+  'invvalue',
+  'EwayBill'
 ];
-columnHeaderMap: { [key: string]: string } = {
-  ModeName: 'Mode',
-  locationName: 'Location',
-  ProductName: 'Product',
-  Bookdate: 'Booking Date',
+
+columnHeaderMap = {
+  Bookdate: 'Book Date',
+  ManifestDate: 'MFT Date',
   awbno: 'AWB No',
+  manifestNo: 'MFT No',
   customer_name: 'Customer Name',
+  GSTNo: 'Customer GST',
+  shipper_name: 'Shipper Name',
+  Shipper_gstNo: 'Shipper GST',
   consignee_name: 'Consignee Name',
-  consigneePin: 'Consignee Pincode',
-  consigneeState: 'Consignee State',
-  manifestNo: 'Manifest No',
-  ManifestDate: 'Manifest Date',
-  vendor_name: 'Vendor Name',
-  Ref_No: 'Reference No',
+  Consignee_GST: 'Consignee GST',
   Origin: 'Origin',
   Destination: 'Destination',
   Customer_type: 'Customer Type',
-  ActualWeight: 'Actual Weight',
-  sgst: 'SGST',
-  cgst: 'CGST',
-  igst: 'IGST',
+  ModeName: 'Mode',
+  ProductName: 'Product',
   Pcs: 'Pcs',
-  chargedwt: 'Charged Weight',
-  billno: 'Bill No',
-  rateperkg: 'Rate / Kg',
-  fuelcharges: 'Fuel Charges',
-  volumetricwt: 'Volumetric Weight',
+  ActualWeight: 'Actual Wt',
+  volumetricwt: 'Vol. Wt',
+  chargedwt: 'Charged Wt',
+  rateperkg: 'Rate Per Kg',
   rate: 'Rate',
-  fov_chrgs: 'FOV Charges',
   docketchrgs: 'Docket Charges',
-  essamt: 'ESS Amount',
-  vtc_chrgs: 'VTC Charges',
-  oda_chrgs: 'ODA Charges',
-  idccharges: 'IDC Charges',
-  cafcharges: 'CAF Charges',
-  othercharges: 'Other Charges',
-  cod_charges: 'COD Charges',
+  fov_chrgs: 'FOV Chrgs',
+  oda_chrgs: 'ODA Chrgs',
   charges1: 'Charges 1',
   charges2: 'Charges 2',
   charges3: 'Charges 3',
+  FuelPer: 'Fuel %',
+  fuelcharges: 'Fuel Charges',
+  othercharges: 'Other Charges',
+  cafcharges: 'CAF Charges',
+  HDP_Chrgs: 'HDP Charges',
+  essamt: 'ESS Amount',
+  idccharges: 'IDC Charges',
+  ENS_Chrgs: 'ENS Charges',
+  SC_Chrgs: 'SC Charges',
   charges4: 'Charges 4',
   charges5: 'Charges 5',
   charges6: 'Charges 6',
@@ -162,23 +153,33 @@ columnHeaderMap: { [key: string]: string } = {
   charges8: 'Charges 8',
   charges9: 'Charges 9',
   charges10: 'Charges 10',
-  servicetax: 'Service Tax',
-  txtother: 'Other Text',
-  vcharges1: 'V-Charges 1',
-  vcharges2: 'V-Charges 2',
-  vcharges3: 'V-Charges 3',
-  vcharges4: 'V-Charges 4',
-  vcharges5: 'V-Charges 5',
-  vcharges6: 'V-Charges 6',
-  vendorwt: 'Vendor Weight',
-  vendorchargewt: 'Vendor Charged Wt',
-  receivedamt: 'Received Amount',
-  receivedtotal: 'Received Total',
-  invvalue: 'Invoice Value',
-  shipper_name: 'Shipper Name',
-  actualshipper: 'Actual Shipper',
+  GSTPer: 'GST %',
+  igst: 'IGST',
+  cgst: 'CGST',
+  sgst: 'SGST',
   TotalAmt: 'Total Amount',
+  vendor_name: 'Vendor Name',
+  Ref_No: 'Reference No',
+  InvoiceNo: 'Invoice No',
+  invvalue: 'Invoice Value',
+  EwayBill: 'E-Way Bill'
 };
+
+
+alwaysVisibleColumns_Statement = [
+  'Bookdate',
+  'awbno',
+  'customer_name',
+  'shipper_name',
+  'consignee_name',
+  'Origin',
+  'Destination',
+  'Customer_type',
+  'ModeName',
+  'ProductName',
+  'Pcs',
+  'ActualWeight'
+];
 
   dataSourceBookingDetails  = new MatTableDataSource();
 
@@ -287,8 +288,20 @@ columnHeaderMap: { [key: string]: string } = {
       if (setupResp.status === 1 && setupResp.Data.length) {
         const setup = setupResp.Data[0];
         const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
-        this.displayedColumnsBookingDetails = ['index', ...selectedKeys];
-        this.displayedColumnsManifestDetails = ['index', ...selectedKeys];
+         let finalColumns = [
+          'index',
+          ...this.alwaysVisibleColumns_Statement,
+          ...selectedKeys
+        ];
+
+        finalColumns = finalColumns.filter((v, i, arr) => arr.indexOf(v) === i);
+          finalColumns = finalColumns.sort(
+            (a, b) =>
+              this.statementMasterOrder.indexOf(a) -
+              this.statementMasterOrder.indexOf(b)
+          );
+          this.displayedColumnsBookingDetails = finalColumns;
+          this.displayedColumnsManifestDetails = finalColumns;
       }
     });
   }
@@ -300,6 +313,16 @@ columnHeaderMap: { [key: string]: string } = {
               this.dataSourceBookingDetails = resp.Data;
               this.length = resp.count;
               this.calculatePageCount();
+               const chargesRow = resp.Data[0];
+
+                for (let i = 1; i <= 10; i++) {
+                  const txtKey = 'txtCharges' + i;
+                  const valKey = 'charges' + i;
+
+                  if (chargesRow[txtKey]) {
+                    this.columnHeaderMap[valKey] = chargesRow[txtKey];
+                  }
+                }
               this.enabledTableBookingDetails = true;
               this.enabledTableBookingSummary = false;
               this.enabledTableManifestDetails = false;
@@ -320,6 +343,16 @@ columnHeaderMap: { [key: string]: string } = {
               this.dataSourceManifestDetails = resp.Data;
               this.length = resp.count;
               this.calculatePageCount();
+               const chargesRow = resp.Data[0];
+
+                for (let i = 1; i <= 10; i++) {
+                  const txtKey = 'txtCharges' + i;
+                  const valKey = 'charges' + i;
+
+                  if (chargesRow[txtKey]) {
+                    this.columnHeaderMap[valKey] = chargesRow[txtKey];
+                  }
+                }
               this.enabledTableManifestDetails = true;
               this.enabledTableBookingDetails = false;
               this.enabledTableBookingSummary = false;
@@ -344,22 +377,48 @@ columnHeaderMap: { [key: string]: string } = {
       }
     });
   }
-
+ getConfigurableColumns() {
+  return this.statementMasterOrder.filter(
+    key => !this.alwaysVisibleColumns_Statement.includes(key) && key !== 'index'
+  );
+}
+getConfigurableColumnMapping() {
+  const obj: any = {};
+  this.getConfigurableColumns().forEach(col => {
+    if (this.columnHeaderMap[col]) {
+      obj[col] = this.columnHeaderMap[col];
+    }
+  });
+  return obj;
+}
    openSetup () {
       const dialogRef = this.dialog.open(SetupReportComponent, {
         data: {
           action: 'add',
           inputName: 'getStatementReportSetup',
-          columnMapping: this.columnHeaderMap,
-          saveApi: 'StatementReportSetup'
+          columnMapping: this.getConfigurableColumnMapping(),
+        saveApi: 'StatementReportSetup'
         },
-        width: '85rem',
+        width: '45rem',
         disableClose: true
       });
       dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
       if (selectedKeys && selectedKeys.length) {
-      this.displayedColumnsBookingDetails = ['index', ...selectedKeys];
-      this.displayedColumnsManifestDetails = ['index', ...selectedKeys];
+         let finalColumns = [
+            'index',
+            ...this.alwaysVisibleColumns_Statement,
+            ...selectedKeys
+          ];
+
+          // remove duplicates
+          finalColumns = finalColumns.filter((v, i, arr) => arr.indexOf(v) === i);
+           finalColumns = finalColumns.sort(
+            (a, b) =>
+              this.statementMasterOrder.indexOf(a) -
+              this.statementMasterOrder.indexOf(b)
+          );
+          this.displayedColumnsBookingDetails = finalColumns;
+          this.displayedColumnsManifestDetails = finalColumns;
       }
       });
     }

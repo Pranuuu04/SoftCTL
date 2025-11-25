@@ -105,7 +105,10 @@
 
       <ng-container *ngFor="let column of displayedColumnsBookingDetails" [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>
-        {{ columnHeaderMap[column] || column }}
+        <span *ngIf="column === 'index'">Sr No</span>
+          <span *ngIf="column !== 'index'">
+            {{ columnHeaderMap[column] || column }}
+          </span>
       </th>
 
       <td mat-cell *matCellDef="let element; let i = index">
@@ -316,7 +319,11 @@
         <table id="myTable" mat-table [dataSource]="dataSourceManifestDetails" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
 
   <ng-container *ngFor="let column of displayedColumnsManifestDetails" [matColumnDef]="column">
-    <th mat-header-cell *matHeaderCellDef> {{ columnHeaderMap[column] || column }} </th>
+    <th mat-header-cell *matHeaderCellDef>
+       <span *ngIf="column === 'index'">Sr No</span>
+          <span *ngIf="column !== 'index'">
+            {{ columnHeaderMap[column] || column }}
+          </span> </th>
     <td mat-cell *matCellDef="let element; let i = index">
     <ng-container *ngIf="column === 'index'; else defaultCell">
       {{ i + 1 }}

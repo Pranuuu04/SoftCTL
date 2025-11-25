@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationDialogComponent } from 'app/Comman/confirmation-dialog/confirmation-dialog.component';
 import { AllServicesService } from 'app/service/all-services.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class CrmViewComponent implements OnInit {
 
   constructor(private getData: AllServicesService,
               private snackBar: MatSnackBar,
+              public dialog: MatDialog,
               ) {}
 
   ngOnInit(): void {
@@ -40,23 +43,30 @@ export class CrmViewComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
-  deleteComplain(complainNo: string) {
-    // const url = `${environment.apiUrl}Crm/deletecomplain?ComplainNo=${complainNo}`;
-    this.getData.deletecomplain(complainNo).subscribe(
-      (response: any) => { 
-        if (response.status === 1) {
-          this.openSnackBar( response.message, 'custom-snackbar')
-          this.loadData();
-        }else{
-          this.openSnackBar(response.message, 'error-snackbar')
-        }
-      },(error) => {
-        this.openSnackBar('Error occurred while deleting complaint', 'error-snackbar')
-        console.error('Error occurred while deleting complaint', error);
+  deleteComplain(complainNo: string): void {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          width: '22rem',
+          data: { message: `Are you sure you want to delete this ${complainNo} complain No. ?` }
+        });
+  
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+             this.getData.deletecomplain(complainNo).subscribe(
+              (response: any) => { 
+                if (response.status === 1) {
+                  this.openSnackBar( response.message, 'custom-snackbar')
+                  this.loadData();
+                }else{
+                  this.openSnackBar(response.message, 'error-snackbar')
+                }
+              },(error) => {
+                this.openSnackBar('Error occurred while deleting complaint', 'error-snackbar')
+                console.error('Error occurred while deleting complaint', error);
+              }
+            );
+          }
+        });
       }
-    );
-  }
- 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

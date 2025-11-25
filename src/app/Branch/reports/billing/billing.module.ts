@@ -10,6 +10,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { BillViewComponent } from './bill-view/bill-view.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { BillViewComponent } from './bill-view/bill-view.component';
     MatSortModule, 
     FormsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgSelectModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

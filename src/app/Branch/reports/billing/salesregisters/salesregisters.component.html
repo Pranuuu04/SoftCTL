@@ -1,4 +1,4 @@
-<div class="col-lg-12 col-md-12" style="display: flex; justify-content: center;">
+<!-- <div class="col-lg-12 col-md-12" style="display: flex; justify-content: center;">
   <div class="card">
     <div class="card-body table-responsive">
       <div class="container m-0" style=" padding: 1px 1px; width: 100%;">
@@ -51,8 +51,8 @@
             <div class="col-sm-3"></div>
 
             <div class="col-sm-2 d-flex" style="height: 30px; justify-content: center;">
-              <!-- <input type="radio" id="summery" name="fav_language" value="SalesBookDate">
-              <label for="summery" class="summery" style="font-size: small;">Booking Date</label> -->
+              <input type="radio" id="summery" name="fav_language" value="SalesBookDate">comm
+              <label for="summery" class="summery" style="font-size: small;">Booking Date</label>Comm
             </div>
             <div class="col-sm-1 download-buttons">
              <button type="button" class="btn btn-outline-light"  (click)="downloadSample()"><i
@@ -72,7 +72,95 @@
       </div>
     </div>
   </div>
+</div> -->
+
+
+<div class="container statement-box">
+  <form [formGroup]="salesRegisterForm" (ngSubmit)="formSubmit(salesRegisterForm.value)">
+    <div class="row mainrow">
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label for="customerName">Customer Name :</label>
+            <ng-select 
+                [items]="customerList" 
+                class="custom-select1" 
+                bindLabel="customerName"
+                bindValue="customerCode" 
+                formControlName="customerName">
+            </ng-select>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>From Date :</label>
+          <input type="date" class="form-control" [(ngModel)]="fromDate" formControlName="fromDate">
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>To Date :</label>
+          <input type="date" class="form-control" [(ngModel)]="toDate" formControlName="toDate">
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="textOnSelect">
+          <label>Invoice Date</label>
+          <select class="custom-select" formControlName="bookingType" [(ngModel)]="bookingType">
+            <option value="SalesInvoiceDate">Invoice Date</option>
+            <option value="SalesBookDate">Booking Date</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mainrow border-row" style="border-bottom: 1px solid #d2d2d2;">
+
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label>Type :</label>
+          <select class="custom-select" formControlName="custType">
+            <option value="All">All</option>
+            <option value="cr">Credit</option>
+            <option value="CRD">Credit Card</option>
+            <option value="CQ">Cheque</option>
+            <option value="TP">To Pay</option>
+            <option value="COD">COD</option>
+            <option value="FOC">FOC</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+        <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-5">
+            <div class="row">              
+            <div class="col-sm-8 d-flex  pr-0" style="justify-content: end;">
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+            </div>
+            <div class="col-sm-4 download-buttons d-flex pl-0" style="justify-content: end;">
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                    <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                    <span class="text">Setup</span></button>
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                    class="fa-solid fa-table"></i>
+                  <span class="text">XLs</span></button>
+                    <button type="button" class="btn btn-outline-light pb-0 mt-0" disabled><i class="fa-solid fa-file-pdf"></i>
+                  <span class="text">PDF</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+  </form>
+
 </div>
+
 
 <div *ngIf="enabledTable"  #TABLE>
     <div class="table-responsive text-nowrap" >
