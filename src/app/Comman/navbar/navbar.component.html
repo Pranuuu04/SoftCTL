@@ -32,8 +32,8 @@
                 <li>
                     <form class="navbar-form">
                         <div class="form-group has-search">
-                          <input type="text" class="form-control" placeholder="Track here.." id="Filter" [(ngModel)]="searchValue">
-                          <button class="btn btn-light search" type="button" (click)="search(searchValue,'')">
+                          <input type="text" class="form-control" placeholder="Track here.." id="Filter" name="searchValue" [(ngModel)]="searchValue">
+                          <button class="btn btn-light search" type="button" (click)="search(searchValue,'Awb')">
                             <i class="fa fa-search" style="margin-top: -24px; font-size: 14px;"></i>
                           </button>
                           <button class="btn btn-light drop" type="button" [matMenuTriggerFor]="menu">

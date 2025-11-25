@@ -363,7 +363,7 @@ getConfigurableColumnMapping() {
       columnMapping: this.getConfigurableColumnMapping(),
       saveApi: 'StatusReportSetup'
     },
-    width: '85rem',
+    width: '45rem',
     disableClose: true
   });
 

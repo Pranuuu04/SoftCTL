@@ -96,7 +96,23 @@
           <div class="col-sm-8">
           <div class="textOnSelect">
             <label class="span">Shipper</label>
-            <input
+                 <ng-select
+              [items]="shipperNameList"
+              bindLabel="shipperName"
+              bindValue="shipperName"
+              formControlName="shipperName"
+              (change)="onShipperSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
+              style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.shipperName }} | {{ item.shipperCode }}
+              </ng-template>
+            </ng-select>
+            <!-- <input
               list="shipperNameList"
               class="form-control"
               formControlName="shipperName"
@@ -106,30 +122,10 @@
             />
             <datalist id="shipperNameList">
               <option *ngFor="let item of shipperNameList" [value]="item.shipperName">
-            </datalist>
+            </datalist> -->
           </div>
         </div>
-          <!-- <div class="col-sm-8">
-            <div class="textOnSelect" *ngIf="!isInputField">
-             <label class="span">Shipper</label>
-          <input
-            list="shipperNameList"
-            formControlName="shipperName"
-            class="form-control"
-            style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
-            (input)="onShipperSelected()"
-          />
-          <datalist id="shipperNameList">
-            <option *ngFor="let item of shipperNameList" [value]="item.shipperName + ' (' + item.shipperCode + ')'"></option>
-          </datalist>
-
-            </div>
-            <div class="textOnInput" *ngIf="isInputField" style="margin-top: 6px; margin-bottom: 20px;">
-              <label for="inputText">Shipper</label>
-              <input class="form-control" type="text" placeholder="Enter Consignee Name."  [value]="shipperName" formControlName="shipperName" >
-            </div> 
-          </div> -->
-          <div class="col-sm-4">
+        <div class="col-sm-4">
             <div class="row btn-row" style="justify-content: space-around; margin-top: 6px; ">
               <button tabindex="-1"  matTooltip="Add Shipper" type="button" class="btn btn-dark form-icon" width="auto" (click)="openShipperModal(consignerCode)"
               >
@@ -148,18 +144,23 @@
           <div class="col-sm-12">
             <div class="textOnSelect">
               <label for="inputText">Consignee</label>
-              <input
-              list="consigneeList"
-              id="consigneeInput"
-              class="form-control"
+              <ng-select
+              id="consigneeSelect"
+              [items]="consigneeList"
+              bindLabel="ConsigneeName"
+              bindValue="ConsigneeName"
               formControlName="consigneeName"
-              (input)="onConsigneeSelected()"
-    [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              (change)="onConsigneeSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
               style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
-            />
-            <datalist id="consigneeList">
-              <option *ngFor="let item of consigneeList" [value]="item.ConsigneeName">
-            </datalist>
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.ConsigneeName }} | {{ item.ConsigneeCode }}
+              </ng-template>
+            </ng-select>
             </div>
           </div>
 
@@ -200,7 +201,7 @@
           <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText">Pincode</label>
-              <input class="form-control" type="text" [(ngModel)]="pinCode" (change)="getPinCode($event)" placeholder="Enter Pincode"  formControlName="pinCode" [value]="consigneePincode" [attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}" >
+              <input class="form-control" type="text" [(ngModel)]="pinCode" maxlength="6" (keyup)="getPinCode($event)" placeholder="Enter Pincode"  formControlName="pinCode" [value]="consigneePincode" [attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}" >
             </div>
           </div>
 

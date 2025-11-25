@@ -204,7 +204,7 @@ export class Booking2Component implements OnInit, AfterViewInit, OnDestroy  {
   vendorNames: string;
   ewayBillData: string;
 
-  chargedWt = 1;
+  chargedWt = 0;
   freightAmt = 0;
   newFreightAmt = 0;
   GSTPer = 0;
@@ -320,7 +320,7 @@ constructor(public httpService: HttpService,
               private snackBar: MatSnackBar,
               private httpclient: HttpClient,
             private sharedService: SharedService ) {
-                  this.sessionLocationCode = localStorage.getItem('originCode');
+                  // this.sessionLocationCode = localStorage.getItem('originCode');
                   this.userType = localStorage.getItem('userType');
                   
                   localStorage.removeItem('vendorListData');
@@ -902,13 +902,6 @@ onShipperSelected(selected: any) {
   if (!rawValue) {
     return;
   }
-
-  // const shipperName = rawValue.split(' (')[0];
-  // this.selectedShipper = shipperName;
-
-  // const selected = this.shipperNameList.find(item =>
-  //   item.shipperName === shipperName
-  // );
   if (!selected) {
     this.shipperAdd1 = '';
     this.shipperAdd2 = '';
@@ -994,9 +987,7 @@ onConsigneeSelected(selected: any) {
     gstNo: '',
     cityName: '',
     stateName: '',
-    // countryName: ''
   });
-
     return;
   }
   if (selected) {
@@ -2455,6 +2446,21 @@ disableEnter(event: KeyboardEvent) {
             this.pinCode = resp.Data.data.Consignee_Pin;
             // this.stateName = resp.Data.data.Consignee_State;
             this.mobileNo = resp.Data.data.Consignee_Tel;
+              this.bluedartChargeCache = {
+             cafCharges: resp.Data.data.CAFCharges,
+              hdpCharges: resp.Data.data.HDP_Chrgs,
+              essCharges: resp.Data.data.ESSAmt,
+              idcCharges: resp.Data.data.IDCCharges,
+              encCharges: resp.Data.data.ENS_Chrgs,
+              scCharges: resp.Data.data.SC_Chrgs,
+              charge4: resp.Data.data.Charges4,
+              charge5: resp.Data.data.Charges5,
+              charge6: resp.Data.data.Charges6,
+              charge7: resp.Data.data.Charges7,
+              charge8: resp.Data.data.Charges8,
+              charge9: resp.Data.data.Charges9
+            };
+
             // this.isInputField = true;
             this.isInputDisabled = true;
             this.fetchReleventData(this.consignerCode);
@@ -2647,24 +2653,24 @@ disableEnter(event: KeyboardEvent) {
         Charges1: this.packingCharge || this.bookingForm.value.packingCharge || 0,
         Charges2: this.insuranceCharge || this.bookingForm.value.insuranceCharge || 0,
         Charges3: this.loadingCharge || this.bookingForm.value.loadingCharge || 0,
-        Charges4: this.charge4 || 0,
-        Charges5: this.charge5 || 0,
-        Charges6: this.charge6 || 0,
-        Charges7: this.charge7 || 0,
-        Charges8: this.charge8 || 0,
-        Charges9: this.charge9 || 0,
+        Charges4: this.bluedartChargeCache.charge4 || 0,
+        Charges5: this.bluedartChargeCache.charge5 || 0,
+        Charges6: this.bluedartChargeCache.charge6 || 0,
+        Charges7: this.bluedartChargeCache.charge7 || 0,
+        Charges8: this.bluedartChargeCache.charge8 || 0,
+        Charges9: this.bluedartChargeCache.charge9 || 0,
         Charges10: 0,
         ESSPer: 0,
-        ESSAmt: this.essCharges || 0,
+        ESSAmt: this.bluedartChargeCache.essCharges,
         vtcChrgs: 0,
         ODAKM: 0,
         IDCPer: 0,
-        IDCCharges: this.idcCharges || 0,
+        IDCCharges: this.bluedartChargeCache.idcCharges,
         CAFPer: 0,
-        CAFCharges: this.cafCharges || 0,
-        ensCharges: this.encCharges || 0,
-        scCharges: this.scCharges || 0,
-        hdpCharges: this.hdpCharges || 0,
+        CAFCharges: this.bluedartChargeCache.cafCharges,
+        ensCharges: this.bluedartChargeCache.encCharges,
+        scCharges: this.bluedartChargeCache.scCharges,
+        hdpCharges: this.bluedartChargeCache.hdpCharges,
         Rate: this.bookingForm.value.freightAmt || this.newFreightAmt || 0 ,
         FuelPer: 0,
         ServiceTax:  this.gstAmount || 0,

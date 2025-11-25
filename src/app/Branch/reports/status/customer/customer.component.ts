@@ -416,7 +416,7 @@ openSetup() {
         saveApi: 'StatusReportSetup',
       columnMapping: this.getConfigurableColumnMapping()
     },
-    width: '85rem',
+    width: '45rem',
     disableClose: true
   });
 

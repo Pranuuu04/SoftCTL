@@ -198,6 +198,7 @@ alwaysVisibleColumns_Statement = [
   'consignee_name',
   'Origin',
   'Destination',
+  'Customer_type',
   'ModeName',
   'ProductName',
   'Pcs',
@@ -503,7 +504,7 @@ getConfigurableColumnMapping() {
             columnMapping: this.columnHeaderMap,
           saveApi: 'StatementReportSetup'
           },
-          width: '85rem',
+          width: '45rem',
           disableClose: true
         });
         dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {

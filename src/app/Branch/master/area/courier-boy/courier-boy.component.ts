@@ -36,6 +36,10 @@ export class CourierBoyComponent implements OnInit, OnChanges, AfterViewInit {
               public masterService: MasterService) {}
 
   ngOnChanges(): void {
+         this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
+
     if (this.courierBoyData.Data && this.courierBoyData.Data.length > 0) {
       this.dataSource = new MatTableDataSource<any>(this.courierBoyData.Data);
       this.dataSource.paginator = this.paginator;
@@ -66,7 +70,7 @@ export class CourierBoyComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
   getCourierboyData(): void {
-    this.http.get(`${environment.apiUrl}Master/EmployeeMast?masterName=Employee&operation=getEmployee`)
+    this.http.get(`${environment.apiUrl}Master/EmployeeMast?masterName=Employee&operation=getEmployee&locationCode=${this.sessionLocationCode}`)
     .subscribe((resp: any) => {
     if (resp.Data) {
       this.dataSource = new MatTableDataSource<any>(resp.Data);
