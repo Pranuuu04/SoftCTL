@@ -1,4 +1,4 @@
-<div class="col-lg-12 col-md-12" style="display: flex; justify-content: center;">
+<!-- <div class="col-lg-12 col-md-12" style="display: flex; justify-content: center;">
     <div class="card">
       <div class="card-body table-responsive">
         <div class="container m-0" style=" padding: 1px 1px; width: 100%;">
@@ -76,15 +76,131 @@
           </div>
         </div>
       </div>
+    </div> -->
+
+
+<div class="statement-box">
+  <form [formGroup]="checkListRegisterForm" (ngSubmit)="formSubmit(checkListRegisterForm.value)">
+
+    <!-- ======================= ROW 1 ======================= -->
+    <div class="row mainrow">
+
+      <!-- Customer Name -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label>Customer Name :</label>
+          <!-- <select class="custom-select"
+                  formControlName="customerName"
+                  [(ngModel)]="customerName">
+            <option value="All">All Customer</option>
+            <option *ngFor="let item of customerList"
+                    [value]="item.customerCode">
+              {{ item.customerName }}
+            </option> 
+             </select>-->
+            <ng-select [items]="customerList" bindLabel="customerName" bindValue="customerCode" class="custom-select1"
+             formControlName="customerName" [(ngModel)]="customerName">
+           </ng-select>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label>Type :</label>
+          <select class="custom-select" formControlName="custType" [(ngModel)]="custType">
+            <option value="All">All</option>
+            <option value="CR">Credit</option>
+            <option value="CRD">CreditCard</option>
+            <option value="ToPay">ToPay</option>
+            <option value="COD">COD</option>
+            <option value="FOC">FOC</option>
+            <option value="NEFT">NEFT</option>
+            <option value="Cheque">Cheque</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Mode -->
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label>Mode :</label>
+          <!-- <select class="custom-select"
+                  formControlName="modeName"
+                  [(ngModel)]="modeName">
+            <option value="All">All Mode</option>
+            <option *ngFor="let item of modeList"
+                    [value]="item.Mode_code">
+              {{ item.Mode_name }}
+            </option>
+          </select> -->
+            <ng-select [items]="modeList" bindLabel="Mode_name" bindValue="Mode_code" class="custom-select1"
+              formControlName="modeName" [(ngModel)]="modeName">
+            </ng-select>
+        </div>
+      </div>
+
+      <!-- Report Type (Details radio replaced with select for clean UI) -->
+      <div class="col-sm-2">
+        <div class="textOnSelect">
+          <label>Report Type :</label>
+          <select class="custom-select" formControlName="bookingType" [(ngModel)]="bookingType">
+            <option value="Details">Details</option>
+            <option value="Summary">Summary</option>
+          </select>
+        </div>
+      </div>
+
     </div>
 
-   <div class="mat-elevation-z8 table-container"  style="overflow: scroll;">
-  </div>
+    <!-- ======================= ROW 2 ======================= -->
+    <div class="row mainrow border-row" style="border-bottom: 1px solid #d2d2d2;">
 
- 
-  <div *ngIf="enabledTable" #TABLE>
+      <!-- From Date -->
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>From Date :</label>
+          <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate">
+        </div>
+      </div>
 
-    <div class="modal" role="dialog" id="comment">
+      <!-- To Date -->
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label>To Date :</label>
+          <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================= ROW 3 — BUTTONS ======================= -->
+        <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-5">
+            <div class="row">              
+            <div class="col-sm-8 d-flex  pr-0" style="justify-content: end;">
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+            </div>
+            <div class="col-sm-4 download-buttons d-flex pl-0" style="justify-content: end;">
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
+                    <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                    <span class="text">Setup</span></button>
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                    class="fa-solid fa-table"></i>
+                  <span class="text">XLs</span></button>
+                    <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i class="fa-solid fa-file-pdf"></i>
+                  <span class="text">PDF</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </form>
+</div>
+
+ <div *ngIf="enabledTable" #TABLE>
+
+    <!-- <div class="modal" role="dialog" id="comment">
       <div class="modal-dialog modal-dialog-centered" style="display: block; height: 20rem; width: 70rem; padding-top: 2rem;">
         <div class="modal-content" style="width: 50rem;">
           <div class="row" style="background: darkorange; margin-left: 20px; margin-right: 18px; margin-top: 5px; margin-bottom: 9px; height: 1.8rem;">
@@ -108,15 +224,37 @@
               Close
             </button>
           </div>
-          </div>
-          </div>
-    </div>
+         </div>
+        </div>
+    </div> -->
 
     <div class="table-responsive text-nowrap" >
       <div class="mat-elevation-z8" >
-        <table mat-table [dataSource]="dataSource" class="table-bordered table-striped ">
+        <table mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
 
-        <ng-container matColumnDef="awbno">
+        <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ displayedColumnsCheckList[column] || column }}
+          </th>
+
+          <td mat-cell *matCellDef="let element; let i = index">
+
+            <!-- SR NO -->
+            <ng-container *ngIf="column === 'index'">
+              {{ pageIndex * pageSize + i + 1 }}
+            </ng-container>
+
+            <!-- NORMAL COLUMNS -->
+            <ng-container *ngIf="column !== 'index'">
+              {{ element[column] }}
+            </ng-container>
+
+          </td>
+
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="awbno">
           <th mat-header-cell *matHeaderCellDef [style.display]="isawbnoSelected ? '' : 'none'"> AWB_No. </th>
           <td mat-cell *matCellDef="let element" [style.display]="isawbnoSelected ? '' : 'none'"> {{element.awbno}} </td>
         </ng-container>
@@ -224,7 +362,7 @@
         <ng-container matColumnDef="receivedtotal">
           <th mat-header-cell *matHeaderCellDef [style.display]="isreceivedtotalSelected ? '' : 'none'"> Received_Total_Amt </th>
           <td mat-cell *matCellDef="let element" [style.display]="isreceivedtotalSelected ? '' : 'none'"> {{element.receivedtotal}} </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action </th>
@@ -234,7 +372,6 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
@@ -251,14 +388,17 @@
             [pageIndex]="pageIndex"
             aria-label="Select page">
         </mat-paginator>
+     </div>
     </div>
-    </div>
+ 
   </div>
+
+
 
 
   <div *ngIf="enabledTableSummary"  #TABLESummary>
 
-    <div class="modal" role="dialog" id="comment1">
+    <!-- <div class="modal" role="dialog" id="comment1">
       <div class="modal-dialog modal-dialog-centered" style="display: block; height: 20rem; width: 70rem; padding-top: 2rem;">
         <div class="modal-content" style="width: 50rem;">
           <div class="row" style="background: darkorange; margin-left: 20px; margin-right: 18px; margin-top: 5px; margin-bottom: 9px; height: 1.8rem;">
@@ -284,9 +424,9 @@
           </div>
           </div>
           </div>
-    </div>
+    </div> -->
 
-    <div class="table-responsive text-nowrap" >
+    <!-- <div class="table-responsive text-nowrap" >
       <div class="mat-elevation-z8" >
         <table mat-table [dataSource]="dataSourceSummary" class="table-bordered table-striped ">
 
@@ -508,7 +648,8 @@
         [pageIndex]="pageIndex"
         aria-label="Select page">
     </mat-paginator>
-    </div>
+    </div> -->
+
   </div>
 
   <!-- Display the selected values -->

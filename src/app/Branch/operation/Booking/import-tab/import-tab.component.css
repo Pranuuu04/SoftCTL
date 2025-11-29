@@ -30,7 +30,7 @@
       font-size: large;
       border-radius: 8px;
       margin-left: 15px;
-      i{
+      i {
         color: white;
       }
     }
@@ -38,7 +38,7 @@
     .header_btn button:focus
     {
       background-color: white;
-      mat-icon{
+      mat-icon {
         color: red;
       }
       i{

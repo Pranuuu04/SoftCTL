@@ -65,14 +65,13 @@
                 id="consignorType"
                 class="custom-select"
                 formControlName="selectedConsignorType"
-                (change)="onConsignorTypeChange($event.target.value)"
-              >
+                (change)="onConsignorTypeChange($event.target.value)">
               <option value="Single">Single</option>
               <option value="All">All</option>
               </select>
             </div>
-                  </div>
-            <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
             <div class="textOnSelect">
               
                 <label for="Consignor"><span style="color: red;">*</span>Consignor :</label>
@@ -167,8 +166,8 @@
                 <label for="Consignee">Consignee :</label>
                 <select id="Consignee" class="custom-select" formControlName="Consignee" [disabled]="selectedConsignorType === 'all'">
                   <option selected disabled>Select Consignee</option>
-                  <option *ngFor="let item of consigneeList" value="{{item.locationCode}}">
-                    {{item.locationName}}
+                  <option *ngFor="let item of consigneeList" value="{{item.consigneeCode}}">
+                    {{item.consigneeName}}
                   </option>
                 </select>
               </div>

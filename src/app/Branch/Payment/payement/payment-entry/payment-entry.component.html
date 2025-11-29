@@ -1,44 +1,4 @@
- <!-- <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
-    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
-      <div class="col-sm-4">
-        <div class="textOnSelect">
-          <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
-          <ng-select
-            [items]="customerList"
-            class="custom-select1"
-            bindLabel="customerName"
-            bindValue="customerCode"
-            formControlName="customer">
-          </ng-select>
-        </div>
-      </div>
 
-      <div class="col-sm-2">
-        <div class="textOnInput">
-          <label for="fromDate"><span style="color: red;">*</span>From date :</label>
-          <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
-        </div>
-      </div>
-
-       <div class="col-sm-2">
-        <div class="textOnInput">
-          <label for="fromDate"><span style="color: red;">*</span>To date :</label>
-          <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
-        </div>
-      </div> 
-
-      <div class="col-sm-2">
-        <div class="textOnInput">
-          <label for="AwbNo">AwbNo :</label> 
-          <input class="form-control" type="text" formControlName="AwbNo">
-        </div>
-      </div>
-
-        <div class="col-sm-2 d-flex" style="justify-content: right;" >
-        <button type="submit" class="btn btn-light other-button">Submit</button>
-      </div>
-    </div>
-  </form> -->
  
  
  <!-- <div *ngIf="showTable && dataSource.data.length > 0"> -->
@@ -69,7 +29,6 @@
                 <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openPaymentForm(element)">
                   <mat-icon>add</mat-icon>
                 </button> </th>
-                <!-- Action</th> -->
 
               <td mat-cell *matCellDef="let element">
 

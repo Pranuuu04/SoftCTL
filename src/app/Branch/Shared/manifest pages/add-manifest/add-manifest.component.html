@@ -1,16 +1,19 @@
+<div class="row" 
+     style="border-bottom: 1px solid #d4d4d4; margin-bottom: 18px; padding-bottom: 6px;">
+  <div class="col-sm-12 d-flex justify-content-between align-items-center pl-3">
+    <h2 style="font-size: 20px; font-weight: 400; margin: 0; color: #000; padding-left: 15px;">
+      Vehicle Details
+    </h2>
+    <button (click)="closeForm()"style="background: none; border: none; font-size: 22px; 
+       cursor: pointer; color: #000; padding-right: 20px; line-height: 1;">✖</button>
+  </div>
+</div>
 
-<header>
-  <h2>
-    Vehicle Details
-    <button class="close-button" (click)="closeForm()">✖</button>
-  </h2>
-</header>
 
-<div class="container">
+<!-- <div class="container">
   <form [formGroup]="createditForm" (ngSubmit)="formSubmit(createditForm.value)">
     <div class="row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Driver_Licence_No</label>
-
       <div class="col-sm-2">
         <input type="text" class="form-control" id="viaInput"  formControlName="Driver_Licence_No"
           placeholder="Enter Driver Licence No. "
@@ -89,4 +92,164 @@
       </div>
     </div>
   </form>
+</div> -->
+
+
+
+
+<div class="container-fluid" >
+
+  <form [formGroup]="createditForm" (ngSubmit)="formSubmit(createditForm.value)">
+    <div class="row">
+
+      <!-- Driver Licence No -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Driver Licence No
+          </label>
+          <input type="text" formControlName="Driver_Licence_No"
+            placeholder="Enter Driver Licence No"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Opening KM -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Opening KM
+          </label>
+          <input type="text" formControlName="Opening_Km"
+            placeholder="Enter Opening KM"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Vehicle Diesel No -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Vehicle Diesel No
+          </label>
+          <input type="text" formControlName="Vehicle_diesel_No"
+            placeholder="Enter Vehicle Diesel No"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+    </div>
+
+ 
+    <div class="row">
+
+      <!-- Diesel Ltrs -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Diesel Ltrs
+          </label>
+          <input type="text" formControlName="Vehicle_diesel_Ltrs"
+            placeholder="Enter Diesel Ltrs"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Kata Weight -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Kata Weight
+          </label>
+          <input type="text" formControlName="Kata_Weight"
+            placeholder="Enter Kata Weight"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Slip No -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Slip No
+          </label>
+          <input type="text" formControlName="Slip_No"
+            placeholder="Enter Slip No"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+    </div>
+
+   
+    <div class="row">
+
+      <!-- Broker Name -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Broker Name
+          </label>
+          <input type="text" formControlName="Brocker_Name"
+            placeholder="Enter Broker Name"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Advance Paid -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Advance Paid
+          </label>
+          <input type="text" formControlName="Advance_Paid"
+            placeholder="Enter Advance Paid"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+      <!-- Diesel Amount -->
+      <div class="col-sm-4" style="margin-bottom: 22px;">
+        <div style="position: relative;">
+          <label style="position:absolute; top:-9px; left:10px; background:#fff;
+              padding:0 6px; font-size:13px; font-weight:600; color:#333;">
+            Diesel Amount
+          </label>
+          <input type="text" formControlName="Diesel_Amount"
+            placeholder="Enter Diesel Amount"
+            style="width:100%; height:36px; border:1px solid #bfbfbf;
+              border-radius:6px; padding:8px 12px; font-size:14px;">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 text-center d-flex justify-content-end">
+        <button type="button" class="btn other-button" (click)="closeForm()">Cancel</button>
+        <button type="submit" class="btn other-button ml-2">Save</button>
+      </div>
+    </div>
+
+  </form>
+
 </div>
+
+
+

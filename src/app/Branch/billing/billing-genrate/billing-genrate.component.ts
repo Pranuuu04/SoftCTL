@@ -118,19 +118,29 @@ private destroy$ = new Subject<void>();
     }
 
 
-  onConsignorChange(customerCode: string): void {
-    this.selectedCustomerCode = customerCode;
+  onConsignorChange(value:any): void {
+    // this.selectedCustomerCode = customerCode;
+    this.selectedCustomerCode = typeof value === 'object' ? value.customerCode : value;
+      let branchCode ;
+      if(this.userType === 'Admin'){
+        branchCode = this.sessionLocationCode
+       }else{
+        branchCode =  this.billingform.get('Location')?.value;
+       }
+       if (!branchCode) return;
 
-    this.billingService.getConsignee(this.sessionLocationCode, this.selectedCustomerCode)
-      .subscribe((data: any) => {
-        this.consigneeList = data.Data;
-      });
+        this.billingService.getConsignee(branchCode, this.selectedCustomerCode)
+          .subscribe((data: any) => {
+            this.consigneeList = data.Data;
+          });
 
-    this.billingService.getShipper(this.sessionLocationCode, this.selectedCustomerCode)
-      .subscribe((data: any) => {
-        this.shipperList = data.Data;
-      });
-  }
+        this.billingService.getShipper(branchCode, this.selectedCustomerCode)
+          .subscribe((data: any) => {
+            this.shipperList = data.Data;
+          });  
+   }
+
+
   onConsignorTypeChange(type: string): void {
     this.selectedConsignorType = type;
     this.invoiceNoEnable = type === 'Single';

@@ -57,7 +57,7 @@
         font-size: large;
         border-radius: 8px;
         margin: 0;
-        mat-icon{
+        mat-icon {
             color: white;
           }
       }
@@ -65,7 +65,7 @@
       .error:focus
       {
         background-color: white;
-        mat-icon{
+        mat-icon {
           color: red;
         }
       }

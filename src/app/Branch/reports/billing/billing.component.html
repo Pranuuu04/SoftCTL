@@ -9,12 +9,18 @@
                 <mat-tab label="Checklist">
                   <app-billing-checklist></app-billing-checklist>
                 </mat-tab> 
-                <mat-tab label="Unbuild">
+                <!-- <mat-tab label="Unbuild">
                      <app-unbuilt></app-unbuilt>  
                 </mat-tab>
                 <mat-tab label="Bill_View">
                     <app-bill-view></app-bill-view>
-               </mat-tab>
+               </mat-tab> -->
+                 <mat-tab label="Unbuild" *ngIf="userType !== 'Customer'">
+                        <app-unbuild-billing></app-unbuild-billing>
+                    </mat-tab>
+                    <mat-tab label="View & print">
+                        <app-bill-print></app-bill-print>
+                    </mat-tab>
                 </mat-tab-group>
             </div>
         </div>

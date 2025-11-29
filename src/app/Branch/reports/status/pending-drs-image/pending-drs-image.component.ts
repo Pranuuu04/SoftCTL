@@ -14,6 +14,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { TransportImagesComponent } from 'app/Branch/master/transport/transport-images/transport-images.component';
 
 @Component({
   selector: 'app-pending-drs-image',
@@ -161,6 +162,20 @@ formSubmit(formData: any) {
         }
       });
 }
+
+    onImageIconClick(images:string) {
+       console.log("POD IMG CLICKED:", images);
+       const dialogRef = this.dialog.open(TransportImagesComponent, {
+         data: {
+           ImageData: images,
+         },
+         width: '600px',
+         disableClose: true
+       });
+       dialogRef.afterClosed().subscribe(() => {
+   
+       });
+     }
 
 
 headerMapping: any = {

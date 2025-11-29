@@ -1,4 +1,4 @@
-<div class="col-lg-12 col-md-12" style="display: flex;justify-content: center;">
+<!-- <div class="col-lg-12 col-md-12" style="display: flex;justify-content: center;">
     <div class="card">
       <div class="card-body table-responsive">
         <div class="container m-0" style=" padding: 1px 1px; width: 100%;">
@@ -68,7 +68,108 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+   <div class="statement-box">
+  <form [formGroup]="unbuildRegisterForm" (ngSubmit)="formSubmit(unbuildRegisterForm.value)">
+
+    <!-- ====================== ROW 1 ====================== -->
+    <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+
+      <!-- Customer Name -->
+      <div class="col-sm-4">
+        <div class="textOnSelect">
+          <label>Customer Name :</label>
+          <!-- <select class="custom-select"
+                  formControlName="customerName"
+                  [(ngModel)]="customerName">
+            <option value="All">All Customer</option>
+            <option *ngFor="let item of customerList"
+                    [value]="item.customerCode">
+              {{ item.customerName }}
+            </option>
+          </select> -->
+           <ng-select 
+                [items]="customerList" 
+                class="custom-select1" 
+                bindLabel="customerName"
+                bindValue="customerCode" 
+                formControlName="customerName">
+            </ng-select>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="col-sm-3">
+        <div class="textOnSelect">
+          <label>Type :</label>
+          <select class="custom-select"
+                  formControlName="custType"
+                  [(ngModel)]="custType">
+            <option value="All">All</option>
+            <option value="CR">Credit</option>
+            <option value="CRD">CreditCard</option>
+            <option value="CQ">Cheque</option>
+            <option value="TP">ToPay</option>
+            <option value="COD">COD</option>
+            <option value="FOC">FOC</option>
+          </select>
+        </div>
+      </div>
+
+        <!-- From Date -->
+      <div class="col-sm">
+        <div class="textOnInput">
+          <label>From Date :</label>
+          <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate">
+        </div>
+      </div>
+
+      <!-- To Date -->
+      <div class="col-sm">
+        <div class="textOnInput">
+          <label>To Date :</label>
+          <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate">
+        </div>
+      </div>
+
+      <!-- Report Type -->
+      <div class="col-sm">
+        <div class="textOnSelect">
+          <label>Report Type :</label>
+          <select class="custom-select" formControlName="bookingType" [(ngModel)]="bookingType">
+            <option value="Detail">Details</option>
+            <option value="Summary">Summary</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+        <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+          <div class="col-sm-5">
+            <div class="row">              
+            <div class="col-sm-8 d-flex  pr-0" style="justify-content: end;">
+              <button type="submit" class="btn btn-light other-button">Submit</button>
+            </div>
+            <div class="col-sm-4 download-buttons d-flex pl-0" style="justify-content: end;">
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="setupReport()">
+                    <i class="fa-solid fa-sliders" style="color: darkslateblue; font-size: medium;"></i>
+                    <span class="text">Setup</span></button>
+                <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                    class="fa-solid fa-table"></i>
+                  <span class="text">XLs</span></button>
+                    <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i class="fa-solid fa-file-pdf"></i>
+                  <span class="text">PDF</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </form>
+</div>
+
+
 
   <div *ngIf="enabledTable" #TABLE>
 

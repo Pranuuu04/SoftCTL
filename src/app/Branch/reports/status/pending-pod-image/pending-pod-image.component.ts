@@ -41,7 +41,7 @@ podForm: FormGroup;
 
   isLoading = false;
 
-displayedColumns: string[] = [];
+displayedColumns: string[] = ['index'];
 podImageColumnMapping: { [key: string]: string } = {
   index: 'Sr No',
   BookDate: 'Book Date',
@@ -203,10 +203,6 @@ getReportSetupKey(){
   });
 }
 
-logColumn(col: string) {
-  console.log("COLUMN FOUND:", `"${col}"`);
-  return '';
-}
 
 formSubmit(formData: any) {
   this.formData = formData

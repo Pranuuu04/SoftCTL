@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,6 +16,7 @@ import { AllServicesService } from 'app/service/all-services.service';
   styleUrls: ['./payment-entry.component.css']
 })
 export class PaymentEntryComponent implements OnInit {
+  @Output() switchTab = new EventEmitter<number>();
 
     filterForm!: FormGroup;
     customerList: any[] = [];
@@ -205,19 +206,25 @@ deletePayment(element): void {
       });
     }
 
-  openPaymentForm(element) {
+
+openPaymentForm(element) {
     const dialogRef = this.dialog.open(PaymentFormComponent, {
       data: {
         action: 'paymentEntryAdd',
         paymentEntryData: element,
         paymentEntryEdit: 'edit'
       },
-      width: '60rem',
+      // width: '90rem',
+       width: '90vw',
+       maxWidth: '90vw',
+       height: 'auto',
+       maxHeight: '85vh',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {}
       this.paymentEntryData(this.pageIndex + 1, this.pageSize);
+      this.switchTab.emit(6);
     });
   }
 

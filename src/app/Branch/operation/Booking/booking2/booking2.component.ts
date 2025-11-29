@@ -376,6 +376,7 @@ constructor(public httpService: HttpService,
       this.sessionLocationCode = localStorage.getItem('originCode');
       this.sessionLocationName = localStorage.getItem('originName');
       this.selectedOrigin = this.sessionLocationCode;
+      this.loadConsignerData();
       this.getPermission();
       this.loadConsignerData();
     }

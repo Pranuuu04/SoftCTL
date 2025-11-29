@@ -44,6 +44,7 @@ export class PaymentFormComponent implements OnInit {
   customerCode:any
   cashToPayData:any
   cashToPayReportFlag:boolean = false
+   reportBranch: any;
 
   rateDetails: any[] = [];
 
@@ -115,6 +116,7 @@ bankList = [
   { name: 'India Post Payments Bank' },
   { name: 'FINO Payments Bank' }
 ];
+ 
 
 
 
@@ -138,6 +140,7 @@ bankList = [
                 toDate:any
                 customerCode:any;
                 CashPayReport:any;
+                Branch:any;
 
               },
               public formBuilder: FormBuilder,
@@ -163,6 +166,7 @@ bankList = [
                   this.toDate = data?.toDate;
                   this.customerCode = data?.customerCode;
                   this.cashToPayReportFlag= data?.CashPayReport;
+                  this.reportBranch = data?.Branch
                   console.log("responseData>>>>>>",this.cashToPayData)
                 }
   }
@@ -392,7 +396,7 @@ getCashToPayData(){
  
 
 getCashToPayReportData(){
-    this.paymentService.cashToPayReport(this.sessionLocationCode,this.cashToPayData?.AwbNo,'','','', this.fromDate, this.toDate,1,100)
+    this.paymentService.cashToPayReport(this.reportBranch,this.cashToPayData?.AwbNo,'','','', this.fromDate, this.toDate,1,100)
      .subscribe((resp: any) => {
       if (resp.status === 1) {
         

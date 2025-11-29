@@ -9,22 +9,25 @@ import { MatTableModule } from '@angular/material/table';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UnbuildBillingComponent } from './unbuild-billing/unbuild-billing.component';
 import { MatSelectModule } from '@angular/material/select';
+import { BillingSharedModule } from './billing-shared.module';
 
 @NgModule({
   declarations: [
       BillingComponents,
       BillingGenrateComponent,
-      BillPrintComponent,
-      UnbuildBillingComponent,
+      // BillPrintComponent,
+      // UnbuildBillingComponent,
   ],
   imports: [
     CommonModule,
-     MatTableModule,
+    MatTableModule,
     MaterialModule,
     FormsModule,
     MatSelectModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    BillingSharedModule
   ]
+  
 })
 export class BillingModule { }

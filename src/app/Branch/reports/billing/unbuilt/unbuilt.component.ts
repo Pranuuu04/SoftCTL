@@ -293,9 +293,14 @@ import { AllServicesService } from 'app/service/all-services.service';
 
   ngOnInit(): void {
     this.sessionLocationCode = localStorage.getItem('originCode');
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
-     this.customerList = resp.Data;
-    });
+    // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+    //  this.customerList = resp.Data;
+    // });
+    this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+        const allCust = { customerName: 'All', customerCode: 'All' };
+        this.customerList = [allCust, ...data.Data];
+        this.unbuildRegisterForm.patchValue({ customerName: 'All' });
+      });
     this.dataSource = new MatTableDataSource(this.displayedColumns);
     this.dataSourceSummary = new MatTableDataSource(this.displayedColumnsSummary);
     this.dataSource.paginator = this.paginator;

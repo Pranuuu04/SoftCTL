@@ -11,6 +11,7 @@ import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
 import { BillingService } from '../billing.service';
 import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.component';
+import { AllServicesService } from 'app/service/all-services.service';
 
 @Component({
   selector: 'app-bill-print',
@@ -52,14 +53,17 @@ export class BillPrintComponent implements OnInit {
                 private billingService: BillingService,
                 public httpService: HttpService,
                 public formbuilder: FormBuilder,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private AllService:AllServicesService) {
                   this.isLoading = false;
                 }
 
    ngOnInit(): void {
      this.userType = localStorage.getItem('userType');
      this.destinationName = localStorage.getItem('selectedValue');
-     this.sessionLocationCode = localStorage.getItem('originCode');
+    //  this.sessionLocationCode = localStorage.getItem('originCode');
+      this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+        ? localStorage.getItem('originCode') : localStorage.getItem('selectedValue');
      this.ClientLogo =  localStorage.getItem('ClientLogo');
      this.ClientName = localStorage.getItem('ClientName');
      this.dataSource = new MatTableDataSource<any>(this.billViewTable);
@@ -132,16 +136,21 @@ export class BillPrintComponent implements OnInit {
      });
    }
    loadCustomerData(): void {
-    this.billingService.getCustomer(this.sessionLocationCode).subscribe({
-      next: (resp) => {
-        const allCust = { customerName: 'All', customerCode: 'All' };
-            this.customerData = [allCust, ...resp.Data];
-          this.createForm.patchValue({ CustomerName: 'All' });
-      },
-      error: (err) => {
-        console.error('Error fetching customer data:', err);
-      },
-    });
+    // this.billingService.getCustomer(this.sessionLocationCode).subscribe({
+    //   next: (resp) => {
+    //     const allCust = { customerName: 'All', customerCode: 'All' };
+    //         this.customerData = [allCust, ...resp.Data];
+    //       this.createForm.patchValue({ CustomerName: 'All' });
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching customer data:', err);
+    //   },
+    // });
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+          const allCust = { customerName: 'All', customerCode: 'All' };
+              this.customerData = [allCust, ...data.Data];
+              this.createForm.patchValue({ CustomerName: 'All' });
+        });
   }
 
   onSubmit() {

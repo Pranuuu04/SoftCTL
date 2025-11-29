@@ -325,9 +325,14 @@ alwaysVisibleColumns_Statement = [
     this.bookingService.getVendor().subscribe((resp: any) => {
       this.vendorList = resp.Data;
     });
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
-     this.customerList = resp.Data;
-    });
+    // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+    //  this.customerList = resp.Data;
+    // });
+    this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+        const allCust = { customerName: 'All', customerCode: 'All' };
+        this.customerList = [allCust, ...data.Data];
+        this.checkListForm.patchValue({ customerName: 'All' });
+      });
     this.AllService.getDestinationData().subscribe((resp: any) => {
       this.destinationList = resp.Data;
     });

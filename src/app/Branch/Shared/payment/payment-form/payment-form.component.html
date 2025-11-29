@@ -138,8 +138,9 @@
     </div>
   </div>
    <form [formGroup]="paymentEntryForm" (ngSubmit)="submitPaymentEntry()">
+
       <div class="row mainrow">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
            <div class="textOnSelect">
                 <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
                   <ng-select
@@ -149,7 +150,6 @@
                   bindValue="customerCode"
                   formControlName="Customer">
                 </ng-select>
-
             </div>
         </div>
          <div class="col-sm-3">
@@ -172,7 +172,7 @@
                 </ng-select>
         </div>
         </div>
-         <div class="col-sm-3">
+         <div class="col-sm-2">
               <div class="textOnSelect">
               <label for="paymentType">Type :</label>
               <select id="paymentType" class="custom-select" formControlName="paymentType">
@@ -190,21 +190,23 @@
               </select>
           </div>
         </div>
-      </div>
-      <div class="row mainrow">
-        <div class="col-sm-3">
+
+         <div class="col-sm-3">
                 <div class="textOnInput">
                     <label for="receiptNo">Cheq/receipt no. :</label>
                     <input class="form-control" type="text" formControlName="receiptNo" placeholder="Enter receipt no">
                 </div>
-            </div>
-         <div class="col-sm-3">
+          </div>
+      </div>
+
+    <div class="row mainrow">
+         <div class="col-sm-2">
           <div class="textOnInput">
             <label for="receiptDt">Cheq/receipt date :</label>
             <input class="form-control" type="date" formControlName="receiptDt">
         </div>
         </div>
-         <div class="col-sm-3">
+         <div class="col-sm-2">
           <div class="textOnInput">
             <label for="receiveDt">Receive date :</label>
             <input class="form-control" type="date" formControlName="receiveDt">
@@ -216,20 +218,22 @@
             <input class="form-control" type="text" formControlName="receiverName" placeholder="Enter receiver name">
         </div>
         </div>
-     </div>
-      <div class="row mainrow">
-          <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="textOnInput">
             <label for="Amount">Amount :</label>
             <input class="form-control" type="text" formControlName="Amount" placeholder="Enter amount">
         </div>
         </div>
-         <div class="col-sm-3">
+          <div class="col-sm-2">
           <div class="textOnInput">
             <label for="TDS">TDS :</label>
             <input class="form-control" type="text" formControlName="TDS" placeholder="Enter TDS">
         </div>
         </div>
+     </div>
+
+      <div class="row mainrow" style=" border-bottom: 1px solid #d2d2d2;">
+       
          <div class="col-sm-3">
           <div class="textOnInput">
             <label for="discount">Discount/Debit :</label>
@@ -242,8 +246,7 @@
             <input class="form-control" type="text" formControlName="remark" placeholder="Enter remark">
         </div>
         </div>
-      </div>
-      <div class="row mainrow form-group m-0" style=" border-bottom: 1px solid #d2d2d2;">
+     
          <div class="col-sm-3">
           <div class="textOnSelect">
             <label for="DepositeBank">Deposite bank :</label>
@@ -262,16 +265,23 @@
                   formControlName="DepositeBank"
                   [addTag]="true">
                 </ng-select>
+           </div>
         </div>
-        </div>
+
+      <div class="col-sm-3 d-flex" style="justify-content: right;" >
+        <button type="submit" class="btn btn-light other-button">{{ paymentEntryEdit ? 'Update' : 'Submit' }}</button>
       </div>
-       <div class="row mainrow form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+
+   </div>
+  
+    <!-- <div class="row mainrow form-group d-flex m-0" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-4 d-flex" style="justify-content: right;" >
         <button type="submit" class="btn btn-light other-button">{{ paymentEntryEdit ? 'Update' : 'Submit' }}</button>
       </div>
-   </div>
+   </div> -->
     
   </form>
+  
     <div class="row mainrow">
       <div class="col-sm-12 pb-2">
         <div *ngIf="showTable && paymentEntryDataSource.data.length > 0">

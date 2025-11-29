@@ -57,7 +57,7 @@ ul{
     border-radius: 8px;
     margin: 0;
     background-color: red;
-    mat-icon{
+    mat-icon {
         color: white;
       }
   }
@@ -66,7 +66,7 @@ ul{
   {
     background-color: white;
     border: 1px solid rgb(255, 71, 71);
-    mat-icon{
+    mat-icon {
       color: red;
     }
   }
@@ -155,7 +155,7 @@ ul{
     border-radius: 8px;
     margin-left: 15px;
     background-color: green;
-    i{
+    i {
       color: white;
     }
   }
@@ -163,7 +163,7 @@ ul{
   .form-group .Download:focus
   {
     background-color: white;
-    i{
+    i {
       color: green;
     }
   }

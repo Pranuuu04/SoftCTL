@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewaddComponent } from 'app/Branch/Shared/manifest pages/viewadd/viewadd.component';
 import { ViewdeleteComponent } from 'app/Branch/Shared/manifest pages/viewdelete/viewdelete.component';
 import { VieweditComponent } from 'app/Branch/Shared/manifest pages/viewedit/viewedit.component';
+import { SetupReportComponent } from 'app/Branch/Shared/report_pages/setup-report/setup-report.component';
 import { AllServicesService } from 'app/service/all-services.service';
 import { SharedService } from 'app/service/shared.service';
 import { environment } from 'environments/environment.prod';
@@ -36,10 +37,75 @@ export class ViewManifestComponent implements OnInit {
   destination: any = '';
   selectedManifestData: any;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageSize: number ;
+  // pageSize: number ;
   pageNumber = 1;
-  displayedColumns: any[] = ['shipment', 'manifestNo', 'manifestDt', 'todest', 'mode', 'SumQty', 'sumActualWt', 'vehicleNo', 'driverName', 'Action'];
+  formData:any;
+
+
+    length: any;
+    pageSize = 10;
+    pageIndex = 0;
+    showPageSizeOptions = false;
+    showFirstLastButtons = true;
+    hidePageSize = false;
+    disabled = false;
+    customerName: any = 'All';
+    custType: any = 'All';
+    isHidden: boolean = true;
+
+  // displayedColumns: any[] = ['shipment', 'manifestNo', 'manifestDt', 'todest', 'mode', 'SumQty', 'sumActualWt', 'vehicleNo', 'driverName', 'Action'];
+  displayedColumns: any[] = ['Action','index'];
+  displayedColumnsManifest = {
+      index: 'SR NO',
+      shipment: 'Shipment',
+      manifestNo: 'Manifest No',
+      manifestDt: 'Manifest Date',
+      todest: 'To Destination',
+      mode: 'Mode',
+      SumQty: 'Total Qty',
+      sumActualWt: 'Actual Weight',
+      vehicleNo: 'Vehicle No',
+      driverName: 'Driver Name',
+      DestCode: 'To Code',
+      fromDestCode: 'From Code',
+      fromdest: 'From Name',
+      via: 'Via Code',
+      viaName: 'Via Name',
+      VehicleType: 'Vehicle Type',
+      driverMobile: 'Driver Mobile',
+      vendorcode: 'Vendor Code',
+      vendorName: 'Vendor Name',
+      route: 'Route',
+      Remark: 'Remark'
+  }
+
+  masterColumnOrder = [
+    'index',                   
+    'manifestNo',     
+    'manifestDt',     
+    'fromDestCode',   
+    'fromdest',        
+    'DestCode',       
+    'todest',        
+    'via',            
+    'viaName',        
+    'route',          
+    'mode',           
+    'shipment',      
+    'SumQty',        
+    'sumActualWt',    
+    'VehicleType',    
+    'vehicleNo',      
+    'driverName',     
+    'driverMobile',   
+    'vendorcode',     
+    'vendorName',    
+    'Remark' 
+];
+
+
   dataSource = new MatTableDataSource<any>();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   DestinationName: any;
   loadPrintDataAPI: any;
@@ -76,6 +142,7 @@ export class ViewManifestComponent implements OnInit {
   ClientName: any;
   selectedValue: string;
   userType: any;
+  pageEvent: PageEvent;
 
 
   constructor( public dialog: MatDialog,
@@ -115,7 +182,9 @@ export class ViewManifestComponent implements OnInit {
         Validators.required
       ])),
     });
-    }
+     this.getReportSetupKey();
+  }
+
     refresh() {
     }
     getDefaultDate(): string {
@@ -153,6 +222,8 @@ openSnackBar(message: string, panelClass: string) {
   });
 }
 formSubmit(formData: any) {
+  this.formData = formData;
+  this.getReportSetupKey();
   if (this.userType === 'Admin') {
     if (formData.manifestNo) {
       this.httpService.viewFromManifestNo(this.selectedValue, formData.manifestNo, this.pageNumber).subscribe((resp: any) => {
@@ -344,4 +415,72 @@ printPDF(element) {
   }
 }
 
+
+
+// getReportSetupKey(){
+//    this.httpService.getReportSetup('getCheckListSetup').subscribe((setupResp: any) => {
+//     if (setupResp.status === 1 && setupResp.Data.length) {
+//       const setup = setupResp.Data[0];
+//         const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
+//         this.displayedColumns = ['index','shipment', 'manifestNo', 'manifestDt', 'todest', 'mode', 'SumQty', 'sumActualWt', 'vehicleNo', 'driverName', ...selectedKeys];
+//      }
+//   });
+// }
+
+getReportSetupKey() {
+  this.httpService.getReportSetup('getCheckListSetup').subscribe((setupResp: any) => {
+    if (setupResp.status === 1 && setupResp.Data.length) {
+      const setup = setupResp.Data[0];
+      this.displayedColumns = this.masterColumnOrder.filter(col => {
+        if (col === 'index') return true;      
+        if (setup[col] === 1) return true;     
+        if (setup[col] === 0) return false;    
+        return true; 
+      });
+    }
+  });
+}
+
+
+  openSetup(){
+      const dialogRef = this.dialog.open(SetupReportComponent, {
+        data: {
+            action: 'add',
+            inputName: 'getCheckListSetup',
+            columnMapping: this.displayedColumnsManifest,
+            saveApi: 'ChecklistReportSetup'
+          },
+            width: '85rem',
+            disableClose: true
+          });
+        dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
+          if (selectedKeys && selectedKeys.length) {
+            this.displayedColumns = ['index', ...selectedKeys];
+           }
+             this.getReportSetupKey();
+        }); 
+     }
+
+
+
+  downloadSample(){
+
   }
+
+
+  pageCount: number = 1;
+  calculatePageCount() {
+      this.pageCount = Math.ceil(this.length / this.pageSize);
+      console.log(this.pageCount,'pageCount');
+    }
+  
+    handlePageEvent(e: PageEvent) {
+      this.pageEvent = e;
+      this.length = e.length;
+      this.pageSize = e.pageSize;
+      this.pageIndex = e.pageIndex;
+      this.calculatePageCount();
+      this.formSubmit(this.formData);
+    }
+
+}
