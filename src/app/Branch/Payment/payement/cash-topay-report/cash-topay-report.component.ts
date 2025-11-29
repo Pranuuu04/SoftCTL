@@ -256,6 +256,13 @@ export class CashTopayReportComponent implements OnInit {
 
 
  openCashTopayForm(action: 'add' | 'edit', element?: any) {
+
+     let sessionLocationCode ;
+       if(this.userType!=='Admin'){
+        sessionLocationCode = this.sessionLocationCode;
+       }else{
+        sessionLocationCode = this.filterForm.get('branch')?.value;
+       }
  
    const dialogRef = this.dialog.open(PaymentFormComponent, {
      data: {
@@ -266,6 +273,7 @@ export class CashTopayReportComponent implements OnInit {
        toDate: this.toDate,
        customerCode:'All',
        CashPayReport:true,
+       Branch:sessionLocationCode
      },
      // width: '95rem',
      width: '95vw',

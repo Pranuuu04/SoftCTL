@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
     isDashboardPage = false;
     isBookingPage = false;
     storedValue: string;
-  currentDate: string;
+    currentDate: string;
 
 
     constructor(location: Location,

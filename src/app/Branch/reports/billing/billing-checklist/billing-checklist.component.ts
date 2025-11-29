@@ -2,8 +2,10 @@ import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, TemplateRef, 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { BookingService } from 'app/Branch/operation/Booking/booking.service';
+import { SetupReportComponent } from 'app/Branch/Shared/report_pages/setup-report/setup-report.component';
 import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.component';
 import { AllServicesService } from 'app/service/all-services.service';
 import { HttpService } from 'app/service/http.service';
@@ -133,54 +135,158 @@ export class BillingChecklistComponent implements OnInit {
   isVendorWtSelected =  true;
 
 
-   displayedColumns: any [] = [ 'awbno', 'billno', 'customer_name', 'bookdate', 'Customer_type', 'ProductName', 'Pcs', 'ModeName', 'consignee_name', 'Origin', 'destination', 'ActualWeight', 'volumetricwt', 'chargedwt', 'receivedamt', 'docketchrgs', 'fov_chrgs', 'oda_chrgs', 'othercharges', 'fuelcharges' , 'servicetax' , 'receivedtotal', 'action' ];
+   displayedColumns: any [] = ['index'];
 
    dataSource  = new MatTableDataSource();
 
-   displayedColumnsSummary: any [] = [
-    'customer_name' ,
-    'Pcs' ,
-    'SumofActualWeight' ,
-    'SumofCafCharges' ,
-    'SumofChargeWeight' ,
-    'SumofCharges1' ,
-    'SumofCharges3' ,
-    'SumofCharges5' ,
-    'SumofCharges7' ,
-    'SumofCharges10' ,
-    'SumofCodcharges' ,
-    'SumofDocketCharges' ,
-    'SumofEssAmt' ,
-    'SumofFovCharges' ,
-    'SumofFuelcharges' ,
-    'SumofIdcCharges' ,
-    'SumofIgst' ,
-    'SumofInvalue' ,
-    'SumofOdacharges' ,
-    'SumofOtherCharges' ,
-    'SumofRate' ,
-    'SumofReceivedtotal' ,
-    'SumofServiceTax' ,
-    'SumofVcharges4' ,
-    'SumofVendorchargewt' ,
-    'SumofVolumetricWt' ,
-    'SumofVtccharges' ,
-    'Sumofcgst' ,
-    'Sumofcharges4' ,
-    'Sumofcharges6' ,
-    'Sumofcharges8' ,
-    'Sumofcharges9' ,
-    'Sumofreceiveamt' ,
-    'Sumofsgst' , 
-    'Sumofvcharges' ,
-    'Sumofvcharges1' ,
-    'Sumofvcharges2' ,
-    'Sumofvcharges6' ,
-    'Sumofvendorwt' ,
-     'action' ];
+  //  displayedColumnsSummary: any [] = [
+  //   'customer_name' ,
+  //   'Pcs' ,
+  //   'SumofActualWeight' ,
+  //   'SumofCafCharges' ,
+  //   'SumofChargeWeight' ,
+  //   'SumofCharges1' ,
+  //   'SumofCharges3' ,
+  //   'SumofCharges5' ,
+  //   'SumofCharges7' ,
+  //   'SumofCharges10' ,
+  //   'SumofCodcharges' ,
+  //   'SumofDocketCharges' ,
+  //   'SumofEssAmt' ,
+  //   'SumofFovCharges' ,
+  //   'SumofFuelcharges' ,
+  //   'SumofIdcCharges' ,
+  //   'SumofIgst' ,
+  //   'SumofInvalue' ,
+  //   'SumofOdacharges' ,
+  //   'SumofOtherCharges' ,
+  //   'SumofRate' ,
+  //   'SumofReceivedtotal' ,
+  //   'SumofServiceTax' ,
+  //   'SumofVcharges4' ,
+  //   'SumofVendorchargewt' ,
+  //   'SumofVolumetricWt' ,
+  //   'SumofVtccharges' ,
+  //   'Sumofcgst' ,
+  //   'Sumofcharges4' ,
+  //   'Sumofcharges6' ,
+  //   'Sumofcharges8' ,
+  //   'Sumofcharges9' ,
+  //   'Sumofreceiveamt' ,
+  //   'Sumofsgst' , 
+  //   'Sumofvcharges' ,
+  //   'Sumofvcharges1' ,
+  //   'Sumofvcharges2' ,
+  //   'Sumofvcharges6' ,
+  //   'Sumofvendorwt' ,
+  //    'action' ];
+
+  displayedColumnsCheckList = {
+          index: 'SR NO',
+          awbno: 'CNOTE',
+          Bookdate: 'BOOKDATE',
+          ManifestDate: 'MFT.DATE',
+          InvoiceNo: 'Inv.No',
+          customer_Code: 'C.Code',
+          customer_name: 'CUSTOMER NAME',
+          GSTNo: 'Cust GST',
+          shipper_Code: 'S. Code',
+          shipper_name: 'SHIPER NAME',
+          Shipper_gstNo: 'SHEEPER GST',
+          consignee_name: 'CONSIGNEE',
+          Consignee_GST: 'C GST',
+          ModeName: 'MODE',
+          ProductName: 'PRODUCT',
+          Train_Flight: 'FLIGHT/ TRAIN',
+          Origin: 'Origin',
+          Destination: 'DEST',
+          Customer_type: 'CUST TYPE',
+          Pcs: 'Pcs',
+          ActualWeight: 'ACT Wgt',
+          volumetricwt: 'VOL WT',
+          chargedwt: 'Chg Wt',
+          rateperkg: 'RATE/KG',
+          rate: 'FRT Amt',
+          docketchrgs: 'Docket',
+          charges1: 'Tempo',
+          charges2: 'Other',
+          fuelcharges: 'Fuel',
+          fov_chrgs: 'Insurance',
+          igst: 'IGST',
+          cgst: 'CGST',
+          sgst: 'SGST',
+          TotalAmt: 'TOTAL AMT',
+          customer_type: 'S',
+          CashRec: 'Cash Rec',
+          paymentDate: 'Rcv Date',
+          ConsignorState: 'Consignor  State',
+          Perc: 'perc',
+          ConsigneeState: 'Consignee  State',
+          Cnoterecieve: 'Cnote recieve',
+          EwayBill: 'e-wayBIll',
+          vendor_name: 'forwarding name',
+          Ref_No: 'No.',
+          invvalue: 'invoice Val',
+          manifestNo: 'MFT NO',
+          BillName: 'BILL NAME',
+          BillNo: 'BILL NO',
+          Remark: 'REMARK'
+      };
+
+masterColumnOrder = [
+  'index',             // SRNO
+  'awbno',             // CNOTE
+  'Bookdate',          // BOOKDATE
+  'ManifestDate',      // MFT.DATE
+  'InvoiceNo',         // Inv.No
+  'customer_Code',     // C.Code
+  'customer_name',     // CUSTOMER NAME
+  'GSTNo',             // Cust GST
+  'shipper_Code',      // S. Code
+  'shipper_name',      // SHIPER NAME
+  'Shipper_gstNo',     // SHEEPER GST
+  'consignee_name',    // CONSIGNEE
+  'Consignee_GST',     // C GST
+  'ModeName',          // MODE
+  'ProductName',       // PRODUCT
+  'Train_Flight',      // FLIGHT/TRAIN
+  'Origin',            // Origin
+  'Destination',       // DEST
+  'Customer_type',     // CUST TYPE
+  'Pcs',               // Pcs
+  'ActualWeight',      // ACT Wgt
+  'volumetricwt',      // VOL WT
+  'chargedwt',         // Chg Wt
+  'rateperkg',         // RATE/KG
+  'rate',              // FRT Amt
+  'docketchrgs',       // Docket
+  'charges1',          // Tempo
+  'charges2',          // Other
+  'fuelcharges',       // Fuel
+  'fov_chrgs',         // Insurance
+  'igst',              // IGST
+  'cgst',              // CGST
+  'sgst',              // SGST
+  'TotalAmt',          // TOTAL AMT
+  'customer_type',     // S
+  'CashRec',           // Cash Rec
+  'paymentDate',       // Rcv Date
+  'ConsignorState',    // Consignor State
+  'Perc',              // perc
+  'ConsigneeState',    // Consignee State
+  'Cnoterecieve',      // Cnote receive
+  'EwayBill',          // e-wayBIll
+  'vendor_name',       // forwarding name
+  'Ref_No',            // No.
+  'invvalue',          // invoice Val
+  'manifestNo',        // MFT NO
+  'BillName',          // BILL NAME
+  'BillNo',            // BILL NO
+  'Remark'             // REMARK
+];
 
 
-   dataSourceSummary = new MatTableDataSource();
+dataSourceSummary = new MatTableDataSource();
 
 
  sections = [
@@ -276,7 +382,7 @@ export class BillingChecklistComponent implements OnInit {
               public httpService: HttpService,
               public formBuilder: FormBuilder,
               private AllService: AllServicesService,
-              private bookingService: BookingService) {
+              private bookingService: BookingService,private snackBar: MatSnackBar) {
                 this.currentDate = this.getDefaultDate();
                 this.fromDate = this.getDefaultDate();
                 this.toDate = this.getCurrentDate();
@@ -350,15 +456,22 @@ export class BillingChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.sessionLocationCode = localStorage.getItem('originCode');
-    this.dataSource = new MatTableDataSource<PeriodicElement>(this.displayedColumns);
-    this.dataSourceSummary = new MatTableDataSource<PeriodicElementSummary>(this.displayedColumnsSummary);
+    // this.dataSource = new MatTableDataSource<PeriodicElement>(this.displayedColumns);
+    // this.dataSourceSummary = new MatTableDataSource<PeriodicElementSummary>(this.displayedColumnsSummary);
 
-       this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
-      this.customerList = resp.Data;
+      //  this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+      // this.customerList = resp.Data;
+      // });
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+        const allCust = { customerName: 'All', customerCode: 'All' };
+        this.customerList = [allCust, ...data.Data];
+        this.checkListRegisterForm.patchValue({ customerName: 'All' });
       });
       
     this.bookingService.getMode().subscribe((resp: any) => {
-     this.modeList = resp.Data;
+       const allMode = { Mode_name: 'All', Mode_code: 'All' };
+       this.modeList = [allMode, ...resp.Data];
+       this.checkListRegisterForm.patchValue({ modeName: 'All' });
     });
       this.checkListRegisterForm  = this.formBuilder.group({
       customerName: new FormControl('', Validators.compose([
@@ -405,41 +518,112 @@ export class BillingChecklistComponent implements OnInit {
     this.formSubmit(this.formData);
   }
 
+
+// getReportSetupKey(){
+//    this.AllService.getReportSetup('getCheckListSetup').subscribe((setupResp: any) => {
+//     if (setupResp.status === 1 && setupResp.Data.length) {
+//       const setup = setupResp.Data[0];
+//         const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
+//         this.displayedColumns = ['index','awbno','BillDate','customer_name','shipper_name', 'consignee_name','ModeName','ProductName','Origin', 'Destination','Customer_type','Pcs','ActualWeight','volumetricwt', ...selectedKeys];
+//       ];
+//     }
+//   });
+// }
+
+getReportSetupKey() {
+  this.AllService.getReportSetup('getCheckListSetup').subscribe((setupResp: any) => {
+    if (setupResp.status === 1 && setupResp.Data.length) {
+      const setup = setupResp.Data[0];
+      this.displayedColumns = this.masterColumnOrder.filter(col => {
+        if (col === 'index') return true;      
+        if (setup[col] === 1) return true;     
+        if (setup[col] === 0) return false;    
+        return true; 
+      });
+    }
+  });
+}
+
+
   formSubmit(formData: any) {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
+    this.formData = formData;
+    this.getReportSetupKey();
 
-    if (this.bookingType === 'Details') {
-      this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + formData.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + formData.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Details&Mode=' + formData.modeName + '&pageNumber=' +(this.pageIndex + 1) + '&pageSize=' + this.pageSize ).then(resp => {
-        console.log(resp, ' hello data ');
-        if ( resp.status === 1) {
-            this.dataSource = resp.result[0];
-            this.enabledTable = true;
-            this.enabledTableSummary = false;
-          } else {
-            alert(resp.message);
-            this.enabledTable = false;
-            this.enabledTableSummary = false;
-          }
-        });
-    } else if (this.bookingType === 'Summary') {
-      this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + formData.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + formData.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + formData.modeName + '&pageNumber=' +(this.pageIndex + 1) + '&pageSize=' + this.pageSize ).then(resp => {
-        console.log(resp, ' hello data ');
-        if ( resp.status === 1) {
-            this.dataSourceSummary = resp.result[0];
-            this.enabledTableSummary = true;
-            this.enabledTable = false;
-          } else {
-            alert(resp.message);
-            this.enabledTableSummary = false;
-            this.enabledTable = false;
-          }
-        });
-      } else {
-        alert('Please select all Field ')
-      }
+    // if (this.bookingType === 'Details') {
+    //   this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + formData.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + formData.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Details&Mode=' + formData.modeName + '&pageNumber=' +(this.pageIndex + 1) + '&pageSize=' + this.pageSize ).then(resp => {
+    //     console.log(resp, ' hello data ');
+    //     if ( resp.status === 1) {
+    //         this.dataSource = resp.result[0];
+    //         this.enabledTable = true;
+    //         this.enabledTableSummary = false;
+    //       } else {
+    //         alert(resp.message);
+    //         this.enabledTable = false;
+    //         this.enabledTableSummary = false;
+    //       }
+    //     });
+    // } else if (this.bookingType === 'Summary') {
+    //   this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + formData.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + formData.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + formData.modeName + '&pageNumber=' +(this.pageIndex + 1) + '&pageSize=' + this.pageSize ).then(resp => {
+    //     console.log(resp, ' hello data ');
+    //     if ( resp.status === 1) {
+    //         this.dataSourceSummary = resp.result[0];
+    //         this.enabledTableSummary = true;
+    //         this.enabledTable = false;
+    //       } else {
+    //         alert(resp.message);
+    //         this.enabledTableSummary = false;
+    //         this.enabledTable = false;
+    //       }
+    //     });
+    //   } else {
+    //     alert('Please select all Field ')
+    //   }
+
+       
+    // (customerCode:any,modeCode:any,clientType:any ,sessionLocationCode:any,ReportType:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any) 
+        this.AllService.getCheckListReport(formData.customerName,formData.modeName,formData.custType,this.sessionLocationCode,formData.bookingType,this.fromDate,this.toDate,this.pageIndex + 1,this.pageSize).subscribe((res:any)=>{
+          if ( res.status === 1) {
+          this.dataSource = res.Data;
+          this.enabledTable = true;
+          this.length = res.count;
+        } else {
+          this.openSnackBar(res.message,'error-snackbar');
+          this.enabledTable = false;
+        }
+       })
+
     }
 
+  openSetup(){
+      const dialogRef = this.dialog.open(SetupReportComponent, {
+        data: {
+            action: 'add',
+            inputName: 'getCheckListSetup',
+            columnMapping: this.displayedColumnsCheckList,
+            saveApi: 'ChecklistReportSetup'
+          },
+            width: '85rem',
+            disableClose: true
+          });
+        dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
+          if (selectedKeys && selectedKeys.length) {
+            this.displayedColumns = ['index', ...selectedKeys];
+           }
+             this.getReportSetupKey();
+        }); 
+      }
+
+
+  openSnackBar(message:string,panelClass:string){
+    this.snackBar.open(message,'close', {
+        duration:3000,
+        horizontalPosition:'right',
+        verticalPosition:'top',
+        panelClass:[panelClass]
+    })
+  }
 
     openprogressbar(): MatDialogRef<ProgressBarComponent> {
       const dialogRef = this.dialog.open(ProgressBarComponent, {
@@ -452,107 +636,162 @@ export class BillingChecklistComponent implements OnInit {
         return dialogRef;
       }
       
-  downloadSample() {
-    const isConfirmed = window.confirm('Do you want to download the Excel file?');
-    if (isConfirmed) {
-      if(this.bookingType === 'Details'){
-        const progressBar = this.openprogressbar();
-        this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + this.checkListRegisterForm.value.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + this.checkListRegisterForm.value.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + this.checkListRegisterForm.value.modeName ).then((response: any) => {
-          console.log(response,'xsl download response');
-          const dataForExcel = response.result[0].map(element => {
-          const headingInUpperCase = {
-            'awbno' : element.awbno,
-             'billno' : element.billno,
-             'customer_name' : element.customer_name,
-             'bookdate' : element.bookdate,
-             'Customer_type' : element.Customer_type,
-             'ProductName' : element.ProductName,
-             'Pcs' : element.Pcs,
-             'ModeName' : element.ModeName,
-             'consignee_name' : element.consignee_name,
-             'Origin' : element.Origin,
-             'destination' : element.destination,
-             'ActualWeight' : element.ActualWeight,
-             'volumetricwt' : element.volumetricwt,
-             'chargedwt' : element.chargedwt,
-             'receivedamt' : element.receivedamt,
-             'docketchrgs' : element.docketchrgs,
-             'fov_chrgs' : element.fov_chrgs,
-             'oda_chrgs' : element.oda_chrgs,
-             'othercharges' : element.othercharges,
-             'fuelcharges' : element.fuelcharges,
-             'servicetax' : element.servicetax,
-             'receivedtotal' : element.receivedtotal,
-          };  
-          return headingInUpperCase;
-        });
-          const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
-          XLSX.writeFile(wb, 'checklistDetails.xlsx');
+  // downloadSample() {
+  //   const isConfirmed = window.confirm('Do you want to download the Excel file?');
+  //   if (isConfirmed) {
+  //     if(this.bookingType === 'Details'){
+  //       const progressBar = this.openprogressbar();
+  //       this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + this.checkListRegisterForm.value.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + this.checkListRegisterForm.value.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + this.checkListRegisterForm.value.modeName ).then((response: any) => {
+  //         console.log(response,'xsl download response');
+  //         const dataForExcel = response.result[0].map(element => {
+  //         const headingInUpperCase = {
+  //           'awbno' : element.awbno,
+  //            'billno' : element.billno,
+  //            'customer_name' : element.customer_name,
+  //            'bookdate' : element.bookdate,
+  //            'Customer_type' : element.Customer_type,
+  //            'ProductName' : element.ProductName,
+  //            'Pcs' : element.Pcs,
+  //            'ModeName' : element.ModeName,
+  //            'consignee_name' : element.consignee_name,
+  //            'Origin' : element.Origin,
+  //            'destination' : element.destination,
+  //            'ActualWeight' : element.ActualWeight,
+  //            'volumetricwt' : element.volumetricwt,
+  //            'chargedwt' : element.chargedwt,
+  //            'receivedamt' : element.receivedamt,
+  //            'docketchrgs' : element.docketchrgs,
+  //            'fov_chrgs' : element.fov_chrgs,
+  //            'oda_chrgs' : element.oda_chrgs,
+  //            'othercharges' : element.othercharges,
+  //            'fuelcharges' : element.fuelcharges,
+  //            'servicetax' : element.servicetax,
+  //            'receivedtotal' : element.receivedtotal,
+  //         };  
+  //         return headingInUpperCase;
+  //       });
+  //         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
+  //         const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //         XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
+  //         XLSX.writeFile(wb, 'checklistDetails.xlsx');
+  //         progressBar.close();
+  //       });
+  //     } 
+  //     else if (this.bookingType === 'Summary'){
+  //       const progressBar = this.openprogressbar();
+  //       this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + this.checkListRegisterForm.value.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + this.checkListRegisterForm.value.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + this.checkListRegisterForm.value.modeName ).then((response: any) => {
+  //         console.log(response,'xsl download response');
+  //         const dataForExcel = response.result[0].map(element => {
+  //         const headingInUpperCase = {
+  //           'customer_name' : element.customer_name,
+  //           'Pcs' : element.Pcs,
+  //           'SumofActualWeight' : element.SumofActualWeight,
+  //           'SumofCafCharges' : element.SumofCafCharges,
+  //           'SumofChargeWeight' : element.SumofChargeWeight,
+  //           'SumofCharges1' : element.SumofCharges1,
+  //           'SumofCharges3' : element.SumofCharges3,
+  //           'SumofCharges5' : element.SumofCharges5,
+  //           'SumofCharges7' : element.SumofCharges7,
+  //           'SumofCharges10' : element.SumofCharges10,
+  //           'SumofCodcharges' : element.SumofCodcharges,
+  //           'SumofDocketCharges' : element.SumofDocketCharges,
+  //           'SumofEssAmt' : element.SumofEssAmt,
+  //           'SumofFovCharges' : element.SumofFovCharges,
+  //           'SumofFuelcharges' : element.SumofFuelcharges,
+  //           'SumofIdcCharges' : element.SumofIdcCharges,
+  //           'SumofIgst' : element.SumofIgst,
+  //           'SumofInvalue' : element.SumofInvalue,
+  //           'SumofOdacharges' : element.SumofOdacharges,
+  //           'SumofOtherCharges' : element.SumofOtherCharges,
+  //           'SumofRate' : element.SumofRate,
+  //           'SumofReceivedtotal' : element.SumofReceivedtotal,
+  //           'SumofServiceTax' : element.SumofServiceTax,
+  //           'SumofVcharges4' : element.SumofVcharges4,
+  //           'SumofVendorchargewt' : element.SumofVendorchargewt,
+  //           'SumofVolumetricWt' : element.SumofVolumetricWt,
+  //           'SumofVtccharges' : element.SumofVtccharges,
+  //           'Sumofcgst' : element.Sumofcgst,
+  //           'Sumofcharges4' : element.Sumofcharges4,
+  //           'Sumofcharges6' : element.Sumofcharges6,
+  //           'Sumofcharges8' : element.Sumofcharges8,
+  //           'Sumofcharges9' : element.Sumofcharges9,
+  //           'Sumofreceiveamt' : element.Sumofreceiveamt,
+  //           'Sumofsgst' : element.Sumofsgst,
+  //           'Sumofvcharges' : element.Sumofvcharges,
+  //           'Sumofvcharges1' : element.Sumofvcharges1,
+  //           'Sumofvcharges2' : element.Sumofvcharges2,
+  //           'Sumofvcharges6' : element.Sumofvcharges6,
+  //           'Sumofvendorwt' : element.Sumofvendorwt,
+  //         };  
+  //         return headingInUpperCase;
+  //       });
+  //         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
+  //         const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //         XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
+  //         XLSX.writeFile(wb, 'checklistSummary.xlsx');
+  //         progressBar.close();
+  //       });
+  //     }
+  //     else{
+  //         alert('Please select one of them Details & Summary');
+  //     }
+  //   }
+  // }
+
+
+   downloadSample() {
+      const isConfirmed = window.confirm('Do you want to download the Excel file?');
+      if (!isConfirmed) return;
+    
+      const progressBar = this.openprogressbar();
+    
+     this.AllService.getCheckListReport(this.formData.customerName,this.formData.modeName,this.formData.custType,this.sessionLocationCode,this.formData.bookingType,this.fromDate,this.toDate,this.pageIndex + 1,this.length)
+      .subscribe({
+        next: (response: any) => {
+          try {
+            if (response?.status === 1 && Array.isArray(response.Data)) {
+              const mapping = this.displayedColumnsCheckList || {};
+              const dataForExcel = response.Data.map((element: any, index: number) => {
+                const row: any = {};
+                const cols = (this.displayedColumns && this.displayedColumns.length) ? this.displayedColumns : Object.keys(mapping);
+                cols.forEach(colKey => {
+                  const header = mapping[colKey] || colKey;
+                  if (colKey === 'index' || colKey === 'srNo') {
+                    row[header] = index + 1;
+                    return;
+                  }
+                  if (colKey === 'POD_Img' || colKey === 'Image' || colKey === 'Sign_Img') {
+                    const val = element[colKey];
+                    row[header] = val ? 'Yes' : 'No';
+                    return;
+                  }
+                  row[header] = (element && element[colKey] !== null && element[colKey] !== undefined) ? element[colKey] : '';
+                });
+                return row;
+              });
+              const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
+              const wb: XLSX.WorkBook = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, 'Pod Image');
+              XLSX.writeFile(wb, 'CheckListDetails.xlsx');
+    
+            } else {
+              this.openSnackBar(response?.message || 'No data to export', 'error-snackbar');
+            }
+          } catch (err) {
+            console.error('Export error', err);
+            this.openSnackBar('Error while preparing export', 'error-snackbar');
+          } finally {
+            progressBar.close();
+          }
+        },
+        error: (err) => {
+          console.error(err);
           progressBar.close();
-        });
-      } 
-      else if (this.bookingType === 'Summary'){
-        const progressBar = this.openprogressbar();
-        this.httpService.get(`${environment.apiUrl}Rpt/SalChecklist?custcode=` + this.checkListRegisterForm.value.customerName + '&destinationcode&Status&sessionLocationCode=' + this.sessionLocationCode + '&Typeofcust=' + this.checkListRegisterForm.value.custType + '&Reporttype=Checklist&date&fromdate=' + this.fromDate + '&todate=' + this.toDate + '&Types=Summary&Mode=' + this.checkListRegisterForm.value.modeName ).then((response: any) => {
-          console.log(response,'xsl download response');
-          const dataForExcel = response.result[0].map(element => {
-          const headingInUpperCase = {
-            'customer_name' : element.customer_name,
-            'Pcs' : element.Pcs,
-            'SumofActualWeight' : element.SumofActualWeight,
-            'SumofCafCharges' : element.SumofCafCharges,
-            'SumofChargeWeight' : element.SumofChargeWeight,
-            'SumofCharges1' : element.SumofCharges1,
-            'SumofCharges3' : element.SumofCharges3,
-            'SumofCharges5' : element.SumofCharges5,
-            'SumofCharges7' : element.SumofCharges7,
-            'SumofCharges10' : element.SumofCharges10,
-            'SumofCodcharges' : element.SumofCodcharges,
-            'SumofDocketCharges' : element.SumofDocketCharges,
-            'SumofEssAmt' : element.SumofEssAmt,
-            'SumofFovCharges' : element.SumofFovCharges,
-            'SumofFuelcharges' : element.SumofFuelcharges,
-            'SumofIdcCharges' : element.SumofIdcCharges,
-            'SumofIgst' : element.SumofIgst,
-            'SumofInvalue' : element.SumofInvalue,
-            'SumofOdacharges' : element.SumofOdacharges,
-            'SumofOtherCharges' : element.SumofOtherCharges,
-            'SumofRate' : element.SumofRate,
-            'SumofReceivedtotal' : element.SumofReceivedtotal,
-            'SumofServiceTax' : element.SumofServiceTax,
-            'SumofVcharges4' : element.SumofVcharges4,
-            'SumofVendorchargewt' : element.SumofVendorchargewt,
-            'SumofVolumetricWt' : element.SumofVolumetricWt,
-            'SumofVtccharges' : element.SumofVtccharges,
-            'Sumofcgst' : element.Sumofcgst,
-            'Sumofcharges4' : element.Sumofcharges4,
-            'Sumofcharges6' : element.Sumofcharges6,
-            'Sumofcharges8' : element.Sumofcharges8,
-            'Sumofcharges9' : element.Sumofcharges9,
-            'Sumofreceiveamt' : element.Sumofreceiveamt,
-            'Sumofsgst' : element.Sumofsgst,
-            'Sumofvcharges' : element.Sumofvcharges,
-            'Sumofvcharges1' : element.Sumofvcharges1,
-            'Sumofvcharges2' : element.Sumofvcharges2,
-            'Sumofvcharges6' : element.Sumofvcharges6,
-            'Sumofvendorwt' : element.Sumofvendorwt,
-          };  
-          return headingInUpperCase;
-        });
-          const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
-          XLSX.writeFile(wb, 'checklistSummary.xlsx');
-          progressBar.close();
-        });
-      }
-      else{
-          alert('Please select one of them Details & Summary');
-      }
+          this.openSnackBar('Something went wrong!', 'error-snackbar');
+        }
+      });
     }
-  }
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

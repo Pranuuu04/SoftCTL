@@ -6,6 +6,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -20,6 +21,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
       ReactiveFormsModule,
       MatAutocompleteModule,
       NgSelectModule,
+      MatPaginatorModule,
   ]
 })
 export class SalesregistersModule { }

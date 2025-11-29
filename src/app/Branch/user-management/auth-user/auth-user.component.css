@@ -51,7 +51,7 @@
       font-size: large;
       border-radius: 8px;
       margin-left: 15px;
-      mat-icon{
+      mat-icon {
         color: white;
       }
     }
@@ -61,7 +61,7 @@
       background-color: white;
       border: 1px solid rgb(214, 175, 175);
 
-      mat-icon{
+      mat-icon {
         color: red;
       }
     }

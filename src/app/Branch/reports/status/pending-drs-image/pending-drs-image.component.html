@@ -124,10 +124,10 @@
           </ng-container>
 
         <ng-container matColumnDef="Image">
-          <th mat-header-cell *matHeaderCellDef> Drs Image </th>
+        <th mat-header-cell *matHeaderCellDef> Drs Image </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element.Image; else noImg">
-              <img [src]="element.Image" width="60" height="25">
+              <img [src]="element.Image" width="60" height="25"  style="cursor:pointer" (click)="onImageIconClick(element.Image)">
             </span>
             <ng-template #noImg>No Image</ng-template>
           </td>
