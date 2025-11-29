@@ -29,7 +29,7 @@ export class PayementComponent implements OnInit {
       // case 1:
       //   this.Adjustment.refresh();
       //   break;
-    case 2:   // Payment Entry Tab
+    case 2: 
       if (this.paymentEntry) {
         this.paymentEntry.openPaymentForm(null);  
       }
