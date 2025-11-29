@@ -43,6 +43,7 @@ export class PaymentFormComponent implements OnInit {
   toDate:any
   customerCode:any
   cashToPayData:any
+  cashToPayReportFlag:boolean = false
 
   rateDetails: any[] = [];
 
@@ -136,6 +137,7 @@ bankList = [
                 fromDate:any;
                 toDate:any
                 customerCode:any;
+                CashPayReport:any;
 
               },
               public formBuilder: FormBuilder,
@@ -160,6 +162,7 @@ bankList = [
                   this.fromDate = data?.fromDate;
                   this.toDate = data?.toDate;
                   this.customerCode = data?.customerCode;
+                  this.cashToPayReportFlag= data?.CashPayReport;
                   console.log("responseData>>>>>>",this.cashToPayData)
                 }
   }
@@ -236,7 +239,13 @@ bankList = [
       Remark: ['']
     });
 
-    this.getCashToPayData();
+    if(this.cashToPayReportFlag){
+      this.getCashToPayReportData();
+    }else{
+      this.getCashToPayData();
+    }
+     
+   
 
   }
 
@@ -299,7 +308,13 @@ addRateDetail() {
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
-        this.getCashToPayData();
+
+          if (payload.outstanding == 0) {
+            this.CloseDialog();
+            return;  
+          }
+
+         this.getCashToPayData();
            
           this.tempRateDetailForm.reset({
           totalAmt: this.tempRateDetailForm.get('totalAmt')?.value || 0,
@@ -314,28 +329,29 @@ addRateDetail() {
       }
     });
 
-  // const newDetail = this.tempRateDetailForm.value;
-      const newDetail = {
-        Payment_mode: this.tempRateDetailForm.value.paymentMode,
-        TransactionId: this.tempRateDetailForm.value.transactionID,
-        Received_by: this.tempRateDetailForm.value.receivedBy,
-        Desposited_bank: this.tempRateDetailForm.value.depositedBank,
-        Received_date: this.tempRateDetailForm.value.receivedDate,
-        Total_amt: this.tempRateDetailForm.value.totalAmt,
-        Received_amt: this.tempRateDetailForm.value.receivedAmt,
-        TDS: this.tempRateDetailForm.value.TDS,
-        Debit_note: this.tempRateDetailForm.value.debitNote,
-        Outstanding: this.tempRateDetailForm.value.outstandingAmt,
-        Remark: this.tempRateDetailForm.value.Remark,
-        id: 1
-      };
+  const newDetail = this.tempRateDetailForm.value;
+      // const newDetail = {
+      //   Payment_mode: this.tempRateDetailForm.value.paymentMode,
+      //   TransactionId: this.tempRateDetailForm.value.transactionID,
+      //   Received_by: this.tempRateDetailForm.value.receivedBy,
+      //   Desposited_bank: this.tempRateDetailForm.value.depositedBank,
+      //   Received_date: this.tempRateDetailForm.value.receivedDate,
+      //   Total_amt: this.tempRateDetailForm.value.totalAmt,
+      //   Received_amt: this.tempRateDetailForm.value.receivedAmt,
+      //   TDS: this.tempRateDetailForm.value.TDS,
+      //   Debit_note: this.tempRateDetailForm.value.debitNote,
+      //   Outstanding: this.tempRateDetailForm.value.outstandingAmt,
+      //   Remark: this.tempRateDetailForm.value.Remark,
+      //   id: 1
+      // };
     this.rateDetails.unshift(newDetail);
-    this.latestRecordTempId = 1;
+    // this.latestRecordTempId = 1;
 }
 
 latestRecordTempId: number | null = null;
 
 getCashToPayData(){
+
    this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
     .subscribe((resp: any) => {
       // if (resp.status === 1) {
@@ -355,6 +371,7 @@ getCashToPayData(){
       // }
 
        if (resp.status === 1) {
+        
         if (resp.getDetails && resp.getDetails.length > 0) {
 
           this.rateDetails = resp.getDetails.reverse();
@@ -373,6 +390,29 @@ getCashToPayData(){
     });
 }
  
+
+getCashToPayReportData(){
+    this.paymentService.cashToPayReport(this.sessionLocationCode,this.cashToPayData?.AwbNo,'','','', this.fromDate, this.toDate,1,100)
+     .subscribe((resp: any) => {
+      if (resp.status === 1) {
+        
+        if (resp.getDetails && resp.getDetails.length > 0) {
+
+          this.rateDetails = resp.getDetails.reverse();
+          this.latestRecordTempId = this.rateDetails[0].id;
+          const last = resp.getDetails[0];
+          const remaining = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining);
+        }
+        else {
+          console.warn("API returned no data, keeping local rateDetails");
+        }
+      } else {
+        this.openSnackBar(resp.message, 'error-snackbar');
+      }
+    });
+}
+
 
 calculateOutstandingAmt() {
   const totalAmt = Number(this.tempRateDetailForm.get('totalAmt')?.value) || 0;

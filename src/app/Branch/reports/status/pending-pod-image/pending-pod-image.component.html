@@ -88,8 +88,25 @@
             </ng-container>
 
             <!-- NORMAL COLUMNS -->
-            <ng-container *ngIf="column !== 'index'">
+            <ng-container *ngIf="column !== 'index'  && column !== 'POD_Img'">
               {{ element[column] }}
+            </ng-container>
+
+          <!-- <ng-container *ngIf="column === 'POD_Img'">
+            <button mat-icon-button matTooltip="Pod Image" (click)="onImageIconClick(element.POD_Img)">
+              <mat-icon style="color: rgb(108, 114, 226);">image</mat-icon>
+            </button>
+          </ng-container> -->
+           <ng-container *ngIf="column === 'POD_Img'">
+              <ng-container *ngIf="element.POD_Img; else noPOD">
+                <img [src]="element.POD_Img" width="60" height="30"
+                    style="cursor:pointer"
+                    (click)="onImageIconClick(element.POD_Img)">
+              </ng-container>
+
+              <ng-template #noPOD>
+                No Image
+              </ng-template>
             </ng-container>
 
           </td>

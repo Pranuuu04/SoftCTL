@@ -119,8 +119,12 @@ export class NavbarComponent implements OnInit {
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     }
 
-    onBranchTypeChange(event: any) {
+ onBranchTypeChange(event: any) {
+
+  // const selectedCode = event.target.value || 'All';
   const selectedCode = event.target.value == null ? 'All' : event.target.value;
+  console.log("Change fired Value is >>>>",selectedCode);
+
   localStorage.setItem('selectedValue', selectedCode);
   this.sharedService.updateSelectedValuee(selectedCode);
   this.sharedService.updateSelectedValue(selectedCode);
@@ -135,7 +139,8 @@ export class NavbarComponent implements OnInit {
   }
 }
 
-      openSnackBar(message: string, panelClass: string) {
+
+  openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Ok', {
       duration: 3000,
       horizontalPosition: 'right',

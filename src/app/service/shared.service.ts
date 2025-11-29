@@ -49,6 +49,7 @@ export class SharedService {
  updateSelectedValuee(newValue: string) {
     localStorage.setItem('selectedValue', newValue);
   }
+  
  getSelectedValue(): string {
      const data = localStorage.getItem('selectedValue') || 'All';
      return data;

@@ -27,8 +27,8 @@ export const environment = {
   // apiUrl: 'https://shrikarniroadlines.com/softctl.shrikarniroadlines.com/SoftCTL/'
   // apiUrl: 'https://www.softctl.com/Zipwheel/SoftCTL/'
   // apiUrl: 'https://moonlineexpresscargo.com/SoftCTL/SoftCTL/'
-  apiUrl: 'https://wheelstrans.com/SoftCTL/SoftCTL/'
-  //  apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
+  // apiUrl: 'https://wheelstrans.com/SoftCTL/SoftCTL/'
+   apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
 
   // pending
   // compare graph color in admin dashboard , customer dashboard and branch dashboard

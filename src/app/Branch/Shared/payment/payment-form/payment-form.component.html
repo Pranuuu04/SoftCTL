@@ -688,7 +688,7 @@
 
         <tbody>
 
-          <tr [formGroup]="tempRateDetailForm" class="top-sticky">
+          <tr *ngIf="!cashToPayReportFlag" [formGroup]="tempRateDetailForm" class="top-sticky">
 
             <td data-label="Pay Mode">
               <input list="paymentModes" formControlName="paymentMode" class="form-control" />
