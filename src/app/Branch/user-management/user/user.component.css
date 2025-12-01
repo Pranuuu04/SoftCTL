@@ -32,6 +32,37 @@
       padding-top: 10px; 
       font-family: auto;
   }
+  .textOnInput,
+  .textOnSelect {
+    position: relative;
+    margin-bottom: 7px; 
+    margin-top: 5px;
+  }
+  
+  .textOnInput label,
+  .textOnSelect label {
+    position: absolute;
+    top: -13px;
+    left: 10px;
+    text-wrap: nowrap;
+    padding: 2px;
+    z-index: 1;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .textOnInput label:after,
+  .textOnSelect label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    z-index: -1;
+  }
    /* input button{
     border: 1px solid #d2d2d2 !important; 
     border-radius: 0.25rem;
@@ -94,11 +125,11 @@
       font-family: auto;
   }
   
-  label{
+  /* label{
     padding-bottom: 4px;
     margin-top: 10px;
       margin-bottom: 0;
-  }
+  } */
   .column {
       float: left;
       width: 33.33%;
@@ -184,6 +215,25 @@ h3 {
   line-height: 16px;
   height: 16px;
 }
+}
+.other-button{
+  width: 40px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  mat-icon{
+    color: white;
+  }
+   i{
+    color: white;
+  }
+  text-transform: capitalize;
 }
   .submit-btn button{
     width: 103px;

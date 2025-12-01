@@ -566,7 +566,7 @@
               <input class="form-control" type="text" placeholder="Enter EwayBill No" formControlName="eWayBill" [(ngModel)]="eWayBill" [value]="eWayBill">
             </div>
           </div>
-             <div class="col-sm-6" style="margin-top: -4px;">
+          <div class="col-sm-6" style="margin-top: -4px;">
             <div class="textOnSelect">
               <label class="span">Weight type</label>
               <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
@@ -580,7 +580,7 @@
           <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText"><span style="color: red;">*</span>Actual Wt</label>
-              <input class="form-control" type="number"  min="0" formControlName="actualWt" [value]="actualWt"  (input)="compareWeights()">
+              <input class="form-control" type="number"  min="0" formControlName="actualWt" (input)="compareWeights()">
               <div *ngFor="let validation of validationMessage.actualWt">
                 <div class="error-message"
                   *ngIf="bookingForm.get('actualWt').hasError(validation.type) && (bookingForm.get('actualWt').dirty || bookingForm.get('actualWt').touched)">
@@ -595,43 +595,19 @@
               <input class="form-control" type="number"  min="0" (input)="compareWeights()" placeholder="Enter Volumetric Weight" formControlName="volumetricWt" >
             </div>
           </div>
-           <div class="col-sm-2" style="display: flex; justify-content: right;">
+          <div class="col-sm-2" style="display: flex; justify-content: right;">
             <button matTooltip="Consigner Volumetric" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVolumetricModal(consignerCode,selectedProduct)"><i class="fa-solid fa-calculator"></i></button>
           </div>
-          <!-- <div class="col-sm-4" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Consigner Volumetric" type="button" class="btn btn-light form-button" (click)="openVolumetricModal(consignerCode,selectedProduct)"><i class="fa-solid fa-calculator"></i>Cal</button>
-          </div> -->
         </div>
-
-        <!-- <div class="form-group row">
-          <div class="col-sm-8">
-            <div class="textOnInput">
-              <label for="inputText">Volumetric Wt</label>
-              <input class="form-control" type="number"  min="0" (input)="compareWeights()" placeholder="Enter Volumetric Weight" formControlName="volumetricWt" >
-            </div>
-          </div>
-          <div class="col-sm-4" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Consigner Volumetric" type="button" class="btn btn-light form-button" (click)="openVolumetricModal(consignerCode,selectedProduct)"><i class="fa-solid fa-calculator"></i>Cal</button>
-          </div>
-        </div> -->
 
         <div class="form-group row">
           <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText">Charge Wt</label>
-              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [(ngModel)]="chargedWt" [value]="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
+              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
             </div>
           </div>
-          <!-- <div class="col-sm-6" style="margin-top: -4px;">
-            <div class="textOnSelect">
-              <label class="span">Actual Wt</label>
-              <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
-                <ng-option value="fixed" style="font-size: 14px;">Fixed</ng-option>
-                <ng-option value="weight" style="font-size: 14px;">Weight</ng-option>
-              </ng-select>
-            </div>
-          </div> -->
-        </div>
+          </div>
       </div>
 
       <div class="col-sm-3 p-0 mt-2">

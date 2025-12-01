@@ -3,9 +3,9 @@
   padding-top: 1.1px;
   color: black;
 }
-.main-div{
-  max-height: auto;
+.table-div{
   overflow: auto;
+  max-height: 70vh;
 }
 form .col-sm-1{
   padding-right: 8px;
@@ -14,7 +14,7 @@ form .col-sm-1{
   height: 26px;
 }
 .tracking-container {
-  height: 40vh;
+  height: 60vh;
 }
 
 h4.section-title{
@@ -41,16 +41,14 @@ h4.section-title:before {
 .shipt i{
   font-size: 24px;
 }
-input, 
-textarea{    
-    height: 77px;
+input{
+    border: 1px solid #d2d2d2; 
     border-radius: 0.25rem;
     padding-left: 10px; 
     padding-top: 10px; 
     font-family: auto;
-    font-size: 18px;
-    border:1px Solid black;
 }
+
 thead {
     position: sticky;
     top: 0;
@@ -126,11 +124,11 @@ h4{
   font-size: 15px;
 }
 label{
-    margin-top: 0.5rem;
+    margin-top: 4px;
     margin-bottom: 0;
 }
 .action button{
-  width: 60px;
+  width: 45px;
   text-align: center;
   border-radius: 8px;
   font-weight: 600;
@@ -143,25 +141,31 @@ label{
   line-height: 26px;
   text-transform: capitalize;
 }
-.action .find:hover,
-.action .find:focus
+.action .find
 {
-  background-color: white;
-  color: #28a745;
+  background-color: #2e3f55;
+  i{
+    color: white;
+  }
 }
-.action .clear{
-  color: black;
+.action .clear
+{
+  background-color: red;
+   i{
+    font-size: larger;
+    color: white;
 }
-.action .clear:hover,
+}
+/* .action .clear:hover,
 .action .clear:focus
 {
   background-color: white;
   color: red;
-}
+} */
 .main-div{
-  border: 1px solid black; 
-  margin: 15px 0;
-  max-height: 100vh;
+  /* border: 1px solid black; 
+  margin: 15px 0; */
+  
 }
 
 @media  (min-width: 375px) and (max-width: 425px){
@@ -215,9 +219,35 @@ color: white;
   color: darkblue;
   text-decoration: none;
 }
-.pod-thumbnail {
-  height: 25px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
+
+  .textOnInput,
+  .textOnSelect {
+    position: relative;
+    margin-bottom: 15px; 
+  }
+  
+  .textOnInput label,
+  .textOnSelect label {
+    position: absolute;
+    top: -13px;
+    left: 7px;
+    padding: 2px;
+    z-index: 1;
+    height: 20px;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .textOnInput label:after,
+  .textOnSelect label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }

@@ -664,7 +664,7 @@
           <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText"><span style="color: red;">*</span>Actual Wt</label>
-              <input class="form-control" type="number"  min="0" formControlName="actualWt" [value]="actualWt" [(ngModel)]="actualWt" (input)="compareWeights()">
+              <input class="form-control" type="number"  min="0" formControlName="actualWt" (input)="compareWeights()">
               <div *ngFor="let validation of validationMessage.actualWt">
                 <div class="error-message"
                   *ngIf="bookingForm.get('actualWt').hasError(validation.type) && (bookingForm.get('actualWt').dirty || bookingForm.get('actualWt').touched)">
@@ -691,7 +691,7 @@
           <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText">Charge Wt</label>
-              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" [value]="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
+              <input class="form-control" type="number"  min="0" placeholder="search Charge Wt" formControlName="chargedWt" (focus)="userHasEditedRate = true; getRatePerKg()" (click)="getRatePerKg()">
             </div>
           </div>
         

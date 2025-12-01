@@ -330,8 +330,9 @@ chargeMap = {
  this.defaultDate = new Date().toISOString().split('T')[0];
 
   this.selectedCustType = localStorage.getItem('custType') || '';
-  this.loadConsignerData();
-    this.renderForm();
+  // this.loadConsignerData();
+    this.renderForm();    
+    this.compareWeights();
     const savedAwbType = localStorage.getItem('awbType');
     if (savedAwbType) {
       this.awbType = savedAwbType;
@@ -345,11 +346,13 @@ chargeMap = {
     if (this.userType === 'Admin') {
       this.selectedOrigin = this.sharedService.getBranchType();
       this.sessionLocationCode = this.selectedOrigin;
+      this.loadConsignerData();
       this.getPermission();
     } else {
       this.sessionLocationCode = localStorage.getItem('originCode');
       this.sessionLocationName = localStorage.getItem('originName');
       this.selectedOrigin = this.sessionLocationCode;
+      this.loadConsignerData();
       this.getPermission();
     }
     this.loadState();
@@ -380,8 +383,6 @@ chargeMap = {
     this.getPinCode(event);
     this.getLabelData();
     this.setControlState();
-    this.compareWeights();
-
   }
   getCurrentDate(): string {
     const today = new Date();
@@ -2344,7 +2345,7 @@ compareWeights() {
         destinationCode: this.bookingForm.value.destination || '',
         qty: this.bookingForm.value.pcs || this.quantity || '',
         ActualWt: this.bookingForm.value.actualWt || 0,
-        VolumetricWt: this.volumetricWt ||  this.bookingForm.value.volumetricWt || 0,
+        VolumetricWt: this.bookingForm.value.volumetricWt || this.volumetricWt || 0,
         DelvTime: '',
         VendorCode1: this.selectedVendor1 || this.bookingForm.value.selectedVendor1 || '',
         VendorAwbNo1: this.forwardNo || this.bookingForm.value.forwardingNo || '',

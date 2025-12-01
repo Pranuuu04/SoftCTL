@@ -348,6 +348,7 @@ constructor(public httpService: HttpService,
   this.selectedCustType = localStorage.getItem('custType') || '';
   // this.loadConsignerData();
     this.renderForm();
+    this.compareWeights();
     const savedAwbType = localStorage.getItem('awbType');
     if (savedAwbType) {
       this.awbType = savedAwbType;
@@ -370,7 +371,6 @@ constructor(public httpService: HttpService,
           this.sessionLocationCode = value;
           this.loadConsignerData();
           this.getPermission();
-         console.log('sessionLocationCode updated from sharedService:', value);
     });
     } else {
       this.sessionLocationCode = localStorage.getItem('originCode');
@@ -378,7 +378,6 @@ constructor(public httpService: HttpService,
       this.selectedOrigin = this.sessionLocationCode;
       this.loadConsignerData();
       this.getPermission();
-      this.loadConsignerData();
     }
     // localStorage.removeItem('custType');
     //         localStorage.removeItem('consignerCode');
@@ -1934,36 +1933,6 @@ getGstDataWithoutModal(subTotalAmt: any, consignerCode: any) {
     });
   }
 
-// compareWeights() {
-//   const actualWt = Number(this.bookingForm.get('actualWt')?.value) || 0;
-//   const volumetricWt = Number(this.bookingForm.get('volumetricWt')?.value) || 0;
-
-//   let weight = 0;
-
-//   if (actualWt === 0 && volumetricWt === 0) {
-//     weight = 0;
-//   } else if (actualWt && volumetricWt) {
-//     weight = Math.max(actualWt, volumetricWt);
-//   } else if (actualWt) {
-//     weight = actualWt;
-//   } else if (volumetricWt) {
-//     weight = volumetricWt;
-//   } else {
-//     weight = 0;
-//   }
-
-//   // ✅ Rounding rule
-//   const decimalPart = weight - Math.floor(weight);
-//   if (decimalPart > 0.5) {
-//     this.chargedWt = Math.ceil(weight);
-//   } else if (decimalPart === 0.5) {
-//     this.chargedWt = Math.ceil(weight);
-//   } else {
-//     this.chargedWt = Math.floor(weight);
-//   }
-
-//   this.freightCharge();
-// }
 compareWeights() {
   const actualWt = Number(this.bookingForm.get('actualWt')?.value) || 0;
   const volumetricWt = Number(this.bookingForm.get('volumetricWt')?.value) || 0;
@@ -1980,7 +1949,6 @@ compareWeights() {
     weight = volumetricWt;
   }
 
-  // ✅ Custom rounding rule
   const decimalPart = weight - Math.floor(weight);
   if (decimalPart >= 0.5) {
     this.chargedWt = Math.ceil(weight);
@@ -1997,35 +1965,6 @@ compareWeights() {
 
   this.freightCharge();
 }
-
-// compareWeights() {
-//   const actualWt = Number(this.bookingForm.get('actualWt')?.value) || 0;
-//   const volumetricWt = Number(this.bookingForm.get('volumetricWt')?.value) || 0;
-
-//   let weight = 0;
-
-//   if (actualWt && volumetricWt) {
-//     weight = Math.max(actualWt, volumetricWt);
-//   } else if (actualWt) {
-//     weight = actualWt;
-//   } else if (volumetricWt) {
-//     weight = volumetricWt;
-//   }
-
-//   // ✅ New rounding rule
-//   if (weight < 1) {
-//     this.chargedWt = weight; // keep decimals like 0.1
-//   } else {
-//     const decimalPart = weight - Math.floor(weight);
-//     if (decimalPart >= 0.5) {
-//       this.chargedWt = Math.ceil(weight);
-//     } else {
-//       this.chargedWt = Math.floor(weight);
-//     }
-//   }
-
-//   this.freightCharge();
-// }
 
 
   calculateTotalAmount(): void {
@@ -2367,7 +2306,7 @@ disableEnter(event: KeyboardEvent) {
             this.consignerCode = resp.Data.data.Customer_Code;
             // this.selectedMode = resp.Data.data.Mode_code;
             // this.selectedOrigin = resp.Data.data.Origin_code;
-            this.actualWt = resp.Data.data.ActualWt;
+            // this.actualWt = resp.Data.data.ActualWt;
             this.billParty = resp.Data.data.BillParty;
             this.quantity = resp.Data.data.qty;
             this.containerType = resp.Data.data.box_pcs;
@@ -2377,7 +2316,7 @@ disableEnter(event: KeyboardEvent) {
             this.serialNo = resp.Data.data.S_No;
             this.remarks = resp.Data.data.Remark;
             this.vendorChargedWt = resp.Data.data.VendorChargewt;
-            this.chargedWt = resp.Data.data.ChargedWt;
+            // this.chargedWt = resp.Data.data.ChargedWt;
 
             this.selectedVendor1 = resp.Data.data.Vendor_Code1;
             this.forwardNo = resp.Data.data.VendorAwbNo1;
@@ -2388,7 +2327,7 @@ disableEnter(event: KeyboardEvent) {
             this.vendor3 = resp.Data.data.Vendor_Code3;
             this.forwarding3 = resp.Data.data.VendorAwbNo3;
 
-            this.volumetricWt = resp.Data.data.VolumetricWt;
+            // this.volumetricWt = resp.Data.data.VolumetricWt;
             this.totalAmount = resp.Data.data.TotalAmt;
             // this.ratePerKg = resp.Data.data.RatePerkg;
             this.docketCharges = resp.Data.data.DocketChrgs;
@@ -2450,6 +2389,9 @@ disableEnter(event: KeyboardEvent) {
               trainFlightNo: resp.Data.data.Train_Flight_No,
               ratePerKg: resp.Data.data.RatePerkg,
               freightAmt: resp.Data.data.Rate,
+              chargedWt: resp.Data.data.ChargedWt,
+              actualWt: resp.Data.data.ActualWt,
+              volumetricWt: resp.Data.data.VolumetricWt
             });
             this.pinCode = resp.Data.data.Consignee_Pin;
             // this.stateName = resp.Data.data.Consignee_State;
@@ -2632,8 +2574,8 @@ disableEnter(event: KeyboardEvent) {
         originCode: this.selectedOrigin || this.bookingForm.value.origin || '',
         destinationCode: this.bookingForm.value.destination || '',
         qty: this.bookingForm.value.pcs || this.quantity || '',
-        ActualWt: this.actualWt || this.bookingForm.value.actualWt || 0,
-        VolumetricWt: this.volumetricWt ||  this.bookingForm.value.volumetricWt || 0,
+        ActualWt: this.bookingForm.value.actualWt || 0,
+        VolumetricWt: this.bookingForm.value.volumetricWt || this.volumetricWt || 0,
         DelvTime: '',
         trainFlight: this.bookingForm.value.trainFlight || '',
         trainFlightNo: this.bookingForm.value.trainFlightNo || '',
