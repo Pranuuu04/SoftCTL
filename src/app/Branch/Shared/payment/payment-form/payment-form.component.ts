@@ -44,7 +44,8 @@ export class PaymentFormComponent implements OnInit {
   customerCode:any
   cashToPayData:any
   cashToPayReportFlag:boolean = false
-   reportBranch: any;
+  reportBranch: any;
+  PaymentEntryData:any[]=[];
 
   rateDetails: any[] = [];
 
@@ -217,6 +218,7 @@ bankList = [
     });
 
     this.getPaymentEntryByCustomerCode();
+     this.paymentEntryData(1,1000);
 
     this.WalletEntryForm  = this.formbuilder.group({
       WalletDate: [this.currentDate, Validators.required],
@@ -245,7 +247,7 @@ bankList = [
 
     if(this.cashToPayReportFlag){
       this.getCashToPayReportData();
-    }else{
+    }else if(!this.cashToPayReportFlag){
       this.getCashToPayData();
     }
      
@@ -542,6 +544,25 @@ getCreditNoteByCustomerCode(): void {
       return;
     }
 
+    // const newDetail = this.paymentEntryForm.value;
+      // const newDetail = {
+      //   Customer_Name: this.paymentEntryForm.value.Customer,
+      //   Bank_Name: this.paymentEntryForm.value.BankName,
+      //   CheqDt: this.paymentEntryForm.value.receiptDt,
+      //   RecvDt: this.paymentEntryForm.value.receiveDt,
+      //   Amount_Type: this.paymentEntryForm.value.paymentType,
+      //   ChequeNo: this.paymentEntryForm.value.receiptNo,
+      //   Recv_Name: this.paymentEntryForm.value.receiverName,
+      //   TDS: this.paymentEntryForm.value.TDS,
+      //   Amount: this.paymentEntryForm.value.Amount,
+      //   Debit: this.paymentEntryForm.value.discount,
+      //   Remark: this.paymentEntryForm.value.remark,
+      //   Deposit_Bank: this.paymentEntryForm.value.DepositeBank,
+      // };
+
+      // const current = this.paymentEntryDataSource.data;
+      // this.paymentEntryDataSource.data = [...current, newDetail];
+
     const formValue = this.paymentEntryForm.value;
 
     const payload = {
@@ -565,7 +586,9 @@ getCreditNoteByCustomerCode(): void {
       next: (res: any) => {
         if (res.status === 1) {
           this.openSnackBar(res.message, 'custom-snackbar');
-          this.CloseDialog();
+          // this.CloseDialog();
+          this.paymentEntryData(1,1000);
+          this.paymentEntryForm.reset();
         } else {
           this.openSnackBar(res.message, 'error-snackbar');
         }
@@ -577,7 +600,7 @@ getCreditNoteByCustomerCode(): void {
     });
   }
 
-  getPaymentEntryByCustomerCode(): void {
+getPaymentEntryByCustomerCode(): void {
     if (!this.Ref_Club) { return; }
   this.paymentService
     .getByReceivedPayCode(this.Ref_Club)
@@ -612,6 +635,20 @@ getCreditNoteByCustomerCode(): void {
       }
     });
 }
+
+paymentEntryData(pageNumber: number, pageSize: number) {
+     this.paymentService.receivedPayNotes(pageNumber, pageSize).subscribe((resp: any) => {
+       if (resp.status === 1) {
+         this.showTable = true;
+         this.paymentEntryDataSource.data = resp.Data;
+        //  this.length = resp.count;
+        //  this.calculatePageCount();
+       } else {
+          this.showTable = false;
+          // this.entryViewData = [];
+        }
+     });
+  }
 
 
 SubmitWalletEntry() {

@@ -1270,6 +1270,9 @@ saveReportSetup(apiName: string, data: any) {
   return this.http.post(`${environment.apiUrl}Reports/${apiName}`, data);
 }
 
+saveManifestSetup(apiName: string, data: any){
+  return this.http.post(`${environment.apiUrl}Manifest/${apiName}`, data);
+}
 
 getAllCustomer(masterName: string, code: any) {
   return this.http.get(`${environment.apiUrl}Master/allMasters?operation=getCustomer&masterName=${masterName}&code=${code}`);
