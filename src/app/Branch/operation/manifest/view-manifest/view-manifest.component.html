@@ -63,17 +63,15 @@
                      <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="openSetup()">
                         <i class="fa-solid fa-sliders" style="color: white; font-size: medium;"></i>
                         <span class="text">Setup</span></button>
-                      <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()"><i
+                      <button type="button" class="btn btn-outline-light pb-0 mt-0" (click)="downloadSample()" disabled><i
                           class="fa-solid fa-table"  style="color: white;"></i>
                         <span class="text">XLs</span></button>
                       <!-- <button type="button" class="btn btn-outline-light pb-0 mt-0" disabled><i class="fa-solid fa-file-pdf" style="color: white;"></i>
                         <span class="text">PDF</span></button> -->
                     </div>
-
                   </div>
                 </div>
             </div>
-
 
     </form>
     <div class="row mainrow">
@@ -100,13 +98,11 @@
           <div class="table-responsive text-nowrap">
             <table id="myTable" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
 
-          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+          <!-- <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
 
               <th mat-header-cell *matHeaderCellDef>
                 {{ displayedColumnsManifest[column] || column }}
               </th>
-
-
 
               <td mat-cell *matCellDef="let element; let i = index">
 
@@ -127,10 +123,10 @@
 
               </td>
 
-            </ng-container>
+            </ng-container> -->
 
 
-              <!-- <ng-container matColumnDef="shipment">
+              <ng-container matColumnDef="shipment">
                 <th mat-header-cell *matHeaderCellDef> Shipment </th>
                 <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
               </ng-container>
@@ -173,9 +169,9 @@
               <ng-container matColumnDef="driverName">
                 <th mat-header-cell *matHeaderCellDef> Driver Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.driverName}} </td>
-              </ng-container> -->
+              </ng-container>
         
-              <!-- <ng-container matColumnDef="Action">
+              <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element">
                   <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
@@ -183,7 +179,7 @@
                   <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon>
                   <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
                 </td>
-              </ng-container> -->
+              </ng-container>
         
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -1,6 +1,6 @@
 <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
     <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <div class="textOnSelect">
           <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
           <ng-select
@@ -14,20 +14,33 @@
       </div>
 
       <div class="col-sm-2">
+        <div class="textOnSelect">
+          <label for="rateCustomer"><span style="color: red;">*</span>Destination :</label>
+          <ng-select
+            [items]="customerList"
+            class="custom-select1"
+            bindLabel="customerName"
+            bindValue="customerCode"
+            formControlName="rateCustomer">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-sm">
         <div class="textOnInput">
           <label for="fromDate"><span style="color: red;">*</span>From date :</label>
           <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
         </div>
       </div>
 
-       <div class="col-sm-2">
+       <div class="col-sm">
         <div class="textOnInput">
           <label for="fromDate"><span style="color: red;">*</span>To date :</label>
           <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
         </div>
       </div> 
 
-      <div class="col-sm-2">
+      <div class="col-sm">
         <div class="textOnInput">
           <label for="AwbNo">AwbNo :</label> <!--<span style="color: red;">*</span>-->
           <input class="form-control" type="text" formControlName="AwbNo">

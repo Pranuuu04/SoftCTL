@@ -101,7 +101,7 @@ export class PaymentEntryComponent implements OnInit {
     return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
   }
 
-  paymentEntryData(pageNumber: number, pageSize: number) {
+paymentEntryData(pageNumber: number, pageSize: number) {
      this.paymentService.receivedPayNotes(pageNumber, pageSize).subscribe((resp: any) => {
        if (resp.status === 1) {
          this.showTable = true;
@@ -218,8 +218,9 @@ openPaymentForm(element) {
        width: '90vw',
        maxWidth: '90vw',
        height: 'auto',
-       maxHeight: '85vh',
-      disableClose: true
+       maxHeight: '95vh',
+        panelClass: 'payment-dialog-panel',
+        disableClose: true
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {}
