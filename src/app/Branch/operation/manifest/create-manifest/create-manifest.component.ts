@@ -332,6 +332,16 @@ getVehicleNumbers() {
         this.listData = [];
         this.showTable = false;
         this.AwbNoDatalist = [];
+
+          this.Driver_Licence_No = '';
+          this.Opening_Km = '';
+          this.Vehicle_diesel_No = '';
+          this.Vehicle_diesel_Ltrs = '';
+          this.Kata_Weight = '';
+          this.Slip_No = '';
+          this.Brocker_Name = '';
+          this.Advance_Paid = '';
+          this.Diesel_Amount = '';
       } else {
         this.openSnackBar(resp.message, 'error-snackbar')
       }
@@ -341,15 +351,17 @@ getVehicleNumbers() {
   openaddmanifest() {
     const dialogRef = this.dialog.open(AddManifestComponent, {
       data: {
-        Driver_Licence_No: this.Driver_Licence_No,
-        Opening_Km: this.Opening_Km,
-        Vehicle_diesel_No: this.Vehicle_diesel_No,
-        Vehicle_diesel_Ltrs: this.Vehicle_diesel_Ltrs,
-        Kata_Weight: this.Kata_Weight,
-        Slip_No: this.Slip_No,
-        Brocker_Name: this.Brocker_Name,
-        Advance_Paid: this.Advance_Paid,
-        Diesel_Amount: this.Diesel_Amount
+        loadManifestData: {
+          Driver_Licence_No: this.Driver_Licence_No,
+          Opening_Km: this.Opening_Km,
+          Vehicle_diesel_No: this.Vehicle_diesel_No,
+          Vehicle_diesel_Ltrs: this.Vehicle_diesel_Ltrs,
+          Kata_Weight: this.Kata_Weight,
+          Slip_No: this.Slip_No,
+          Brocker_Name: this.Brocker_Name,
+          Advance_Paid: this.Advance_Paid,
+          Diesel_Amount: this.Diesel_Amount
+        } 
       },
       width: '55rem',
       disableClose: true

@@ -76,9 +76,9 @@ onFileSelected(event: any) {
   const file = event.target.files[0];
   if (!file) return;
 
-  const maxSize = 30 * 1024; // 30 KB
+  const maxSize = 1025 * 1024; // 30 KB
   if (file.size > maxSize) {
-    this.openSnackBar('File size must be less than 30 KB!', 'error-snackbar');
+    this.openSnackBar('File size must be less than 1 MB!', 'error-snackbar');
     event.target.value = '';
     return;
   }
