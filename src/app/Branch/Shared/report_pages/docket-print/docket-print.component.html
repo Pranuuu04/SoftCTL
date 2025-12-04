@@ -11,7 +11,7 @@
   </div>
   </div>
   <form  [formGroup]="PrintForm" (ngSubmit)="onSubmit(PrintForm.value)">
-    <div class="row">
+    <div class="row pb-2" style="border-bottom: 1px solid #d2d2d2;">
 
     <div class="col-sm-6 d-flex" style="height: 30px; justify-content: center; right: 6px;">
         <input type="radio"id="awbNo" name="print" value="awbNo" checked (click)="onCheckedAwb()" [(ngModel)]="printType">
@@ -23,17 +23,22 @@
       <label for="cust" class="cust" style="font-size: small;">Customer</label>
     </div>
    </div>
-   <div class="row"[hidden]="awbDisabled">
-      <div class="col-sm-6">
-        <label for="fAwbNo" class="col-form-label">From Awb No.</label>
+   <div class="row pb-2 mt-2" [hidden]="awbDisabled"  style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+        <label for="fAwbNo">From Awb No.</label>
         <input type="text" placeholder="Enter Awb No." class="form-control" id="fAwbNo" formControlName="fAwbNo" [(ngModel)]="fAwbNo"/>
       </div>
-      <div class="col-sm-6">
-        <label for="ToAwbNo" class="col-form-label">To Awb No.</label>
+      </div>
+      <div class="col-sm-12 mt-1">
+        <div class="textOnInput">
+        <label for="ToAwbNo">To Awb No.</label>
         <input type="text" placeholder="Enter Awb No." class="form-control" id="ToAwbNo" formControlName="ToAwbNo" [(ngModel)]="ToAwbNo"/>
       </div>
-      <div class="col-sm-12">
-        <label for="Employee" class="col-form-label">Print Format</label>
+      </div>
+      <div class="col-sm-12 mt-1">
+        <div class="textOnSelect">
+        <label for="Employee">Print Format</label>
         <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintType" formControlName="multiplePrintType">
           <option value="" disabled selected>Select Format Size</option>
           <!-- <option value="1Format">1 Docket Print</option>
@@ -46,11 +51,13 @@
           <!-- <option value="label3" >Label Sticker Unique</option> -->
         </select>
       </div>
+      </div>
     </div>
 
-    <div class="row" [hidden]="CustDisabled">
+    <div class="row pb-1 mt-1" [hidden]="CustDisabled">
       <div class="col-sm-12" *ngIf="this.userType === 'Customer'">
-        <label for="Customer" class="col-form-label">Customer name</label>
+        <div class="textOnInput">
+        <label for="Customer">Customer name</label>
         <input type="text" class="form-control" formControlName="Customer" readonly/>
         <!-- <select id="Customer" class="custom-select" formControlName="Customer">
           <option value="" selected disabled>Select Customer</option>
@@ -58,30 +65,38 @@
             {{ item.customerName }} &nbsp; ({{ item.customerCode }})
           </option>
         </select> -->
+        </div>
     </div>
-    <div class="col-sm-12" *ngIf="this.userType !== 'Customer'">
-        <label for="Customer" class="col-form-label">Customer name</label>
+    <div class="col-sm-12  mt-1" *ngIf="this.userType !== 'Customer'">
+        <div class="textOnSelect">
+        <label for="Customer">Customer name</label>
         <select id="Customer" class="custom-select" formControlName="Customer">
           <option value="" selected disabled>Select Customer</option>
           <option value="{{item.customerCode}}" *ngFor="let item of customerNameList">
             {{ item.customerName }} &nbsp; ({{ item.customerCode }})
           </option>
         </select>
+        </div>
     </div>
     </div>
     <div class="row" [hidden]="CustDisabled">
       <div class="col-sm-6">
-        <label for="fromdate" class="col-form-label">Date</label>
+        <div class="textOnInput">
+        <label for="fromdate">Date</label>
         <input type="date" value="{{currentDate}}" class="form-control" id="fromdate" formControlName="fromdate" />
       </div>
+      </div>
       <div class="col-sm-6">
-        <label for="todate" class="col-form-label">Date</label>
+        <div class="textOnInput">
+        <label for="todate">Date</label>
         <input type="date" value="{{currentDate}}" class="form-control" id="todate" formControlName="todate"/>
       </div>
+      </div>
     </div>
-    <div class="row"  [hidden]="CustDisabled">
+    <div class="row pb-2 mt-1"  style="border-bottom: 1px solid #d2d2d2;" [hidden]="CustDisabled">
       <div class="col-sm-12">
-        <label for="Employee" class="col-form-label">Print Format</label>
+        <div class="textOnSelect">
+        <label for="Employee">Print Format</label>
         <select id="Employee" class="custom-select" [(ngModel)]="multiplePrintType" formControlName="multiplePrintType">
           <option value="" disabled selected>Select Format Size</option>
           <!-- <option value="1Format">1 Docket Print</option>
@@ -93,6 +108,7 @@
           <option value="label3" >Sticker Print3 </option> -->
           <!-- <option value="label3" >Label Sticker Unique</option> -->
         </select>
+        </div>
       </div>
     </div>
         <!-- <div class="row d-flex m-0" style="justify-content: right;">
@@ -103,8 +119,8 @@
           </div>
          </div> -->
          <div class="row d-flex m-0" style="justify-content: right;" >
-          <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;" >
-            <button type="submit" class="btn btn-info" >Ok</button>
+          <div class="col-sm-4 d-flex submit-btn" style="justify-content: right; padding-right: 0;" >
+            <button type="submit" class="btn btn-light" >Submit</button>
           </div>
       </div>
       </form>

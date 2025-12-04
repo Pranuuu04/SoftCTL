@@ -16,57 +16,30 @@
       background: #a6bcbd;">X</button>
   </div>
   </div>
-
-
-
     <form [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
 
       <div class="row">
         <div class="col-sm-12">
+        <div class="textOnInput">
           <label for="manifestNo" class="col-form-label">Manifest No.</label>
           <input type="text"  class="form-control" id="manifestNo" formControlName="manifestNo"
             placeholder="enter Manifest no." readonly />
         </div>
+        </div>
       </div>
-      <div class="row">
+      <div class="row" style="border-bottom: 1px solid #d2d2d2;">
         <div class="col-sm-12">
+        <div class="textOnInput">
           <label for="awbNo" class="col-form-label">AWB No.</label>
           <input type="text" placeholder="date" class="form-control" id="awbNo" formControlName="awbNo"
             placeholder="enter awbNo" />
         </div>
+        </div>
       </div>
       <div class="row d-flex m-0" style="justify-content: right;">
         <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;">
-          <button type="submit" class="btn btn-info">Ok</button>
+          <button type="submit" class="btn btn-light">Submit</button>
         </div>
       </div>
-
     </form>
 </div>
-
-<!-- <div class="container">
-              <div class="row" style="border-bottom: 1px solid #d2d2d2;">
-                <div class="col-sm-6">
-                  <h1 style="font-weight: 600;
-                  font-size: large;
-                  margin-bottom: 0;
-                  margin-top: 7px; ">Add Drs.</h1>
-                </div>
-                  <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
-                  <button type="button" class="btn btn-light" style="width: 30px;
-                  text-align: center;
-                  line-height: 30px;
-                  height: 30px;
-                  font-weight: 600;
-                  font-size: large;
-                  background: #a6bcbd;">X</button>
-              </div>
-              </div>
-              
-           </div> -->
-
-<!-- </div>
-    <div class="col-sm-1 generate text-right">
-      <button type="submit" class="dot btn-warning">
-         OK
-      </button> -->

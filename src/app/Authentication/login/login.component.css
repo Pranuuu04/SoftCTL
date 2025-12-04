@@ -21,9 +21,6 @@
 	max-width: 100%;
 	color:black;
 	}
-	/* .upper{
-	padding: 1rem 3rem;
-	} */
 	.upper .img{
 		padding: 1rem 3rem;
 		height: 15vh;
@@ -50,11 +47,11 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background-color:rgb(255 255 255 / 66%); /* Adds a dark overlay */
-		z-index: 1; /* Ensures the overlay is above the background image */
+		background-color:rgb(255 255 255 / 66%);
+		z-index: 1;
 	}
 	.description ul{
-	  position: relative; /* Ensures the content is above the overlay */
+	  position: relative;
 	  z-index: 2;
 	  line-height: 2;
 	  font-size: 15px;
@@ -81,7 +78,6 @@
 	}
 	li{
 		font-weight: 500;
-		/* color: black; */
 	}
 	  li i::before {
 		color: #27278b;
@@ -92,11 +88,7 @@
 	  margin-bottom: 2px;
 	}
 	.img3{
-		/* height: 136px;
-		width: 285px; */
 		height: 60px;
-		/* width: 220px; */
-		/* margin-top: 15px; */
 	}
 	.left-side h2 {
 	font-size: 28px;
@@ -177,12 +169,6 @@
   border-color: #007bff;
   outline: none;
   }
-  /* #username{
-	width: 100%;
-  }
-  #password{
-	width: 85%;
-  } */
   
   .error-message {
   color: red;
@@ -192,9 +178,6 @@
 	padding-right: 7px;
   }
   @media  (min-width: 768px) and  (max-width: 1024px){
-	.img3{
-		/* height: 150px; */
-	  }
 	  ul h4{
 		font-size: 14px;
 	  }
@@ -203,10 +186,6 @@
   @media  (min-width: 425px) and  (max-width: 560px){
 	.upper{
 	  padding: 0.5rem 1rem;
-	}
-	.img3{
-	  /* height: 230px;
-	  width: 230px; */
 	}
 	.logo2{
 	  height: 55px;
@@ -234,8 +213,6 @@
 	  font-size: 13px;
 	}
 	.img3{
-		/* height: 130px;
-		width: 220px; */
 	  justify-content: center;
 	}
 	::ng-deep .description{

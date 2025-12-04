@@ -30,14 +30,14 @@ export class PendingDispatchedComponent implements OnInit {
 
   constructor(private http: AllServicesService,
               private httpService: HttpService){
-                this.sessionLocationCode = localStorage.getItem('originCode');
               }
   
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
-    this.destinationName = localStorage.getItem('selectedValue');
     this.dataSource = new MatTableDataSource<any>(this.ManifestViewData);
-    this.sessionLocationCode = localStorage.getItem('originCode');
+    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
       this.pendingTableData(1, 15);
   }
 
@@ -52,7 +52,7 @@ export class PendingDispatchedComponent implements OnInit {
 
   pendingTableData(pageNumber: number, pageSize: number){
    if(this.userType === 'Admin'){
-    this.httpService.get(`${environment.apiUrl}dispatch/pendingDispatch?sessionLocationCode=${this.destinationName}&pageNumber=${pageNumber}&pageSize=${pageSize}`).then((resp:any)=>{
+    this.httpService.get(`${environment.apiUrl}dispatch/pendingDispatch?sessionLocationCode=${this.sessionLocationCode}&pageNumber=${pageNumber}&pageSize=${pageSize}`).then((resp:any)=>{
       if (resp.status === 1){
         this.showTable =true;
         this.ManifestViewData = resp.Data;

@@ -225,7 +225,7 @@ closeSidebarOnMobile(route?: string) {
         data: {
           action: 'add'
         },
-        width: '40rem',
+        width: '25rem',
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(res => {

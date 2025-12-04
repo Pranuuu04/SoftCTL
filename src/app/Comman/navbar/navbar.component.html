@@ -5,6 +5,21 @@
           </div> 
           <!-- <label class="textOnInput"><span style="color: red;" *ngIf="this.userType === 'Admin' && !this.isBookingPage">*</span>Select Branch</label> -->
           <div class="navbar-wrapper" *ngIf="this.userType === 'Admin'">
+ <!-- <ng-select
+  [items]="branchList"
+  [(ngModel)]="branchType"
+  bindLabel="locationName"
+  bindValue="locationCode"
+  (change)="onBranchTypeChange($event)"
+  [clearable]="false"
+  class="custom-select1"
+  [disabled]="!isDropdownEnabled()"
+>  <ng-option [value]="'All'">All Branch</ng-option>
+
+  <ng-option *ngFor="let item of branchList" [value]="item.locationCode">
+    {{ item.locationName }} ({{ item.locationCode }})
+  </ng-option>
+</ng-select> -->
             <select class="custom-select1" name="branchType" [(ngModel)]="branchType" (change)="onBranchTypeChange($event)"   style="font-size:12px; border-radius: 11px; box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; border: none;  height: 28px;width: 108px;     padding-left: 10px;" [disabled]="!isDropdownEnabled()">
                 <option value="All" style="font-size: 14px;">All Brach</option>
                 <option *ngFor="let item of branchList"  [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</option>

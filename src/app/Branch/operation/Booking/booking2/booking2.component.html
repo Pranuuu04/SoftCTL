@@ -87,7 +87,9 @@
             </div>
           </div>
           <div class="col-sm-2" style="display: flex; justify-content: right; margin-top: 6px;">
-            <button matTooltip="Add Consigner" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto"><i class="fa-solid fa-plus"></i></button>
+            <button matTooltip="Add Consigner" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto">
+              <i class="fa-solid fa-plus"></i>
+            </button>
           </div>
         </div>
 
@@ -392,7 +394,7 @@
       <div [ngClass]="bookingForm.get('custType')?.value === 'Credit' ? 'col-sm-6' : 'col-sm-4'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
 
         <div class="form-group row">
-          <div class="col-sm-8">
+          <div class="col-sm-9">
             <div class="textOnSelect">
              <label class="span">Vendor</label>
              <select id="Employee" class="custom-select" [(ngModel)]="selectedVendor1" formControlName="selectedVendor1"  [ngStyle]="{'background-color': isVendorChecked ? 'inherit' : '#e9ecef'}" >
@@ -403,8 +405,10 @@
              </select>
             </div>
           </div>
-          <div class="col-sm-4" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Select Other Vendor" type="button" class="btn btn-light form-button"  (click)="openVendorboxModal()"><i class="fa-solid fa-shop" ></i> Vendor</button>
+            <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Other Vendor" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorboxModal()">
+              <i class="fa-solid fa-shop"></i>
+            </button>
           </div>
         </div>
 
@@ -500,7 +504,7 @@
         </div>
 
         <div class="form-group row" style="margin-top: -8px;">
-          <div class="col-sm-8">
+          <div class="col-sm-9">
             <div class="textOnInput">
               <label for="inputText">Via</label>
               <select id="Employee" class="custom-select" [(ngModel)]="via" formControlName="via">
@@ -509,11 +513,16 @@
               </select>
             </div>
           </div>
-          <div class="col-sm-4" style="display: flex; justify-content: right; margin-top: 6px;">
-            <button tabindex="-1" matTooltip="Select Vehicle" type="button" class="btn btn-light form-button"  (click)="openVehicleModal()">Vehicle</button>
+          <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Vehicle" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVehicleModal()">
+              <i class="fa-solid fa-truck"></i>
+            </button>
           </div>
+          <!-- <div class="col-sm-4" style="display: flex; justify-content: right; margin-top: 6px;">
+            <button tabindex="-1" matTooltip="Select Vehicle" type="button" class="btn btn-light form-button"  (click)="openVehicleModal()">Vehicle</button>
+          </div> -->
         </div>
-        
+        <!-- <i class="fa-regular fa-truck"></i> -->
         <div class="form-group row">
           <div class="col-sm-6">
              <div class="textOnSelect">
@@ -605,14 +614,16 @@
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8">
+          <div class="col-sm-9">
             <div class="textOnInput">
               <label for="inputText">Vendor charge Wt</label>
               <input class="form-control" type="number"  min="0" placeholder="Vendor charge Wt" formControlName="vendorChargedWt" [(ngModel)]="vendorChargedWt">
             </div>
           </div>
-          <div class="col-sm-4" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Vendor Volumetric" type="button" class="btn btn-light form-button"  (click)="openVendorModal(selectedVendor1,selectedProduct)"><i class="fa-solid fa-calculator" ></i>V.Cal</button>
+           <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Vendor Volumetric" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorModal(selectedVendor1,selectedProduct)">
+              <i class="fa-solid fa-calculator"></i>
+            </button>
           </div>
         </div>
 
@@ -629,14 +640,16 @@
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8">
+          <div class="col-sm-9">
             <div class="textOnInput">
               <label for="inputText">Invoice Value</label>
               <input class="form-control" type="number"  min="0" placeholder="Enter Invoice Value" formControlName="invoiceValue" [(ngModel)]="invoiceValue" [value]="invoiceValue">
             </div>
           </div>
-          <div class="col-sm-4" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Customer Invoice" type="button" class="btn btn-light form-button"  (click)="openInvoiceModal()"><i class="fa-solid fa-users"></i>Cust</button>
+           <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Customer Invoice" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openInvoiceModal()">
+              <i class="fa-solid fa-users"></i>
+            </button>
           </div>
         </div>
 
@@ -850,14 +863,15 @@
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-9">
             <div class="textOnInput">
               <label for="inputText">Other</label>
               <input class="form-control" type="number"  min="0" placeholder="Enter Other Charge" formControlName="otherCharge" [(ngModel)]="otherCharge"   [attr.disabled]="isOtherChrgChecked ? null : false" [ngStyle]="{'background-color': isOtherChrgChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Others Charges" type="button" class="btn btn-light form-button"  (click)="openBluedartModal()"><i class="fa-solid fa-coins"></i>Charge
+            <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Others Charges" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openBluedartModal()">
+              <i class="fa-solid fa-coins"></i>
             </button>
           </div>
         </div>
@@ -878,27 +892,30 @@
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7" style="margin-top: -4px;">
+          <div class="col-sm-9" style="margin-top: -4px;">
             <div class="textOnSelect">
               <label class="span">GST</label>
               <input class="form-control" type="text" placeholder="GST Amount" [value]="gstAmount" [(ngModel)]="gstAmount" readonly>
             </div>
           </div>
-
-          <div class="col-sm-4 col-md-5" style="display: flex; justify-content: right;">
-            <button tabindex="-1" matTooltip="Find GST" type="button" class="btn btn-light form-button"  (click)="openGstModal(consignerCode)"><i class="fa-solid fa-money-bill"></i>Gst</button>
+          <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Find GST" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openGstModal(consignerCode)">
+              <i class="fa-solid fa-money-bill"></i>
+            </button>
           </div>
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-9">
             <div class="textOnInput">
               <label for="inputText">Total Amt</label>
               <input class="form-control" type="number" placeholder="Total Amt" [value]="totalAmount" [(ngModel)]="totalAmount" readonly formControlName="totalAmount">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" style="display: flex; justify-content: right;">
-            <button tabindex="-1" type="button" class="btn btn-light form-button"  (click)="openChargeReceivedModal()"><i class="fa-solid fa-user"></i>Recv</button>
+            <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+            <button matTooltip="Receive" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openChargeReceivedModal()">
+              <i class="fa-solid fa-user"></i>
+            </button>
           </div>
         </div>
 

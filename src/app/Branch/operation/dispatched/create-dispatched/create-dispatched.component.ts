@@ -56,14 +56,15 @@ export class CreateDispatchedComponent implements OnInit {
               public formBuilder: FormBuilder,
               private renderer: Renderer2,
               private snackBar: MatSnackBar,) {
-                this.sessionLocationCode = localStorage.getItem('originCode');
                 this.originName = localStorage.getItem('originName');
                 this.tripsheet = localStorage.getItem('tripSheet');
                }
      
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
-    this.destinationName = localStorage.getItem('selectedValue');
+    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
   this.createForm = this.formBuilder.group({
     MFTno: new FormControl('', Validators.compose([])),
     awbNumber: new FormControl('', Validators.compose([])),
@@ -90,8 +91,8 @@ export class CreateDispatchedComponent implements OnInit {
   this.loadRouteName();
   this.loadColoaderName();
   this.getMFTno();
-  this.createForm.controls['origin'].setValue(this.originName);
-  this.createForm.controls['origin'].setValue(this.destinationName);
+  // this.createForm.controls['origin'].setValue(this.originName);
+  this.createForm.controls['origin'].setValue(this.sessionLocationCode);
   this.validationMessage = {
     MFTno :[
       {type: 'required' ,message :'Please select MFTno'}
@@ -140,7 +141,7 @@ getVehicleNumbers() {
 getDataByMFTno(event: any){
   this.mftNo = event.target.value;
  if(this.userType === 'Admin'){
-  this.httpservice.get(`${environment.apiUrl}dispatch/getDispatchByManifestNo?sessionLocationCode=${this.destinationName}&manifestNo=${this.mftNo}`).then(resp=>{
+  this.httpservice.get(`${environment.apiUrl}dispatch/getDispatchByManifestNo?sessionLocationCode=${this.sessionLocationCode}&manifestNo=${this.mftNo}`).then(resp=>{
     if(resp.status === 1){
       this.createForm.controls.destination.setValue(resp.Data[0].toDest );
       this.createForm.controls.via.setValue(resp.Data[0].viacode );
@@ -194,7 +195,7 @@ findAwbNo(formData: any) {
     return;
   }
   if(this.userType === 'Admin'){
-    this.httpservice.get(`${environment.apiUrl}dispatch/pendingDispatchByAwbNo?sessionLocationCode=${this.destinationName}&awbNo=${awbNoToCheck}&manifestNo=${ManfToCheck}`).then((resp:any) => {
+    this.httpservice.get(`${environment.apiUrl}dispatch/pendingDispatchByAwbNo?sessionLocationCode=${this.sessionLocationCode}&awbNo=${awbNoToCheck}&manifestNo=${ManfToCheck}`).then((resp:any) => {
       if (resp.status === 1) {
         this.openSnackBar( resp.message, 'custom-snackbar')
         const awbNoFromResponse = resp.Data[0].awbNo;
@@ -285,7 +286,7 @@ findAwbNo(formData: any) {
       return;
     }
     let postData = {
-      sessionLocationCode:this.sessionLocationCode || this.destinationName,
+      sessionLocationCode:this.sessionLocationCode ,
       toDest:formData.destination,
       manifestNo:formData.MFTno,
       Mode:formData.Mode,
@@ -310,7 +311,7 @@ findAwbNo(formData: any) {
     };
     if(this.userType === 'Admin'){
       let postData = {
-        sessionLocationCode:  this.destinationName,
+        sessionLocationCode:  this.sessionLocationCode,
         toDest:formData.destination,
         manifestNo:formData.MFTno,
         Mode:formData.Mode,
@@ -421,7 +422,7 @@ findAwbNo(formData: any) {
 
   getMFTno(){
    if(this.userType === 'Admin'){
-    this.httpservice.get(`${environment.apiUrl}dispatch/pendingManifestno?sessionLocationCode=${this.destinationName}`).then(resp=>{
+    this.httpservice.get(`${environment.apiUrl}dispatch/pendingManifestno?sessionLocationCode=${this.sessionLocationCode}`).then(resp=>{
       this.manfNo = resp.Data;
     })
    }else{

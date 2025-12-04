@@ -81,7 +81,6 @@ h4 {
     width: 10rem;
     font-weight: bold;
     color: #002B5C;
-    font-size: 15px;
     border-radius: 7px;
 }
 
@@ -92,13 +91,11 @@ h4 {
     width: 10rem;
     font-weight: bold;
     color: #002B5C;
-    font-size: 15px;
     border-radius: 7px;
 }
 
 ::ng-deep .mat-tab-label .mat-tab-label-content {
     font-weight: bold;
-    font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
 }
 

@@ -12,7 +12,7 @@ input{
     font-family: auto;
     height: 28px;
 }
-/* Style the input field */
+
 .styled-input {
   border: 1px solid #d2d2d2;
   border-radius: 4px;
@@ -21,18 +21,12 @@ input{
   height: 36px;
 }
 
-/* Attempt to style the datalist options */
 .styled-input option {
   font-size: 14px;
   padding: 8px;
   background-color: #fff;
   color: #333;
 }
-
-/* Ensuring dropdown position and behavior */
-/* input::-webkit-calendar-picker-indicator {
-  display: none; 
-} */
 
 form .col-sm-1{
   padding-right: 8px;
@@ -271,12 +265,6 @@ form .col-sm-1{
     padding: 4px 12px !important;
   }
 }
-
-/* .custom-select1 .ng-option:hover ,
-   .custom-select1 .ng-option.ng-option-marked{
-    background-color: #da3a3a; 
-    color: #000000;
-} */
 &.ng-select-opened {
     .ng-arrow {
         transform: rotate(180deg);
@@ -285,8 +273,6 @@ form .col-sm-1{
 
 .custom-select1{
   height: 28px;
-  /* padding-left: 10px; */
-  /* padding: 0 1rem 0 10px; */
   display: flex;
   line-height: 20px;
   justify-content: center;

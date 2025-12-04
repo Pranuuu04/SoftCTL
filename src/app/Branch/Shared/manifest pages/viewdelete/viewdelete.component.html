@@ -17,12 +17,8 @@
     </div>
   </div>
 
-
-
   <form [formGroup]="createForm">
-
-
-    <div class="row">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-6">
         <input type="radio" id="huey" name="drone" value="huey" checked (click)="onCheckedAwb()" />
         <label for="huey">AWB No.</label>
@@ -31,29 +27,30 @@
         <input type="radio" id="dewey" name="drone" value="dewey" (click)="onChecked()" />
         <label for="dewey">Manifest No.</label>
       </div>
-    </div>
+      </div>
 
-    <div class="row">
+    <div class="row pb-2 mt-2">
       <div class="col-sm-12">
+        <div class="textOnInput">
         <label for="manifestNo" class="col-form-label">Manifest No.</label>
         <input type="text" class="form-control" id="manifestInput" placeholder="Enter Manifest No"
           [hidden]="!manifestDisabled" formControlName="manifestNo">
       </div>
+      </div>
     </div>
-    <div class="row">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-12">
+        <div class="textOnInput">
         <label for="awbNo" class="col-form-label" [hidden]="!awbDisabled">AWB No.</label>
         <input type="text" class="form-control" id="awbInput" placeholder="Enter Awb No" [hidden]="!awbDisabled"
           formControlName="awbNo">
       </div>
     </div>
+  </div>
     <div class="row d-flex m-0" style="justify-content: right;">
       <div class="col-sm-4 d-flex" style="justify-content: right; padding-right: 0;">
-        <button type="submit" class="btn btn-info" (click)="confirmDeleteDrs()">Ok</button>
+        <button type="submit" class="btn btn-light" (click)="confirmDeleteDrs()">Submit</button>
       </div>
     </div>
   </form>
-
 </div>
-
-

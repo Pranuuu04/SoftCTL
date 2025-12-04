@@ -22,14 +22,14 @@
           </div>
            </div>
            <div class="col-sm-6">
-            <div class="textOnInput" *ngIf="!destinationName">
+            <div class="textOnInput">
               <label for="origin">From :</label>
-              <input class="form-control" type="text" id="origin" value="{{originName}}" [(ngModel)]="originName" readonly>
+              <input class="form-control" type="text" id="origin" formControlName="origin" readonly>
             </div>
-            <div class="textOnInput" *ngIf="destinationName">
+            <!-- <div class="textOnInput" *ngIf="destinationName">
               <label for="origin">From :</label>
               <input class="form-control" type="text" id="origin" value="{{destinationName}}" [(ngModel)]="originName" readonly>
-            </div>
+            </div> -->
            </div>
           </div>
          </div>

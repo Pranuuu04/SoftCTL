@@ -31,7 +31,6 @@ export class ScanByAbwNoComponent implements OnInit {
   listData: any = [];
   AwbNoDatalist: string[] = [];
   userType: string;
-  // selectedValue: string;
   destinationName: any;
   dispatch: string;
 
@@ -47,13 +46,11 @@ export class ScanByAbwNoComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
-    // this.sessionLocationCode = localStorage.getItem('originCode');
       this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
 
     this.dispatch = localStorage.getItem('dispatch');
-    // this.destinationName = this.sharedService.getSelectedValue();
 
      this.currentDate = new Date().toISOString().split('T')[0];
      this.getScanAwbDone();

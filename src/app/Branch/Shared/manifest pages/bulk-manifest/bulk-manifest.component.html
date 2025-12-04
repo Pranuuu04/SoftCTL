@@ -18,30 +18,34 @@
   </div>
   <form class="mt-2"  [formGroup]="createForm" (ngSubmit)="formSubmit(createForm.value)">
      <div class="row">
-       <label for="fdate" class="col-sm-1 col-form-label">From Date</label>
        <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="fdate">From Date</label>
          <input type="date" placeholder="date" class="form-control" id="fdate" formControlName="fromDate" [(ngModel)]="currentDate" value="{{currentDate}}" />
        </div>
+        </div>
 
-       <label for="tdate" class="col-sm-1 col-form-label">To Date</label>
+      <div class="col-sm-3">
+        <div class="textOnInput">
+          <label for="tdate">To Date</label>
+          <input type="date" placeholder="date" class="form-control" id="tdate"  formControlName="toDate" value="{{currentDate2}}" [(ngModel)]="currentDate2"/>
+        </div>
+      </div>
        <div class="col-sm-3">
-         <input type="date" placeholder="date" class="form-control" id="tdate"  formControlName="toDate" value="{{currentDate2}}" [(ngModel)]="currentDate2"/>
-       </div>
-       <label for="destination" class="col-sm-1 col-form-label">Destination</label>
-       <div class="col-sm-3">
+        <div class="textOnInput">
+            <label for="destination">Destination</label>
               <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
                 <option selected disabled>Select destination</option>
                 <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
                   {{ item.destinationName }} 
                 </option>
               </select>
+        </div>
        </div>
-
-     </div>
-     <div class="row d-flex m-0" style="justify-content: right;">
-      <div class="col-sm-2 d-flex" style="justify-content: right; padding-right: 0;" >
+        <div class="col-sm-3 d-flex" style="justify-content: right; padding-right: 0;" >
         <button type="submit" class="btn btn-light" >Find</button>
       </div>
+
      </div>
    </form>
    <div *ngIf="showTable && dataSource.data.length > 0">

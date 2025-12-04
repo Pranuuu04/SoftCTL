@@ -9,12 +9,12 @@
           <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
           <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
           text-align: center;
-        line-height: 30px;
-        height: 30px;
-        font-weight: 600;
-        font-size: large;
-        background: #a6bcbd;
-        padding: 1px 0px;">X</button>
+          line-height: 30px;
+          height: 30px;
+          font-weight: 600;
+          font-size: large;
+          background: #a6bcbd;
+          padding: 1px 0px;">X</button>
       </div>
       </div>
      <div *ngIf="showTable && dataSource.data.length > 0">
@@ -29,15 +29,15 @@
             height: 32px;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
-            background-color: orange;">
-              <i class="fa fa-search" style="color: white; margin-top: -24px;"></i>
+            background-color: #2e3f55;">
+              <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px;"></i>
             </button>
             <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
           </div>
          </div>
       </div>
       <div class="table-responsive text-nowrap">
-        <table id="myTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: rgb(215 244 255 / 87%);" >
+        <table id="myTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: #e2e9f1;" >
   
           <ng-container matColumnDef="Awbno">
             <th mat-header-cell *matHeaderCellDef>Awb no. </th>

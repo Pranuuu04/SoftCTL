@@ -29,15 +29,15 @@
           height: 32px;
           border-top-left-radius: 10px;
           border-bottom-left-radius: 10px;
-          background-color: orange;">
-            <i class="fa fa-search" style="color: white; margin-top: -24px;"></i>
+          background-color: #2e3f55;">
+            <i class="fa fa-search" style="color: #a3b8d4; margin-top: -24px;"></i>
           </button>
           <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
         </div>
        </div>
     </div>
   <div class="table-responsive text-nowrap" style="max-height: 310px;">
-      <table id="myTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" >
+      <table id="myTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: #e2e9f1;" >
 
         <ng-container matColumnDef="Awbno">
           <th mat-header-cell *matHeaderCellDef>Awb no. </th>
