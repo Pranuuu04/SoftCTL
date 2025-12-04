@@ -124,7 +124,7 @@
         <h1 style="font-weight: 600;
         font-size: large;
         margin-bottom: 0;
-        margin-top: 7px; ">Payment entry form</h1>
+        margin-top: 7px; ">Payment Entry On Account form</h1>
       </div>
         <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
         <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
@@ -485,6 +485,166 @@
         </div>
       </div>
     </div>
+</div>
+
+
+<div style="padding: 0 13px;" *ngIf="data.action === 'paymentEntryBillAdd'">
+    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="col-sm-6">
+        <h1 style="font-weight: 600;
+        font-size: large;
+        margin-bottom: 0;
+        margin-top: 7px; ">Payment Entry Bill form</h1>
+      </div>
+        <div class="col-sm-6 d-flex cancel" style="justify-content: right;">
+        <button type="button" class="btn btn-light" (click)="CloseDialog()" style="width: 30px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 500;
+        font-size: large;
+        background: red;
+        color: white;">X</button>
+    </div>
+  </div>
+   <form [formGroup]="paymentEntryForm" (ngSubmit)="submitPaymentEntry()">
+
+      <div class="row mainrow">
+        <div class="col-sm-4">
+           <div class="textOnSelect">
+                <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
+                  <ng-select
+                  [items]="customerList"
+                  class="custom-select1"
+                  bindLabel="customerName"
+                  bindValue="customerCode"
+                  formControlName="Customer">
+                </ng-select>
+            </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="BankName">Bank name :</label>
+             <!-- <ng-select
+                  [items]="BankList"
+                  class="custom-select1"
+                  bindLabel="Bank_Name"
+                  bindValue="Bank_Name"
+                  formControlName="BankName">
+                </ng-select> -->
+                <ng-select
+                  [items]="bankList"
+                  class="custom-select1"
+                  bindLabel="name"
+                  bindValue="name"
+                  [addTag]="true"
+                  formControlName="BankName">
+                </ng-select>
+        </div>
+        </div>
+         <div class="col-sm-2">
+              <div class="textOnSelect">
+              <label for="paymentType">Type :</label>
+              <select id="paymentType" class="custom-select" formControlName="paymentType">
+                <option value="" selected disabled>Select payment type</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit">Credit</option>
+                <option value="Credit">UPI</option>
+                <option value="Credit">TOPAY</option>
+                <option value="Credit">Cheque</option>
+                <option value="Credit">COD</option>
+                <option value="Credit">FOC</option>
+                <option value="Credit">NEFT</option>
+                <option value="Credit">RTGS</option>
+                <option value="Credit">IMPS</option>
+              </select>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+                <div class="textOnInput">
+                    <label for="receiptNo">Cheq/receipt no. :</label>
+                    <input class="form-control" type="text" formControlName="receiptNo" placeholder="Enter receipt no">
+                </div>
+          </div>
+      </div>
+
+    <div class="row mainrow">
+         <div class="col-sm-2">
+          <div class="textOnInput">
+            <label for="receiptDt">Cheq/receipt date :</label>
+            <input class="form-control" type="date" formControlName="receiptDt">
+        </div>
+        </div>
+         <div class="col-sm-2">
+          <div class="textOnInput">
+            <label for="receiveDt">Receive date :</label>
+            <input class="form-control" type="date" formControlName="receiveDt">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="receiverName">Receiver name :</label>
+            <input class="form-control" type="text" formControlName="receiverName" placeholder="Enter receiver name">
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="Amount">Amount :</label>
+            <input class="form-control" type="text" formControlName="Amount" placeholder="Enter amount">
+        </div>
+        </div>
+          <div class="col-sm-2">
+          <div class="textOnInput">
+            <label for="TDS">TDS :</label>
+            <input class="form-control" type="text" formControlName="TDS" placeholder="Enter TDS">
+        </div>
+        </div>
+     </div>
+
+      <div class="row mainrow" style=" border-bottom: 1px solid #d2d2d2;">
+       
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="discount">Discount/Debit :</label>
+            <input class="form-control" type="text" formControlName="discount" placeholder="Enter discount/debit">
+        </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="textOnInput">
+            <label for="remark">Remark :</label>
+            <input class="form-control" type="text" formControlName="remark" placeholder="Enter remark">
+        </div>
+        </div>
+     
+         <div class="col-sm-3">
+          <div class="textOnSelect">
+            <label for="DepositeBank">Deposite bank :</label>
+             <!-- <ng-select
+                  [items]="BankList"
+                  class="custom-select1"
+                  bindLabel="Bank_Name"
+                  bindValue="Bank_Name"
+                  formControlName="DepositeBank">
+                </ng-select> -->
+                <ng-select
+                  [items]="bankList"
+                  class="custom-select1"
+                  bindLabel="name"
+                  bindValue="name"
+                  formControlName="DepositeBank"
+                  [addTag]="true">
+                </ng-select>
+           </div>
+        </div>
+
+      <div class="col-sm-3 d-flex" style="justify-content: right;" >
+        <button type="submit" class="btn btn-light other-button">{{ paymentEntryEdit ? 'Update' : 'Submit' }}</button>
+      </div>
+
+   </div>
+    
+  </form>
 </div>
 
 
