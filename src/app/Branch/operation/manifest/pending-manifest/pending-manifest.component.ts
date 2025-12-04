@@ -142,3 +142,57 @@ export class PendingManifestComponent implements OnInit {
     this.pendingTableData(pageNumber, pageSize);
   }
 }
+// pageIndex = 0;
+//   showFirstLastButtons = true;
+//   hidePageSize = false;
+//   disabled = false;
+//   pageCount = 0;
+//   pageEvent: PageEvent;
+//   showPageSizeOptions = false;
+//   pageSizeOptions: number[] = [15, 50, 100, 1000];
+//   totalountPages: any;
+//   totalPending: number;
+//   showTable = false;
+//   ManifestViewData: any[] = [];
+//       this.pendingTableData(this.pageIndex + 1, this.pageSize);
+
+//  calculatePageCount() {
+//     this.pageCount = Math.ceil(this.length / this.pageSize);
+//     console.log(this.pageCount, 'pageCount');
+//   }
+//   handlePageEvent(e: PageEvent) {
+//     this.pageEvent = e;
+//     this.length = e.length;
+//     this.pageSize = e.pageSize;
+//     this.pageIndex = e.pageIndex;
+//   const pageNumber = this.pageIndex + 1;
+//     console.log(this.pageIndex, 'pageindex');
+//     this.calculatePageCount();
+//     this.pendingTableData(pageNumber, this.pageSize);
+//   }
+//   pendingTableData(pageNumber: number, pageSize: number) {
+//    if (this.userType === 'Admin') {
+//     this.http.getPendingManifest(this.destinationName , pageNumber , pageSize).subscribe((resp: any) => {
+//       if (resp.status === 1) {
+//         this.showTable = true;
+//         this.ManifestViewData = resp.Data;
+//         this.length = resp.count;
+//         this.calculatePageCount();
+//         this.dataLoaded = true;
+//       } else {
+//         this.showTable = false;
+//       }
+//     });
+//    } else {
+//     this.http.getPendingManifest(this.sessionLocationCode , pageNumber , pageSize).subscribe((resp: any) => {
+//       if (resp.status === 1) {
+//         this.showTable = true;
+//         this.ManifestViewData = resp.Data;
+//          this.dataSource.data = this.ManifestViewData;
+//         this.length = resp.count;
+//         this.calculatePageCount();
+//         this.dataLoaded = true;
+//       }
+//     });
+//    }
+// }
