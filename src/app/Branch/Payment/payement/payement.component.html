@@ -14,8 +14,11 @@
                     <mat-tab label="Credit note">
                         <app-credit-note></app-credit-note>
                     </mat-tab> 
-                    <mat-tab label="Payment entry">
+                    <mat-tab label="Payment entry / On Account">
                         <app-payment-entry (switchTab)="goToTab($event)"></app-payment-entry>
+                    </mat-tab>
+                     <mat-tab label="Payment entry / Bill">
+                        <app-payment-entry-bill></app-payment-entry-bill>
                     </mat-tab>
                     <mat-tab label="Wallet entry">
                         <app-wallet-entry></app-wallet-entry>
@@ -27,13 +30,16 @@
                     <mat-tab label="Credit note Report">
                         <app-credit-note-report></app-credit-note-report>
                     </mat-tab> 
-                    <mat-tab label="Payment entry Report">
+                    <mat-tab label="Payment entry / On Account Report">
                         <app-payment-entry-report></app-payment-entry-report>
+                    </mat-tab>
+                     <mat-tab label="Payment entry / Bill Report">
+                        <app-payment-entry-bill-report></app-payment-entry-bill-report>
                     </mat-tab>
                     <mat-tab label="Wallet entry Report">
                         <app-wallet-entry-report></app-wallet-entry-report>
                     </mat-tab>
-
+                    
                 </mat-tab-group>
             </div>
         </div>

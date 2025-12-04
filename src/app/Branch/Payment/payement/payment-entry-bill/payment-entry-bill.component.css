@@ -1,0 +1,198 @@
+table {
+  width: 100%;
+}
+th.mat-header-cell {
+  text-align: center;
+}
+table ,th {
+  color: black;
+}
+table th{ 
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 11px;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+  padding-left: 0;
+}
+ td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-right: 0;
+}
+table , td ,th {
+  border: 1px Solid #9b9898;
+}
+.mat-cell {
+  font-size: 13px;
+  text-align: center;
+  font-weight: 400;
+  padding: 0 5px;
+}
+tr.mat-row {
+  height: 26px;
+}
+tr.mat-header-row {
+  height: 30px;
+  color: black;
+  font-weight: 600;
+  background-color:  #a3b8d4;
+}
+.mat-paginator-range-label {
+  margin: 0 9px 0 12px;
+}
+
+form{
+    margin-top: 10px;
+    margin-bottom: 0.125rem;
+}
+.mainrow{
+  margin-left: 0;
+  margin-right: 0;
+}
+.form-control,
+.form-select {
+    height: 30px;
+}
+input{
+    border: 1px solid #d2d2d2; 
+    border-radius: 0.25rem;
+    padding-left: 10px; 
+    padding-top: 10px; 
+    font-family: auto;
+}
+
+.custom-select1{
+      height: 28px;
+      display: flex;
+      line-height: 20px;
+      justify-content: center;
+      border: 1px solid #d2d2d2; 
+      border-radius: 0.25rem;
+      padding: 6px 7px;
+      font-size: 14px;
+      font-family: auto;
+    }
+  .textOnInput,
+  .textOnSelect {
+    position: relative;
+    margin-bottom: 15px; 
+  }
+  
+  .textOnInput label,
+  .textOnSelect label {
+    position: absolute;
+    top: -13px;
+    left: 7px;
+    text-wrap: nowrap;
+    padding: 2px;
+    z-index: 1;
+    text-wrap: nowrap;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+  }
+  
+  .textOnInput label:after,
+  .textOnSelect label:after {
+    content: " ";
+    background-color: #fff;
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 3px;
+    z-index: -1;
+  }
+  
+    .form-control:focus,
+    ::ng-deep .custom-select1:focus{
+        color: #495057 !important;
+        background-color: rgba(173, 11, 11, 0) !important;
+        border-color: #9acffa !important;
+        outline: 0 !important;
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25) !important;
+    }
+    
+    ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        background-color: white !important;
+        padding: 1px 8px;
+        font-weight: 500;
+        font-size: 13px;
+      }
+    
+      
+      ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover,
+      ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+        background-color: rgb(201, 214, 214) !important;
+      }
+      ::ng-deep .ng-dropdown-panel {
+        border: 1px solid #d2d2d2 !important;
+        border-top: none !important;
+      }
+      ::ng-deep .ng-dropdown-panel .scroll-host{
+        border: 1px solid #d2d2d2 !important; 
+      }
+      ::ng-deep .ng-select {
+        height: 28px !important;
+      }
+      
+      ::ng-deep .ng-select .ng-arrow {
+        font-family: "icomoon" !important;
+        border-color: inherit !important;
+        border-width: 0 !important;
+        font-size: 10px;
+        color: black !important;
+        top: 0 !important;
+        left: -3px;
+        color: inherit;
+        text-align: center;
+        transform: rotate(0deg);
+        transform-origin: 8px 12px;
+        transition: transform 0.2s ease;
+        padding-right: 10px !important;
+      }
+      
+      ::ng-deep .ng-select .ng-arrow:before {
+        content: "\25BC";
+      }
+      
+      ::ng-deep .ng-select .ng-select-container .ng-value-container {
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        left: 16px !important;
+      }
+      
+      ::ng-deep .ng-select.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        background-color: rgb(201, 214, 214) !important;
+      }
+
+      
+.other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  color: white;
+  text-transform: capitalize;
+}
+
+/* @media (max-width: 768px) {
+  :host-context(.cashTopay-dialog) {
+    width: 100vw !important;
+  }
+
+  :host-context(.cashTopay-dialog) .mat-dialog-container {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+} */

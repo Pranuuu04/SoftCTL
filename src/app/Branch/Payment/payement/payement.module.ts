@@ -16,6 +16,8 @@ import { CashTopayReportComponent } from './cash-topay-report/cash-topay-report.
 import { CreditNoteReportComponent } from './credit-note-report/credit-note-report.component';
 import { PaymentEntryReportComponent } from './payment-entry-report/payment-entry-report.component';
 import { WalletEntryReportComponent } from './wallet-entry-report/wallet-entry-report.component';
+import { PaymentEntryBillComponent } from './payment-entry-bill/payment-entry-bill.component';
+import { PaymentEntryBillReportComponent } from './payment-entry-bill-report/payment-entry-bill-report.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { WalletEntryReportComponent } from './wallet-entry-report/wallet-entry-r
     CashTopayReportComponent,
     CreditNoteReportComponent,
     PaymentEntryReportComponent,
-    WalletEntryReportComponent
+    WalletEntryReportComponent,
+    PaymentEntryBillComponent,
+    PaymentEntryBillReportComponent
   ],
   imports: [
     CommonModule,
