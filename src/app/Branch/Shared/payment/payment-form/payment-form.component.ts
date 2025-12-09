@@ -220,6 +220,7 @@ bankList = [
     this.paymentEntryBillForm = this.formbuilder.group({
       CustomerBill: ['', Validators.required],
       BankNameBill: ['', Validators.required],
+      billAmt:['',Validators.required],
       paymentTypeBill: [''],
       receiptNoBill: ['', Validators.required],
       receiptDtBill: [this.currentDate, Validators.required],
@@ -264,8 +265,7 @@ bankList = [
     }else if(!this.cashToPayReportFlag){
       this.getCashToPayData();
     }
-     
-   
+       
 
 }
 

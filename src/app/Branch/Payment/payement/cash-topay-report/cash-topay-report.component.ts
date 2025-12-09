@@ -290,79 +290,153 @@ export class CashTopayReportComponent implements OnInit {
  }
 
 
-//  downloadExcel() {
-//     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
-//     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-//     XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
-  
-//     XLSX.writeFile(wb, 'CashToPay.xlsx');
-//   }
+// downloadExcel() {
+
+//   const displayedColumns = [
+//     'SrNO',
+//     'AwbNo',
+//     'BookDate',
+//     'Customer_Name',
+//     'Shipper_Name',
+//     'Consignee_Name',
+//     'Total_amt',
+//     'Received_amt',
+//     'TDS',
+//     'Debit_note',
+//     'Outstanding',
+//     'Payment_mode',
+//     'Received_by',
+//     'Received_date',
+//     'Desposited_bank',
+//     'TransactionId',
+//     'Remark',
+//   ];
+
+
+//    const exportData = this.dataSource.filteredData.length
+//      ? this.dataSource.filteredData
+//     : this.dataSource.data;
+
+
+//   // const excelData = this.dataSource.data.map((row: any, index: number) => {
+//   const excelData = exportData.map((row: any, index: number) => {
+//     const temp: any = {
+//       SrNO: index + 1,
+//       AwbNo: row.AwbNo,
+//       BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+//       Customer_Name: row.Customer_Name,
+//       Shipper_Name: row.Shipper_Name,
+//       Consignee_Name: row.Consignee_Name,
+//       Total_amt: row.Total_amt,
+//       Received_amt: row.Received_amt,
+//       Outstanding: row.Outstanding,
+//       Payment_mode: row.Payment_mode,
+//       Received_by: row.Received_by,
+//       Received_date: row.Received_date
+//         ? new Date(row.Received_date).toLocaleDateString()
+//         : '',
+//       Desposited_bank: row.Desposited_bank,
+//       TransactionId: row.TransactionId,
+//       TDS: row.TDS,
+//       Debit_note: row.Debit_note,
+//       Remark: row.Remark,
+//       // Location_Code: row.Location_Code
+//     };
+
+//     // Apply order
+//     const ordered: any = {};
+//     displayedColumns.forEach(col => (ordered[col] = temp[col] ?? ''));
+
+//     return ordered;
+//   });
+
+//   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+//   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//   XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+
+//   XLSX.writeFile(wb, 'CashToPay.xlsx');
+// }
+
 
 downloadExcel() {
 
   const displayedColumns = [
-    'SrNO',
-    'AwbNo',
-    'BookDate',
-    'Customer_Name',
-    'Shipper_Name',
-    'Consignee_Name',
-    'Total_amt',
-    'Received_amt',
-    'TDS',
-    'Debit_note',
-    'Outstanding',
-    'Payment_mode',
-    'Received_by',
-    'Received_date',
-    'Desposited_bank',
-    'TransactionId',
-    'Remark',
+    'SrNO','AwbNo','BookDate','Customer_Name','Shipper_Name','Consignee_Name',
+    'Total_amt','Received_amt','TDS','Debit_note','Outstanding','Payment_mode',
+    'Received_by','Received_date','Desposited_bank','TransactionId','Remark'
   ];
 
-  const exportData = this.dataSource.filteredData.length
-    ? this.dataSource.filteredData
-    : this.dataSource.data;
+  let sessionLocationCode;
 
+  if (this.userType !== 'Admin') {
+    sessionLocationCode = this.sessionLocationCode;
+  } else {
+    sessionLocationCode = this.filterForm.get('branch')?.value;
+  }
 
-  // const excelData = this.dataSource.data.map((row: any, index: number) => {
-  const excelData = exportData.map((row: any, index: number) => {
-    const temp: any = {
-      SrNO: index + 1,
-      AwbNo: row.AwbNo,
-      BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
-      Customer_Name: row.Customer_Name,
-      Shipper_Name: row.Shipper_Name,
-      Consignee_Name: row.Consignee_Name,
-      Total_amt: row.Total_amt,
-      Received_amt: row.Received_amt,
-      Outstanding: row.Outstanding,
-      Payment_mode: row.Payment_mode,
-      Received_by: row.Received_by,
-      Received_date: row.Received_date
-        ? new Date(row.Received_date).toLocaleDateString()
-        : '',
-      Desposited_bank: row.Desposited_bank,
-      TransactionId: row.TransactionId,
-      TDS: row.TDS,
-      Debit_note: row.Debit_note,
-      Remark: row.Remark,
-      // Location_Code: row.Location_Code
-    };
+  const customerType = this.filterForm.get('customerType')?.value;
+  let customerCode = '';
+  let shipperName = '';
+  let consigneeName = '';
 
-    // Apply order
-    const ordered: any = {};
-    displayedColumns.forEach(col => (ordered[col] = temp[col] ?? ''));
+  if (customerType === 'Customer') {
+    customerCode = this.filterForm.get('name')?.value;
+  } else if (customerType === 'Shipper') {
+    shipperName = this.filterForm.get('name')?.value;
+  } else if (customerType === 'Consignee') {
+    consigneeName = this.filterForm.get('name')?.value;
+  }
 
-    return ordered;
-  });
+  const fromDate = this.filterForm.get('fromDate')?.value;
+  const toDate = this.filterForm.get('toDate')?.value;
 
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+  this.paymentService
+    .cashToPayReport(sessionLocationCode, '', customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
+    .subscribe((resp: any) => {
 
-  XLSX.writeFile(wb, 'CashToPay.xlsx');
+      if (resp.status === 1) {
+
+        const exportData = resp.getExelDetails; 
+
+        const excelData = exportData.map((row: any, index: number) => {
+          const temp: any = {
+            SrNO: index + 1,
+            AwbNo: row.AwbNo,
+            BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+            Customer_Name: row.Customer_Name,
+            Shipper_Name: row.Shipper_Name,
+            Consignee_Name: row.Consignee_Name,
+            Total_amt: row.Total_amt,
+            Received_amt: row.Received_amt,
+            Outstanding: row.Outstanding,
+            Payment_mode: row.Payment_mode,
+            Received_by: row.Received_by,
+            Received_date: row.Received_date ? new Date(row.Received_date).toLocaleDateString() : '',
+            Desposited_bank: row.Desposited_bank,
+            TransactionId: row.TransactionId,
+            TDS: row.TDS,
+            Debit_note: row.Debit_note,
+            Remark: row.Remark
+          };
+
+          const ordered: any = {};
+          displayedColumns.forEach(col => ordered[col] = temp[col] ?? '');
+          return ordered;
+        });
+
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
+        const wb: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Payment Entry Report');
+
+        XLSX.writeFile(wb, 'CashToPay.xlsx'); 
+
+      } else {
+        this.openSnackBar(resp.message, 'error-snackbar');
+      }
+    });
+
 }
+
   
 // downloadPdf() {
 
