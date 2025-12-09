@@ -22,7 +22,7 @@
       </div>
 
       <div class="table-responsive text-nowrap">
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
+          <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped" style="background-color: #e2e9f1;">
             
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> 
@@ -36,10 +36,6 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <!-- <button mat-menu-item>
-                    <mat-icon>copy</mat-icon>
-                    <span>copy</span>
-                  </button> -->
                   <button mat-menu-item  (click)="openPaymentForm(element)">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
@@ -49,10 +45,6 @@
                     <span>Delete</span>
                   </button> 
                 </mat-menu>
-                  
-                <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openPaymentForm()" style="font-size: 16px;text-align: center;">
-                  <mat-icon class="small-icon" >add</mat-icon>
-                </button>  -->
               </td>
             </ng-container>
             
@@ -137,12 +129,10 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-    <!-- Data rows (only if showTable and has data) -->
     <ng-container *ngIf="showTable && dataSource.data.length > 0">
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </ng-container>
 
-    <!--  No data row -->
     <ng-container *ngIf="!showTable || dataSource.data.length === 0">
       <tr>
         <td [attr.colspan]="displayedColumns.length" class="text-center">
@@ -151,7 +141,7 @@
         </td>
       </tr>
     </ng-container>
-          </table>
+          </table> -->
       </div>
  <mat-paginator
   [length]="length"

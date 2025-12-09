@@ -1,6 +1,6 @@
 <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
     <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="textOnSelect">
           <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
           <ng-select
@@ -13,20 +13,7 @@
         </div>
       </div>
 
-      <!-- <div class="col-sm-2">
-        <div class="textOnSelect">
-          <label for="rateCustomer"><span style="color: red;">*</span>Destination :</label>
-          <ng-select
-            [items]="customerList"
-            class="custom-select1"
-            bindLabel="customerName"
-            bindValue="customerCode"
-            formControlName="rateCustomer">
-          </ng-select>
-        </div>
-      </div> -->
-
-      <div class="col-sm">
+      <!-- <div class="col-sm">
         <div class="textOnInput">
           <label for="fromDate"><span style="color: red;">*</span>From date :</label>
           <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
@@ -38,21 +25,15 @@
           <label for="fromDate"><span style="color: red;">*</span>To date :</label>
           <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
         </div>
-      </div> 
+      </div>  -->
 
-      <div class="col-sm">
+      <div class="col-sm-3">
         <div class="textOnInput">
           <label for="AwbNo">Bill No :</label> <!--<span style="color: red;">*</span>-->
           <input class="form-control" type="text" formControlName="AwbNo">
         </div>
       </div>
-       <!-- <div class="col-sm-2">
-        <div class="textOnInput">
-          <label for="Amount">Amount :</label>
-          <input class="form-control" type="number" min="0" formControlName="Amount">
-        </div>
-      </div> -->
-        <div class="col-sm-2 d-flex" style="justify-content: right;" >
+        <div class="col-sm-5 d-flex" style="justify-content: right;" >
         <button type="submit" class="btn btn-light other-button">Submit</button>
       </div>
     </div>
@@ -76,7 +57,7 @@
           <input type="text" class="form-control" #input (keyup)="applyFilter($event.target.value)" placeholder="Search.." id="Filter" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
         </div>
       </div>
-    </div>
+    </div>      
       <div class="table-responsive text-nowrap">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-bordered table-striped " style="background-color: #e2e9f1;" matSort>
       
@@ -147,12 +128,7 @@
     [showFirstLastButtons]="true"
     (page)="handlePageEvent($event)">
   </mat-paginator>
-      <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions"
-      [pageSize]="pageSize"
-      [length]="totalPending"
-      (page)="loadPage($event)"
-      aria-label="Select page of pending DRS records">
-    </mat-paginator> -->
+     
    </div>
   <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
     <img src="./assets/images/NOdata.png" alt="">
