@@ -41,6 +41,8 @@ export class PaymentEntryComponent implements OnInit {
     'Amount_Type', 'ChequeNo', 'Recv_Name', 'TDS', 'Amount', 'Debit',
     'Remark', 'Deposit_Bank', 'UserName', 'BillPay'];
   entryViewData: any[] = [];
+  destinationList: any;
+  cityList: any;
 
 
 
@@ -69,6 +71,7 @@ export class PaymentEntryComponent implements OnInit {
             this.customerList = [allCust, ...data.Data];
           this.filterForm.patchValue({ CustomerName: 'All' });
     });
+
 
 
     this.filterForm = this.formBuilder.group({
@@ -225,7 +228,7 @@ openPaymentForm(element) {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {}
       this.paymentEntryData(this.pageIndex + 1, this.pageSize);
-      this.switchTab.emit(6);
+      this.switchTab.emit(7);
     });
   }
 

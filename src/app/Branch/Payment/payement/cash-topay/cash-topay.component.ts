@@ -49,6 +49,7 @@ export class CashTopayComponent implements OnInit {
   rateViewData: any;
   selectedCustomerCode: any;
   AwbNo:any;
+  destinationList: any;
 
   //  allData = [
   //   {AwbNo: 'AWB1001',BookDate: '2025-10-01',SubTotal: 1200,CGSTAmt: 60,TotalAmt: 1320,ReceivedAmt: 1000,Outstanding: 320,Remark: 'Delivered'},
@@ -69,7 +70,7 @@ export class CashTopayComponent implements OnInit {
                 this.toDate = this.getCurrentDate();
               }
 
-  ngOnInit(): void {
+ngOnInit(): void {
 
     this.userType = localStorage.getItem('userType');
       this.currentDate1 = new Date().toISOString().split('T')[0];
@@ -89,20 +90,29 @@ export class CashTopayComponent implements OnInit {
 
       this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
           const allCust = { customerName: 'All', customerCode: 'All' };
-              this.customerList = [allCust, ...data.Data];
-              this.filterForm.patchValue({ CustomerName: 'All' });
-        });
+          this.customerList = [allCust, ...data.Data];
+          this.filterForm.patchValue({ CustomerName: 'All' });
+      });
+
+      this.AllService.getDestinationDataa().subscribe((data) => {
+        const allDest = { destinationName: 'All', destinationCode: 'All' };
+        this.destinationList = [allDest,...data.Data];
+        this.filterForm.patchValue({ destination: 'All' }); 
+      });
 
      this.filterForm = this.formBuilder.group({
-    rateCustomer: ['All', Validators.required],
-    fromDate: [this.currentDate1, Validators.required],
-    toDate: [this.currentDate2, Validators.required],
-    AwbNo:['']
-  });
+      rateCustomer: ['All', Validators.required],
+      destination: ['All'],
+      fromDate: [this.currentDate1, Validators.required],
+      toDate: [this.currentDate2, Validators.required],
+      AwbNo:['']
+    });
 
   }
 
-  refresh() {}
+refresh() {
+
+  }
 
   getDefaultDate(): string {
     const today = new Date();

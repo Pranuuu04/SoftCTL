@@ -22,6 +22,7 @@ export class PaymentFormComponent implements OnInit {
   creditNoteForm: FormGroup;
   paymentEntryForm: FormGroup;
   WalletEntryForm: FormGroup;
+  paymentEntryBillForm: FormGroup;
   sessionLocationCode: string ;
   showTable = false;
   userType: any;
@@ -117,9 +118,8 @@ bankList = [
   { name: 'India Post Payments Bank' },
   { name: 'FINO Payments Bank' }
 ];
+  
  
-
-
 
   constructor(private _mdr: MatDialogRef<PaymentFormComponent>,
               public dialog: MatDialog,
@@ -217,8 +217,23 @@ bankList = [
       DepositeBank: [''],
     });
 
+    this.paymentEntryBillForm = this.formbuilder.group({
+      CustomerBill: ['', Validators.required],
+      BankNameBill: ['', Validators.required],
+      billAmt:['',Validators.required],
+      paymentTypeBill: [''],
+      receiptNoBill: ['', Validators.required],
+      receiptDtBill: [this.currentDate, Validators.required],
+      receiveDtBill: [this.currentDate, Validators.required],
+      adjustAmount: ['', Validators.required],
+      AmountBill: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      TDSBill: [''],
+      outstandingAmt: [''],
+      remarkBill: [''],
+      DepositeBankBill: [''],
+    });
+
     this.getPaymentEntryByCustomerCode();
-     this.paymentEntryData(1,1000);
 
     this.WalletEntryForm  = this.formbuilder.group({
       WalletDate: [this.currentDate, Validators.required],
@@ -250,10 +265,10 @@ bankList = [
     }else if(!this.cashToPayReportFlag){
       this.getCashToPayData();
     }
-     
-   
+       
 
-  }
+}
+
 
   refresh() {
 
@@ -587,7 +602,6 @@ getCreditNoteByCustomerCode(): void {
         if (res.status === 1) {
           this.openSnackBar(res.message, 'custom-snackbar');
           // this.CloseDialog();
-          this.paymentEntryData(1,1000);
           this.paymentEntryForm.reset();
         } else {
           this.openSnackBar(res.message, 'error-snackbar');
@@ -645,7 +659,6 @@ paymentEntryData(pageNumber: number, pageSize: number) {
         //  this.calculatePageCount();
        } else {
           this.showTable = false;
-          // this.entryViewData = [];
         }
      });
   }
@@ -687,10 +700,12 @@ SubmitWalletEntry() {
 }
 
 
+CloseDialog() {
+ this._mdr.close(false);
+ }
 
-  CloseDialog() {
-this._mdr.close(false);
-}
+
+
 }
 
 
