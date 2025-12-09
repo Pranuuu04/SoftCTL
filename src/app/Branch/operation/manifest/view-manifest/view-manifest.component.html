@@ -16,12 +16,19 @@
         <div class="col-sm-3">
           <div class="textOnSelect">
               <label for="Destination">Destination :</label>
-              <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
+              <!-- <select id="destination" class="custom-select" formControlName="destination"  [(ngModel)]="destination">
                 <option selected disabled>Select destination</option>
                 <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
                   {{ item.destinationName }} 
                 </option>
-              </select>
+              </select> -->
+                <ng-select
+              [items]="DestinationName"
+              class="custom-select1"
+              bindLabel="destinationName"
+              bindValue="destinationCode"
+              formControlName="destination">
+            </ng-select>
           </div>
         </div>
         <div class="col-sm-3">

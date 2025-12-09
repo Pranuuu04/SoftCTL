@@ -58,7 +58,7 @@ export class BranchMastComponent implements OnInit, OnChanges, AfterViewInit {
         branchMastData: element,
         branchMastMode: 'edit'
       },
-      width: '60rem',
+      width: '80rem',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(res => {

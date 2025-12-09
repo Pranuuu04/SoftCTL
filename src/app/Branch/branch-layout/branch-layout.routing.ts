@@ -35,6 +35,7 @@ import { TransportWayComponent } from '../master/transport-Way/transport-way.com
 import { AuditComponent } from '../audit/audit.component';
 import { PayementComponent } from '../Payment/payement/payement.component';
 import { UserReportComponent } from '../reports/user-report/user-report.component';
+import { InventryReportComponent } from '../reports/inventry-report/inventry-report.component';
 
 
 export const BracnhLayoutRoutes: Routes = [
@@ -123,6 +124,9 @@ export const BracnhLayoutRoutes: Routes = [
       },
       {
         path: 'Users',  component: UserReportComponent
+      },
+      {
+        path: 'Inventry',  component: InventryReportComponent
       },
       // Crm
       {

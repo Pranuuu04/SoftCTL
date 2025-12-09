@@ -860,7 +860,7 @@
 </div>
   <form [formGroup]="branchMastForm">
    <div class="row" style="border-bottom: 1px solid #d2d2d2;">
-    <div class="col-sm-5" style="border-right: 1px solid #d2d2d2;">
+    <div class="col-sm-4" style="border-right: 1px solid #d2d2d2;">
       <div class="row">
       <div class="col-sm-6">
         <div class="textOnInput">
@@ -1040,7 +1040,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="textOnInput">
-      <label for="branchMastHsn">HSN No :</label>
+      <label for="branchMastHsn">HSN / SAC :</label>
       <input class="form-control" type="text" id="branchMastHsn"
              formControlName="branchMastHsn" 
              placeholder="Enter HSN No">
@@ -1071,7 +1071,7 @@
 </div>
 
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2" style="border-right: 1px solid #d2d2d2;">
      <div class="row">
        <div class="col-sm-12">
         <div class="textOnInput">
@@ -1126,6 +1126,73 @@
           <label for="drsStock">Drs Stock :</label>
           <input class="form-control" type="number" min="0" id="drsStock" 
                 formControlName="drsStock" >
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-2">
+      
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="msmeNo">MSME No. :</label>
+          <input class="form-control" type="text" 
+                formControlName="branchmsmeNo" placeholder="Enter MSME no." >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="panNo">Pan No :</label>
+          <input class="form-control" type="text" 
+                formControlName="branchpanNo" placeholder="Enter Pan no.">
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="InvCode">Invoice code :</label>
+          <input class="form-control" type="text" 
+                formControlName="branchInvCode" placeholder="Enter Invoice code">
+        </div>
+      </div>
+    </div>
+      <div class="row">
+       <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="companyname">Company Name :</label>
+          <ng-select
+                  [items]="companyList"
+                  class="custom-select1"
+                  bindLabel="CompanyName"
+                  bindValue="CompanyCode"
+                  formControlName="branchcompanyname">
+                </ng-select>
+          <!-- <input class="form-control" type="text" id="companyname"
+                formControlName="branchcompanyname" 
+                placeholder="Enter Company Name"> -->
+        </div>
+      </div>
+    </div>
+      <!-- <div class="row">
+       <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="HSNSAC"> HSN / SAC :</label>
+          <input class="form-control" type="text" id="HSNSAC"
+                formControlName="branchHSNSAC" 
+                placeholder="Enter HSN / SAC">
+        </div>
+      </div>
+    </div> -->
+      <div class="row">
+       <div class="col-sm-12">
+        <div class="textOnInput">
+          <label for="finantialYear">Financial year :</label>
+          <input class="form-control" type="text" id="finantialYear"
+                formControlName="branchfinantialYear" 
+                placeholder="Enter IFSC Code">
         </div>
       </div>
     </div>

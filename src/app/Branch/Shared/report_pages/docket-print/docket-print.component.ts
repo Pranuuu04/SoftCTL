@@ -6,6 +6,7 @@ import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.compo
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
 import { DocketMultipleComponent } from '../../docket-multiple/docket-multiple.component';
+import { AllServicesService } from 'app/service/all-services.service';
 
 @Component({
   selector: 'app-docket-print',
@@ -36,6 +37,7 @@ constructor(private _mdr: MatDialogRef<DocketPrintComponent >,
             public formBuilder: FormBuilder,
             private httpService: HttpService,
             private snackBar: MatSnackBar,
+            public AllService: AllServicesService,
             @Inject(MAT_DIALOG_DATA) public data: any) {
             }
 
@@ -49,8 +51,12 @@ ngOnInit(): void {
     // this.sessionLocationCode = localStorage.getItem('originCode');
     this.customerName = localStorage.getItem('customerCode');
     this.userType = localStorage.getItem('userType');
-
-    this.loadConsignerData();
+this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+          //  const allCust = { customerName: 'All', customerCode: 'All' };
+            this.customerNameList = resp.Data;
+          // this.customerForm.patchValue({ customerName: 'All' });
+        });
+    // this.loadConsignerData();
     this.PrintForm = this.formBuilder.group({
       fAwbNo: ['', Validators.required],
       ToAwbNo: ['', Validators.required],
@@ -113,11 +119,11 @@ onCheckedAwb() {
   });
 }
 
-loadConsignerData() {
-  this.httpService.get(`${environment.apiUrl}Booking/getConsigner?SessionLocationCode=` + this.sessionLocationCode ).then((resp) => {
-      this.customerNameList = resp.Data;
-  });
-}
+// loadConsignerData() {
+//   this.httpService.get(`${environment.apiUrl}Booking/getConsigner?SessionLocationCode=` + this.sessionLocationCode ).then((resp) => {
+//       this.customerNameList = resp.Data;
+//   });
+// }
 
 onSubmit(formData: any) {
   this.multiplePrintType = this.multiplePrintType || formData.multiplePrintType;

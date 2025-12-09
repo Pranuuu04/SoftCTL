@@ -1,8 +1,5 @@
 <div>
-    <!-- <div class="card"> -->
-        <!-- <div class="card-body table-responsive "> -->
-    <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
-      
+  <form  [formGroup]="Drsentryform" (ngSubmit)="submitDrsForm(Drsentryform.value)">
     <div class="row mainrow ">
         <div class="col-sm-3">
           <div class="textOnSelect">
@@ -43,12 +40,12 @@
           <div class="textOnSelect">
             <label for="vehicleNo"><span style="color: red;">*</span>Vehicle No. :</label>
               <input type="text" class="form-control" id="vehicleNo" formControlName="vehicleNo"  placeholder="Vechile No.">
-               <div *ngFor="let validation of validationMessage.vehicleNo">
-                      <div class="error-message"
-                        *ngIf="Drsentryform.get('vehicleNo').hasError(validation.type) && (Drsentryform.get('vehicleNo').dirty || Drsentryform.get('vehicleNo').touched)">
-                        {{ validation.message }}
-                      </div>
-                    </div>
+              <div *ngFor="let validation of validationMessage.vehicleNo">
+                <div class="error-message"
+                  *ngIf="Drsentryform.get('vehicleNo').hasError(validation.type) && (Drsentryform.get('vehicleNo').dirty || Drsentryform.get('vehicleNo').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
           </div>
         </div>
          <div class="col-sm-3">
@@ -70,11 +67,7 @@
                 </div>
               </div>
               
-              <!-- <div class="row mainrow" style="justify-content: right;">
-            
-              </div> -->
             </form>
-        <!-- </div> -->
       <div *ngIf="listData.length > 0">
         <div class="table-responsive text-nowrap mt-2">
           <table class="table table-bordered table-striped"  style="background-color: #e2e9f1">
@@ -101,7 +94,6 @@
           </table>
         </div>
     </div>
-  <!-- </div> -->
 </div>
 <div *ngIf="showTable && dataSource.data.length > 0">
   <div class="table-responsive">

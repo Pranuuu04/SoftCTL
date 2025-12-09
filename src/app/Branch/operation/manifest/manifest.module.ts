@@ -19,6 +19,7 @@ import { MaterialModule } from 'app/angularMaterial/angularMaterial';
 import { AddManifestComponent } from 'app/Branch/Shared/manifest pages/add-manifest/add-manifest.component';
 import { BulkManifestComponent } from 'app/Branch/Shared/manifest pages/bulk-manifest/bulk-manifest.component';
 import { ManferrorLogComponent } from 'app/Branch/Shared/manifest pages/manferror-log/manferror-log.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ManferrorLogComponent } from 'app/Branch/Shared/manifest pages/manferro
     ReactiveFormsModule,
     MatTabsModule,
     MaterialModule,
+    NgSelectModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserReportModule } from '../user-report/user-report.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TripCancelComponent } from '../trip-report/trip-cancel/trip-cancel.component';
+import { InventryReportModule } from '../inventry-report/inventry-report.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TripCancelComponent } from '../trip-report/trip-cancel/trip-cancel.comp
     ReactiveFormsModule,
     MatTooltipModule,
     UserReportModule,
-    NgSelectModule
+    NgSelectModule,
+    InventryReportModule
   ]
 })
 export class ReportsModule { }

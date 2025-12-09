@@ -70,12 +70,19 @@
     <div class="col-sm-12  mt-1" *ngIf="this.userType !== 'Customer'">
         <div class="textOnSelect">
         <label for="Customer">Customer name</label>
-        <select id="Customer" class="custom-select" formControlName="Customer">
+        <ng-select
+          [items]="customerNameList"
+          class="custom-select1"
+          bindLabel="customerName"
+          bindValue="customerCode"
+          formControlName="Customer">
+        </ng-select>
+        <!-- <select id="Customer" class="custom-select" formControlName="Customer">
           <option value="" selected disabled>Select Customer</option>
           <option value="{{item.customerCode}}" *ngFor="let item of customerNameList">
             {{ item.customerName }} &nbsp; ({{ item.customerCode }})
           </option>
-        </select>
+        </select> -->
         </div>
     </div>
     </div>

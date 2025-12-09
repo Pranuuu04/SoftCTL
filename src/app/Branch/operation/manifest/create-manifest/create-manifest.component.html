@@ -26,12 +26,13 @@
       <div class="col-sm-3">
         <div class="textOnSelect">
             <label for="destination"><span style="color: red;">*</span>destination :</label>
-            <select id="destination" class="custom-select" formControlName="destination">
-              <option selected disabled>Select destination</option>
-              <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
-                {{ item.destinationName }} 
-              </option>
-            </select>
+            <ng-select
+              [items]="DestinationName"
+              class="custom-select1"
+              bindLabel="destinationName"
+              bindValue="destinationCode"
+              formControlName="destination">
+            </ng-select>
             <div *ngFor="let validation of validationMessage.destination">
               <div class="error-message"
                 *ngIf="createForm.get('destination').hasError(validation.type) && (createForm.get('destination').dirty || createForm.get('destination').touched)">
@@ -44,12 +45,13 @@
       <div class="col-sm-3">
         <div class="textOnSelect">
           <label for="via">Via :</label>
-          <select id="via" class="custom-select" formControlName="via" >
-            <option selected disabled>Select via</option>
-            <option *ngFor="let item of DestinationName" value="{{item.destinationCode}}">
-              {{ item.destinationName }} 
-            </option>
-          </select>
+          <ng-select
+              [items]="DestinationName"
+              class="custom-select1"
+              bindLabel="destinationName"
+              bindValue="destinationCode"
+              formControlName="via">
+            </ng-select>
         </div>
       </div>
     </div>
@@ -59,12 +61,13 @@
        <div class="col-sm-3">
         <div class="textOnSelect">
           <label for="Mode"><span style="color: red;">*</span>Mode :</label>
-          <select id="Mode" class="custom-select" formControlName="Mode" >
-            <option selected disabled>Select Mode</option>
-            <option  *ngFor="let item of ModeName" value="{{ item.Mode_name }}">
-              {{ item.Mode_name }}
-            </option>
-          </select>
+            <ng-select
+              [items]="ModeName"
+              class="custom-select1"
+              bindLabel="Mode_name"
+              bindValue="Mode_name"
+              formControlName="Mode">
+            </ng-select>
           <div *ngFor="let validation of validationMessage.Mode">
             <div class="error-message"
               *ngIf="createForm.get('Mode').hasError(validation.type) && (createForm.get('Mode').dirty || createForm.get('Mode').touched)">
@@ -95,10 +98,7 @@
        </div>
       </div>
 
-      <!-- <div *ngIf="selectedType !== 'Self'"> -->
         <div class="col-sm-3">
-          <!-- <div class="row">
-            <div class="col-sm-6"> -->
               <div class="textOnSelect">
                 <label for="VehicleType">Vehicle Type :</label>
                 <select id="VehicleType" class="custom-select" formControlName="VehicleType">
@@ -123,36 +123,9 @@
               </select>
             </div>
             </div>
-
-          <!-- </div>
-         
-        </div> -->
-
-        <!-- <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
-          <div class="textOnInput">
-              <label for="Drivername">Driver Name :</label>
-              <input class="form-control" type="text" id="Drivername" formControlName="Drivername"  placeholder="enter Driver name"> 
-          </div>
-        </div>
-    
-      <div class="col-sm-3"  *ngIf="selectedType === 'Self'">
-        <div class="textOnSelect">
-            <label for="Drivername">Driver Name :</label>
-            <select id="Drivername" class="custom-select" formControlName="Drivername" (change)="onDriverNameChange($event)">
-              <option selected disabled>Select Driver Name</option>
-              <option *ngFor="let item of DriverName" value="{{item.driverCode}}">
-                {{ item.driverName }} 
-              </option>
-            </select>
-        </div>
-      </div> -->
-  
-    
     </div>
 
     <div class="row mainrow">
-
-
        <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
           <div class="textOnInput">
               <label for="Drivername">Driver Name :</label>
@@ -197,19 +170,6 @@
           <input class="form-control" type="number" id="ColoaderNumber" formControlName="ColoaderNumber"  placeholder="enter Coloader Number">
       </div>
       </div>
-
-      <!--<div class="col-sm-3">
-        <div class="textOnSelect">
-            <label for="Route">Route :</label>
-            <select id="Route" class="custom-select" formControlName="Route" >
-              <option selected disabled>Select Route</option>
-              <option *ngFor="let item of inputRouteName" value="{{item.routeName}}">
-                {{ item.routeName }} 
-              </option>
-            </select>
-        </div>
-      </div> -->
-
     </div>
 
     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
@@ -232,13 +192,6 @@
           <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter Remark">
         </div>
       </div>
-
-      <!-- <div class="col-sm-3"  style="display: flex; justify-content: right;">
-          <button matTooltip="Add" type="button" class="btn btn-light form-icon" width="auto" (click)="openaddmanifest()">
-            <i class="fa-solid fa-plus"></i>
-          </button>
-        </div> -->
-
     </div>
 
     <div class="row mainrow mt-3"  style="border-bottom: 1px solid #d2d2d2;">

@@ -100,6 +100,7 @@ export class ZoneFormComponent implements OnInit {
   DepartmentData: any;
   CocourierMode: any;
   CocourierData: any;
+  companyList: any;
 
 
   constructor(private _mdr: MatDialogRef<ZoneFormComponent>,
@@ -300,6 +301,14 @@ if (this.CocourierMode === 'edit' && this.CocourierData?.Vendor_Code) {
         manifestStock: [0],
         dispatchStock: [0],
         drsStock: [0],
+        branchmsmeNo: [''],
+        branchpanNo: ['',[
+    Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')  
+    // PAN Format: ABCDE1234F
+  ]],
+        branchInvCode: [''],
+        branchcompanyname: [''],
+        branchfinantialYear: ['']
       })
       this.CoCourierForm = this.formBuilder.group({
       CocouirerCode: ['', [Validators.required, Validators.minLength(2)]],
@@ -328,6 +337,7 @@ if (this.CocourierMode === 'edit' && this.CocourierData?.Vendor_Code) {
       this.loadBranch();
       this.getBranchMastData();
       this.getDepartmentData();
+      this.getCompany();
   }
 
 
@@ -364,7 +374,12 @@ if (this.CocourierMode === 'edit' && this.CocourierData?.Vendor_Code) {
       console.error('Error in loadCountry:', error);
     }
   }
-
+getCompany() {
+    // tslint:disable-next-line:max-line-length
+     this.httpService.get(`${environment.apiUrl}Booking/getCompany`).then((res: any) => {
+        this.companyList = res.Data;
+       })
+    }
   async loadDestination() {
     try {
       const resp = await this.masterService.getDestinations().toPromise();
@@ -588,14 +603,19 @@ formSubmitBranchMast(formValue: any) {
     stateCode: formValue.branchMastState,
     gstNo: formValue.branchMastGst,
     hsnNo: formValue.branchMastHsn,
-    companyName: '',
+    companyName: formValue.branchcompanyname,
     upf: '',
     subBranch: formValue.branchMastBranch,
     accountNo: formValue.branchMastAccNo,
     bankName: formValue.branchMastBank,
     ifscCode: formValue.branchMastIfsc,
     bankBranch: formValue.branchMastBranch,
-    comLoc: ''
+    comLoc: '',
+    msmeNo: formValue.branchmsmeNo,
+    panNo: formValue.branchpanNo,
+    invoiceCode: formValue.branchInvCode,
+    financialYear: formValue.branchfinantialYear,
+    // hsnNo: formValue.branchHSNSAC
   };
 
   this.masterService.createLocationMast(payload).subscribe({
@@ -812,7 +832,12 @@ getBranchMastData() {
           branchMastAccNo: details.AccountNo,
           branchMastBank: details.Bank_Name,
           branchMastIfsc: details.IFSC_Code,
-          branchMastBranch: details.Bank_Branch
+          branchMastBranch: details.Bank_Branch,
+          branchmsmeNo: details.MSMENo,
+          branchcompanyname: details.CompanyName,
+          branchpanNo: details.PanNo,
+          branchInvCode: details.InvoiceCode,
+          branchfinantialYear: details.FinancialYear,
       });
 
     }

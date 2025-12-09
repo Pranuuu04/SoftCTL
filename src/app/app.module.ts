@@ -50,6 +50,7 @@ import { DrsBulkComponent } from './Branch/Shared/Runsheet-pages/drs-bulk/drs-bu
 import { VolumatricReportComponent } from './Branch/reports/report-booking/volumatric-report/volumatric-report.component';
 import { TripCancelComponent } from './Branch/reports/trip-report/trip-cancel/trip-cancel.component';
 import { SetupReportComponent } from './Branch/Shared/report_pages/setup-report/setup-report.component';
+import { InventryReportComponent } from './Branch/reports/inventry-report/inventry-report.component';
 
 @NgModule({
   imports: [

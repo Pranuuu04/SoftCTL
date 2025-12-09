@@ -13,6 +13,7 @@ import { BookingService } from 'app/Branch/operation/Booking/booking.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from '../../master.service';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-import-pd',
@@ -55,6 +56,9 @@ length = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
    showTable = false;
 
+  searchSubject = new Subject<string>();
+  searchValue: string = '';
+  
   constructor(public dialog: MatDialog,
               public formbuilder: FormBuilder,
               private snackBar: MatSnackBar,
@@ -83,6 +87,17 @@ length = 0;
   this.createForm.get('CustomerName')?.valueChanges.subscribe(customerName => {
     this.loadSupplierData(customerName);
   });
+    // this.searchSubject
+    //   .pipe(
+    //     debounceTime(500),
+    //     distinctUntilChanged()
+    //   )
+    //   .subscribe(searchTerm => {
+    //     this.searchValue = searchTerm;
+    //     this.pageIndex = 0;
+    //     this.getTripSheetData(1, this.pageSize, searchTerm);
+    //   });
+  
   }
 
 refresh() {  }
