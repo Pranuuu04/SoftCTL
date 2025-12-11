@@ -154,7 +154,10 @@ export class PaymentEntryBillReportComponent implements OnInit {
    
          branchData() {
             this.httpService.get(`${environment.apiUrl}Booking/getBranch` ).then((resp) => {
-                this.branchName = resp.Data;
+                const allBranch = { locationName: 'All', locationCode: 'All' };
+                this.branchName = [allBranch, ...resp.Data];
+                this.filterForm.patchValue({ branch: 'All' });
+                // this.branchName = resp.Data;
               });
           }
     
@@ -225,7 +228,6 @@ export class PaymentEntryBillReportComponent implements OnInit {
          const fromDate = this.filterForm.get('fromDate')?.value;
          const toDate = this.filterForm.get('toDate')?.value;
         
-  
     //  this.paymentService.PaymentEntryReport(this.sessionLocationCode, customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
     //    .subscribe((resp: any) => {
     //      if (resp.status === 1) {

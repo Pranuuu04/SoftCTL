@@ -1,7 +1,7 @@
 <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
-    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;">
+    <div class="row mainrow mt-4" style="border-bottom: 1px solid #d2d2d2;margin:0; padding:0;">
 
-      <div *ngIf="userType === 'Admin'" class="col-sm">
+      <div *ngIf="userType === 'Admin'" class="col-sm" style="padding-left:4px; padding-right:4px;">
         <div class="textOnSelect">
           <label for="branch"><span style="color: red;">*</span>Branch :</label>
           <ng-select
@@ -36,7 +36,7 @@
       </div>
     </div> -->
 
-      <div class="col-sm">
+      <div class="col-sm" style="padding-left:4px; padding-right:4px;">
         <div class="textOnSelect">
           <label for="customerType"><span style="color: red;">*</span>Customer Type :</label>
           <select class="custom-select" formControlName="customerType">
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-3" style="padding-left:4px; padding-right:4px;">
         <div class="textOnSelect">
           <label for="name"><span style="color: red;">*</span>Name :</label>
           <ng-select *ngIf="filterForm.get('customerType').value ===  'Customer'"
@@ -75,21 +75,32 @@
         </div>
       </div>
 
-      <div class="col-sm">
+      <div class="col-sm" style="padding-left:4px; padding-right:4px;">
+        <div class="textOnSelect">
+          <label for="rateCustomer"><span style="color: red;">*</span>Client Type :</label>
+          <select class="custom-select" formControlName="clientType">
+            <option selected value="All">All</option>
+            <option selected value="Cash">Cash</option>
+            <option selected value="ToPay">ToPay</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm" style="padding-left:4px; padding-right:4px;">
         <div class="textOnInput">
           <label for="fromDate"><span style="color: red;">*</span>From date :</label>
           <input class="form-control" type="date" id="fromDate" formControlName="fromDate"  [value]="getDefaultDate()" [(ngModel)]="fromDate" >
         </div>
       </div>
 
-       <div class="col-sm">
+       <div class="col-sm" style="padding-left:4px; padding-right:4px;">
         <div class="textOnInput">
           <label for="fromDate"><span style="color: red;">*</span>To date :</label>
           <input class="form-control" type="date" id="toDate" formControlName="toDate"  [value]="getDefaultDate()" [(ngModel)]="toDate" >
         </div>
       </div> 
 
-        <div class="col-sm-2 d-flex" style="justify-content: right;" >
+        <div class="col-lg-1 d-flex" style="justify-content: center;" style="padding-left:7px; padding-right:2px;">
           <button type="submit" class="btn btn-light other-button">Submit</button>
        </div>
 
@@ -158,6 +169,21 @@
             <ng-container matColumnDef="BookDate">
               <th mat-header-cell *matHeaderCellDef>Book Date</th>
               <td mat-cell *matCellDef="let row">{{ row.BookDate | date }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="OriginName">
+              <th mat-header-cell *matHeaderCellDef>Origin Name</th>
+              <td mat-cell *matCellDef="let row">{{ row.OriginName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="DestinationName">
+              <th mat-header-cell *matHeaderCellDef>Destination Name</th>
+              <td mat-cell *matCellDef="let row">{{ row.DestinationName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="DestinationManifest">
+              <th mat-header-cell *matHeaderCellDef>Destination Manifest</th>
+              <td mat-cell *matCellDef="let row">{{ row.DestinationManifest }}</td>
             </ng-container>
 
             <!-- Customer Name -->
@@ -255,7 +281,7 @@
             </ng-container> -->
 
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       </div>
