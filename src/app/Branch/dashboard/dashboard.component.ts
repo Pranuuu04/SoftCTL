@@ -914,9 +914,9 @@ checkDataBeforeOpeningModal(modalType: string, status: string): Observable<boole
 
   return apiCall.pipe(
     map((response: any) => {
-      return response.Data && response.Data.length > 0; // Returns true if data exists, otherwise false
+      return response.Data && response.Data.length > 0;
     }),
-    catchError(() => of(false)) // If API fails, return false
+    catchError(() => of(false))
   );
 }
 
