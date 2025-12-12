@@ -130,6 +130,11 @@
       <td mat-cell *matCellDef="let row">{{ row.DestinationManifest }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="ClientType">
+      <th mat-header-cell *matHeaderCellDef>Client Type</th>
+      <td mat-cell *matCellDef="let row">{{ row.ClientType }}</td>
+    </ng-container>
+
   <ng-container matColumnDef="SubTotal">
      <th mat-header-cell *matHeaderCellDef>Sub Total</th>
      <td mat-cell *matCellDef="let element">{{ (element.TotalAmt || 0) - (element.SGST || 0) | number:'1.2-2' }}</td>

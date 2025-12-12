@@ -50,6 +50,7 @@ export class CashTopayReportComponent implements OnInit {
         'OriginName',
         'DestinationName',
         'DestinationManifest',
+        'clientType',
         'Customer_Name',
         'Shipper_Name',
         'Consignee_Name',

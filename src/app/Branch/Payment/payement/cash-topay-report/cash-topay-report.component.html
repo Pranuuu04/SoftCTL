@@ -168,7 +168,7 @@
             <!-- BookDate -->
             <ng-container matColumnDef="BookDate">
               <th mat-header-cell *matHeaderCellDef>Book Date</th>
-              <td mat-cell *matCellDef="let row">{{ row.BookDate | date }}</td>
+              <td mat-cell *matCellDef="let row">{{ row.BookDate | date:'dd/MM/yyyy'}}</td>
             </ng-container>
 
             <ng-container matColumnDef="OriginName">
@@ -185,6 +185,11 @@
               <th mat-header-cell *matHeaderCellDef>Destination Manifest</th>
               <td mat-cell *matCellDef="let row">{{ row.DestinationManifest }}</td>
             </ng-container>
+
+          <ng-container matColumnDef="clientType">
+            <th mat-header-cell *matHeaderCellDef>Client Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.clientType }}</td>
+          </ng-container>
 
             <!-- Customer Name -->
             <ng-container matColumnDef="Customer_Name">

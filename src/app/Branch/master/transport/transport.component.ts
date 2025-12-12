@@ -39,7 +39,7 @@ export class TransportComponent implements OnInit {
       case 3:
         this.getVtypeData();
         break;
-      case 4:
+      case 5:
         this.getVehicleData();
         break;
       default:
