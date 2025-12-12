@@ -264,75 +264,116 @@ export class BillPrintComponent implements OnInit {
 
        return dialogRef;
      }
-
 printPDF(element) {
   const dialogRef = this.Excelprogressbar();
-  if (this.userType === 'Admin') {
 
-    const obj = {
-      sessionLocationCode: element.BranchCode,
-      BillNo: element.BillNo,
-      logolink: this.ClientLogo,
-      CustomerCode: element.Customer_Code,
-    };
+  const obj = {
+    sessionLocationCode: element.BranchCode,
+    BillNo: element.BillNo,
+    logolink: this.ClientLogo,
+    CustomerCode: element.Customer_Code,
+  };
 
-    const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+  const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
-    this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe(
-      (blob: Blob) => {
-         dialogRef.close();
-        const blobUrl = URL.createObjectURL(blob);
+  this.http.post(PdfUrl, obj, { headers, responseType: 'blob' as 'json' })
+    .subscribe((blob: Blob) => {
+
+      dialogRef.close();
+
+      // 👉 Create a new Blob with PDF MIME type
+      const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+
       const fileName = `Billing_Print_${element.BillNo}.pdf`;
-       const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
 
-      URL.revokeObjectURL(blobUrl);
+      // 👉 Create blob URL
+      const blobUrl = URL.createObjectURL(pdfBlob);
 
-        window.open(blobUrl, '_blank');
-      },
-      (error) => {
-        console.error('Error generating PDF:', error);
+      // 👉 Open in new tab (NO download)
+      const newTab = window.open(blobUrl, '_blank');
+
+      // OPTIONAL: Attach the filename in the window title
+      if (newTab) {
+        newTab.document.title = fileName;
       }
-    );
-  } else {
-    let obj = {
-      sessionLocationCode: element.BranchCode,
-      BillNo: element.BillNo,
-      logolink: this.ClientLogo,
-      CustomerCode: element.Customer_Code
-    };
 
-    const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+    }, error => {
+      dialogRef.close();
+      console.error("Error generating PDF:", error);
     });
-
-    this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe(
-      (blob: Blob) => {
-         dialogRef.close();
-        const blobUrl = URL.createObjectURL(blob);
-        const fileName = `Billing_Print_${element.BillNo}.pdf`;
-         const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-        window.open(blobUrl, '_blank');
-      URL.revokeObjectURL(blobUrl);
-      },
-      (error) => {
-        console.error('Error generating PDF:', error);
-      }
-    );
-  }
 }
+
+// printPDF(element) {
+//   const dialogRef = this.Excelprogressbar();
+//   if (this.userType === 'Admin') {
+
+//     const obj = {
+//       sessionLocationCode: element.BranchCode,
+//       BillNo: element.BillNo,
+//       logolink: this.ClientLogo,
+//       CustomerCode: element.Customer_Code,
+//     };
+
+//     const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
+//     const headers = new HttpHeaders({
+//       'Content-Type': 'application/json'
+//     });
+
+//     this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe(
+//       (blob: Blob) => {
+//          dialogRef.close();
+//         const blobUrl = URL.createObjectURL(blob);
+//       const fileName = `Billing_Print_${element.BillNo}.pdf`;
+//        const a = document.createElement('a');
+//       a.href = blobUrl;
+//       a.download = fileName;
+//       document.body.appendChild(a);
+//       a.click();
+//       document.body.removeChild(a);
+
+//       URL.revokeObjectURL(blobUrl);
+
+//         window.open(blobUrl, '_blank');
+//       },
+//       (error) => {
+//         console.error('Error generating PDF:', error);
+//       }
+//     );
+//   } else {
+//     let obj = {
+//       sessionLocationCode: element.BranchCode,
+//       BillNo: element.BillNo,
+//       logolink: this.ClientLogo,
+//       CustomerCode: element.Customer_Code
+//     };
+
+//     const PdfUrl = `${environment.apiUrl}Billing/billPrint`;
+//     const headers = new HttpHeaders({
+//       'Content-Type': 'application/json'
+//     });
+
+//     this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe(
+//       (blob: Blob) => {
+//          dialogRef.close();
+//         const blobUrl = URL.createObjectURL(blob);
+//         const fileName = `Billing_Print_${element.BillNo}.pdf`;
+//          const a = document.createElement('a');
+//       a.href = blobUrl;
+//       a.download = fileName;
+//       document.body.appendChild(a);
+//       a.click();
+//       document.body.removeChild(a);
+
+//         window.open(blobUrl, '_blank');
+//       URL.revokeObjectURL(blobUrl);
+//       },
+//       (error) => {
+//         console.error('Error generating PDF:', error);
+//       }
+//     );
+//   }
+// }
 }
