@@ -1138,9 +1138,6 @@ getDestSearchX(SupplierCode: string): Observable<any> {
       shareReplay(1)
     );
   }
-  getCompany(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}Booking/getCompany`)
-  }
 
   getOriginData(): Observable<any> {
     if (!this.cachedOriginData$) {

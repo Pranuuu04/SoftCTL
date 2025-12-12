@@ -9,6 +9,7 @@ import { AllServicesService } from 'app/service/all-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminDashService } from './admin-dash.service';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -766,146 +767,204 @@ generatePieChart() {
   }
 }
 
-InscanModal(status: 'Done', pageNumber: number, pageSize: number) {
-  this.http.getBranchDashbordInscanDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
-      if (resp.status === 1) {
-        this.inscanData = resp.Data;
-        const dialogRef = this.dialog.open(DashboardViewComponent, {
+InscanModal(status: 'Done' | 'Pending') {
+  // this.http.getBranchDashbordInscanDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
+  //     if (resp.status === 1) {
+  //       this.inscanData = resp.Data;
+        // const dialogRef = 
+        this.dialog.open(DashboardViewComponent, {
           data: {
             action: 'add',
-            RespTableData: this.inscanData,
+            // RespTableData: this.inscanData,
             status: status,
             modalType: 'Inscan',
+            sessionLocationCode: this.selectedValue,
+            fromDate: this.fromDate,
+            toDate: this.toDate,
           },
           width: '90rem',
           maxWidth: '90vw',
           disableClose: true,
         });
 
-        dialogRef.afterClosed().subscribe(res => {
-          if (res) {
-          }
-        });
-      } else {
-        this.openSnackBar(resp.message , 'error-snackbar')
-      }
-    }, error => {
-      console.error('Error fetching data:', error);
-    })
+    //     dialogRef.afterClosed().subscribe(res => {
+    //       if (res) {
+    //       }
+    //     });
+    //   } else {
+    //     this.openSnackBar(resp.message , 'error-snackbar')
+    //   }
+    // }, error => {
+    //   console.error('Error fetching data:', error);
+    // })
 }
 
-ManifestModal(status: 'Done' , pageNumber: number, pageSize: number) {
-  this.http.getBranchDashbordManifestDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
-    if (resp.status === 1) {
-      this.ManfData = resp.Data;
-      const dialogRef = this.dialog.open(DashboardViewComponent, {
+ManifestModal(status: 'Done' | 'Pending' ) {
+  // this.http.getBranchDashbordManifestDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
+  //   if (resp.status === 1) {
+  //     this.ManfData = resp.Data;
+  //     const dialogRef = 
+      this.dialog.open(DashboardViewComponent, {
         data: {
           action: 'add',
-          RespTableData: this.ManfData,
+          // RespTableData: this.ManfData,
           status: status,
           modalType: 'Manifest',
+          sessionLocationCode: this.selectedValue,
+          fromDate: this.fromDate,
+          toDate: this.toDate,
         },
         width: '90rem',
         maxWidth: '90vw',
         disableClose: true,
       });
 
-      dialogRef.afterClosed().subscribe(res => {
-        if (res) {
-        }
-      });
+  //     dialogRef.afterClosed().subscribe(res => {
+  //       if (res) {
+  //       }
+  //     });
 
-    } else {
-      this.openSnackBar(resp.message , 'error-snackbar')
-    }
-  }, error => {
-    console.error('Error fetching data:', error);
-  });
+  //   } else {
+  //     this.openSnackBar(resp.message , 'error-snackbar')
+  //   }
+  // }, error => {
+  //   console.error('Error fetching data:', error);
+  // });
 
 
 }
 
-DrsModal(status: 'Done', pageNumber: number, pageSize: number) {
-  this.http.getBranchDashbordRunsheetDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
-      if (resp.status === 1) {
-        this.DrsData = resp.Data;
-        const dialogRef = this.dialog.open(DashboardViewComponent, {
+DrsModal(status: 'Done' | 'Pending') {
+  // this.http.getBranchDashbordRunsheetDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
+  //     if (resp.status === 1) {
+  //       this.DrsData = resp.Data;
+  //       const dialogRef = 
+        this.dialog.open(DashboardViewComponent, {
           data: {
             action: 'add',
-            RespTableData: this.DrsData,
+            // RespTableData: this.DrsData,
             status: status,
             modalType: 'Drs',
+            sessionLocationCode: this.selectedValue,
+            fromDate: this.fromDate,
+            toDate: this.toDate,
           },
           width: '90rem',
           maxWidth: '90vw',
           disableClose: true,
         });
 
-        dialogRef.afterClosed().subscribe(res => {
-          if (res) {
-          }
-        });
-      } else {
-        this.openSnackBar(resp.message , 'error-snackbar')
-      }
-    }, error => {
-      console.error('Error fetching data:', error);
-    });
+    //     dialogRef.afterClosed().subscribe(res => {
+    //       if (res) {
+    //       }
+    //     });
+    //   } else {
+    //     this.openSnackBar(resp.message , 'error-snackbar')
+    //   }
+    // }, error => {
+    //   console.error('Error fetching data:', error);
+    // });
 }
 
-StatusModal(status:  'InTransit' | 'UnDelivered'| 'Delivered' | 'RTO'| 'OFD', pageNumber: number, pageSize: number ) {
-  this.http.getBranchDashbordStatusDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
-    if (resp.status === 1) {
-      this.SalesData = resp.Data;
-      const dialogRef = this.dialog.open(DashboardViewComponent, {
+StatusModal(status:  'InTransit' | 'UnDelivered'| 'Delivered' | 'RTO'| 'OFD' ) {
+  // this.http.getBranchDashbordStatusDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
+  //   if (resp.status === 1) {
+  //     this.SalesData = resp.Data;
+  //     const dialogRef = 
+      this.dialog.open(DashboardViewComponent, {
         data: {
           action: 'add',
-          RespTableData : this.SalesData,
+          // RespTableData : this.SalesData,
           status: status,
           modalType: 'Status',
+          sessionLocationCode: this.selectedValue,
+          fromDate: this.fromDate,
+          toDate: this.toDate,
         },
         width: '90rem',
         maxWidth: '90vw',
         disableClose: true,
       });
 
-      dialogRef.afterClosed().subscribe(res => {
-        if (res) {
-        }
-      });
-    } else {
-      this.openSnackBar(resp.message , 'error-snackbar')
-    }
-  }, error => {
-    console.error('Error fetching data:', error);
-  });
+  //     dialogRef.afterClosed().subscribe(res => {
+  //       if (res) {
+  //       }
+  //     });
+  //   } else {
+  //     this.openSnackBar(resp.message , 'error-snackbar')
+  //   }
+  // }, error => {
+  //   console.error('Error fetching data:', error);
+  // });
 }
 
-BranchModal(status: 'Credit' | 'Cash'| 'ToPay' | 'COD', pageNumber: number, pageSize: number) {
-  this.http.getBranchDashbordSalesDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
-    if (resp.status === 1) {
-      this.SalesData = resp.Data;
-      const dialogRef = this.dialog.open(DashboardViewComponent, {
+BranchModal(status: 'Credit' | 'Cash'| 'ToPay' | 'COD') {
+  // this.http.getBranchDashbordSalesDetails(this.selectedValue, status, this.fromDate, this.toDate, pageNumber, pageSize).subscribe((resp: any) => {
+  //   if (resp.status === 1) {
+  //     this.SalesData = resp.Data;
+  //     const dialogRef = 
+      this.dialog.open(DashboardViewComponent, {
         data: {
           action: 'add',
-          RespTableData : this.SalesData,
+          // RespTableData : this.SalesData,
           status: status,
           modalType: 'Sales',
+          sessionLocationCode: this.selectedValue,
+          fromDate: this.fromDate,
+          toDate: this.toDate,
         },
         width: '90rem',
         maxWidth: '90vw',
         disableClose: true,
       });
 
-      dialogRef.afterClosed().subscribe(res => {
-        if (res) {
-        }
-      });
-    } else {
-      this.openSnackBar(resp.message , 'error-snackbar')
-    }
-  }, error => {
-    console.error('Error fetching data:', error);
-  });
+  //     dialogRef.afterClosed().subscribe(res => {
+  //       if (res) {
+  //       }
+  //     });
+  //   } else {
+  //     this.openSnackBar(resp.message , 'error-snackbar')
+  //   }
+  // }, error => {
+  //   console.error('Error fetching data:', error);
+  // });
 }
+checkDataBeforeOpeningModal(modalType: string, status: string): Observable<any> {
+  const fromDate = this.fromDate;
+  const toDate = this.toDate;
+
+  let apiCall: Observable<any>;
+
+  switch (modalType) {
+    case 'Inscan':
+      apiCall = this.http.getBranchDashbordInscanDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
+      break;
+    case 'Manifest':
+      apiCall = this.http.getBranchDashbordManifestDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
+      break;
+    case 'Drs':
+      apiCall = this.http.getBranchDashbordRunsheetDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
+      break;
+    case 'Status':
+      apiCall = this.http.getBranchDashbordStatusDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
+      break;
+    case 'Sales':
+      apiCall = this.http.getBranchDashbordSalesDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
+      break;
+    default:
+      return of({ valid: false });
+  }
+
+  return apiCall.pipe(
+    map((response: any) => {
+      return response.Data && response.Data.length > 0; // Returns true if data exists, otherwise false
+    }),
+    // map((resp: any) => ({
+    //   valid: resp.status === 1 && resp.Data.length > 0,
+    //   data: resp.Data
+    // })),
+    catchError(() => of({ valid: false }))
+  );
+}
+
 }
