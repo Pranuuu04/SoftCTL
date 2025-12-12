@@ -151,7 +151,7 @@ export class PaymentEntryBillComponent implements OnInit {
        // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
        // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
        console.log("AwbNo>>>",AwbNo);
-   this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, pageNumber, pageSize)
+   this.paymentService.getCashToPay(AwbNo, customerCode,'', fromDate, toDate, pageNumber, pageSize)
      .subscribe((resp: any) => {
        if (resp.status === 1) {
          this.openSnackBar(resp.message, 'custom-snackbar');

@@ -89,8 +89,8 @@ getByReceivedPayCode(refClub: string ): Observable<any> {
     return this.http.get(url);
   }
 
-    getCashToPay(awb: number, customerCode: string,fromDate:any,toDate:any,pageNumber: number, pageSize: number): Observable<any> {
-    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  getCashToPay(awb: number, customerCode: string,clientType:string,fromDate:any,toDate:any,pageNumber: number, pageSize: number): Observable<any> {
+    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&clientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
   }
 
@@ -112,8 +112,8 @@ createCashToPay(obj:any): Observable<any> {
     return this.http.get(url);
   }
 
-cashToPayReport(sessionLocationCode:any,AwbNo:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
-    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&AwbNo=${AwbNo}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+cashToPayReport(sessionLocationCode:any,AwbNo:any,customerCode:any,shipperName:any,consigneeName:any,clientType:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&AwbNo=${AwbNo}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&clientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
   }
 

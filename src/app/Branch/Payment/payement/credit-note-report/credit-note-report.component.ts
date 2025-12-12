@@ -166,7 +166,10 @@ export class CreditNoteReportComponent implements OnInit {
  
        branchData() {
           this.httpService.get(`${environment.apiUrl}Booking/getBranch` ).then((resp) => {
-              this.branchName = resp.Data;
+               const allBranch = { locationName: 'All', locationCode: 'All' };
+                this.branchName = [allBranch, ...resp.Data];
+                this.filterForm.patchValue({ branch: 'All' });
+              // this.branchName = resp.Data;
             });
         }
   

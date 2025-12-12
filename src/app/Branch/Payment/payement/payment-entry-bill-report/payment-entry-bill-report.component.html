@@ -1,7 +1,7 @@
 <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()" class="mt-4">
     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
 
-      <!-- <div *ngIf="userType === 'Admin'" class="col-sm">
+      <div *ngIf="userType === 'Admin'" class="col-sm">
         <div class="textOnSelect">
           <label for="branch"><span style="color: red;">*</span>Branch :</label>
           <ng-select
@@ -12,7 +12,7 @@
             formControlName="branch">
           </ng-select>
         </div>
-       </div> -->
+       </div>
 
     <!-- <div class="col-sm-2">
       <div class="textOnSelect">

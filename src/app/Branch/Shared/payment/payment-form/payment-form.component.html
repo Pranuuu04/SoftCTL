@@ -385,7 +385,7 @@
    <form [formGroup]="paymentEntryBillForm" (ngSubmit)="submitPaymentEntry()">
 
       <div class="row mainrow">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
            <div class="textOnSelect">
                 <label for="rateCustomer"><span style="color: red;">*</span>Customer Name :</label>
                   <ng-select
@@ -402,6 +402,13 @@
           <div class="textOnInput">
             <label for="receiptDt">Bill date :</label>
             <input class="form-control" type="date" formControlName="receiptDtBill">
+         </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="textOnInput">
+            <label for="billAmt">Bill Amont :</label>
+            <input class="form-control" type="number" formControlName="billAmt" min="0">
          </div>
         </div>
 
@@ -426,7 +433,7 @@
         </div>
 
 
-         <div class="col-sm-4">
+         <div class="col-sm-3">
           <div class="textOnSelect">
             <label for="BankName">Bank name :</label>
              <!-- <ng-select

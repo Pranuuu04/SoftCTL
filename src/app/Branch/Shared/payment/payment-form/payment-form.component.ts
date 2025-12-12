@@ -44,6 +44,7 @@ export class PaymentFormComponent implements OnInit {
   toDate:any
   customerCode:any
   cashToPayData:any
+  clientType:any;
   cashToPayReportFlag:boolean = false
   reportBranch: any;
   PaymentEntryData:any[]=[];
@@ -141,6 +142,7 @@ bankList = [
                 toDate:any
                 customerCode:any;
                 CashPayReport:any;
+                clientType:any
                 Branch:any;
 
               },
@@ -166,6 +168,7 @@ bankList = [
                   this.fromDate = data?.fromDate;
                   this.toDate = data?.toDate;
                   this.customerCode = data?.customerCode;
+                  this.clientType = data?.clientType;
                   this.cashToPayReportFlag= data?.CashPayReport;
                   this.reportBranch = data?.Branch
                   console.log("responseData>>>>>>",this.cashToPayData)
@@ -373,7 +376,7 @@ latestRecordTempId: number | null = null;
 
 getCashToPayData(){
 
-   this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
+   this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode,this.clientType, this.fromDate, this.toDate, 1, 10)
     .subscribe((resp: any) => {
       // if (resp.status === 1) {
       //   this.openSnackBar(resp.message, 'custom-snackbar');
@@ -413,7 +416,7 @@ getCashToPayData(){
  
 
 getCashToPayReportData(){
-    this.paymentService.cashToPayReport(this.reportBranch,this.cashToPayData?.AwbNo,'','','', this.fromDate, this.toDate,1,100)
+    this.paymentService.cashToPayReport(this.reportBranch,this.cashToPayData?.AwbNo,'','','',this.clientType, this.fromDate, this.toDate,1,100)
      .subscribe((resp: any) => {
       if (resp.status === 1) {
         

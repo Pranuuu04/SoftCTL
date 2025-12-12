@@ -47,6 +47,9 @@ export class CashTopayReportComponent implements OnInit {
         'SrNO',
         'AwbNo',
         'BookDate',
+        'OriginName',
+        'DestinationName',
+        'DestinationManifest',
         'Customer_Name',
         'Shipper_Name',
         'Consignee_Name',
@@ -133,6 +136,7 @@ export class CashTopayReportComponent implements OnInit {
     this.filterForm = this.formBuilder.group({
      branch: ['All', Validators.required],
      customerType:['Customer', Validators.required],
+     clientType: ['All'],
      name:['All',Validators.required],
      fromDate: [this.currentDate1, Validators.required],
      toDate: [this.currentDate2, Validators.required],
@@ -161,7 +165,10 @@ export class CashTopayReportComponent implements OnInit {
 
       branchData() {
          this.httpService.get(`${environment.apiUrl}Booking/getBranch` ).then((resp) => {
-             this.branchName = resp.Data;
+           const allBranch = { locationName: 'All', locationCode: 'All' };
+                this.branchName = [allBranch, ...resp.Data];
+                this.filterForm.patchValue({ branch: 'All' });
+            //  this.branchName = resp.Data;
            });
        }
  
@@ -231,9 +238,10 @@ export class CashTopayReportComponent implements OnInit {
        
        const fromDate = this.filterForm.get('fromDate')?.value;
        const toDate = this.filterForm.get('toDate')?.value;
+       const clientType = this.filterForm.get('clientType')?.value;
       
 
-   this.paymentService.cashToPayReport(sessionLocationCode,'', customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
+   this.paymentService.cashToPayReport(sessionLocationCode,'', customerCode, shipperName, consigneeName,clientType,fromDate, toDate, this.pageNumber, this.pageSize)
      .subscribe((resp: any) => {
        if (resp.status === 1) {
          this.openSnackBar(resp.message, 'custom-snackbar');
@@ -272,6 +280,7 @@ export class CashTopayReportComponent implements OnInit {
        fromDate: this.fromDate,
        toDate: this.toDate,
        customerCode:'All',
+       clientType:this.filterForm.get('clientType')?.value,
        CashPayReport:true,
        Branch:sessionLocationCode
      },
@@ -389,9 +398,10 @@ downloadExcel() {
 
   const fromDate = this.filterForm.get('fromDate')?.value;
   const toDate = this.filterForm.get('toDate')?.value;
+  const clientType = this.filterForm.get('clientType')?.value;
 
   this.paymentService
-    .cashToPayReport(sessionLocationCode, '', customerCode, shipperName, consigneeName, fromDate, toDate, this.pageNumber, this.pageSize)
+    .cashToPayReport(sessionLocationCode, '', customerCode, shipperName, consigneeName,clientType, fromDate, toDate, this.pageNumber, this.pageSize)
     .subscribe((resp: any) => {
 
       if (resp.status === 1) {

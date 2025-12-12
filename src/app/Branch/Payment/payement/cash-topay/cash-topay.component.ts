@@ -34,7 +34,7 @@ export class CashTopayComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];'SubTotal',
-  displayedColumns: string[] = ['action','AwbNo','BookDate','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
+  displayedColumns: string[] = ['action','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
 
   userType: any;
   selectedValue = 'All';
@@ -102,7 +102,7 @@ ngOnInit(): void {
 
      this.filterForm = this.formBuilder.group({
       rateCustomer: ['All', Validators.required],
-      destination: ['All'],
+      clientType: ['All'],
       fromDate: [this.currentDate1, Validators.required],
       toDate: [this.currentDate2, Validators.required],
       AwbNo:['']
@@ -163,10 +163,11 @@ if (this.filterForm.valid) {
       const fromDate = this.filterForm.get('fromDate')?.value;
       const toDate = this.filterForm.get('toDate')?.value;
       const AwbNo = this.filterForm.get('AwbNo')?.value;
+      const clientType = this.filterForm.get('clientType')?.value;
       // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
       // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
       console.log("AwbNo>>>",AwbNo);
-  this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, pageNumber, pageSize)
+  this.paymentService.getCashToPay(AwbNo, customerCode,clientType, fromDate, toDate, pageNumber, pageSize)
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
@@ -197,6 +198,7 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
       fromDate: this.fromDate,
       toDate: this.toDate,
       customerCode:this.filterForm.get('rateCustomer')?.value,
+      clientType:this.filterForm.get('clientType')?.value,
       CashPayReport:false
     },
     // width: '95rem',
