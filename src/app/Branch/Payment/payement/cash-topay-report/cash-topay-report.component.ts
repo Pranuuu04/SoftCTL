@@ -371,9 +371,9 @@ export class CashTopayReportComponent implements OnInit {
 downloadExcel() {
 
   const displayedColumns = [
-    'SrNO','AwbNo','BookDate','Customer_Name','Shipper_Name','Consignee_Name',
-    'Total_amt','Received_amt','TDS','Debit_note','Outstanding','Payment_mode',
-    'Received_by','Received_date','Desposited_bank','TransactionId','Remark'
+    'SrNO','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','ClientType',
+    'Customer_Name','Shipper_Name','Consignee_Name','Total_amt','Received_amt','TDS','Debit_note',
+    'Outstanding','Payment_mode','Received_by','Received_date','Desposited_bank','TransactionId','Remark'
   ];
 
   let sessionLocationCode;
@@ -414,6 +414,10 @@ downloadExcel() {
             SrNO: index + 1,
             AwbNo: row.AwbNo,
             BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+            OriginName:row.OriginName,
+            DestinationName:row.DestinationName,
+            DestinationManifest:row.DestinationManifest,
+            ClientType:row.clientType,
             Customer_Name: row.Customer_Name,
             Shipper_Name: row.Shipper_Name,
             Consignee_Name: row.Consignee_Name,
@@ -528,10 +532,10 @@ downloadExcel() {
 downloadPdf() {
 
   const headers = [
-    'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
-    'Total Amt', 'Received Amt', 'TDS', 'Debit Note', 'Outstanding',
-    'Payment Mode', 'Received By', 'Bank', 'Received Date',
-    'Txn ID', 'Remark'
+   'AWBNo', 'BookDate','Origin','Destination','DestinationM','Client', 'Customer', 'Shipper', 'Consignee',
+    'Total', 'Received', 'TDS', 'DebitN', 'Outst',
+    'Payment Mode', 'ReceivedBy', 'Bank', 'ReceivedD',
+    'TxnID', 'Remark'
   ];
 
   let sessionLocationCode;
@@ -573,9 +577,13 @@ downloadPdf() {
       const tableBody = [
         headers,
         ...exportData.map((item: any, index: number) => [
-          index + 1,
+          // index + 1,
           item.AwbNo || '',
           item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
+          item.OriginName || '',
+          item.DestinationName || '',
+          item.DestinationManifest || '',
+          item.ClientType || '',
           item.Customer_Name || '',
           item.Shipper_Name || '',
           item.Consignee_Name || '',
