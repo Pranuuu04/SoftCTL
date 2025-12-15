@@ -189,3 +189,8 @@ h1 {
 }
 
 
+.disabled-box {
+  pointer-events: none;   /* 🚫 disable click */
+  opacity: 0.5;           /* visual disabled */
+  cursor: not-allowed;
+}

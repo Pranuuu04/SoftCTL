@@ -917,19 +917,56 @@ BranchModal(status: 'Credit' | 'Cash'| 'ToPay' | 'COD') {
         maxWidth: '90vw',
         disableClose: true,
       });
-
-  //     dialogRef.afterClosed().subscribe(res => {
-  //       if (res) {
-  //       }
-  //     });
-  //   } else {
-  //     this.openSnackBar(resp.message , 'error-snackbar')
-  //   }
-  // }, error => {
-  //   console.error('Error fetching data:', error);
-  // });
 }
-checkDataBeforeOpeningModal(modalType: string, status: string): Observable<any> {
+
+// getCount(modalType: string, status: string): Observable<number> {
+//   const fromDate = this.fromDate;
+//   const toDate = this.toDate;
+
+//   let apiCall: Observable<any>;
+
+//   switch (modalType) {
+//     case 'Inscan':
+//       apiCall = this.http.getBranchDashbordInscanDetails(
+//         this.selectedValue, status, fromDate, toDate, 1, 1
+//       );
+//       break;
+
+//     case 'Manifest':
+//       apiCall = this.http.getBranchDashbordManifestDetails(
+//         this.selectedValue, status, fromDate, toDate, 1, 1
+//       );
+//       break;
+
+//     case 'Drs':
+//       apiCall = this.http.getBranchDashbordRunsheetDetails(
+//         this.selectedValue, status, fromDate, toDate, 1, 1
+//       );
+//       break;
+
+//     case 'Status':
+//       apiCall = this.http.getBranchDashbordStatusDetails(
+//         this.selectedValue, status, fromDate, toDate, 1, 1
+//       );
+//       break;
+
+//     case 'Sales':
+//       apiCall = this.http.getBranchDashbordSalesDetails(
+//         this.selectedValue, status, fromDate, toDate, 1, 1
+//       );
+//       break;
+
+//     default:
+//       return of(0);
+//   }
+
+//   return apiCall.pipe(
+//     map(res => res?.count || 0),
+//     catchError(() => of(0))
+//   );
+// }
+
+checkDataBeforeOpeningModal(modalType: string, status: string): Observable<boolean> {
   const fromDate = this.fromDate;
   const toDate = this.toDate;
 
@@ -952,18 +989,14 @@ checkDataBeforeOpeningModal(modalType: string, status: string): Observable<any> 
       apiCall = this.http.getBranchDashbordSalesDetails(this.selectedValue, status, fromDate, toDate, 1, 1);
       break;
     default:
-      return of({ valid: false });
+      return of( false );
   }
 
   return apiCall.pipe(
     map((response: any) => {
-      return response.Data && response.Data.length > 0; // Returns true if data exists, otherwise false
+      return response.Data && response.Data.length > 0;
     }),
-    // map((resp: any) => ({
-    //   valid: resp.status === 1 && resp.Data.length > 0,
-    //   data: resp.Data
-    // })),
-    catchError(() => of({ valid: false }))
+    catchError(() => of( false))
   );
 }
 
