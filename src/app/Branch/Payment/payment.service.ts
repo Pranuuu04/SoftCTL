@@ -90,7 +90,7 @@ getByReceivedPayCode(refClub: string ): Observable<any> {
   }
 
   getCashToPay(awb: number, customerCode: string,clientType:string,fromDate:any,toDate:any,pageNumber: number, pageSize: number): Observable<any> {
-    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&clientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&ClientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
   }
 
@@ -113,7 +113,7 @@ createCashToPay(obj:any): Observable<any> {
   }
 
 cashToPayReport(sessionLocationCode:any,AwbNo:any,customerCode:any,shipperName:any,consigneeName:any,clientType:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
-    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&AwbNo=${AwbNo}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&clientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&AwbNo=${AwbNo}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&ClientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
   }
 

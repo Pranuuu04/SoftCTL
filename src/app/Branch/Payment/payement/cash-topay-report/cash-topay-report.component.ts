@@ -50,6 +50,7 @@ export class CashTopayReportComponent implements OnInit {
         'OriginName',
         'DestinationName',
         'DestinationManifest',
+        'clientType',
         'Customer_Name',
         'Shipper_Name',
         'Consignee_Name',
@@ -370,9 +371,9 @@ export class CashTopayReportComponent implements OnInit {
 downloadExcel() {
 
   const displayedColumns = [
-    'SrNO','AwbNo','BookDate','Customer_Name','Shipper_Name','Consignee_Name',
-    'Total_amt','Received_amt','TDS','Debit_note','Outstanding','Payment_mode',
-    'Received_by','Received_date','Desposited_bank','TransactionId','Remark'
+    'SrNO','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','ClientType',
+    'Customer_Name','Shipper_Name','Consignee_Name','Total_amt','Received_amt','TDS','Debit_note',
+    'Outstanding','Payment_mode','Received_by','Received_date','Desposited_bank','TransactionId','Remark'
   ];
 
   let sessionLocationCode;
@@ -413,6 +414,10 @@ downloadExcel() {
             SrNO: index + 1,
             AwbNo: row.AwbNo,
             BookDate: row.BookDate ? new Date(row.BookDate).toLocaleDateString() : '',
+            OriginName:row.OriginName,
+            DestinationName:row.DestinationName,
+            DestinationManifest:row.DestinationManifest,
+            ClientType:row.clientType,
             Customer_Name: row.Customer_Name,
             Shipper_Name: row.Shipper_Name,
             Consignee_Name: row.Consignee_Name,
@@ -447,18 +452,23 @@ downloadExcel() {
 
 }
 
-  
+
 // downloadPdf() {
 
 //   const headers = [
 //     'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
-//     'Total Amt', 'Received Amt', 'Outstanding', 'Payment Mode', 'Received By',
-//     'Bank', 'Received Date', 'Txn ID', 'TDS', 'Debit Note', 'Remark', 'Location'
+//     'Total Amt', 'Received Amt', 'TDS', 'Debit Note', 'Outstanding', 'Payment Mode', 'Received By',
+//     'Bank', 'Received Date', 'Txn ID', 'Remark'
 //   ];
+
+//    const exportData = this.dataSource.filteredData.length
+//     ? this.dataSource.filteredData
+//     : this.dataSource.data;
 
 //   const tableBody = [
 //     headers,
-//     ...this.dataSource.data.map((item: any, index: number) => [
+//     // ...this.dataSource.data.map((item: any, index: number) => [
+//     ...exportData.map((item: any, index: number) => [
 //       index + 1,
 //       item.AwbNo || '',
 //       item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
@@ -467,124 +477,168 @@ downloadExcel() {
 //       item.Consignee_Name || '',
 //       item.Total_amt ?? '',
 //       item.Received_amt ?? '',
+//       item.TDS ?? '',
+//       item.Debit_note ?? '',
 //       item.Outstanding ?? '',
 //       item.Payment_mode || '',
 //       item.Received_by || '',
 //       item.Desposited_bank || '',
-//       item.Received_date ? new Date(item.Received_date).toLocaleDateString() : '',
+//       item.Received_date
+//         ? new Date(item.Received_date).toLocaleDateString()
+//         : '',
 //       item.TransactionId || '',
-//       item.TDS ?? '',
-//       item.Debit_note ?? '',
-//       item.Remark || '',
-//       item.Location_Code || ''
+//       item.Remark || ''
 //     ])
 //   ];
 
+//   // Dynamic Widths — AUTO SIZE
+//   const colCount = headers.length;
+//   const dynamicWidths = Array(colCount).fill('auto');   
+
 //   const docDefinition: any = {
 //     pageOrientation: 'landscape',
+//     pageSize: 'A4',
+//     pageMargins: [10, 10, 10, 10],
+
 //     content: [
 //       { text: 'CashToPay Report', style: 'header' },
 //       {
 //         table: {
 //           headerRows: 1,
-//           widths: [
-//             'auto','auto','auto','*','*','*',
-//             'auto','auto','auto','auto','auto',
-//             'auto','auto','auto','auto','auto','*','auto'
-//           ],
+//           widths: dynamicWidths,   // set dynamic widths
 //           body: tableBody
+//         },
+//         layout: {
+//           fillColor: (rowIndex: any) => (rowIndex === 0 ? '#e8e8e8' : null)
 //         }
 //       }
 //     ],
 //     styles: {
 //       header: {
-//         fontSize: 18,
+//         fontSize: 16,
 //         bold: true,
 //         alignment: 'center',
-//         margin: [0, 0, 0, 10]
+//         margin: [0, 0, 0, 8]
 //       }
+//     },
+//     defaultStyle: {
+//       fontSize: 8
 //     }
 //   };
 
 //   pdfMake.createPdf(docDefinition).download('CashToPay.pdf');
 // }
 
-
-
 downloadPdf() {
 
   const headers = [
-    'SrNo', 'AWB No', 'Book Date', 'Customer Name', 'Shipper', 'Consignee',
-    'Total Amt', 'Received Amt', 'TDS', 'Debit Note', 'Outstanding', 'Payment Mode', 'Received By',
-    'Bank', 'Received Date', 'Txn ID', 'Remark'
+   'AWBNo', 'BookDate','Origin','Destination','DestinationM','Client', 'Customer', 'Shipper', 'Consignee',
+    'Total', 'Received', 'TDS', 'DebitN', 'Outst',
+    'Payment Mode', 'ReceivedBy', 'Bank', 'ReceivedD',
+    'TxnID', 'Remark'
   ];
 
-   const exportData = this.dataSource.filteredData.length
-    ? this.dataSource.filteredData
-    : this.dataSource.data;
+  let sessionLocationCode;
 
-  const tableBody = [
-    headers,
-    // ...this.dataSource.data.map((item: any, index: number) => [
-    ...exportData.map((item: any, index: number) => [
-      index + 1,
-      item.AwbNo || '',
-      item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
-      item.Customer_Name || '',
-      item.Shipper_Name || '',
-      item.Consignee_Name || '',
-      item.Total_amt ?? '',
-      item.Received_amt ?? '',
-      item.TDS ?? '',
-      item.Debit_note ?? '',
-      item.Outstanding ?? '',
-      item.Payment_mode || '',
-      item.Received_by || '',
-      item.Desposited_bank || '',
-      item.Received_date
-        ? new Date(item.Received_date).toLocaleDateString()
-        : '',
-      item.TransactionId || '',
-      item.Remark || ''
-    ])
-  ];
+  if (this.userType !== 'Admin') {
+    sessionLocationCode = this.sessionLocationCode;
+  } else {
+    sessionLocationCode = this.filterForm.get('branch')?.value;
+  }
 
-  // Dynamic Widths — AUTO SIZE
-  const colCount = headers.length;
-  const dynamicWidths = Array(colCount).fill('auto');   
+  const customerType = this.filterForm.get('customerType')?.value;
+  let customerCode = '';
+  let shipperName = '';
+  let consigneeName = '';
 
-  const docDefinition: any = {
-    pageOrientation: 'landscape',
-    pageSize: 'A4',
-    pageMargins: [10, 10, 10, 10],
+  if (customerType === 'Customer') {
+    customerCode = this.filterForm.get('name')?.value;
+  } else if (customerType === 'Shipper') {
+    shipperName = this.filterForm.get('name')?.value;
+  } else if (customerType === 'Consignee') {
+    consigneeName = this.filterForm.get('name')?.value;
+  }
 
-    content: [
-      { text: 'CashToPay Report', style: 'header' },
-      {
-        table: {
-          headerRows: 1,
-          widths: dynamicWidths,   // set dynamic widths
-          body: tableBody
+  const fromDate = this.filterForm.get('fromDate')?.value;
+  const toDate = this.filterForm.get('toDate')?.value;
+  const clientType = this.filterForm.get('clientType')?.value;
+
+  this.paymentService.cashToPayReport(sessionLocationCode,'',customerCode,shipperName,
+      consigneeName,clientType,fromDate,toDate,this.pageNumber,this.pageSize)
+    .subscribe((resp: any) => {
+
+      if (resp.status !== 1) {
+        this.openSnackBar(resp.message, 'error-snackbar');
+        return;
+      }
+
+      const exportData = resp.getExelDetails || [];
+
+      const tableBody = [
+        headers,
+        ...exportData.map((item: any, index: number) => [
+          // index + 1,
+          item.AwbNo || '',
+          item.BookDate ? new Date(item.BookDate).toLocaleDateString() : '',
+          item.OriginName || '',
+          item.DestinationName || '',
+          item.DestinationManifest || '',
+          item.ClientType || '',
+          item.Customer_Name || '',
+          item.Shipper_Name || '',
+          item.Consignee_Name || '',
+          item.Total_amt ?? '',
+          item.Received_amt ?? '',
+          item.TDS ?? '',
+          item.Debit_note ?? '',
+          item.Outstanding ?? '',
+          item.Payment_mode || '',
+          item.Received_by || '',
+          item.Desposited_bank || '',
+          item.Received_date
+            ? new Date(item.Received_date).toLocaleDateString()
+            : '',
+          item.TransactionId || '',
+          item.Remark || ''
+        ])
+      ];
+
+      const dynamicWidths = Array(headers.length).fill('auto');
+
+      const docDefinition: any = {
+        pageOrientation: 'landscape',
+        pageSize: 'A4',
+        pageMargins: [10, 10, 10, 10],
+
+        content: [
+          { text: 'CashToPay Report', style: 'header' },
+          {
+            table: {
+              headerRows: 1,
+              widths: dynamicWidths,
+              body: tableBody
+            },
+            layout: {
+              fillColor: (rowIndex: number) =>
+                rowIndex === 0 ? '#e8e8e8' : null
+            }
+          }
+        ],
+        styles: {
+          header: {
+            fontSize: 16,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 0, 0, 8]
+          }
         },
-        layout: {
-          fillColor: (rowIndex: any) => (rowIndex === 0 ? '#e8e8e8' : null)
+        defaultStyle: {
+          fontSize: 8
         }
-      }
-    ],
-    styles: {
-      header: {
-        fontSize: 16,
-        bold: true,
-        alignment: 'center',
-        margin: [0, 0, 0, 8]
-      }
-    },
-    defaultStyle: {
-      fontSize: 8
-    }
-  };
+      };
 
-  pdfMake.createPdf(docDefinition).download('CashToPay.pdf');
+      pdfMake.createPdf(docDefinition).download('CashToPay.pdf');
+    });
 }
 
 

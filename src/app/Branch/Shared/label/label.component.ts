@@ -49,7 +49,8 @@ export class LabelComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.originCode = localStorage.getItem('originCode');
+    // this.originCode = localStorage.getItem('originCode');
+       this.originCode = localStorage.getItem('userType') !== 'Admin' ? localStorage.getItem('originCode') : localStorage.getItem('selectedValue');
     this.originName = localStorage.getItem('originName');
     this.username = localStorage.getItem('userName');
     this.getLabelData();

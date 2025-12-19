@@ -24,8 +24,10 @@ export class DirectDrsUpdateComponent implements OnInit {
 
   ngOnInit() {
 
-    this.sessionLocationCode = localStorage.getItem('originCode');
-    
+    // this.sessionLocationCode = localStorage.getItem('originCode');
+       this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
     this.drsForm = this.fb.group({
       drsNumber: ['', Validators.required],
       // drsDate: [this.currentDate, Validators.required],
@@ -112,17 +114,17 @@ onFileSelected(event: any) {
 onSubmit() {
     if (this.drsForm.valid) {
       console.log(this.drsForm.value);
-      // const payload ={
-      //       "sessionLocationCode": this.sessionLocationCode,
-      //       "DrsNo": this.drsForm.get('drsNumber').value,
-      //       "Image": this.drsForm.get('drsImage').value
-      // }
+      const payload ={
+            "sessionLocationCode": this.sessionLocationCode,
+            "DrsNo": this.drsForm.get('drsNumber').value,
+            "Image": this.drsForm.get('drsImage').value
+      }
 
-        const payload = new FormData();
+        // const payload = new FormData();
 
-        payload.append('sessionLocationCode', this.sessionLocationCode);
-        payload.append('DrsNo', this.drsForm.get('drsNumber')?.value);
-        payload.append('Image', this.drsForm.get('drsImage')?.value); 
+        // payload.append('sessionLocationCode', this.sessionLocationCode);
+        // payload.append('DrsNo', this.drsForm.get('drsNumber')?.value);
+        // payload.append('Image', this.drsForm.get('drsImage')?.value); 
 
       this.allServices.drsImageUpload(payload).subscribe((res:any) => {
         if(res.status === 1){

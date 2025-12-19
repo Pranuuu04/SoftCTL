@@ -34,7 +34,7 @@ export class CashTopayComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];'SubTotal',
-  displayedColumns: string[] = ['action','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
+  displayedColumns: string[] = ['action','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','ClientType','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
 
   userType: any;
   selectedValue = 'All';
