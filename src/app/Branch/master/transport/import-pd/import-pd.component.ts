@@ -54,10 +54,10 @@ length = 0;
   pageEvent: PageEvent;
   showPageSizeOptions = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-   showTable = false;
-
+  showTable = false;
+  
   searchSubject = new Subject<string>();
-  searchValue: string = '';
+  searchTerm: string = '';
   
   constructor(public dialog: MatDialog,
               public formbuilder: FormBuilder,
@@ -87,6 +87,16 @@ length = 0;
   this.createForm.get('CustomerName')?.valueChanges.subscribe(customerName => {
     this.loadSupplierData(customerName);
   });
+   this.searchSubject
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    )
+    .subscribe((term) => {
+      this.searchTerm = term.trim();
+      this.pageIndex = 0;
+      this.getTripSheetData(1, this.pageSize, this.searchTerm);
+    });
     // this.searchSubject
     //   .pipe(
     //     debounceTime(500),
@@ -151,7 +161,7 @@ onSearch(): void {
     const pageNumber = 1;
     const pageSize = this.pageSize;
 
-    this.getTripSheetData(pageNumber, pageSize);
+    this.getTripSheetData(pageNumber, pageSize, this.searchTerm);
   }
 }
 
@@ -165,14 +175,14 @@ onSearch(): void {
   this.pageIndex = e.pageIndex;
   const pageNumber = this.pageIndex + 1;
     this.calculatePageCount();
-  this.getTripSheetData(pageNumber, this.pageSize);
+  this.getTripSheetData(pageNumber, this.pageSize, this.searchTerm);
 }
-getTripSheetData(pageNumber: number, pageSize: number): void {
+getTripSheetData(pageNumber: number, pageSize: number, searchTerm: string = ''): void {
     const type = this.createForm.value.inputType;
   const customerCode = this.createForm.value.CustomerName;
   const supplierCode = this.createForm.value.supplierName;
 
-  this.masterservice.getLatLongData(type, customerCode, supplierCode, pageNumber, pageSize).subscribe({
+  this.masterservice.getLatLongData(type, customerCode, supplierCode, pageNumber, pageSize, searchTerm).subscribe({
     next: (res) => {
       if (res.status === 1) {
         this.dataSource.data = res.Data;
@@ -189,7 +199,9 @@ getTripSheetData(pageNumber: number, pageSize: number): void {
     }
   });
 }
-
+applySearch(value: string): void {
+  this.searchSubject.next(value);
+}
 onFileSelected(event: any) {
   const file: File = event.target.files[0];
   this.selectedFile = file;

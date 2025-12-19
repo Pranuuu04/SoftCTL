@@ -179,7 +179,7 @@ getTripSheetData(pageNumber: number, pageSize: number): void {
   const customerCode = this.createForm.value.CustomerName;
   const supplierCode = this.createForm.value.supplierName;
 
-  this.masterService.getLatLongData(type, customerCode, supplierCode, pageNumber, pageSize).subscribe({
+  this.masterService.getLatLongData(type, customerCode, supplierCode, pageNumber, pageSize,'').subscribe({
     next: (res) => {
       if (res.status === 1) {
         this.dataSource.data = res.Data;

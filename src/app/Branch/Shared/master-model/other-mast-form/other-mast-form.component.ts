@@ -214,6 +214,7 @@ if (this.companyMode) {
       companyMastLogo: [''],
       companyMastStamp: [''],
       companyMastWeb: [''],
+      companyMastTotalAmt: [false],
       printDetails: this.formBuilder.array(this.printDetailKeys.map(() => new FormControl(false)),
     this.validateAtLeastOneChecked())
     });
@@ -685,6 +686,7 @@ formSubmitCompanyMast(formData: any) {
       web: formData.companyMastWeb,
       remark: formData.companyMastRemark,
       comLoc: 'All',
+      TotalAmt: formData.companyMastTotalAmt ? 1 : 0,
       printDetails: [printDetailsObj]
     };
 
@@ -735,15 +737,9 @@ companyData() {
             companyMastEmail: data.Email || '',
             companyMastLogo: data.LOGO || '',
             companyMastStamp: data.STAMP || '',
-            companyMastWeb: data.Web || ''
+            companyMastWeb: data.Web || '',
+            companyMastTotalAmt: data.TotalAmts === 1
         });
-        // this.logoPreview = data.LOGO || null;
-        // if (PrintData) {
-        //   const detailsArray = this.companyMastForm.get('printDetails') as FormArray;
-        //   PrintData.forEach((val: boolean, index: number) => {
-        //     detailsArray.at(index).setValue(val);
-        //   });
-        // }
  if (PrintData) {
         const detailsArray = this.companyMastForm.get('printDetails') as FormArray;
         this.printDetailKeys.forEach((key, index) => {
@@ -751,8 +747,6 @@ companyData() {
           detailsArray.at(index).setValue(value);
         });
       }
-        // Change button label to Update
-        // this.buttonLable = 'Update';
       }
     });
 }

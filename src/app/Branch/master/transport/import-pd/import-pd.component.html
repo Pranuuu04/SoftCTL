@@ -1,6 +1,6 @@
-<div class="container">
+<!-- <div class="container"> -->
     <form [formGroup]="createForm">
-      <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+      <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
         <div class="col-sm-5">
             <div class="textOnSelect">
                 <label for="CustomerName">Customer name :</label>
@@ -54,7 +54,7 @@
           </div>
       </div>
     </div>
-     <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-12 d-flex form-group" style="justify-content: end;">
         <button type="button" class="btn btn-light other-button" [disabled]="createForm.invalid" 
   (click)="onSearch()">Search</button>
@@ -86,7 +86,8 @@
             background-color: #2e3f55;">
               <i class="fa fa-search" style="color:  #a3b8d4; margin-top: -4px;"></i>
             </button>
-            <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input (keyup)="applyFilter($event.target.value)" style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
+            <input type="text" class="form-control" placeholder="Search.."  id="Filter" #input 
+  (input)="applySearch($event.target.value)"  style="border-radius: 11px; margin: 0px 0 0; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; height: 32px; padding-left: 48px;">
           </div>
         </div>
       </div>
@@ -142,4 +143,4 @@
   </div>
 </div>
 </div>
-</div>
+<!-- </div> -->

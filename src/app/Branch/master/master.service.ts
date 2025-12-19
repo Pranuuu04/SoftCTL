@@ -606,8 +606,9 @@ getCompany(companyCode: string): Observable<any> {
     return this.http.get(url);
   }
 
-  getLatLongData(type: string, customerCode: string, supplierCode: string, pageNumber: number, pageSize: number ): Observable<any> {
-    const url = `${environment.apiUrl}Trip/getLatLongData?type=${type}&customerCode=${customerCode}&supplierCode=${supplierCode}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  getLatLongData(type: string, customerCode: string, supplierCode: string, pageNumber: number, pageSize: number,
+  searchTerm: string): Observable<any> {
+    const url = `${environment.apiUrl}Trip/getLatLongData?type=${type}&customerCode=${customerCode}&supplierCode=${supplierCode}&pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${encodeURIComponent(searchTerm)}`;
     return this.http.get(url);
   }
   getRatePrint(inputName: string, customerCode: string, pageNumber: number, pageSize: number, logolink: string ): Observable<any> {

@@ -288,3 +288,13 @@ ng-select.ng-invalid.ng-touched, ng-select.ng-invalid.ng-dirty ,
 .invalid-checkbox-container {
   border: 1px solid red !important;
 }
+
+  /* ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgb(114 102 225 / 54%) !important;
+}
+ ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #2e3f55 !important;
+}
+::ng-deep .mat-slide-toggle-content {
+    color: black !important;
+} */
