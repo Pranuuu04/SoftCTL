@@ -2,19 +2,32 @@
     <form [formGroup]="customerForm" (ngSubmit)="formSubmit(customerForm.value)">
     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
       
-            <div class="col-sm-2">
-                <div class="textOnInput">
-                    <label for="fromDate">From :</label>
-                    <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate">
-                </div>
+                                
+               <div class="col-sm-2">
+            <div class="textOnSelect">
+                <label for="Type">Stock issue :</label>
+                  <select class="custom-select" formControlName="stockIssue">
+                <option value="Branch" selected>Branch</option>
+                <option value="Customer"> Customer</option>   
+                <option value="Employee"> Employee</option>
+                <option value="Employee"> franchisee</option>
+              </select>
             </div>
-            <div class="col-sm-2">
-                <div class="textOnInput">
-                    <label for="toDate">To :</label>
-                    <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate">
-                </div>
+        </div>
+              <div class="col-sm-4">
+            <div class="textOnSelect">
+                <label for="customerName">Customer name :</label>
+                  <ng-select
+                    [items]="customerList"
+                    class="custom-select1"
+                    bindLabel="customerName"
+                    bindValue="customerCode"
+                    formControlName="customerName"
+                    (change)="resetPagination()">
+                  </ng-select>
             </div>
-        <div class="col-sm-3">
+          </div>
+        <div class="col-sm-2">
             <div class="textOnSelect">
                 <label for="Type">Type :</label>
                   <select class="custom-select" formControlName="Type">
@@ -23,7 +36,18 @@
               </select>
             </div>
         </div>
-                  <div class="col-sm-5"></div>
+         <div class="col-sm-2">
+                <div class="textOnInput">
+                    <label for="fromAwbno">From Awb no.:</label>
+                    <input class="form-control" type="text" formControlName="fromAwbno" placeholder="Enter Awb No">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="textOnInput">
+                    <label for="toAwbno">To Awb no.:</label>
+                    <input class="form-control" type="text" formControlName="toAwbno" placeholder="Enter Awb No">
+                </div>
+            </div>
                 </div>
             <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
           <div class="col-sm-5">

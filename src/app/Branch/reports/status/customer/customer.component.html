@@ -92,6 +92,12 @@
              </form>
           </div>
 
+<div class="loader-overlay" *ngIf="isLoading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="50">
+  </mat-progress-spinner>
+</div>
 
 <div *ngIf="enabledTable"  #TABLE>
 

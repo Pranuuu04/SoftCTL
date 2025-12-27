@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <div class="textOnInput">
           <label for="driverNumber">AWB Number :</label>
-          <input class="form-control" type="text" (change)="getDeleiveredData()" [(ngModel)]="awbNo"  id="exampleFormControlInput1" placeholder="Enter Airwaybill number." formControlName="awb">
+          <input class="form-control" type="text"(change)="awbNo = undeliverdform.get('awb')?.value; getDeleiveredData()" id="exampleFormControlInput1" placeholder="Enter Airwaybill number." formControlName="awb">
           <div *ngFor="let validation of validationMessage.awb">
             <div class="error-message"
               *ngIf="undeliverdform.get('awb').hasError(validation.type) && (undeliverdform.get('awb').dirty || undeliverdform.get('awb').touched)">
@@ -28,7 +28,7 @@
       </div>
        <div class="textOnInput">
         <label for="Date">Date :</label>
-        <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date">
+        <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date" [(ngModel)]="currentDate">
           <div *ngFor="let validation of validationMessage.date">
             <div class="error-message"
               *ngIf="undeliverdform.get('date').hasError(validation.type) && (undeliverdform.get('date').dirty ||undeliverdform.get('date').touched)">
@@ -39,12 +39,6 @@
        <div class="textOnInput">
           <label for="Time">Time :</label>
               <input type="Time" placeholder="Time" class="form-control" id="Time" formControlName="time" />
-              <div *ngFor="let validation of validationMessage.time">
-                <div class="error-message"
-                  *ngIf="undeliverdform.get('time').hasError(validation.type) && (undeliverdform.get('time').dirty ||undeliverdform.get('time').touched)">
-                  {{ validation.message }}
-                </div>
-              </div>
         </div>
          <div class="textOnSelect">
       <label>Reason :</label>
@@ -67,13 +61,7 @@
     </div>
  <div class="textOnInput">
       <label for="image">Upload image :</label>
-      <input type="file" placeholder="Upload image here" class="form-control"   (change)="fileChangeEvent($event)" id="image" formControlName="image" />
-      <div *ngFor="let validation of validationMessage.image">
-          <div class="error-message"
-            *ngIf="deliverdform.get('image').hasError(validation.type) && (deliverdform.get('image').dirty || deliverdform.get('image').touched)">
-            {{ validation.message }}
-        </div>
-      </div>
+      <input type="file" placeholder="Upload image here" class="form-control"   (change)="fileChangeEvent($event)" id="image"/>
     </div>
         <div class="col-sm-12 d-flex mb-2" style="justify-content: space-around;" >
           <button type="button" class="btn btn-light other-button" 

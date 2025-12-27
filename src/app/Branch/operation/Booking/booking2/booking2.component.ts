@@ -48,16 +48,16 @@ export class Booking2Component implements OnInit, AfterViewInit, OnDestroy  {
   custType: any;
   billParty = 'Consignor';
   containerType = 'pcs';
-  actaulWeightType = 'weight';
+  // actaulWeightType = 'weight';
   deliveryType: string;
   packageType: string;
-  docketAction = 'yes';
-  fovAction = 'yes';
-  odaAction = 'yes';
-  packingAction = 'yes';
-  insuranceAction = 'yes';
-  loadingAction = 'yes';
-  fuelAction = 'yes';
+  // docketAction = 'yes';
+  // fovAction = 'yes';
+  // odaAction = 'yes';
+  // packingAction = 'yes';
+  // insuranceAction = 'yes';
+  // loadingAction = 'yes';
+  // fuelAction = 'yes';
   selectedVendor1: string;
   selectedMode: string;
   selectedProduct: string;
@@ -383,6 +383,7 @@ constructor(public httpService: HttpService,
     //         localStorage.removeItem('consignerCode');
     this.loadState();
 
+    this.getLabelData();
     this.AllService.getDestinationDataa().subscribe((data) => {
       this.destinationList = data.Data;
       this.cityList = data.Data;
@@ -408,7 +409,6 @@ constructor(public httpService: HttpService,
     this.packageTypeData();
     this.getPinCode(event);
     // this.addressList();
-    this.getLabelData();
   this.setControlState();
 
   }
@@ -695,7 +695,7 @@ freightCharge() {
       actualWt: [{type: 'required' , message: 'Please Enter Actual Weight.'}],
       volumetricWt: [{}],
       chargedWt: [{}],
-      actaulWeightType: [{}],
+      // actaulWeightType: [{}],
       ratePerKg: [{}],
       freightAmt: [{}],
       discountAmt: [{}],
@@ -707,13 +707,13 @@ freightCharge() {
       loadingCharge: [{}],
       otherCharge: [{}],
       fuelCharge: [{}],
-      docketAction: [{}],
-      fovAction: [{}],
-      odaAction: [{}],
-      packingAction: [{}],
-      insuranceAction: [{}],
-      loadingAction: [{}],
-      fuelAction: [{}],
+      // docketAction: [{}],
+      // fovAction: [{}],
+      // odaAction: [{}],
+      // packingAction: [{}],
+      // insuranceAction: [{}],
+      // loadingAction: [{}],
+      // fuelAction: [{}],
       eWayBill: [{}],
       invoiceNo: [{}]
     }
@@ -759,7 +759,7 @@ freightCharge() {
       actualWt: new FormControl(this.actualWt, Validators.compose([Validators.required])),
       volumetricWt: new FormControl('', Validators.compose([])),
       chargedWt: new FormControl(this.chargedWt, Validators.compose([])),
-      actaulWeightType: new FormControl('', Validators.compose([])),
+      // actaulWeightType: new FormControl('', Validators.compose([])),
       ratePerKg: new FormControl('', Validators.compose([])),
       freightAmt: new FormControl(this.freightAmt, Validators.compose([])),
       discountAmt: new FormControl('', Validators.compose([])),
@@ -771,13 +771,13 @@ freightCharge() {
       loadingCharge: new FormControl('', Validators.compose([])),
       otherCharge: new FormControl('', Validators.compose([])),
       fuelCharge: new FormControl('', Validators.compose([])),
-      docketAction: new FormControl('', Validators.compose([])),
-      fovAction: new FormControl('', Validators.compose([])),
-      odaAction: new FormControl('', Validators.compose([])),
-      packingAction: new FormControl('', Validators.compose([])),
-      insuranceAction: new FormControl('', Validators.compose([])),
-      loadingAction: new FormControl('', Validators.compose([])),
-      fuelAction: new FormControl('', Validators.compose([])),
+      // docketAction: new FormControl('', Validators.compose([])),
+      // fovAction: new FormControl('', Validators.compose([])),
+      // odaAction: new FormControl('', Validators.compose([])),
+      // packingAction: new FormControl('', Validators.compose([])),
+      // insuranceAction: new FormControl('', Validators.compose([])),
+      // loadingAction: new FormControl('', Validators.compose([])),
+      // fuelAction: new FormControl('', Validators.compose([])),
       eWayBill: new FormControl('', Validators.compose([])),
       invoiceNo: new FormControl('', Validators.compose([])),
       subTotalAmt: new FormControl('', Validators.compose([])),
@@ -1184,21 +1184,6 @@ verifyGST() {
     }
   );
 }
-// handleModeChange(modeCode: string) {
-//   this.selectedMode = modeCode;
-
-//   if (modeCode === 'AI') {
-//     this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
-//     this.getFlightData();
-//   } else if (modeCode === 'T') {
-//     this.bookingForm.patchValue({ trainFlight: '', trainFlightNo: '' });
-//     this.getTrain();
-//   } else {
-//     this.trainFlightOptions = [];
-//     this.trainFlightNoOptions = [];
-//     this.bookingForm.patchValue({ trainFlight: null, trainFlightNo: null });
-//   }
-// }
 handleModeChange(modeCode: string) {
   this.selectedMode = modeCode;
 
@@ -1298,49 +1283,6 @@ onTrainFlightSelect(event: any) {
     this.getTrainByCode(selectedCode);
   }
 }
-
-
-
-
-// handleModeChange(modeCode: string) {
-//   if (modeCode === 'AI') {
-//     this.getFlightData();
-//   } else if (modeCode === 'T') {
-//     this.getTrain();
-//   }
-// }
-
-//    getFlightData(): void {
-//     this.httpclient.get(`${environment.apiUrl}Master/FlightMast?masterName=Flight&operation=getFlight`)
-//       .subscribe((response: any) => {
-//         this.flightData = response.Data;
-//       });
-//   }
-// getTrain(): void {
-//     this.httpclient.get(`${environment.apiUrl}Master/allMasters?masterName=Train&operation=getTrain`)
-//     .subscribe((response: any) => {
-//       this.trainData = response.Data;
-//     });
-//   }
-// onTrainFlightSelect(selectedName: string) {
-//   let selectedNumber = '';
-
-//   if (this.selectedMode === 'AI') {
-//     const flight = this.flightData.find(item => item.Flight_Name === selectedName);
-//     if (flight) {
-//       selectedNumber = flight.Flight_Code;
-//     }
-//   } else if (this.selectedMode === 'T') {
-//     const train = this.trainData.find(item => item.Train_Name === selectedName);
-//     if (train) {
-//       selectedNumber = train.Train_Code;
-//     }
-//   }
-
-//   this.bookingForm.patchValue({
-//     trainFlightNo: selectedNumber
-//   });
-// }
 
   loadProduct() {
     this.bookingService.getProduct().subscribe(
@@ -1779,6 +1721,41 @@ getGstDataWithoutModal(subTotalAmt: any, consignerCode: any) {
         this.isLoadingChecked = res.charges3;
         this.isOtherChrgChecked = res.otherCharge;
         this.isFuelChrgChecked = res.charges4;
+                if (!this.isShipperChecked) {
+      this.bookingForm.get('shipperName')?.disable();
+    } else {
+      this.bookingForm.get('shipperName')?.enable();
+    }
+
+     if (!this.isConsigneeChecked) {
+      this.bookingForm.get('consigneeName')?.disable();
+    } else {
+      this.bookingForm.get('consigneeName')?.enable();
+    }
+
+    if (!this.isBillPartyChecked) {
+      this.bookingForm.get('billParty')?.disable();
+    } else {
+      this.bookingForm.get('billParty')?.enable();
+    }
+
+    if (!this.isVendorChecked) {
+      this.bookingForm.get('selectedVendor1')?.disable();
+    } else {
+      this.bookingForm.get('selectedVendor1')?.enable();
+    }
+
+     if (!this.isDelvTypeChecked) {
+      this.bookingForm.get('deliveryType')?.disable();
+    } else {
+      this.bookingForm.get('deliveryType')?.enable();
+    }
+
+     if (!this.isPkgTypeChecked) {
+      this.bookingForm.get('packageType')?.disable();
+    } else {
+      this.bookingForm.get('packageType')?.enable();
+    }
       }
       this.getPermission();
     });
@@ -1986,13 +1963,13 @@ compareWeights() {
     const otherChrg = this.bookingForm.get('otherCharge').value || this.otherCharge || 0;
     const fuelCharges = this.bookingForm.get('fuelCharge').value || this.fuelCharge || 0;
 
-    const docketActionValue = this.bookingForm.get('docketAction').value || 'no';
-    const fovActionValue = this.bookingForm.get('fovAction').value || 'no';
-    const odaActionValue = this.bookingForm.get('odaAction').value || 'no';
-    const packingActionValue = this.bookingForm.get('packingAction').value || 'no';
-    const insuranceActionValue = this.bookingForm.get('insuranceAction').value || 'no';
-    const loadingActionValue = this.bookingForm.get('loadingAction').value || 'no';
-    const fuelActionValue = this.bookingForm.get('fuelAction').value || 'no';
+    // const docketActionValue = this.bookingForm.get('docketAction').value || 'no';
+    // const fovActionValue = this.bookingForm.get('fovAction').value || 'no';
+    // const odaActionValue = this.bookingForm.get('odaAction').value || 'no';
+    // const packingActionValue = this.bookingForm.get('packingAction').value || 'no';
+    // const insuranceActionValue = this.bookingForm.get('insuranceAction').value || 'no';
+    // const loadingActionValue = this.bookingForm.get('loadingAction').value || 'no';
+    // const fuelActionValue = this.bookingForm.get('fuelAction').value || 'no';
     const cafCharges = this.bluedartChargeCache?.cafCharges || 0;
     const hdpCharges = this.bluedartChargeCache?.hdpCharges || 0;
     const essCharges = this.bluedartChargeCache?.essCharges || 0;
@@ -2014,27 +1991,27 @@ compareWeights() {
     this.gstPer = localStorage.getItem('gstPer');
 
     // tslint:disable-next-line:max-line-length
-    this.docketGST = docketActionValue === 'yes' ? parseFloat((this.bookingForm.get('docketCharge').value * this.gstPer / 100).toFixed(2)) : 0;
-    this.fovGST = fovActionValue === 'yes' ? parseFloat((this.bookingForm.get('fovCharge').value * this.gstPer / 100).toFixed(2)) : 0;
-    this.odaGST = odaActionValue === 'yes' ? parseFloat((this.bookingForm.get('odaCharge').value * this.gstPer / 100).toFixed(2)) : 0;
+    this.docketGST = parseFloat((this.bookingForm.get('docketCharge').value * this.gstPer / 100).toFixed(2)) || 0;
+    this.fovGST = parseFloat((this.bookingForm.get('fovCharge').value * this.gstPer / 100).toFixed(2)) || 0;
+    this.odaGST = parseFloat((this.bookingForm.get('odaCharge').value * this.gstPer / 100).toFixed(2)) || 0;
     // tslint:disable-next-line:max-line-length
-    this.packingGST = packingActionValue === 'yes' ? parseFloat((this.bookingForm.get('packingCharge').value * this.gstPer / 100).toFixed(2)) : 0;
+    this.packingGST = parseFloat((this.bookingForm.get('packingCharge').value * this.gstPer / 100).toFixed(2)) || 0;
        // tslint:disable-next-line:max-line-length
-    this.insuranceGST = insuranceActionValue === 'yes' ? parseFloat((this.bookingForm.get('insuranceCharge').value * this.gstPer / 100).toFixed(2)) : 0;
+    this.insuranceGST = parseFloat((this.bookingForm.get('insuranceCharge').value * this.gstPer / 100).toFixed(2)) || 0;
         // tslint:disable-next-line:max-line-length
-    this.loadingGST = loadingActionValue === 'yes' ? parseFloat((this.bookingForm.get('loadingCharge').value * this.gstPer / 100).toFixed(2)) : 0;
-    this.fuelGST = fuelActionValue === 'yes' ? parseFloat((this.bookingForm.get('fuelCharge').value * this.gstPer / 100).toFixed(2)) : 0;
+    this.loadingGST = parseFloat((this.bookingForm.get('loadingCharge').value * this.gstPer / 100).toFixed(2)) || 0;
+    this.fuelGST = parseFloat((this.bookingForm.get('fuelCharge').value * this.gstPer / 100).toFixed(2)) || 0;
     this.othersGST = parseFloat((this.bookingForm.get('otherCharge').value * this.gstPer / 100).toFixed(2));
 
-    this.withoutGSTTotalAmt = Number(this.subTotalAmt) -
-                              (docketActionValue === 'no' ? Number(docketChrgs) : 0) -
-                              (fovActionValue === 'no' ? Number(fovChrgs) : 0) -
-                              (odaActionValue === 'no' ? Number(odaChrgs) : 0) -
-                              (packingActionValue === 'no' ? Number(packingChrg) : 0) -
-                              (insuranceActionValue === 'no' ? Number(insuranceChrg) : 0) -
-                              (loadingActionValue === 'no' ? Number(loadingChrg) : 0) -
-                              (fuelActionValue === 'no' ? Number(fuelCharges) : 0);
-    this.withoutGSTTotalAmt = parseFloat(Number(this.withoutGSTTotalAmt).toFixed(2)) || 0;
+    // this.withoutGSTTotalAmt = Number(this.subTotalAmt) -
+    //                           (docketActionValue === 'no' ? Number(docketChrgs) : 0) -
+    //                           (fovActionValue === 'no' ? Number(fovChrgs) : 0) -
+    //                           (odaActionValue === 'no' ? Number(odaChrgs) : 0) -
+    //                           (packingActionValue === 'no' ? Number(packingChrg) : 0) -
+    //                           (insuranceActionValue === 'no' ? Number(insuranceChrg) : 0) -
+    //                           (loadingActionValue === 'no' ? Number(loadingChrg) : 0) -
+    //                           (fuelActionValue === 'no' ? Number(fuelCharges) : 0);
+    this.withoutGSTTotalAmt = parseFloat(Number(this.subTotalAmt).toFixed(2)) || 0;
     // this.totalAmount = parseFloat((Number(this.subTotalAmt) + Number(this.gstAmount)).toFixed(2));
     // this.bookingForm.patchValue({ 'TotalAmount': this.totalAmount }, { emitEvent: false });
   }

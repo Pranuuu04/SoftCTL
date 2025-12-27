@@ -277,11 +277,11 @@ masterColumnOrder: string[] = [
     this.pageIndex = e.pageIndex;
     this.calculatePageCount();
     this.formData.vendorName = this.customerForm.value.vendorName;
-    this.formData.destination = this.destination;
+    this.formData.destination = this.customerForm.value.destination;
     this.formData.statusName = this.customerForm.value.statusName;
-    this.formData.fromDate = this.fromDate;
-    this.formData.toDate = this.toDate;
-    this.formData.reportType = this.reportType;
+    this.formData.fromDate = this.customerForm.value.fromDate;
+    this.formData.toDate = this.customerForm.value.toDate;
+    this.formData.reportType = this.customerForm.value.reportType;
     this.formSubmit(this.formData);
   }
   onStatusChange(event: any) {

@@ -242,14 +242,6 @@ this.tempRateDetailForm = this.formBuilder.group({
   Active_Date: ['', Validators.required],
   Closing_Date: ['', Validators.required]
 });
-// this.RateForm.get('RateMode')?.valueChanges.subscribe(mode => {
-//   if (mode === 'Flat') {
-//     this.tempRateDetailForm.get('On_Addition')?.setValue('0');
-//     this.tempRateDetailForm.get('On_Addition')?.disable();
-//   } else {
-//     this.tempRateDetailForm.get('On_Addition')?.enable();
-//   }
-// });
 this.RateForm.get('RateMode')?.valueChanges.subscribe(mode => {
   if (mode === 'Flat') {
     this.tempRateDetailForm.get('On_Addition')?.setValue('0');
@@ -458,10 +450,7 @@ RateData() {
   this.masterService.getRateMasterdataByCode(this.Club_No).subscribe((resp: any) => {
     if (resp) {
       const rateDetails = resp.Data.rateMasterData[0];
-      // this.RateForm.get('rateCountry')?.enable();
-      // this.RateForm.get('rateState')?.enable();
-      // this.RateForm.get('rateDestination')?.enable();
-
+      
       this.AllService.getCountrySales(rateDetails.Zone_Codes[0]).subscribe((countryData: any) => {
         this.countryList = countryData.Data;
 if (rateDetails.Country_Codes?.length) {
@@ -498,28 +487,6 @@ if (rateDetails.Country_Codes?.length) {
         this.onCountrySelectionChange(rateDetails.Country_Codes.map(code => ({ countryCode: code })));
         this.onStateSelectionChange(rateDetails.State_Codes.map(code => ({ State_Code: code })));
 
-        // if (rateDetails.Country_Codes?.length) {
-        //   this.RateForm.get('rateCountry')?.enable();
-        //   this.RateForm.patchValue({ rateCountry: rateDetails.Country_Codes });
-        // } else {
-        //   this.RateForm.get('rateCountry')?.disable();
-        // }
-
-        // if (rateDetails.State_Codes?.length) {
-        //   this.RateForm.get('rateState')?.enable();
-        //   this.RateForm.patchValue({ rateState: rateDetails.State_Codes });
-        // } else {
-        //   this.RateForm.get('rateState')?.disable();
-        // }
-
-        // if (rateDetails.Destination_Codes?.length) {
-        //   this.RateForm.get('rateDestination')?.enable();
-        //   this.RateForm.patchValue({ rateDestination: rateDetails.Destination_Codes });
-        // } else {
-        //   this.RateForm.get('rateDestination')?.disable();
-        // }
-
-        // Conditional state and destination loading
         if (rateDetails.Country_Codes.length === 1) {
           this.loadStateByCode(rateDetails.Country_Codes[0], rateDetails.Zone_Codes[0], () => {
             this.RateForm.patchValue({
@@ -542,7 +509,7 @@ const rateDetailsList = resp.Data.rateDetailsData;
 
         rateDetailsList.forEach(detail => {
           const detailGroup = this.formBuilder.group({
-            On_Addition: [this.RateForm.get('RateMode')?.value === 'Flat' ? 0 : (detail.On_Addition ?? 0), Validators.required],
+            On_Addition: [this.RateForm.get('RateMode')?.value === 'Flat' ? 0 : (detail.On_Addition), Validators.required],
             Lower_Wt: [detail.Lower_Wt , Validators.required],
             Upper_Wt: [detail.Upper_Wt , Validators.required],
             Rate: [detail.Rate , Validators.required],

@@ -15,19 +15,6 @@ export class AuthenticationService {
   hasValidToken(): boolean {
     return localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined;
   }
-  
-  // loadOrigin(): Observable<any> {
-  //   return this.http.get<any>(`${environment.apiUrl}Booking/getOrigin`)
-  //     .pipe(
-  //       tap(resp => localStorage.setItem('originList', JSON.stringify(resp.Data)))
-  //     );
-  // }
-  // loadDestination(): Observable<any> {
-  //   return this.http.get<any>(`${environment.apiUrl}Booking/getDestination`)
-  //     .pipe(
-  //       tap(resp => localStorage.setItem('destinationList', JSON.stringify(resp.Data)))
-  //     );
-  // }
 
   loadMode(): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}Booking/getMode`)
@@ -42,9 +29,4 @@ export class AuthenticationService {
         tap(resp => localStorage.setItem('productList', JSON.stringify(resp.Data)))
       );
   }
-  // logout() {
-  //   localStorage.removeItem("token");
-  //   this.currentUserSubject.next(null!);
-  //   this.router.navigate(['/login']);
-  // }
 }

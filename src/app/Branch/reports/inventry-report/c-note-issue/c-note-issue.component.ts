@@ -113,11 +113,15 @@ displayedColumns: string[] = [
           });
     this.dataSource = new MatTableDataSource;
     this.customerForm  = this.formBuilder.group({
-      franchise: new FormControl('All Franchise', Validators.compose([
+      customerName: new FormControl('All', Validators.compose([
          Validators.required
         ])),
       fromDate: new FormControl('', Validators.compose([ ])),
       toDate: new FormControl('', Validators.compose([ ])),
+      stockIssue: new FormControl('Branch', Validators.compose([])),
+      fromAwbno: new FormControl('', Validators.compose([])),
+      toAwbno: new FormControl('', Validators.compose([])),
+      CNoteNo: new FormControl('', Validators.compose([])),
     });
   }
   openSnackBar(message: string, panelClass: string) {

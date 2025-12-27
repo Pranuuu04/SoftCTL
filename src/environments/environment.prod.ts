@@ -29,6 +29,7 @@ export const environment = {
   // apiUrl: 'https://moonlineexpresscargo.com/SoftCTL/SoftCTL/'
   // apiUrl: 'https://wheelstrans.com/SoftCTL/SoftCTL/'
   apiUrl: 'https://www.softctl.com/Moonline/SoftCTL/'
-  // apiUrl: 'https://moon.neotechnet.com/SoftCTL/'
+    //  apiUrl: 'https://www.softctl.com/Frontline/SoftCTL/'
+
 };
  

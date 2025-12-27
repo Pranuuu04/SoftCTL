@@ -63,33 +63,6 @@ export class CustomerComponent implements OnInit {
   isHidden = true;
 displayedColumns: string[] = ['index'];
 
-// customerColumnMapping: { [key: string]: string } = {
-//   AwbNo: 'AWB No',
-//   BookDate: 'Book Date',
-//   customer_name: 'Customer Name',
-//   Consignee_Name: 'Consignee Name',
-//   shipperName: 'Shipper Name',
-//   Origin: 'Origin',
-//   destination_name: 'Destination',
-//   Consignee_Pin: 'Consignee Pin',
-//   mode_name: 'Mode',
-//   Typeofdelivery: 'Delivery Type',
-//   Qty: 'Quantity',
-//   ActualWt: 'Actual Weight',
-//   Status: 'Status',
-//   InvoiceNo: 'Invoice No',
-//   InvValue: 'Invoice Value',
-//   EwayBill: 'E-way Bill',
-//   Consignee_Tel: 'Consignee Tel',
-//   vendor_name: 'Vendor Name',
-//   Ref_No: 'Vendor Ref No',
-//   DelvDT: 'Delivery Date',
-//   DelvTime: 'Delivery Time',
-//   Remark: 'Remark',
-//   ExptDateOfDelvDt: 'Expected Delivery',
-//   T_flag: 'Customer Type',
-//   TotalAmt: 'Amount'
-// };
 customerColumnMapping: { [key: string]: string } = {
   BookDate: 'Book Date',
   ManifestDate: 'Manifest Date',
@@ -216,7 +189,7 @@ masterColumnOrder: string[] = [
   };
 
   pageCount = 1;
-
+isLoading = false;
 
   constructor(public dialog: MatDialog,
               public formBuilder: FormBuilder,
@@ -314,12 +287,12 @@ masterColumnOrder: string[] = [
     this.pageIndex = e.pageIndex;
     console.log(this.pageIndex, 'pageindex');
     this.calculatePageCount();
-    this.formData.customerName = this.customerName;
-    this.formData.destination = this.destination;
+    this.formData.customerName = this.customerForm.value.customerName;
+    this.formData.destination = this.customerForm.value.destination;
     this.formData.statusName = this.customerForm.value.statusName;
-    this.formData.fromDate = this.fromDate;
-    this.formData.toDate = this.toDate;
-    this.formData.reportType = this.reportType;
+    this.formData.fromDate = this.customerForm.value.fromDate;
+    this.formData.toDate = this.customerForm.value.toDate;
+    this.formData.reportType = this.customerForm.value.reportType;
     this.formSubmit(this.formData);
   }
   onStatusChange(event: any) {
@@ -336,6 +309,7 @@ masterColumnOrder: string[] = [
 
 
   formSubmit(formData: any) {
+    this.isLoading = true;
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     let statusParam = '';
@@ -345,12 +319,6 @@ masterColumnOrder: string[] = [
   } else {
     statusParam = `Status=[${formData.statusName.map(status => `"${status}"`).join(',')}]`;
   }
-    // this.AllService.getReportSetup('getstatusReportSetup').subscribe((setupResp: any) => {
-    // if (setupResp.status === 1 && setupResp.Data.length) {
-    //   const setup = setupResp.Data[0];
-    //   const selectedKeys = Object.keys(setup).filter(k => setup[k] === 1);
-    //   this.displayedColumns = ['index', ...selectedKeys];
-    // }
  if (formData.reportType === 'StatusDetail') {
     this.AllService.getReportSetup('getstatusReportSetup').subscribe((setupResp: any) => {
       if (setupResp.status === 1 && setupResp.Data.length) {
@@ -370,6 +338,7 @@ masterColumnOrder: string[] = [
   }
     this.httpService.get(`${environment.apiUrl}Reports/getStatusReports?customerCode=${formData.customerName}&vendorCode=All&destinationCode=${formData.destination}&${statusParam}&sessionLocationCode=${this.sessionLocationCode}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&Reporttype=${formData.reportType}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}` ).then(resp => {
       if ( resp.status === 1) {
+         this.isLoading = false;
         if (formData.reportType === 'StatusDetail') {
           this.dataSource = resp.Data;
           this.length = resp.count;
@@ -389,7 +358,11 @@ masterColumnOrder: string[] = [
         this.openSnackBar(resp.message, 'error-snackbar')
         this.enabledTable = false;
         this.enabledTableSummary  = false;
+      this.isLoading = false; 
       }
+    }).catch(() => {
+      this.isLoading = false;
+      this.openSnackBar('Something went wrong', 'error-snackbar');
     });
   //  });
   }

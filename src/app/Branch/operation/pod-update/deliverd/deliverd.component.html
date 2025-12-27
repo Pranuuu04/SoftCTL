@@ -95,7 +95,7 @@
     </div>
     <div class="textOnInput">
       <label for="image">Upload image :</label>
-      <input type="file" (change)="fileChangeEvent($event)" class="form-control" id="image" formControlName="image"/>
+      <input type="file" (change)="fileChangeEvent($event)" class="form-control" id="image" formControlName="image" />
       <div *ngFor="let validation of validationMessage.image">
           <div class="error-message"
             *ngIf="deliverdform.get('image').hasError(validation.type) && (deliverdform.get('image').dirty || deliverdform.get('image').touched)">

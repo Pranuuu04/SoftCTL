@@ -116,8 +116,9 @@ displayedColumns: string[] = [
       Type: new FormControl('CourierBoyWise', Validators.compose([
          Validators.required
         ])),
-      fromDate: new FormControl('', Validators.compose([ ])),
-      toDate: new FormControl('', Validators.compose([ ])),
+      stockIssue: new FormControl('Branch', Validators.compose([])),
+      fromAwbno: new FormControl('', Validators.compose([])),
+      toAwbno: new FormControl('', Validators.compose([])),
     });
   }
   openSnackBar(message: string, panelClass: string) {

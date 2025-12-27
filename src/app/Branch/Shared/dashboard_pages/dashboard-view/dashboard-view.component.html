@@ -7,8 +7,7 @@
       </div>
     <div class="col-sm-2 d-flex cancel download-button" style="justify-content: space-around;">
       <button type="submit" class="btn btn-outline-light" (click)="generateExcel()"><i class="fa-solid fa-table"></i></button>
-      <!-- <button type="button" class="btn btn-outline-light" (click)="generatePdf()"><i class="fa-solid fa-file-pdf"></i></button> -->
-      <button type="button" class="btn btn-light" (click)="CloseDialog()" style="background: #a6bcbd;">X</button>
+       <button type="button" class="btn btn-light" (click)="CloseDialog()" style="background: #a6bcbd;">X</button>
     </div>
   </div>
   <div *ngIf="showTable && dataSource.data.length > 0">
@@ -171,4 +170,10 @@
   <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
     <img src="./assets/images/NOdata.png" alt="">
   </div>
+</div>
+<div class="loader-overlay" *ngIf="isExcelLoading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="50">
+  </mat-progress-spinner>
 </div>

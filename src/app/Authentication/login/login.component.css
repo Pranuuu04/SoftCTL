@@ -29,7 +29,7 @@
 		margin-bottom: 0;
 		font-weight: 500;
 	  }
-	  ::ng-deep .description {
+	  /* ::ng-deep .description {
 		display: flex !important;
 		height: 60vh !important;
 		align-items: center !important;
@@ -57,7 +57,40 @@
 	  font-size: 15px;
 	  text-align: justify;
 	  color: black;
-	}
+	} */
+	 ::ng-deep .description {
+  display: flex !important;
+  height: 60vh !important;
+  align-items: center !important;
+  justify-content: center;
+  background-image: url('./../../../assets/images/loginBG3.png') !important;
+  background-size: cover !important;
+  background-position: center;
+  position: relative;
+}
+
+::ng-deep .description::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.85);   /* brighter overlay */
+  z-index: 0;
+}
+
+.description ul{
+  position: relative;
+  z-index: 2;
+  line-height: 1.8;
+  color: #0d1b2a;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.description li,
+.description h4{
+  text-shadow: 0 1px 2px rgba(0,0,0,.18);
+}
+
 	ul {
 		list-style: none; 
 		padding-left: 26px;

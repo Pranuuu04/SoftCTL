@@ -125,7 +125,7 @@
               <td>
                 <ng-container *ngIf="item.podImg; else noImageTemplate">
                   <img [src]="item.podImg" alt="POD" class="pod-thumbnail" 
-                      (click)="openImage(item.podImg)" />
+                      (click)="openImage(item.podImg)" style="height: 30px;" />
                 </ng-container>
                 <ng-template #noImageTemplate>No Image</ng-template>
               </td>

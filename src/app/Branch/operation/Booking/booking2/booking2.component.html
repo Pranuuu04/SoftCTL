@@ -394,7 +394,7 @@
       <div [ngClass]="bookingForm.get('custType')?.value === 'Credit' ? 'col-sm-6' : 'col-sm-4'" class="p-0 mt-2"  style="border-right: 1px solid  #d2d2d2;">
 
         <div class="form-group row">
-          <div class="col-sm-9">
+          <div class="col-sm-8">
             <div class="textOnSelect">
              <label class="span">Vendor</label>
              <select id="Employee" class="custom-select" [(ngModel)]="selectedVendor1" formControlName="selectedVendor1"  [ngStyle]="{'background-color': isVendorChecked ? 'inherit' : '#e9ecef'}" >
@@ -405,18 +405,30 @@
              </select>
             </div>
           </div>
-            <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
-            <button matTooltip="Other Vendor" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorboxModal()">
+            <!-- <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
+          
+          </div> -->
+           <div class="col-sm-4 pl-0" style="display: flex; justify-content: right;">
+              <button matTooltip="Other Vendor" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorboxModal()">
               <i class="fa-solid fa-shop"></i>
+            </button>
+            <button matTooltip="Vendor Volumetric" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorModal(selectedVendor1,selectedProduct)">
+              <i class="fa-solid fa-calculator"></i>
             </button>
           </div>
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText">Forwarding No</label>
               <input class="form-control" type="text" placeholder="Forwarding" formControlName="forwardingNo" [(ngModel)]="forwardNo"   [attr.disabled]="isForwardNoChecked ? null : false" [ngStyle]="{'background-color': isForwardNoChecked ? 'inherit' : '#e9ecef'}">
+            </div>
+          </div>
+             <div class="col-sm-6">
+            <div class="textOnInput">
+              <label for="inputText">Vendor charge Wt</label>
+              <input class="form-control" type="number"  min="0" placeholder="Vendor charge Wt" formControlName="vendorChargedWt" [(ngModel)]="vendorChargedWt">
             </div>
           </div>
         </div>
@@ -522,7 +534,25 @@
             <button tabindex="-1" matTooltip="Select Vehicle" type="button" class="btn btn-light form-button"  (click)="openVehicleModal()">Vehicle</button>
           </div> -->
         </div>
-        <!-- <i class="fa-regular fa-truck"></i> -->
+            <div class="form-group row">
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label class="span">{{lebelSet3}}</label>
+              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="deliveryType" formControlName="deliveryType" [ngStyle]="{'background-color': isDelvTypeChecked ? 'inherit' : '#e9ecef'}">
+                <ng-option *ngFor="let item of deliveryTypeList" [value]="item.deliverTypeCode" style="font-size: 14px;">{{item.deliverTypeName}}&nbsp;({{item.deliverTypeCode}})</ng-option>
+             </ng-select>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="textOnSelect">
+              <label class="span">{{lebelSet4}}</label>
+              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="packageType" formControlName="packageType" [ngStyle]="{'background-color': isPkgTypeChecked ? 'inherit' : '#e9ecef'}">
+                <ng-option *ngFor="let item of packageTypeList" [value]="item.packageTypeCode" style="font-size: 14px;">{{item.packageTypeName}}&nbsp;({{item.packageTypeCode}})</ng-option>
+             </ng-select>
+            </div>
+          </div>
+        </div>
         <div class="form-group row">
           <div class="col-sm-6">
              <div class="textOnSelect">
@@ -537,20 +567,6 @@
               class="custom-select1"
               style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
             </ng-select>
-
-              <!-- <ng-select *ngIf="selectedMode === 'AI'" [clearable]="false" class="custom-select1" formControlName="trainFlight" (change)="onTrainFlightSelect($event)">
-                <ng-option *ngFor="let item of flightData" [value]="item.Flight_Name" style="font-size: 14px;">{{item.Flight_Name}}</ng-option>
-             </ng-select>
-              <ng-select *ngIf="selectedMode === 'T'" [clearable]="false" class="custom-select1" formControlName="trainFlight" (change)="onTrainFlightSelect($event)">
-                <ng-option *ngFor="let item of trainData" [value]="item.Train_Name" style="font-size: 14px;">{{item.Train_Name}}</ng-option>
-             </ng-select>
-              <ng-select *ngIf="selectedMode !== 'AI' && selectedMode !== 'T'"
-                 [clearable]="false"
-                 class="custom-select1"
-                 formControlName="trainFlight"
-                 [disabled]="true"
-                 style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
-      </ng-select> -->
             </div>
           </div>
 
@@ -565,29 +581,10 @@
                 formControlName="trainFlightNo"
                 class="custom-select1">
               </ng-select>
-              <!-- <input class="form-control" type="text" formControlName="trainFlightNo"> -->
             </div>
           </div>
         </div>
-        <!-- <div class="form-group row">
-          <div class="col-sm-6">
-            <div class="textOnSelect">
-              <label class="span">{{lebelSet3}}</label>
-              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="deliveryType" formControlName="deliveryType"   [attr.disabled]="isDelvTypeChecked ? null : false" [ngStyle]="{'background-color': isDelvTypeChecked ? 'inherit' : '#e9ecef'}">
-                <ng-option *ngFor="let item of deliveryTypeList" [value]="item.deliverTypeCode" style="font-size: 14px;">{{item.deliverTypeName}}&nbsp;({{item.deliverTypeCode}})</ng-option>
-             </ng-select>
-            </div>
-          </div>
 
-          <div class="col-sm-6">
-            <div class="textOnSelect">
-              <label class="span">{{lebelSet4}}</label>
-              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="packageType" formControlName="packageType"   [attr.disabled]="isPkgTypeChecked ? null : false" [ngStyle]="{'background-color': isPkgTypeChecked ? 'inherit' : '#e9ecef'}">
-                <ng-option *ngFor="let item of packageTypeList" [value]="item.packageTypeCode" style="font-size: 14px;">{{item.packageTypeName}}&nbsp;({{item.packageTypeCode}})</ng-option>
-             </ng-select>
-            </div>
-          </div>
-        </div> -->
         <div class="form-group row">
           <div class="col-sm-6" style="margin-top: -4px;">
             <div class="textOnSelect">
@@ -610,20 +607,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-sm-9">
-            <div class="textOnInput">
-              <label for="inputText">Vendor charge Wt</label>
-              <input class="form-control" type="number"  min="0" placeholder="Vendor charge Wt" formControlName="vendorChargedWt" [(ngModel)]="vendorChargedWt">
-            </div>
-          </div>
-           <div class="col-sm-3 pl-0" style="display: flex; justify-content: right;">
-            <button matTooltip="Vendor Volumetric" tabindex="-1" type="button" class="btn btn-light form-icon" width="auto" (click)="openVendorModal(selectedVendor1,selectedProduct)">
-              <i class="fa-solid fa-calculator"></i>
-            </button>
           </div>
         </div>
 
@@ -664,11 +647,12 @@
           </div>
             <div class="col-sm-6" style="margin-top: -4px;">
             <div class="textOnSelect">
-              <label class="span">Weight type</label>
-              <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1">
+              <label class="ewayBillDate">EwayBill Date</label>
+                <input type="date" class="form-control" id="ewayBillDate" formControlName="ewayBillDate" [max]="getCurrentDate()">
+              <!-- <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option value="fixed" style="font-size: 14px;">Fixed</ng-option>
                 <ng-option value="weight" style="font-size: 14px;">Weight</ng-option>
-              </ng-select>
+              </ng-select> -->
             </div>
           </div>
         </div>
@@ -735,14 +719,14 @@
 
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> Docket</label>
               <input class="form-control" type="number"  min="0"  placeholder="Enter Docket Charge" formControlName="docketCharge" [(ngModel)]="docketCharges"   [attr.disabled]="isDocketChecked ? null : false" [ngStyle]="{'background-color': isDocketChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
 
-          <div class="col-sm-4 col-md-5" >
+          <!-- <div class="col-sm-4 col-md-5" >
             <div class="textOnSelect">
               <label class="span">Action</label>
               <select tabindex="-1" class="custom-select" [(ngModel)]="docketAction" formControlName="docketAction" >
@@ -750,18 +734,18 @@
                 <option value="no" style="font-size: 14px;">NO</option>
               </select>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> FOV</label>
               <input class="form-control" type="number"  min="0" placeholder="Enter FOV Charge" formControlName="fovCharge" [(ngModel)]="fovCharge"   [attr.disabled]="isFovChecked ? null : false" [ngStyle]="{'background-color': isFovChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
 
-          <div class="col-sm-4 col-md-5" >
+          <!-- <div class="col-sm-4 col-md-5" >
             <div class="textOnSelect">
               <label class="span">Action</label>
               <select tabindex="-1" class="custom-select" [(ngModel)]="fovAction" formControlName="fovAction" >
@@ -769,97 +753,57 @@
                 <option value="no" style="font-size: 14px;">NO</option>
               </select>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> ODA</label>
               <input class="form-control" type="number"  min="0"  placeholder="Enter ODA Charge" formControlName="odaCharge" [(ngModel)]="odaCharge"   [attr.disabled]="isOdaChecked ? null : false" [ngStyle]="{'background-color': isOdaChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" >
-            <div class="textOnSelect">
-              <label class="span">Action</label>
-              <select tabindex="-1" class="custom-select" [(ngModel)]="odaAction" formControlName="odaAction" >
-                <option selected value="yes" style="font-size: 14px;">YES</option>
-                <option value="no" style="font-size: 14px;">NO</option>
-              </select>
-            </div>
-          </div>
+         
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> {{lebelSet5}}</label>
               <input class="form-control" type="number"  min="0"  placeholder="Enter Charge" formControlName="packingCharge" [(ngModel)]="packingCharge"   [attr.disabled]="isPackingChrgChecked ? null : false" [ngStyle]="{'background-color': isPackingChrgChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" >
-            <div class="textOnSelect">
-              <label class="span">Action</label>
-              <select tabindex="-1" class="custom-select" [(ngModel)]="packingAction" formControlName="packingAction" >
-                <option selected value="yes" style="font-size: 14px;">YES</option>
-                <option value="no" style="font-size: 14px;">NO</option>
-              </select>
-            </div>
-          </div>
+        
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> {{lebelSet6}}</label>
               <input class="form-control" type="number"  min="0" placeholder="Enter Charge" formControlName="insuranceCharge" [(ngModel)]="insuranceCharge"   [attr.disabled]="isInsurranceChecked ? null : false" [ngStyle]="{'background-color': isInsurranceChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" >
-            <div class="textOnSelect">
-              <label class="span">Action</label>
-              <select tabindex="-1" class="custom-select" [(ngModel)]="insuranceAction" formControlName="insuranceAction" >
-                <option selected value="yes" style="font-size: 14px;">YES</option>
-                <option value="no" style="font-size: 14px;">NO</option>
-              </select>
-            </div>
-          </div>
+         
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> {{lebelSet7}}</label>
               <input class="form-control" type="number"  min="0"    placeholder="Enter Charge" formControlName="loadingCharge" [(ngModel)]="loadingCharge" [attr.disabled]="isLoadingChecked ? null : false" [ngStyle]="{'background-color': isLoadingChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" >
-            <div class="textOnSelect">
-              <label class="span">Action</label>
-              <select tabindex="-1" class="custom-select" [(ngModel)]="loadingAction" formControlName="loadingAction" >
-                <option selected value="yes" style="font-size: 14px;">YES</option>
-                <option value="no" style="font-size: 14px;">NO</option>
-              </select>
-            </div>
-          </div>
+         
         </div>
 
         <div class="form-group row">
-          <div class="col-sm-8 col-md-7">
+          <div class="col-sm-12">
             <div class="textOnInput">
               <label for="inputText"> Fuel</label>
               <input class="form-control" type="number"  min="0"  placeholder="Enter Fuel Charge" formControlName="fuelCharge" [(ngModel)]="fuelCharge"   [attr.disabled]="isFuelChrgChecked ? null : false" [ngStyle]="{'background-color': isFuelChrgChecked ? 'inherit' : '#e9ecef'}">
             </div>
           </div>
-          <div class="col-sm-4 col-md-5" >
-            <div class="textOnSelect">
-              <label class="span">Action</label>
-              <select tabindex="-1" class="custom-select" [(ngModel)]="fuelAction" formControlName="fuelAction" >
-                <option selected value="yes" style="font-size: 14px;">YES</option>
-                <option value="no" style="font-size: 14px;">NO</option>
-              </select>
-            </div>
-          </div>
+         
         </div>
 
         <div class="form-group row">
@@ -879,7 +823,7 @@
         <div class="form-group row">
           <div class="col-sm-8 col-md-6">
             <div class="textOnInput">
-              <label for="inputText">Sub Total Amt</label>
+              <label for="inputText">Sub Total</label>
               <input class="form-control" type="number"  placeholder="Sub Total Amt" [value]="subTotalAmt" formControlName="subTotalAmt" readonly>
             </div>
           </div>
