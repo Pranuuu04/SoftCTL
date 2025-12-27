@@ -12,6 +12,8 @@ import { environment } from 'environments/environment';
 import { BillingService } from '../billing.service';
 import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.component';
 import { AllServicesService } from 'app/service/all-services.service';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
 
 @Component({
   selector: 'app-bill-print',
@@ -335,4 +337,135 @@ printPDF(element) {
     );
   }
 }
+
+printXLS(element){
+  // this.downloadInvoiceExcel(element)
+  this.billingService.billPrintData(element.BranchCode,element.BillNo,element.Customer_Code).subscribe((res:any)=>{
+       if(res.status === 1){
+          this.downloadInvoiceExcel(res.data)
+       }else{
+        this.openSnackBar(res.message, 'error-snackbar')
+       }
+  })
+}
+
+downloadInvoiceExcel(data: any) {
+
+  const header = data.billHeader[0];
+  const items = data.billHeader;
+  const summary = data.chargesSummary[0];
+  const desc = data.description[0];
+
+  const wb = new Workbook();
+  const ws = wb.addWorksheet("Invoice");
+
+  // ====================== HEADER ======================
+  ws.mergeCells('A1:J1');
+  ws.getCell('A1').value = header.CompanyName;
+  ws.getCell('A1').font = { bold: true, size: 18 };
+  ws.getCell('A1').alignment = { horizontal: 'center' };
+
+  ws.mergeCells('A2:J2');
+  ws.getCell('A2').value = `${header.Location_Add1}, ${header.Location_Add2}, ${header.Location_Add3}`;
+  ws.getCell('A2').alignment = { horizontal: 'center' };
+
+  ws.mergeCells('A3:J3');
+  ws.getCell('A3').value = `Tel: ${header.Location_Tel} | Email: ${header.Location_eMail} | GSTIN: ${header.BranchGSTNO}`;
+  ws.getCell('A3').alignment = { horizontal: 'center' };
+
+  ws.mergeCells('A4:J4');
+  ws.getCell('A4').value = "TAX INVOICE";
+  ws.getCell('A4').font = { bold: true, size: 14 };
+  ws.getCell('A4').alignment = { horizontal: 'center' };
+
+  // ================== CONSIGNOR + INVOICE ==================
+  ws.mergeCells('A6:E6'); ws.getCell('A6').value = "Consignor Details";
+  ws.mergeCells('F6:J6'); ws.getCell('F6').value = "Invoice Details";
+  ws.getRow(6).font = { bold: true };
+
+  ws.getCell('A7').value = "Customer:";      ws.getCell('B7').value = header.customerName;
+  ws.getCell('A8').value = "State:";         ws.getCell('B8').value = header.state_Name;
+  ws.getCell('A9').value = "GSTIN:";         ws.getCell('B9').value = header.CustGST ?? "-";
+
+  ws.getCell('F7').value = "Invoice No:";    ws.getCell('G7').value = `${header.InvoiceCode}/${header.BillNo}/${header.FinancialYear}`;
+  ws.getCell('F8').value = "Invoice Date:";  ws.getCell('G8').value = header.BillDate;
+  ws.getCell('F9').value = "Bill Period:";   ws.getCell('G9').value = `${header.BillFrom} to ${header.BillTo}`;
+  ws.getCell('F10').value = "Mode:";         ws.getCell('G10').value = header.Mode_Name;
+
+  // ================== TABLE HEADER ==================
+  const tableHead = [
+    "Sr","Book Date","AWB No","Origin","Destination",
+    "Mode","Pcs","Weight","Rate/Kg","Amount"
+  ];
+
+  let row = 12;
+  ws.getRow(row).values = tableHead;
+  ws.getRow(row).font = { bold: true };
+
+  ws.getRow(row).eachCell(c=>{
+    c.alignment = { horizontal:"center" };
+    c.border = { top:{style:'thin'}, bottom:{style:'thin'}, left:{style:'thin'}, right:{style:'thin'} };
+    c.fill = { type:"pattern", pattern:"solid", fgColor:{argb:"A3B8D4"} };
+  });
+
+  // ================== ROW DATA ==================
+  let total = 0;
+  let r = row+1;
+
+  items.forEach((item,i)=>{
+
+    ws.getRow(r).values = [
+      i+1, item.bookDate, item.AwbNo, item.originName, item.destinationName,
+      item.Mode_Name, item.Qty, item.ChargedWt, item.RatePerkg, item.TOTAL
+    ];
+
+    total += item.TOTAL;
+
+    ws.getRow(r).eachCell(c=>{
+      c.border = { top:{style:'thin'}, bottom:{style:'thin'}, left:{style:'thin'}, right:{style:'thin'} };
+    });
+
+    r++;
+  });
+
+  // ================== TOTAL SECTION ==================
+  ws.mergeCells(`A${r}:I${r}`);
+  ws.getCell(`A${r}`).value = "Total Bill Amount";
+  ws.getCell(`A${r}`).font = { bold:true };
+  ws.getCell(`J${r}`).value = total; r++;
+
+  ws.mergeCells(`A${r}:I${r}`);
+  ws.getCell(`A${r}`).value = `CGST @${header.CGSTPer}%`; 
+  ws.getCell(`J${r}`).value = summary.CGST; r++;
+
+  ws.mergeCells(`A${r}:I${r}`);
+  ws.getCell(`A${r}`).value = `SGST @${header.SGSTPer}%`; 
+  ws.getCell(`J${r}`).value = summary.SGST; r++;
+
+  ws.mergeCells(`A${r}:I${r}`);
+  ws.getCell(`A${r}`).value = "Grand Total";
+  ws.getCell(`A${r}`).font = { bold:true };
+  ws.getCell(`J${r}`).value = summary.sumTotalAmt;
+  ws.getCell(`J${r}`).font = { bold:true }; r++;
+
+  // ================== AMOUNT IN WORDS ==================
+  ws.mergeCells(`A${r}:J${r}`);
+  ws.getCell(`A${r}`).value = `Amount in Words: ${data.totalAmountInWords} Only`;
+  ws.getCell(`A${r}`).font = { italic:true }; r+=2;
+
+  // ================== TERMS ==================
+  ws.getCell(`A${r}`).value = "Terms & Conditions:"; 
+  ws.getCell(`A${r}`).font = { bold:true }; r++;
+
+  Object.values(desc).forEach((d:any)=>{
+    if(d) { ws.getCell(`A${r}`).value = d; r++; }
+  });
+
+  // ================== SAVE FILE ==================
+  wb.xlsx.writeBuffer().then((file)=>{
+    fs.saveAs(new Blob([file]), `Invoice_${header.BillNo}.xlsx`);
+  });
+
+}
+
 }
