@@ -63,7 +63,7 @@
   height: 60vh !important;
   align-items: center !important;
   justify-content: center;
-  background-image: url('./../../../assets/images/loginBG3.png') !important;
+  background-image: url('./../../../assets/images/loginBG4.png') !important;
   background-size: cover !important;
   background-position: center;
   position: relative;
@@ -73,7 +73,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,.85);   /* brighter overlay */
+  background: rgba(255,255,255,.55);   /* brighter overlay */
   z-index: 0;
 }
 
@@ -81,33 +81,52 @@
   position: relative;
   z-index: 2;
   line-height: 1.8;
-  color: #0d1b2a;
+  color: #385371;
   font-size: 15px;
   font-weight: 600;
+
+  /* backdrop-filter: blur(8px);
+  border-radius: 18px;
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .4);
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .15); */
 }
 
 .description li,
 .description h4{
   text-shadow: 0 1px 2px rgba(0,0,0,.18);
+  backdrop-filter: blur(20px);
+  border-radius: 18px;
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .4);
+  box-shadow: 0 11px 34px rgba(0, 0, 0, -0.85);
 }
 
 	ul {
 		list-style: none; 
 		padding-left: 26px;
 	}
+	.description h4{
+  margin-bottom: 10px;
+  display: block;
+}
+
+.description li i{
+  margin-right: 8px;
+}
 	ul h4{
 		font-weight: 700;
 		font-size: 18px;
 		margin-left: -21px;
 		color: black;
-		padding-bottom: 5px;
+		/* padding-bottom: 5px; */
 		border-bottom: 2px solid orange;
 		display: inline; 
 		margin-bottom: 10px;
 	}
 	.img h6{
 		margin-bottom: 0;
-		font-size: 20px;
+		font-size: 22px;
 	}
 	li{
 		font-weight: 500;
@@ -195,13 +214,13 @@
   .form__input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+   border-radius: 8px;
+  border: 1px solid #d7d7d7;
   }
-  .form__input:focus {
-  border-color: #007bff;
-  outline: none;
-  }
+  .form__input:focus{
+  border-color:#28bbf5;
+  box-shadow:0 0 0 2px rgba(40,187,245,.25);
+}
   
   .error-message {
   color: red;
@@ -209,6 +228,8 @@
   }
   .footer p{
 	padding-right: 7px;
+	/* font-size: 11px; */
+  opacity:.8;
   }
   @media  (min-width: 768px) and  (max-width: 1024px){
 	  ul h4{
@@ -357,11 +378,23 @@
     font-size: 16px;
     font-weight: 600;
     border: 1px solid #d2d2d2; 
-    text-transform: capitalize;
-	background-color: #28bbf5;
+    background:#28bbf5;
+  /* border: none; */
 	color: #fff;
   }
   .btn-light:hover,
   .btn-light:focus{
-	background-color: #e48455;
+  background:#1aa4d7;
   }
+  .fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn .9s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -102,3 +102,24 @@ input{
     bottom: 0;
     z-index: -1;
   }
+  
+  ::ng-deep .custom-snackbar {
+    color: white !important;
+    background-color: #0a990a !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+}
+::ng-deep .error-snackbar{
+    color: white !important;
+    background-color: red !important;
+    margin-top: 72px !important;
+    margin-right: 66px !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+
+}
+::ng-deep .mat-simple-snackbar-action button  {
+  color: white;
+}

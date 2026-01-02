@@ -129,9 +129,6 @@ handlePageEvent(event: PageEvent) {
         this.dataSource = new MatTableDataSource(this.scanbyManfBulkTable);
         this.length = resp.Count;
         this.calculatePageCount();
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        });
         if (this.data.selectedRows && this.data.selectedRows.length > 0) {
           this.data.selectedRows.forEach((awbNo: string) => {
             const row = this.scanbyManfBulkTable.find((item: any) => item.Awbno === awbNo);

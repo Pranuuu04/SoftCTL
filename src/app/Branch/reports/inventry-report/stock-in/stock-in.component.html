@@ -1,79 +1,21 @@
-  <div *ngIf="isLoading" class="loader-overlay">
-  <div class="loader"></div>
-</div>
-
-<div>
-    <form [formGroup]="cNoteIssueForm" (ngSubmit)="formSubmit(cNoteIssueForm.value)">
+  <div>
+    <form [formGroup]="stockInForm" (ngSubmit)="formSubmit(stockInForm.value)">
     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
-            
-                                     
-               <div class="col-sm-2">
-            <div class="textOnSelect">
-                <label for="Type">Stock issue :</label>
-                  <select class="custom-select" formControlName="stockIssue" 
-            (change)="onStockIssueChange()">
-                <option value="Branch" selected>Branch</option>
-                <option value="Customer"> Customer</option>   
-                <option value="Employee"> Employee</option>
-                <!-- <option value="Employee"> franchisee</option> -->
-              </select>
-            </div>
-        </div>
-        <div class="col-sm-4" *ngIf="cNoteIssueForm.get('stockIssue')?.value === 'Branch'">
-          <div class="textOnSelect">
-            <label>Branch :</label>
-            <ng-select
-              [items]="branchList"
-              class="custom-select1"
-              bindLabel="locationName"
-              bindValue="locationCode"
-              formControlName="branch">
-            </ng-select>
-          </div>
-        </div>
-
-        <!-- Customer dropdown -->
-        <div class="col-sm-4" *ngIf="cNoteIssueForm.get('stockIssue')?.value === 'Customer'">
-          <div class="textOnSelect">
-            <label>Customer name :</label>
-            <ng-select
-              [items]="customerList"
-              class="custom-select1"
-              bindLabel="customerName"
-              bindValue="customerCode"
-              formControlName="customerName"
-              (change)="resetPagination()">
-            </ng-select>
-          </div>
-        </div>
-
-        <!-- Employee dropdown -->
-        <div class="col-sm-4" *ngIf="cNoteIssueForm.get('stockIssue')?.value === 'Employee'">
-          <div class="textOnSelect">
-            <label>Employee :</label>
-            <ng-select
-              [items]="employeeList"
-              class="custom-select1"
-              bindLabel="employeeName"
-              bindValue="employeeCode"
-              formControlName="employee">
-            </ng-select>
-          </div>
-        </div>
-          <div class="col-sm-2">
+      
+            <div class="col-sm-2">
                 <div class="textOnInput">
                     <label for="fromDate">From :</label>
                     <input class="form-control" type="date" formControlName="fromDate"  [(ngModel)]="fromDate"  [value]="getDefaultDate()" id="fromDate">
                 </div>
-            </div>
-            <div class="col-sm-2">
+            </div>   
+              <div class="col-sm-2">
                 <div class="textOnInput">
                     <label for="toDate">To :</label>
                     <input class="form-control" type="date" formControlName="toDate"  [(ngModel)]="toDate"  [value]="getCurrentDate()" id="toDate">
                 </div>
             </div>
+          
                 </div>
-             
             <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
           <div class="col-sm-5">
             <div class="row">              
@@ -100,28 +42,14 @@
       <table  id="genPDF" mat-table [dataSource]="dataSource" class="table-bordered table-striped " style="background-color: rgb(223 233 237 / 87%);" matSort >
       <ng-container matColumnDef="srNo">
           <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.srNo }} </td>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="issueDate">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.issueDate}} </td>
+        <ng-container matColumnDef="BookNo">
+          <th mat-header-cell *matHeaderCellDef> Book No </th>
+          <td mat-cell *matCellDef="let element"> {{element.BookNo}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="fromAwb">
-          <th mat-header-cell *matHeaderCellDef> From AWB </th>
-          <td mat-cell *matCellDef="let element"> {{element.fromAwb}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="toAwb">
-          <th mat-header-cell *matHeaderCellDef> To AWB </th>
-          <td mat-cell *matCellDef="let element"> {{element.toAwb}} </td>
-        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 

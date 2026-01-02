@@ -102,11 +102,8 @@ this._mdr.close(false);
         this.showTable = true;
         this.scanbyAwbBulkTable = resp.Data;
         this.dataSource = new MatTableDataSource(this.scanbyAwbBulkTable);
-        this.length = resp.count;
+        this.length = resp.Count;
         this.calculatePageCount();
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        });
         if (this.data.selectedRows && this.data.selectedRows.length > 0) {
           this.data.selectedRows.forEach((awbNo: string) => {
             const row = this.scanbyAwbBulkTable.find((item: any) => item.Awbno === awbNo);

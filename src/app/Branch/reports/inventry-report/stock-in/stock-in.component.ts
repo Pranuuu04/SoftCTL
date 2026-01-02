@@ -12,14 +12,16 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
-import { MasterService } from 'app/Branch/master/master.service';
+import { ConfirmationDialogComponent } from 'app/Comman/confirmation-dialog/confirmation-dialog.component';
+
 
 @Component({
-  selector: 'app-c-note-issue',
-  templateUrl: './c-note-issue.component.html',
-  styleUrls: ['./c-note-issue.component.css']
+  selector: 'app-stock-in',
+  templateUrl: './stock-in.component.html',
+  styleUrls: ['./stock-in.component.css']
 })
-export class CNoteIssueComponent implements OnInit {
+export class StockInComponent implements OnInit {
+
 
   @ViewChild('TABLE', { read: ElementRef }) table: ElementRef;
 
@@ -29,7 +31,7 @@ export class CNoteIssueComponent implements OnInit {
   currentDate: any;
   customerList: any;
   destinationList: any;
-  cNoteIssueForm: FormGroup;
+  stockInForm: FormGroup;
   sessionLocationCode: any;
   yourDataArray: any;
   enabledTable = false;
@@ -60,10 +62,7 @@ export class CNoteIssueComponent implements OnInit {
 
 displayedColumns: string[] = [
   'srNo',
-  'issueDate',
-  'name',
-  'fromAwb',
-  'toAwb'
+  'BookNo'
 ];
 
   dataSource  = new MatTableDataSource();
@@ -71,25 +70,14 @@ displayedColumns: string[] = [
   @ViewChild(MatPaginator) paginator: MatPaginator;
   destinationName: string;
   userType: string;
-  formData: any = {
-    customerName: '',
-    destination: '',
-    statusName: '',
-    fromDate: '',
-    toDate: '',
-    reportType: '',
-  };
   pageCount = 1;
-  branchList: any;
-  employeeList: any;
-isLoading: boolean = false;
+
 
   constructor(public dialog: MatDialog,
               public formBuilder: FormBuilder,
               public httpService: HttpService,
               private snackBar: MatSnackBar,
-              public AllService: AllServicesService,
-              public masterService: MasterService,) {
+              public AllService: AllServicesService) {
                 this.fromDate = this.getDefaultDate();
                 this.toDate = this.getCurrentDate();
               }
@@ -100,15 +88,10 @@ isLoading: boolean = false;
     : localStorage.getItem('originCode');
     this.userType = localStorage.getItem('userType');
     this.dataSource = new MatTableDataSource;
-    this.cNoteIssueForm  = this.formBuilder.group({
-      stockIssue: new FormControl('Branch', Validators.compose([])),
-      branch: new FormControl(''),
-      customerName: new FormControl(''),
-      employee: new FormControl(''),
+    this.stockInForm  = this.formBuilder.group({
       fromDate: new FormControl('', Validators.compose([ ])),
-      toDate: new FormControl('', Validators.compose([ ])),
-    });    
-     this.loadBranch();
+      toDate: new FormControl('', Validators.compose([ ]))
+    });
   }
   openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Ok', {
@@ -141,42 +124,7 @@ isLoading: boolean = false;
     this.pageCount = Math.ceil(this.length / this.pageSize);
     console.log(this.pageCount, 'pageCount');
   }
-onStockIssueChange() {
-  const value = this.cNoteIssueForm.get('stockIssue')?.value;
 
-  if (value === 'Branch') {
-    this.cNoteIssueForm.patchValue({ branch: '', customerName: '', employee: '' });
-    this.loadBranch();
-  }
-
-  if (value === 'Customer') {
-    this.cNoteIssueForm.patchValue({ customerName: '', branch: '', employee: '' });
-    this.loadCustomer();
-  }
-
-  if (value === 'Employee') {
-    this.cNoteIssueForm.patchValue({ employee: '', branch: '', customerName: '' });
-    this.loadEmployee();
-  }
-}
-loadBranch() {
-  this.masterService.getBranchLocations().subscribe((resp: any) => {
-    this.branchList = resp.Data;
-  });
-}
-
-loadCustomer() {
-  this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
-    const allCust = { customerName: 'All', customerCode: 'All' };
-    this.customerList = [allCust, ...resp.Data];
-  });
-}
-
-loadEmployee() {
-  this.masterService.getEmployeeData(this.sessionLocationCode).subscribe((resp: any) => {
-    this.employeeList = resp.Data;
-  });
-}
   resetPagination() {
     this.pageIndex = 0;
     this.paginator.pageIndex = 0;
@@ -188,50 +136,25 @@ loadEmployee() {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.calculatePageCount();
-     const formData = this.cNoteIssueForm.value;
+    const formData = this.stockInForm.value;
     this.formSubmit(formData);
   }
 
   formSubmit(formData: any) {
-    this.isLoading = true;
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-     const code =
-    formData.stockIssue === 'Branch' ? formData.branch :
-    formData.stockIssue === 'Customer' ? formData.customerName :
-    formData.stockIssue === 'Employee' ? formData.employee :
-    '';
-
-    this.httpService.get(`${environment.apiUrl}Reports/GetStockIssueReport?code=${code}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}` ).then(resp => {
-        this.isLoading = false; 
+    this.httpService.get(`${environment.apiUrl}Reports/GetStockInReport?fromDate=${formData.fromDate}&toDate=${formData.toDate}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}` ).then(resp => {
       if ( resp.status === 1) {
           this.openSnackBar(resp.message, 'custom-snackbar')
           this.length = resp.count;
           this.calculatePageCount();
-            this.dataSource = resp.Data.map((item: any, index: number) => {
-              let name =
-                item.Customer_Name ??
-                item.Employee_Name ??
-                item.Location_Name ??
-                '-';
-
-              return {
-                srNo: index + 1 + (this.pageIndex * this.pageSize),
-                issueDate: item.IssueDate,
-                name: name,
-                fromAwb: item.AwbFromNo,
-                toAwb: item.AwbToNo
-              };
-            });
+          this.dataSource = resp.Data;
           this.enabledTable = true;
       } else {
         this.openSnackBar(resp.message, 'error-snackbar')
         this.enabledTable = false;
       }
-    }).catch(() => {
-    this.isLoading = false;   // 🔹 hide loader on error
-    this.openSnackBar('Something went wrong', 'error-snackbar');
-  });
+    });
   }
 
   openprogressbar(): MatDialogRef<ProgressBarComponent> {
@@ -244,39 +167,37 @@ loadEmployee() {
       });
       return dialogRef;
     }
-
 downloadSample() {
-  const isConfirmed = window.confirm('Do you want to download the Excel file?');
-  if (!isConfirmed) { return; }
 
-  const progressBar = this.openprogressbar();
-const code =
-    this.cNoteIssueForm.value.stockIssue === 'Branch' ? this.cNoteIssueForm.value.branch :
-    this.cNoteIssueForm.value.stockIssue === 'Customer' ? this.cNoteIssueForm.value.customerName :
-    this.cNoteIssueForm.value.stockIssue === 'Employee' ? this.cNoteIssueForm.value.employee :
-    '';
-  this.httpService.get(`${environment.apiUrl}Reports/GetStockIssueReport?code=${code}&fromDate=${this.cNoteIssueForm.value.fromDate}&toDate=${this.cNoteIssueForm.value.toDate}&pageNumber=1&pageSize=${this.length}`)
+  const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+    width: '22rem',
+    data: { message: 'Do you want to download the Excel file?' }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+
+    if (!result) {
+      this.openSnackBar('Download cancelled', 'error-snackbar');
+      return;
+    }
+
+    const progressBar = this.openprogressbar();
+
+    this.httpService.get(
+      `${environment.apiUrl}Reports/GetStockInReport?fromDate=${this.stockInForm.value.fromDate}&toDate=${this.stockInForm.value.toDate}&pageNumber=1&pageSize=${this.length}`
+    )
     .then((response: any) => {
-      const dataForExcel = response.Data.map((element: any, index: number) => {
-        let name =
-          element.Customer_Code ??
-          element.Employee_Code ??
-          element.Location_Code ??
-          '-';
 
+      const dataForExcel = response.Data.map((element: any) => {
         return {
-          'Sr No': index + 1,
-          'Date': element.IssueDate,
-          'Name': name,
-          'From AWB': element.AwbFromNo,
-          'To AWB': element.AwbToNo
+          'Book No': element.BookNo
         };
       });
 
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
-      XLSX.writeFile(wb, 'cNote_Issue_Report.xlsx');
+      XLSX.writeFile(wb, 'stockIn_Report.xlsx');
 
       progressBar.close();
     })
@@ -284,7 +205,37 @@ const code =
       progressBar.close();
       this.openSnackBar('Failed to download report', 'error-snackbar');
     });
+
+  });
+
 }
+
+// downloadSample() {
+//   const isConfirmed = window.confirm('Do you want to download the Excel file?');
+//   if (!isConfirmed) { return; }
+
+//   const progressBar = this.openprogressbar();
+
+//   this.httpService.get(`${environment.apiUrl}Reports/GetStockInReport?fromDate=${this.stockInForm.value.fromDate}&toDate=${this.stockInForm.value.toDate}&pageNumber=1&pageSize=${this.length}`)
+//     .then((response: any) => {
+//       const dataForExcel = response.Data.map((element: any, index: number) => {
+//         return {
+//           'Book No': element.BookNo
+//         };
+//       });
+
+//       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
+//       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//       XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
+//       XLSX.writeFile(wb, 'volumatricReport.xlsx');
+
+//       progressBar.close();
+//     })
+//     .catch(() => {
+//       progressBar.close();
+//       this.openSnackBar('Failed to download report', 'error-snackbar');
+//     });
+// }
 
   generatePdf() {
     const doc = new jsPDF();

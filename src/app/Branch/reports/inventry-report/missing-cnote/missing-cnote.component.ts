@@ -12,6 +12,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
+import { MasterService } from 'app/Branch/master/master.service';
 
 @Component({
   selector: 'app-missing-cnote',
@@ -28,7 +29,7 @@ export class MissingCnoteComponent implements OnInit {
   currentDate: any;
   customerList: any;
   destinationList: any;
-  customerForm: FormGroup;
+  missingCNoteForm: FormGroup;
   sessionLocationCode: any;
   yourDataArray: any;
   enabledTable = false;
@@ -50,29 +51,11 @@ export class MissingCnoteComponent implements OnInit {
   showFirstLastButtons = true;
   hidePageSize = false;
   disabled = false;
-  validationMessage: {
-    status: { type: string; message: string; }[];
-    remark: { type: string; message: string; }[];
-    AWB: { type: string; message: string; }[];
-  };
   isHidden = true;
 
 displayedColumns: string[] = [
   'srNo',
-  'AwbNo',
-  'originName',
-  'destinationName',
-  'Consignee_Name',
-  'Dimension',
-  'qty',
-  'ActualWt',
-  'VolumetricWt',
-  'ChargeWt',
-  'BookDate',
-  'expectedDate',
-  'InvValue',
-  'InvoiceNo',
-  'Remark'
+  'MissingAwbNo'
 ];
 
   dataSource  = new MatTableDataSource();
@@ -80,22 +63,16 @@ displayedColumns: string[] = [
   @ViewChild(MatPaginator) paginator: MatPaginator;
   destinationName: string;
   userType: string;
-  formData: any = {
-    customerName: '',
-    destination: '',
-    statusName: '',
-    fromDate: '',
-    toDate: '',
-    reportType: '',
-  };
-
   pageCount = 1;
+  branchList: any;
+  employeeList: any;
 
 
   constructor(public dialog: MatDialog,
               public formBuilder: FormBuilder,
               public httpService: HttpService,
               private snackBar: MatSnackBar,
+              public masterService: MasterService,
               public AllService: AllServicesService) {
                 this.fromDate = this.getDefaultDate();
                 this.toDate = this.getCurrentDate();
@@ -106,20 +83,16 @@ displayedColumns: string[] = [
     ? localStorage.getItem('selectedValue')
     : localStorage.getItem('originCode');
     this.userType = localStorage.getItem('userType');
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
-           const allCust = { customerName: 'All', customerCode: 'All' };
-            this.customerList = [allCust, ...resp.Data];
-          this.customerForm.patchValue({ customerName: 'All' });
-          });
     this.dataSource = new MatTableDataSource;
-    this.customerForm  = this.formBuilder.group({
-      Type: new FormControl('CourierBoyWise', Validators.compose([
-         Validators.required
-        ])),
-      stockIssue: new FormControl('Branch', Validators.compose([])),
-      fromAwbno: new FormControl('', Validators.compose([])),
-      toAwbno: new FormControl('', Validators.compose([])),
+    this.missingCNoteForm  = this.formBuilder.group({
+        stockIssue: new FormControl('Branch'),
+        branch: new FormControl(''),
+        customerName: new FormControl(''),
+        employee: new FormControl(''),
+        fromAwbno: new FormControl(''),
+        toAwbno: new FormControl('')
     });
+     this.loadBranch();
   }
   openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Ok', {
@@ -147,7 +120,42 @@ displayedColumns: string[] = [
 
     return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
   }
+onStockIssueChange() {
+  const value = this.missingCNoteForm.get('stockIssue')?.value;
 
+  if (value === 'Branch') {
+    this.missingCNoteForm.patchValue({ branch: '', customerName: '', employee: '' });
+    this.loadBranch();
+  }
+
+  if (value === 'Customer') {
+    this.missingCNoteForm.patchValue({ customerName: '', branch: '', employee: '' });
+    this.loadCustomer();
+  }
+
+  if (value === 'Employee') {
+    this.missingCNoteForm.patchValue({ employee: '', branch: '', customerName: '' });
+    this.loadEmployee();
+  }
+}
+loadBranch() {
+  this.masterService.getBranchLocations().subscribe((resp: any) => {
+    this.branchList = resp.Data;
+  });
+}
+
+loadCustomer() {
+  this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+    const allCust = { customerName: 'All', customerCode: 'All' };
+    this.customerList = [allCust, ...resp.Data];
+  });
+}
+
+loadEmployee() {
+  this.masterService.getEmployeeData(this.sessionLocationCode).subscribe((resp: any) => {
+    this.employeeList = resp.Data;
+  });
+}
   calculatePageCount() {
     this.pageCount = Math.ceil(this.length / this.pageSize);
     console.log(this.pageCount, 'pageCount');
@@ -164,28 +172,51 @@ displayedColumns: string[] = [
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.calculatePageCount();
-    this.formData.customerName = this.customerName;
-    this.formData.fromDate = this.fromDate;
-    this.formData.toDate = this.toDate;
-    this.formSubmit(this.formData);
+    
+    const formData = this.missingCNoteForm.value;
+    this.formSubmit(formData);
   }
+formSubmit(formData: any) {
+  const code =
+    formData.stockIssue === 'Branch' ? formData.branch :
+    formData.stockIssue === 'Customer' ? formData.customerName :
+    formData.stockIssue === 'Employee' ? formData.employee :
+    '';
 
-  formSubmit(formData: any) {
-    const startIndex = this.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.httpService.get(`${environment.apiUrl}Reports/getVolumetricReports?customerCode=${formData.customerName}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}` ).then(resp => {
-      if ( resp.status === 1) {
-          this.openSnackBar(resp.message, 'custom-snackbar')
-          this.length = resp.count;
-          this.calculatePageCount();
-          this.dataSource = resp.Data;
-          this.enabledTable = true;
-      } else {
-        this.openSnackBar(resp.message, 'error-snackbar')
-        this.enabledTable = false;
-      }
-    });
-  }
+  this.httpService.get(
+    `${environment.apiUrl}Reports/GetCNoteMissingReport?code=${code}&awbFromNo=${formData.fromAwbno}&awbToNo=${formData.toAwbno}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}`
+  ).then(resp => {
+
+    if (resp.status === 1) {
+      this.openSnackBar(resp.message, 'custom-snackbar');
+      this.length = resp.count;
+      this.calculatePageCount();
+      this.dataSource = resp.Data;
+      this.enabledTable = true;
+    } else {
+      this.openSnackBar(resp.message, 'error-snackbar');
+      this.enabledTable = false;
+    }
+
+  });
+}
+
+  // formSubmit(formData: any) {
+  //   const startIndex = this.pageIndex * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   this.httpService.get(`${environment.apiUrl}Reports/getVolumetricReports?customerCode=${formData.customerName}&fromDate=${formData.fromDate}&toDate=${formData.toDate}&pageNumber=${this.pageIndex + 1}&pageSize=${this.pageSize}` ).then(resp => {
+  //     if ( resp.status === 1) {
+  //         this.openSnackBar(resp.message, 'custom-snackbar')
+  //         this.length = resp.count;
+  //         this.calculatePageCount();
+  //         this.dataSource = resp.Data;
+  //         this.enabledTable = true;
+  //     } else {
+  //       this.openSnackBar(resp.message, 'error-snackbar')
+  //       this.enabledTable = false;
+  //     }
+  //   });
+  // }
 
   openprogressbar(): MatDialogRef<ProgressBarComponent> {
     const dialogRef = this.dialog.open(ProgressBarComponent, {
@@ -204,31 +235,23 @@ downloadSample() {
 
   const progressBar = this.openprogressbar();
 
-  this.httpService.get(`${environment.apiUrl}Reports/getVolumetricReports?customerCode=${this.customerForm.value.customerName}&fromDate=${this.customerForm.value.fromDate}&toDate=${this.customerForm.value.toDate}&pageNumber=${this.pageIndex + 1}&pageSize=${this.length}`)
+  const code =
+    this.missingCNoteForm.value.stockIssue === 'Branch' ? this.missingCNoteForm.value.branch :
+    this.missingCNoteForm.value.stockIssue === 'Customer' ? this.missingCNoteForm.value.customerName :
+    this.missingCNoteForm.value.stockIssue === 'Employee' ? this.missingCNoteForm.value.employee :
+    '';
+  this.httpService.get(`${environment.apiUrl}Reports/GetCNoteMissingReport?code=${code}&awbFromNo=${this.missingCNoteForm.value.fromAwbno}&awbToNo=${this.missingCNoteForm.value.toAwbno}&pageNumber=1&pageSize=${this.length}`)
     .then((response: any) => {
       const dataForExcel = response.Data.map((element: any, index: number) => {
         return {
-          'Awb No': element.AwbNo,
-          'Origin': element.originName,
-          'Destination': element.destinationName,
-          'Consignee': element.Consignee_Name,
-          'Dimension': element.Dimension,
-          'Quantity': element.qty,
-          'Actual Weight': element.ActualWt,
-          'Volumetric Weight': element.VolumetricWt,
-          'Charge Weight': element.ChargeWt,
-          'Booked Date': element.BookDate,
-          'Expected Date': element.expectedDate,
-          'Invoice Value': element.InvValue,
-          'Invoice No': element.InvoiceNo,
-          'Remark': element.Remark
+          'Awb No': element.MissingAwbNo
         };
       });
 
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Entrysheet');
-      XLSX.writeFile(wb, 'volumatricReport.xlsx');
+      XLSX.writeFile(wb, 'missing_CNote_Report.xlsx');
 
       progressBar.close();
     })

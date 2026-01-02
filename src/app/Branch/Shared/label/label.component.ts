@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
 
@@ -46,7 +47,8 @@ export class LabelComponent implements OnInit {
   constructor(public _mdr: MatDialogRef<LabelComponent>,
               public httpService: HttpService,
               public formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: any) {}
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     // this.originCode = localStorage.getItem('originCode');
@@ -95,14 +97,22 @@ export class LabelComponent implements OnInit {
   onClose(): void {
     this._mdr.close();
   }
+  openSnackBar(message: string, panelClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [panelClass]
+    });
+  }
 
   formSubmit(formData: any) {
     let obj  = {
       sessionLocationCode: this.originCode,
       txtlabel1: formData.inputFeild1 || this.label12Changes,
       txtlabel2: formData.inputFeild2 || this.label13Changes,
-      txtlabel3: formData.inputFeild4 || this.label14Changes,
-      txtlabel4: formData.inputFeild3 || this.label15Changes,
+      txtlabel3: formData.inputFeild3  || this.label14Changes,
+      txtlabel4: formData.inputFeild4 || this.label15Changes ,
       charges1: formData.inputFeild5 || this.label1Changes,
       charges2: formData.inputFeild6 || this.label2Changes,
       charges3: formData.inputFeild7 || this.label3Changes,
@@ -119,7 +129,7 @@ export class LabelComponent implements OnInit {
     this.httpService.post(`${environment.apiUrl}Booking/chargesLabel`, obj).then(resp => {
       console.log(resp, 'postData');
       if (resp.status === 1) {
-        alert(resp.message);
+      this.openSnackBar(resp.message, 'custom-snackbar');
         this._mdr.close(obj);
       }
     })

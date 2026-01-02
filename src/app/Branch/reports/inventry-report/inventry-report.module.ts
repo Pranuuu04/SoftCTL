@@ -6,6 +6,7 @@ import { MaterialModule } from 'app/angularMaterial/angularMaterial';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InventryReportComponent } from './inventry-report.component';
+import { StockInComponent } from './stock-in/stock-in.component';
 
 
 
@@ -13,7 +14,8 @@ import { InventryReportComponent } from './inventry-report.component';
   declarations: [
     InventryReportComponent,
     MissingCnoteComponent,
-    CNoteIssueComponent
+    CNoteIssueComponent,
+    StockInComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {  MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -310,7 +310,10 @@ chargeMap = {
   };
   bluedartChargeCache: any;
   autoRateFlag: boolean;
-rateFetchFailed = false;
+  rateFetchFailed = false;
+  showTrainFlightSection  = false;
+  trainFlightLabel = 'Train/Flight';
+  trainFlightNoLabel = 'Train/Flight No';
 constructor(public httpService: HttpService,
               public AllService: AllServicesService,
               public bookingService: BookingService,
@@ -319,10 +322,9 @@ constructor(public httpService: HttpService,
               public formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private httpclient: HttpClient,
-            private sharedService: SharedService ) {
-                  // this.sessionLocationCode = localStorage.getItem('originCode');
+            private sharedService: SharedService,
+            private cdr: ChangeDetectorRef ) {
                   this.userType = localStorage.getItem('userType');
-                  
                   localStorage.removeItem('vendorListData');
                   localStorage.removeItem('CustInvoice');
                   localStorage.removeItem('Volumetrice');
@@ -338,21 +340,17 @@ constructor(public httpService: HttpService,
                   localStorage.removeItem('forwarding3');
                   localStorage.removeItem('Vol');
                 }
-                refresh() {
-                }
+
  ngOnInit() {
- this.defaultDate = new Date().toISOString().split('T')[0];
-
-
-//  this.consignerCode = localStorage.getItem('consignerCode') || '';
+  this.defaultDate = new Date().toISOString().split('T')[0];
   this.selectedCustType = localStorage.getItem('custType') || '';
-  // this.loadConsignerData();
     this.renderForm();
     this.compareWeights();
     const savedAwbType = localStorage.getItem('awbType');
     if (savedAwbType) {
       this.awbType = savedAwbType;
-    }
+    }    
+    this.loadState();
     this.userType = localStorage.getItem('userType');
     this.username = localStorage.getItem('userName');
     this.ClientLogo =  localStorage.getItem('ClientLogo');
@@ -365,12 +363,11 @@ constructor(public httpService: HttpService,
     this.checkBranchSelection();
     if (this.userType === 'Admin') {
       this.selectedOrigin = this.sharedService.getBranchType();
-      // this.sessionLocationCode = this.selectedOrigin;
-      // this.getPermission();
         this.sharedService.selectedValue$.subscribe(value => {
           this.sessionLocationCode = value;
           this.loadConsignerData();
           this.getPermission();
+          this.getLabelData();
     });
     } else {
       this.sessionLocationCode = localStorage.getItem('originCode');
@@ -378,16 +375,12 @@ constructor(public httpService: HttpService,
       this.selectedOrigin = this.sessionLocationCode;
       this.loadConsignerData();
       this.getPermission();
+      this.getLabelData();
     }
-    // localStorage.removeItem('custType');
-    //         localStorage.removeItem('consignerCode');
-    this.loadState();
-
-    this.getLabelData();
     this.AllService.getDestinationDataa().subscribe((data) => {
       this.destinationList = data.Data;
       this.cityList = data.Data;
-      this.filteredDestinationList = [...this.destinationList]; // Initialize with all items
+      this.filteredDestinationList = [...this.destinationList];
     });
     this.AllService.getOriginData().subscribe((data) => {
       this.originList = data.Data;
@@ -412,6 +405,7 @@ constructor(public httpService: HttpService,
   this.setControlState();
 
   }
+  refresh() {}
   getCurrentDate(): string {
     const today = new Date();
     return this.formatDate(today);
@@ -425,18 +419,15 @@ constructor(public httpService: HttpService,
   }
 
   onScrollToEnd() {
-    this.scrollTrigger$.next(); // Trigger the scroll event to load more data
+    this.scrollTrigger$.next();
   }
   onCitySelect(cityCode: string) {
-    // Set destination to match selected city
     this.cityName = cityCode;
   }
   onSearch(searchTerm: string) {
-    // If search term is empty, reset the list to show all items
     if (!searchTerm) {
       this.filteredDestinationList = [...this.destinationList];
     } else {
-      // Filter `destinationList` based on search term
       this.filteredDestinationList = this.destinationList.filter(item =>
         item.destinationName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.destinationCode.toLowerCase().includes(searchTerm.toLowerCase())
@@ -1187,24 +1178,53 @@ verifyGST() {
 handleModeChange(modeCode: string) {
   this.selectedMode = modeCode;
 
-  // Clear both dropdown values FIRST
   this.bookingForm.patchValue({
     trainFlight: null,
     trainFlightNo: null
   });
 
-  // Clear options
   this.trainFlightOptions = [];
-  this.trainFlightNoOptions = [];  // ✅ Clear second dropdown options also
+  this.trainFlightNoOptions = [];
 
-  // Load new options based on mode
   if (modeCode === 'AI') {
+    this.showTrainFlightSection = true;
+      this.trainFlightLabel = 'Flight';
+    this.trainFlightNoLabel = 'Flight No';
+
     this.getFlightData();
   } 
   else if (modeCode === 'T') {
+    this.showTrainFlightSection = true;
+    
+    this.trainFlightLabel = 'Train';
+    this.trainFlightNoLabel = 'Train No';
     this.getTrain();
   }
+  else {
+    this.showTrainFlightSection = false;
+    this.trainFlightLabel = 'Train/Flight';
+    this.trainFlightNoLabel = 'Train/Flight No';
+  }
 }
+
+// handleModeChange(modeCode: string) {
+//   this.selectedMode = modeCode;
+
+//   this.bookingForm.patchValue({
+//     trainFlight: null,
+//     trainFlightNo: null
+//   });
+
+//   this.trainFlightOptions = [];
+//   this.trainFlightNoOptions = []; 
+
+//   if (modeCode === 'AI') {
+//     this.getFlightData();
+//   } 
+//   else if (modeCode === 'T') {
+//     this.getTrain();
+//   }
+// }
 
 getFlightData(): void {
   this.httpclient.get(`${environment.apiUrl}Master/allMasters?masterName=AirLine&operation=getAirLine`)
@@ -1272,7 +1292,6 @@ onTrainFlightSelect(event: any) {
     const selectedCode = event?.code;
 
   if (!selectedCode) return;
-  // Clear second dropdown before new load
   this.trainFlightNoOptions = [];
   
   this.bookingForm.patchValue({ trainFlightNo: null });
@@ -1301,13 +1320,6 @@ onTrainFlightSelect(event: any) {
       }
     );
   }
-
-
-  // tslint:disable-next-line:no-shadowed-variable
-  // fetchViaData(event: any) {
-  //   this.cityName = event;
-  //   this.loadVia(event);
-  // }
 
   loadVia(params: any) {
     this.bookingService.getDestManifest(params).subscribe(
@@ -1346,7 +1358,6 @@ onTrainFlightSelect(event: any) {
     const dialogRef = this.dialog.open(ActiveCustomerComponent, {
       data: {
         action: 'add',
-        // source: 'booking2',
         responseData: this.consignerCode,
         shipperAdd1: this.shipperAdd1,
         shipperAdd2: this.shipperAdd2,
@@ -1369,7 +1380,6 @@ onTrainFlightSelect(event: any) {
         this.selectedShipper = res.shipperName?.trim();
 
         this.bookingForm.get('shipperName')?.setValue(this.selectedShipper);
-        // this.bokingForm.get('shipperName').setValue(res.shipperName);
         this.shipperAdd1 = res.shipperAdd1;
         this.shipperAdd2 = res.shipperAdd2;
         this.shipperCity = res.shipperCity;
@@ -1507,7 +1517,6 @@ onTrainFlightSelect(event: any) {
         this.bookingForm.get('volumetricWt').setValue(res.total);
         this.compareWeights();
         this.actualWt = res.totalActWt;
-        // this.bookingForm.get('volumetricWt').setValue(res.totalVolWt)
       }
     });
   }
@@ -1524,7 +1533,7 @@ onTrainFlightSelect(event: any) {
         origin: this.bookingForm.value.origin,
         cachedCharges: this.bluedartChargeCache
       },
-      width: '50rem',
+      width: '35rem',
       disableClose: true,
       });
     dialogRef.afterClosed().subscribe((res) => {
@@ -1662,27 +1671,24 @@ getGstDataWithoutModal(subTotalAmt: any, consignerCode: any) {
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.lebelSet1 = res.txtlabel1;
-        this.lebelSet2 = res.txtlabel2;
-        this.lebelSet3 = res.txtlabel3;
-        this.lebelSet4 = res.txtlabel4;
-        this.lebelSet5 = res.charges1;
-        this.lebelSet6 = res.charges2;
-        this.lebelSet7 = res.charges3;
-      }
+     this.getLabelData();
+     this.cdr.detectChanges();
     });
   }
   getLabelData() {
     this.bookingService.getLabelData(this.sessionLocationCode).subscribe(
       (resp) => {
-        this.lebelSet5 = resp.Data[0].Charges_1;
-        this.lebelSet6 = resp.Data[0].Charges_2;
-        this.lebelSet7 = resp.Data[0].Charges_3;
-        this.lebelSet1 = resp.Data[0].txt_label1;
-        this.lebelSet2 = resp.Data[0].txt_label2;
-        this.lebelSet3 = resp.Data[0].txt_label3;
-        this.lebelSet4 = resp.Data[0].txt_label4;
+        if(resp.status === 1) {
+          const data = resp.Data[0];
+        this.lebelSet5 = data.Charges_1;
+        this.lebelSet6 = data.Charges_2;
+        this.lebelSet7 = data.Charges_3;
+        this.lebelSet1 = data.txt_label1;
+        this.lebelSet2 = data.txt_label2;
+        this.lebelSet3 = data.txt_label3;
+        this.lebelSet4 = data.txt_label4;
+        this.cdr.detectChanges();
+        }
       },
       (error) => {
         console.error('Error fetching label data:', error);

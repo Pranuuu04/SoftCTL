@@ -459,7 +459,6 @@ if (rateDetails.Country_Codes?.length) {
   setTimeout(() => {
     this.RateForm.patchValue({ rateCountry: rateDetails.Country_Codes });
 
-    // Trigger the cascade
     this.onCountrySelectionChange(
       rateDetails.Country_Codes.map(code => ({ countryCode: code }))
     );
@@ -509,7 +508,7 @@ const rateDetailsList = resp.Data.rateDetailsData;
 
         rateDetailsList.forEach(detail => {
           const detailGroup = this.formBuilder.group({
-            On_Addition: [this.RateForm.get('RateMode')?.value === 'Flat' ? 0 : (detail.On_Addition), Validators.required],
+            On_Addition: [detail.On_Addition, Validators.required],
             Lower_Wt: [detail.Lower_Wt , Validators.required],
             Upper_Wt: [detail.Upper_Wt , Validators.required],
             Rate: [detail.Rate , Validators.required],

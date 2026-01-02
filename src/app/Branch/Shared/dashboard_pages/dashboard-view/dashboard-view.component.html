@@ -171,9 +171,13 @@
     <img src="./assets/images/NOdata.png" alt="">
   </div>
 </div>
-<div class="loader-overlay" *ngIf="isExcelLoading">
+<!-- <div class="loader-overlay" *ngIf="">
   <mat-progress-spinner
     mode="indeterminate"
     diameter="50">
   </mat-progress-spinner>
+</div> -->
+
+<div *ngIf="isExcelLoading" class="loader-overlay">
+    <div class="loader"></div>
 </div>
