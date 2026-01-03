@@ -37,7 +37,7 @@ export class ViewManifestComponent implements OnInit {
   currentDate: string;
   sessionLocationCode: string ;
   fetchedData: any[] = [];
-  isLoading = false;
+  isLoading: boolean = false;
   manifestNo: any = '';
   destination: any = '';
   selectedManifestData: any;
@@ -159,7 +159,7 @@ export class ViewManifestComponent implements OnInit {
                public httpService: AllServicesService,
                public formbuilder: FormBuilder,
                private snackBar: MatSnackBar, ) {
-               this.isLoading = false;
+              //  this.isLoading = false;
                }
 
    ngOnInit(): void {
@@ -391,6 +391,7 @@ formSubmit(formData: any) {
   // }
 
 printPDF(element) {
+  this.isLoading = true;
   if (this.userType === 'Admin') {
     const obj = {
       sessionLocationCode: element.fromDestCode,
@@ -402,9 +403,16 @@ printPDF(element) {
     const headers = new HttpHeaders({
         'Content-Type': 'application/json'
     });
-    this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe((blob: Blob) => {
-        const blobUrl = URL.createObjectURL(blob);
-        window.open(blobUrl, '_blank');
+    this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe({
+         next: (blob: Blob) => {
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, '_blank');
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false;
+        }
     });
   } else {
     const obj = {
@@ -417,9 +425,16 @@ printPDF(element) {
   const headers = new HttpHeaders({
       'Content-Type': 'application/json'
   });
-  this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe((blob: Blob) => {
-      const blobUrl = URL.createObjectURL(blob);
-      window.open(blobUrl, '_blank');
+  this.http.post(PdfUrl, obj, { headers: headers, responseType: 'blob' as 'json' }).subscribe({
+      next: (blob: Blob) => {
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, '_blank');
+          this.isLoading = false; 
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false; 
+        }
   });
   }
 }

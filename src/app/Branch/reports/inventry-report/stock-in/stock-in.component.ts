@@ -62,6 +62,8 @@ export class StockInComponent implements OnInit {
 
 displayedColumns: string[] = [
   'srNo',
+  'AwbFromNo',
+  'AwbToNo',
   'BookNo'
 ];
 
@@ -190,7 +192,9 @@ downloadSample() {
 
       const dataForExcel = response.Data.map((element: any) => {
         return {
-          'Book No': element.BookNo
+          'Book No': element.BookNo,
+          'From Awb No': element.AwbFromNo,
+          'To Awb No': element.AwbToNo
         };
       });
 

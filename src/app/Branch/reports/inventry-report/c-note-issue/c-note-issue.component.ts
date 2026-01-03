@@ -102,9 +102,9 @@ isLoading: boolean = false;
     this.dataSource = new MatTableDataSource;
     this.cNoteIssueForm  = this.formBuilder.group({
       stockIssue: new FormControl('Branch', Validators.compose([])),
-      branch: new FormControl(''),
-      customerName: new FormControl(''),
-      employee: new FormControl(''),
+      branch: new FormControl('All'),
+      customerName: new FormControl('All'),
+      employee: new FormControl('All'),
       fromDate: new FormControl('', Validators.compose([ ])),
       toDate: new FormControl('', Validators.compose([ ])),
     });    
@@ -161,7 +161,8 @@ onStockIssueChange() {
 }
 loadBranch() {
   this.masterService.getBranchLocations().subscribe((resp: any) => {
-    this.branchList = resp.Data;
+      const allBranch = { locationName: 'All', locationCode: 'All' };
+    this.branchList = [allBranch, ...resp.Data];
   });
 }
 
@@ -174,7 +175,8 @@ loadCustomer() {
 
 loadEmployee() {
   this.masterService.getEmployeeData(this.sessionLocationCode).subscribe((resp: any) => {
-    this.employeeList = resp.Data;
+     const allemp = { employeeName: 'All', employeeCode: 'All' };
+    this.employeeList = [allemp, ...resp.Data];
   });
 }
   resetPagination() {
@@ -255,6 +257,7 @@ const code =
     this.cNoteIssueForm.value.stockIssue === 'Customer' ? this.cNoteIssueForm.value.customerName :
     this.cNoteIssueForm.value.stockIssue === 'Employee' ? this.cNoteIssueForm.value.employee :
     '';
+    
   this.httpService.get(`${environment.apiUrl}Reports/GetStockIssueReport?code=${code}&fromDate=${this.cNoteIssueForm.value.fromDate}&toDate=${this.cNoteIssueForm.value.toDate}&pageNumber=1&pageSize=${this.length}`)
     .then((response: any) => {
       const dataForExcel = response.Data.map((element: any, index: number) => {

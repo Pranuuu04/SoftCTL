@@ -86,9 +86,9 @@ displayedColumns: string[] = [
     this.dataSource = new MatTableDataSource;
     this.missingCNoteForm  = this.formBuilder.group({
         stockIssue: new FormControl('Branch'),
-        branch: new FormControl(''),
-        customerName: new FormControl(''),
-        employee: new FormControl(''),
+        branch: new FormControl('All'),
+        customerName: new FormControl('All'),
+        employee: new FormControl('All'),
         fromAwbno: new FormControl(''),
         toAwbno: new FormControl('')
     });
@@ -140,7 +140,8 @@ onStockIssueChange() {
 }
 loadBranch() {
   this.masterService.getBranchLocations().subscribe((resp: any) => {
-    this.branchList = resp.Data;
+      const allBranch = { locationName: 'All', locationCode: 'All' };
+    this.branchList = [allBranch, ...resp.Data];
   });
 }
 
@@ -153,7 +154,8 @@ loadCustomer() {
 
 loadEmployee() {
   this.masterService.getEmployeeData(this.sessionLocationCode).subscribe((resp: any) => {
-    this.employeeList = resp.Data;
+    const allemp = { employeeName: 'All', employeeCode: 'All' };
+    this.employeeList = [allemp, ...resp.Data];
   });
 }
   calculatePageCount() {
