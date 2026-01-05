@@ -43,10 +43,6 @@ pageEvent: PageEvent;
     this.destinationName = this.sharedService.getSelectedValue();
     this.dispatch = localStorage.getItem('dispatch');
     this.sessionLocationCode = localStorage.getItem('originCode');
-
-    // this.sharedService.selectedValue$.subscribe(value => {
-    //   this.selectedValue = value;
-    // });
     this.getScanAwbData(this.pageIndex + 1, this.pageSize);
   }
    CloseDialog() {
@@ -75,9 +71,6 @@ calculatePageCount() {
         this.length = resp.Count;
         this.calculatePageCount();
         this.dataSource = new MatTableDataSource(this.AwbTableData);
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        });
       } else {
         this.showTable = false;
         this.AwbTableData = [];
@@ -98,9 +91,6 @@ calculatePageCount() {
     this.length = resp.Count;
     this.calculatePageCount();
     this.dataSource = new MatTableDataSource(this.AwbTableData);
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-    });
   } else {
     this.showTable = false;
     this.AwbTableData = [];

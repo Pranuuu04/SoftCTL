@@ -63,21 +63,21 @@
   height: 60vh !important;
   align-items: center !important;
   justify-content: center;
-  background-image: url('./../../../assets/images/loginBG4.png') !important;
+  background-image: url('./../../../assets/images/loginBG6.png') !important;
   background-size: cover !important;
   background-position: center;
   position: relative;
 }
 
-::ng-deep .description::before {
+/* ::ng-deep .description::before {
   content: "";
   position: absolute;
   inset: 0;
   background: rgba(255,255,255,.70); 
   z-index: 0;
-}
+} */
 
-.description ul{
+/* .description ul{
   position: relative;
   z-index: 2;
   line-height: 1.8;
@@ -85,11 +85,11 @@
   font-size: 15px;
   font-weight: 600;
 
-  /* backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-radius: 18px;
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, .4);
-  box-shadow: 0 15px 34px rgba(0, 0, 0, .15); */
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .15);
 }
 
 .description li,
@@ -119,11 +119,11 @@
 		font-size: 18px;
 		margin-left: -21px;
 		color: black;
-		/* padding-bottom: 5px; */
 		border-bottom: 2px solid orange;
 		display: inline; 
 		margin-bottom: 10px;
-	}
+	} */
+	 
 	.img h6{
 		margin-bottom: 0;
 		font-size: 22px;

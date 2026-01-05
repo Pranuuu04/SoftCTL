@@ -69,7 +69,6 @@ calculatePageCount() {
           this.length = resp.Count;
           this.calculatePageCount();
           this.dataSource = new MatTableDataSource(this.ManfTableData);
-          this.dataSource.paginator = this.paginator;
         } else {
           this.showTable = false;
         }
@@ -80,7 +79,6 @@ calculatePageCount() {
           this.showTable = true;
           this.ManfTableData = resp.Data;
           this.dataSource = new MatTableDataSource(this.ManfTableData);
-          this.dataSource.paginator = this.paginator;
           this.length = resp.Count;
           this.calculatePageCount();
         } else {

@@ -40,7 +40,6 @@ export class PInscanAwbNoComponent implements OnInit {
     constructor(public httpService: AllServicesService,
                 private _mdr: MatDialogRef<PInscanAwbNoComponent>,
                 private sharedService: SharedService) {
-                  this.sessionLocationCode = localStorage.getItem('originCode');
                 }
 
   ngOnInit(): void {

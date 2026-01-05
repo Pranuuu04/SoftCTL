@@ -1729,13 +1729,13 @@ compareWeights() {
       if (this.awbType === 'Manual' && awbNo === '') {        this.openSnackBar('AWB Number is required', 'error-snackbar');
         return;
       }
-      if ((formData.custType || this.selectedCustType) === 'Cash') {
-        const freightValue = formData.freightAmt || this.newFreightAmt || this.freightAmt || 0;
-        if (freightValue <= 0) {
-          this.openSnackBar('Freight Amount is required', 'error-snackbar');
-          return;
-        }
-      }
+      // if ((formData.custType || this.selectedCustType) === 'Cash') {
+      //   const freightValue = formData.freightAmt || this.newFreightAmt || this.freightAmt || 0;
+      //   if (freightValue <= 0) {
+      //     this.openSnackBar('Freight Amount is required', 'error-snackbar');
+      //     return;
+      //   }
+      // }
 
       const obj = {
         Session_LocationCode: this.sessionLocationCode,
