@@ -41,18 +41,20 @@
      
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                            [aria-label]="checkboxLabel()">
-              </mat-checkbox>
+           <mat-checkbox
+  (change)="toggleAllRows()"
+  [checked]="allSelectedAwbs.length === length"
+  [indeterminate]="allSelectedAwbs.length > 0 && allSelectedAwbs.length < length">
+</mat-checkbox>
+
             </th>
             <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)">
-              </mat-checkbox>
+             <mat-checkbox
+  (click)="$event.stopPropagation()"
+  (change)="toggleRowSelection(row)"
+  [checked]="allSelectedAwbs.includes(row.Awbno)">
+</mat-checkbox>
+
             </td>
           </ng-container>
       

@@ -33,6 +33,7 @@ export class ScanByAbwNoComponent implements OnInit {
   userType: string;
   destinationName: any;
   dispatch: string;
+  isLoading = false;
 
   constructor(public dialog: MatDialog,
               private httpService: HttpService,
@@ -116,93 +117,170 @@ export class ScanByAbwNoComponent implements OnInit {
     }
   }
 
-  openAwbBulkModal() {
-    const dialogRef = this.dialog.open(AwbBulkComponent, {
-      data: {
-        action: 'add',
-        selectedRows: this.AwbNoDatalist
-      },
-      width: '60rem',
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe((selectedAwb: string[]) => {
-      if (selectedAwb) {
-        selectedAwb.forEach((awbNo) => {
-          // Check for duplicates in AwbNoDatalist or listData
-          if (
-            !this.AwbNoDatalist.includes(awbNo) &&
-            !this.listData.some((item) => item.AwbNo === awbNo)
-          ) {
-            // Add to AwbNoDatalist
-            this.AwbNoDatalist.push(awbNo);
+  // openAwbBulkModal() {
+  //   const dialogRef = this.dialog.open(AwbBulkComponent, {
+  //     data: {
+  //       action: 'add',
+  //       selectedRows: this.AwbNoDatalist
+  //     },
+  //     width: '60rem',
+  //     disableClose: true
+  //   });
+  //   dialogRef.afterClosed().subscribe((selectedAwb: string[]) => {
+  //     if (selectedAwb) {
+  //       selectedAwb.forEach((awbNo) => {
+  //         // Check for duplicates in AwbNoDatalist or listData
+  //         if (
+  //           !this.AwbNoDatalist.includes(awbNo) &&
+  //           !this.listData.some((item) => item.AwbNo === awbNo)
+  //         ) {
+  //           // Add to AwbNoDatalist
+  //           this.AwbNoDatalist.push(awbNo);
 
-            if (this.userType !== 'Admin') {
-            this.getData.findinscanAwb(this.sessionLocationCode, awbNo, this.dispatch).subscribe(
-              (resp: any) => {
-                if (resp.status === 1) {
-                  this.showTable = true;
-                  const awbDetails = resp.Data[0]; // Assuming Data[0] contains AWB details
-                  this.listData.push({
-                    Awbno: awbDetails.Awbno,
-                    Bookdate: awbDetails.Bookdate,
-                    ManifestNo: awbDetails.ManifestNo,
-                    manifestDt: awbDetails.manifestDt,
-                    Customer_Name: awbDetails.Customer_Name,
-                    ConsigneeName: awbDetails.ConsigneeName,
-                    FromDest: awbDetails.FromDest,
-                    ToDest: awbDetails.ToDest,
-                    qty: awbDetails.qty,
-                    actualwT: awbDetails.actualwT,
-                    ManifestWt: awbDetails.ManifestWt,
-                  });
-                  this.openSnackBar('AWB added successfully!', 'custom-snackbar');
-                } else {
-                  this.openSnackBar(resp.message, 'error-snackbar');
-                }
-              },
-              (error) => {
-                this.openSnackBar('Error fetching AWB details.', 'error-snackbar');
-              }
-            );
-          } else {
-            this.getData.findinscanAwb(this.sessionLocationCode, awbNo, this.dispatch).subscribe(
-              (resp: any) => {
-                if (resp.status === 1) {
-                  this.showTable = true;
-                  const awbDetails = resp.Data[0]; // Assuming Data[0] contains AWB details
-                  this.listData.push({
-                    Awbno: awbDetails.Awbno,
-                    Bookdate: awbDetails.Bookdate,
-                    ManifestNo: awbDetails.ManifestNo,
-                    manifestDt: awbDetails.manifestDt,
-                    Customer_Name: awbDetails.Customer_Name,
-                    ConsigneeName: awbDetails.ConsigneeName,
-                    FromDest: awbDetails.FromDest,
-                    ToDest: awbDetails.ToDest,
-                    qty: awbDetails.qty,
-                    actualwT: awbDetails.actualwT,
-                    ManifestWt: awbDetails.ManifestWt,
-                  });
-                  this.openSnackBar('AWB added successfully!', 'custom-snackbar');
-                } else {
-                  this.openSnackBar(resp.message, 'error-snackbar');
-                }
-              },
-              (error) => {
-                this.openSnackBar('Error fetching AWB details.', 'error-snackbar');
-              }
-            );
-          }
-          } else {
-            this.openSnackBar(
-              `AWB ${awbNo} already exists in the list.`,
-              'error-snackbar'
-            );
-          }
-        });
+  //           if (this.userType !== 'Admin') {
+  //           this.getData.findinscanAwb(this.sessionLocationCode, awbNo, this.dispatch).subscribe(
+  //             (resp: any) => {
+  //               if (resp.status === 1) {
+  //                 this.showTable = true;
+  //                 const awbDetails = resp.Data[0]; // Assuming Data[0] contains AWB details
+  //                 this.listData.push({
+  //                   Awbno: awbDetails.Awbno,
+  //                   Bookdate: awbDetails.Bookdate,
+  //                   ManifestNo: awbDetails.ManifestNo,
+  //                   manifestDt: awbDetails.manifestDt,
+  //                   Customer_Name: awbDetails.Customer_Name,
+  //                   ConsigneeName: awbDetails.ConsigneeName,
+  //                   FromDest: awbDetails.FromDest,
+  //                   ToDest: awbDetails.ToDest,
+  //                   qty: awbDetails.qty,
+  //                   actualwT: awbDetails.actualwT,
+  //                   ManifestWt: awbDetails.ManifestWt,
+  //                 });
+  //                 this.openSnackBar('AWB added successfully!', 'custom-snackbar');
+  //               } else {
+  //                 this.openSnackBar(resp.message, 'error-snackbar');
+  //               }
+  //             },
+  //             (error) => {
+  //               this.openSnackBar('Error fetching AWB details.', 'error-snackbar');
+  //             }
+  //           );
+  //         } else {
+  //           this.getData.findinscanAwb(this.sessionLocationCode, awbNo, this.dispatch).subscribe(
+  //             (resp: any) => {
+  //               if (resp.status === 1) {
+  //                 this.showTable = true;
+  //                 const awbDetails = resp.Data[0]; // Assuming Data[0] contains AWB details
+  //                 this.listData.push({
+  //                   Awbno: awbDetails.Awbno,
+  //                   Bookdate: awbDetails.Bookdate,
+  //                   ManifestNo: awbDetails.ManifestNo,
+  //                   manifestDt: awbDetails.manifestDt,
+  //                   Customer_Name: awbDetails.Customer_Name,
+  //                   ConsigneeName: awbDetails.ConsigneeName,
+  //                   FromDest: awbDetails.FromDest,
+  //                   ToDest: awbDetails.ToDest,
+  //                   qty: awbDetails.qty,
+  //                   actualwT: awbDetails.actualwT,
+  //                   ManifestWt: awbDetails.ManifestWt,
+  //                 });
+  //                 this.openSnackBar('AWB added successfully!', 'custom-snackbar');
+  //               } else {
+  //                 this.openSnackBar(resp.message, 'error-snackbar');
+  //               }
+  //             },
+  //             (error) => {
+  //               this.openSnackBar('Error fetching AWB details.', 'error-snackbar');
+  //             }
+  //           );
+  //         }
+  //         } else {
+  //           this.openSnackBar(
+  //             `AWB ${awbNo} already exists in the list.`,
+  //             'error-snackbar'
+  //           );
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+  openAwbBulkModal() {
+  const dialogRef = this.dialog.open(AwbBulkComponent, {
+    data: {
+      action: 'add',
+      selectedRows: this.AwbNoDatalist
+    },
+    width: '60rem',
+    disableClose: true
+  });
+
+  dialogRef.afterClosed().subscribe((selectedAwb: string[]) => {
+
+    if (!selectedAwb) return;
+
+    this.isLoading = true;
+
+    let processed = 0;
+
+    selectedAwb.forEach((awbNo) => {
+      if (
+        this.AwbNoDatalist.includes(awbNo) ||
+        this.listData.some(item => item.Awbno === awbNo)
+      ) {
+        this.openSnackBar(`AWB ${awbNo} already exists.`, 'error-snackbar');
+        processed++;
+        if (processed === selectedAwb.length) this.isLoading = false;
+        return;
       }
+
+      this.AwbNoDatalist.push(awbNo);
+
+      this.getData
+        .findinscanAwb(this.sessionLocationCode, awbNo, this.dispatch)
+        .subscribe(
+          (resp: any) => {
+            processed++;
+
+            if (resp.status === 1) {
+              this.showTable = true;
+              const d = resp.Data[0];
+
+              this.listData.push({
+                Awbno: d.Awbno,
+                Bookdate: d.Bookdate,
+                ManifestNo: d.ManifestNo,
+                manifestDt: d.manifestDt,
+                Customer_Name: d.Customer_Name,
+                ConsigneeName: d.ConsigneeName,
+                FromDest: d.FromDest,
+                ToDest: d.ToDest,
+                qty: d.qty,
+                actualwT: d.actualwT,
+                ManifestWt: d.ManifestWt,
+              });
+
+              this.openSnackBar('AWB added successfully!', 'custom-snackbar');
+
+            } else {
+              this.openSnackBar(resp.message, 'error-snackbar');
+            }
+
+            if (processed === selectedAwb.length) {
+              this.isLoading = false;
+            }
+          },
+          () => {
+            processed++;
+            this.openSnackBar('Error fetching AWB details', 'error-snackbar');
+            if (processed === selectedAwb.length) {
+              this.isLoading = false;
+            }
+          }
+        );
     });
-  }
+  });
+}
+
 
   openPendingAWBModal() {
     const dialogRef = this.dialog.open(PInscanAwbNoComponent, {

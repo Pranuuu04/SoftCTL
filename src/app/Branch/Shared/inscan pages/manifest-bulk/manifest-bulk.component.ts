@@ -34,42 +34,56 @@ export class ManifestBulkComponent implements OnInit {
   pageEvent: PageEvent;
   dispatch: string;
   userType: string;
+  allSelectedManifests: string[] = [];
+
 
   constructor(public dialog: MatDialog,
               public formbuilder: FormBuilder,
               private snackBar: MatSnackBar,
               public httpService: AllServicesService,
-               private sharedService: SharedService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private _mdr: MatDialogRef<ManifestBulkComponent>) {
 }
 
 ngOnInit(): void {
-  this.sessionLocationCode = localStorage.getItem('originCode');
+      this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
   this.userType = localStorage.getItem('userType');
-  this.destinationName = this.sharedService.getSelectedValue();
   this.dispatch = localStorage.getItem('dispatch');
-  // this.dataSource = new MatTableDataSource<any>(this.scanbyManfBulkTable);
-
     this.getScanManfData(this.pageIndex + 1, this.pageSize);
 
 }
 CloseDialog() {
 this._mdr.close(false);
 }
-  toggleAllRows() {
-    if (this.selection.hasValue() && this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      this.dataSource.data.forEach(row => this.selection.select(row));
-    }
+toggleAllRows() {
+  if (this.allSelectedManifests.length === this.length) {
+    this.allSelectedManifests = [];
+    this.selection.clear();
+    return;
   }
+ this.httpService
+    .getPendingScanManf(this.sessionLocationCode, this.dispatch, 1, this.length)
+    .subscribe((resp: any) => {
+      if (resp.status === 1) {
+        this.allSelectedManifests = resp.Data.map((x: any) => x.Manifest_no);
+        this.selection.clear();
+        this.scanbyManfBulkTable.forEach((row: any) => {
+          if (this.allSelectedManifests.includes(row.Manifest_no)) {
+            this.selection.select(row);
+          }
+        });
+      }
+    });
+}
 
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
+
+
+isAllSelected() {
+  return this.allSelectedManifests.length === this.length;
+}
+
 
   checkboxLabel(row?: any): string {
     if (!row) {
@@ -77,10 +91,21 @@ this._mdr.close(false);
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
+toggleRowSelection(row: any) {
 
-  toggleRowSelection(row: any) {
-    this.selection.toggle(row);
+  this.selection.toggle(row);
+
+  if (this.selection.isSelected(row)) {
+    if (!this.allSelectedManifests.includes(row.Manifest_no)) {
+      this.allSelectedManifests.push(row.Manifest_no);
+    }
+  } else {
+    this.allSelectedManifests = this.allSelectedManifests.filter(
+      id => id !== row.Manifest_no
+    );
   }
+}
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -99,7 +124,7 @@ handlePageEvent(event: PageEvent) {
 }
   getScanManfData(pageNumber: number, pageSize: number) {
     if (this.userType === 'Admin') {
-      this.httpService.getPendingScanManf(this.destinationName, this.dispatch, pageNumber, pageSize).subscribe((resp: any) => {
+      this.httpService.getPendingScanManf(this.sessionLocationCode, this.dispatch, pageNumber, pageSize).subscribe((resp: any) => {
         if (resp.status === 1) {
          this.showTable = true;
          this.scanbyManfBulkTable = resp.Data;
@@ -149,12 +174,15 @@ handlePageEvent(event: PageEvent) {
     });
   }
 onLoad() {
-  const selectedAwbNos = this.selection.selected.map(row => row.Manifest_no);
-  if (this.selection.selected.length === 0) {
-    this.openSnackBar('Please select at least one AWB number!', 'error-snackbar')
-  } else {
-    this._mdr.close(selectedAwbNos);
-    this.openSnackBar('AWB numbers selected successfully!', 'custom-snackbar' )
+
+  if (this.allSelectedManifests.length === 0) {
+    this.openSnackBar('Please select at least one manifest!', 'error-snackbar');
+    return;
   }
+
+  this._mdr.close(this.allSelectedManifests);
+
+  this.openSnackBar('Manifest numbers selected successfully!', 'custom-snackbar');
 }
+
 }

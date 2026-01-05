@@ -33,6 +33,7 @@ export class AwbBulkComponent implements OnInit {
   showPageSizeOptions = false;
   pageEvent: PageEvent;
   dispatch: string;
+allSelectedAwbs: string[] = [];
 
   constructor(public dialog: MatDialog,
               public formbuilder: FormBuilder,
@@ -55,19 +56,31 @@ ngOnInit(): void {
 CloseDialog() {
 this._mdr.close(false);
 }
-  toggleAllRows() {
-    if (this.selection.hasValue() && this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      this.dataSource.data.forEach(row => this.selection.select(row));
-    }
+toggleAllRows() {
+  if (this.allSelectedAwbs.length === this.length) {
+    this.allSelectedAwbs = [];
+    this.selection.clear();
+    return;
   }
 
+  this.httpService
+    .getPendingInscan(this.sessionLocationCode, this.dispatch, 1, this.length)
+    .subscribe((resp: any) => {
+      if (resp.status === 1) {
+        this.allSelectedAwbs = resp.Data.map((x: any) => x.Awbno);
+        this.selection.clear();
+        this.scanbyAwbBulkTable.forEach((row: any) => {
+          if (this.allSelectedAwbs.includes(row.Awbno)) {
+            this.selection.select(row);
+          }
+        });
+      }
+    });
+}
+
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
+  return this.allSelectedAwbs.length === this.length;
+}
 
   checkboxLabel(row?: any): string {
     if (!row) {
@@ -76,9 +89,21 @@ this._mdr.close(false);
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
 
-  toggleRowSelection(row: any) {
-    this.selection.toggle(row);
+toggleRowSelection(row: any) {
+
+  this.selection.toggle(row);
+
+  if (this.selection.isSelected(row)) {
+    if (!this.allSelectedAwbs.includes(row.Awbno)) {
+      this.allSelectedAwbs.push(row.Awbno);
+    }
+  } else {
+    this.allSelectedAwbs = this.allSelectedAwbs.filter(
+      awb => awb !== row.Awbno
+    );
   }
+}
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -131,12 +156,15 @@ this._mdr.close(false);
     });
   }
 onLoad() {
-  const selectedAwbNos = this.selection.selected.map(row => row.Awbno);
-  if (this.selection.selected.length === 0) {
-    this.openSnackBar('Please select at least one AWB number!', 'error-snackbar')
-  } else {
-    this._mdr.close(selectedAwbNos);
-    this.openSnackBar('AWB numbers selected successfully!', 'custom-snackbar' )
+
+  if (this.allSelectedAwbs.length === 0) {
+    this.openSnackBar('Please select at least one AWB number!', 'error-snackbar');
+    return;
   }
+
+  this._mdr.close(this.allSelectedAwbs);
+
+  this.openSnackBar('AWB numbers selected successfully!', 'custom-snackbar');
 }
+
 }
