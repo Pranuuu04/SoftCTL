@@ -7,79 +7,6 @@
 form .col-sm-1{
     padding-right: 8px;
 }
-.form-group{
-    padding-bottom: 0;
-    margin: 0;
-}
-.form-control,
-.form-select {
-    height: 26px;
-}
-input, 
-textarea{
-    border: 1px solid #d2d2d2; 
-    border-radius: 0.25rem;
-    padding-left: 10px; 
-    padding-top: 10px; 
-    font-family: auto;
-}
-.right-side{
-    border-left: 1px solid  #d2d2d2;
-}
-
-.custom-select{
-    height: 30px;
-    padding-left: 10px;
-    display: flex;
-    justify-content: center;
-    border: 1px solid #d2d2d2; 
-    border-radius: 0.25rem;
-    padding-top: 5px; 
-    font-family: auto;
-}
-
-label{
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-}
-form button{
-    width: 70px;
-    text-align: center;
-    border-radius: 8px;
-    font-weight: 600;
-    border: 1px solid #d2d2d2; 
-    font-size: medium;
-    padding-top: 1.1px;
-    height: 26px;
-    margin-top: 0;
-    margin-right: 7px;
-    line-height: 26px;
-}
-.error-message{
-    color: red;
-  }
-  @media (min-width: 1200px){
-    .container {
-      max-width: 100%;
-  }
-}
-
-@media (min-width: 320px) and (max-width: 425px){
-    .right-side{
-        border-bottom: 1px solid #d2d2d2;
-        border-right:0;
-    }
-}
-
-/* 
-* {
-    font-size: 12px;
-    padding-top: 1.1px;
-    color: black;
-}
-form .col-sm-1{
-    padding-right: 8px;
-}
 form{
     margin-top: 10px;
     margin-bottom: 0.125rem;
@@ -125,7 +52,7 @@ input{
     margin-top: 0;
     line-height: 30px;
     background-color: #2e3f55;
-    i{
+    i {
       font-size: 18px;
       color: white;
     }
@@ -143,6 +70,7 @@ input{
     top: -13px;
     left: 7px;
     padding: 2px;
+    text-wrap: nowrap;
     z-index: 1;
     height: 20px;
     margin-bottom: 0;
@@ -162,9 +90,10 @@ input{
     z-index: -1;
   }
 .textOnInput input[type=file]{
-    padding-left:0px; 
-    padding-top: 0px; 
+    padding-left: 10px;
+    padding-top: 5px;
 }
+
 
 .custom-select{
     height: 30px;
@@ -184,4 +113,4 @@ input{
     .container {
       max-width: 100%;
   }
- } */
+ }

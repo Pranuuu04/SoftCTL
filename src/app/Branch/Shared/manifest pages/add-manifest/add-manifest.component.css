@@ -1,13 +1,14 @@
-h2{
+/* h2{
     font-size: 20px;
-    background-color: rgb(130, 207, 243);
+    background-color: rgb(212, 212, 212);
     text-align: center;
     font-weight: 400;
     margin-top: -6px;
+    border-bottom: 1px solid rgb(212, 212, 212);
     margin-bottom: 18px;
     line-height: 1.5em;
-    color: white;
-} 
+    color: rgb(0, 0, 0);
+}  */
 
 .form-control{
     height: 29px;
@@ -81,6 +82,25 @@ h2{
         right: 276px;
         
       }
+
+
+.other-button{
+  width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #d2d2d2; 
+  font-size: 15px;
+  padding-top: 1.1px;
+  height: 30px;
+  margin: 0 4px;
+  background-color: #2e3f55;
+  line-height: 30px;
+  color: white;
+  text-transform: capitalize;
+}
+
+
       /* .close-button {
         right: 276px;
     } */
@@ -134,3 +154,4 @@ h2{
     }
     
   
+

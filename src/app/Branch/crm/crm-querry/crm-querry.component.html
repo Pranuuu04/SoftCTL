@@ -1,104 +1,27 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4" style=" border-right: 1px solid  #d2d2d2; padding-bottom: 15px;">
-            <div class="row">
-              <select class="custom-select col-sm-3 col-md-3 form-label select" data-live-search="true" [(ngModel)]="selectType">
+<!-- <div class="container">
+    <div class="row"> -->
+        <!-- <div class="col-sm-4" style=" border-right: 1px solid  #d2d2d2; padding-bottom: 15px;"> -->
+            <div class="row mainrow mt-2" style="border-bottom: 1px solid  #d2d2d2;">
+              <div class="col-sm-2">
+              <select class="custom-select" data-live-search="true" [(ngModel)]="selectType">
                 <option value="Awb" selected>Awb No.</option>
                 <option value="Ref">Ref No.</option>
             </select>
-              <div class="col-sm-5">
+            </div>
+              <div class="col-sm-2">
                 <input type="text" *ngIf="selectType === 'Awb'" placeholder="Enter Awb No" [(ngModel)]="awbNo"  class="form-control" id="awb." required />
                 <input type="text" *ngIf="selectType === 'Ref'" placeholder="Enter Refference no" [(ngModel)]="refNo"  class="form-control" id="awb." required />
               </div>
-              <div class="col-sm-2 d-flex action">
-                <button class="btn btn-success" (click)="getQuerryTable1()"> Find </button>
-              </div>
+               <div class="col-sm-1 d-flex action" style="justify-content: space-between;">
+                     <button matTooltip="Find" type="button" class="btn btn-light form-icon" width="auto" (click)="getQuerryTable1()">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                  </div>
             </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center" style="font-size: large; font-weight: 600;">Tracking Details</h1>
-                </div>
-                </div>
-           <div *ngIf="showTable">
-            <div class="table-responsive text-nowrap">
-              <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
-                <thead style="background-color:#34b0d3;">
-                  <tr>
-                      <th>AwbNo</th>
-                      <th>RefNo</th>
-                      <th>Bookdate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of QuerryTableData1">
-                      <td>{{item.Awbno}}</td>
-                      <td>{{item.RefNo}}</td>
-                      <td>{{item.bookdate | date:'dd/MM/yyyy'}}</td>
-                    </tr>
-                </tbody>
-
-                <thead style="background-color:#34b0d3;">
-                  <tr>
-                      <th>Consignee</th>
-                      <th>Destination</th>
-                      <th>Status</th>
-                    </tr>
-                </thead>
-                   <tbody>
-                    <tr *ngFor="let item of QuerryTableData1">
-                      <td>{{item.consignee_name}}</td>
-                      <td>{{item.destinationname}}</td>
-                      <td>{{item.status}}</td>
-                    </tr>
-               </tbody>
-               
-                <thead style="background-color:#34b0d3;">
-                  <tr>
-                      <th>Deliverydate</th>
-                      <th>ReceiverName</th>
-                      <th>PodImage</th>
-                    </tr>
-                </thead>
-                   <tbody>
-                    <tr *ngFor="let item of QuerryTableData1">
-                      <td>{{item.deliverydate | date:'dd/MM/yyyy'}}</td>
-                      <td>{{item.Receivername}}</td>
-                      <td>pod</td>
-                    </tr>
-                   </tbody>
-              </table>
-            </div>
-          
-            <div class="table-responsive text-nowrap" style="max-height: 183px;">
-              <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
-                <thead style="background-color:#34b0d3; color: white;">
-                  <tr>
-                      <th>StatusDate</th>
-                      <th>Time</th>
-                      <th>Location</th>
-                      <th>ShipmentHistory</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of QuerryTableData2">
-                    <td >{{item.StatusDate | date:'dd/MM/yyyy'}}</td>
-                    <td >{{item.deliverytime}}</td>
-                    <td >{{item.destinationname}}</td>
-                    <td >{{item.ShipmentHistory}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-           </div>
-              <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
-                <img src="./../../../../../assets/images/NOdata.png" alt="">
-                </div>
-          </div>
-
-        <div class="col-sm-8">
+<div class="row mainrow" >
+   <div class="col-sm-6">
             <div class="accordion" id="accordionExample">
-                <div class="card">
+                <div class="card accordion-card mt-0 mb-0">
                   <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
                       <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -110,71 +33,105 @@
                   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                      
-                        <div class="row">
-                            <div class="col-sm-3">
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="conginer">Conginer</label>
                                 <input type="text" placeholder="Enter conginer " value="{{ sales?.consignee }}" class="form-control" id="conginer" readonly>
+                              </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="mode">Mode</label>
                                 <input type="text" placeholder="Enter mode" value="{{ sales?.mode }}" class="form-control" id="mode" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="product">Product</label>
                                 <input type="text" placeholder="Enter product" value="{{ sales?.product }}" class="form-control" id="product" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                             <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="package">Package type</label>
                                 <input type="text" placeholder="Enter package type" class="form-control" id="package" readonly>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                          
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="delivery">Delivery type</label>
                                 <input type="text" placeholder="delivery "  class="form-control" id="delivery" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="shipper">Shipper name</label>
                                 <input type="text" placeholder="Enter shipper name"  class="form-control" id="shipper" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="qantity">Qantity</label>
                                 <input type="text" placeholder="Enter qantity" value="{{ sales?.Quantity}}"  class="form-control" id="qantity" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="weight">Actual weight</label>
                                 <input type="text" placeholder="Actual weight" value="{{ sales?.Actualweight }}" class="form-control" id="weight" readonly>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="VolWt">Volumetric Wt</label>
                                 <input type="text" placeholder="Enter Vol Wt." value="{{ sales?.Volumetric }}" class="form-control" id="VolWt" readonly>
-                            </div>
-                            <div class="col-sm-3">
+                                </div>
+                            </div>                          
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="charge">Charge Wt</label>
                                 <input type="text" placeholder="Enter charge Wt" value="{{ sales?.ChargedWeight }}" class="form-control" id="charge" readonly>
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="invoice">Invoice no</label>
-                                <input type="text" placeholder="Enter invoice" class="form-control" id="invoice" readonly>
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="invoiceVal">Invoice value</label>
-                                <input type="text" placeholder="Enter invoice Value " class="form-control" id="invoiceVal" readonly>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                          
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
+                                <label for="invoice">Invoice no</label>
+                                <input type="text" placeholder="Enter invoice" class="form-control" id="invoice" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
+                                <label for="invoiceVal">Invoice value</label>
+                                <input type="text" placeholder="Enter invoice Value " class="form-control" id="invoiceVal" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="Eway">E-way bill</label>
                                 <input type="text" placeholder="Enter E-way bill" value="{{ sales?.EwayBill }}" class="form-control" id="Eway" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="card">
+                <div class="card accordion-card mt-0 mb-0">
                   <div class="card-header" id="headingTwo">
                     <h2 class="mb-0">
                       <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -185,66 +142,95 @@
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                      
-                        <div class="row">
-                            <div class="col-sm-3">
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="manNo.">Manifest no</label>
                                 <input type="text" placeholder="Enter Manifest no" value="{{forwording?.ManifestNumber}}" class="form-control" id="manNo." readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="manDt">Manifest Date</label>
                                 <input type="text" placeholder="Enter Manifest date" value="{{forwording?.ManifestDate | date:'dd/MM/yyyy'}}" class="form-control" id="manDt" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="manWt">Manifest weight</label>
                                 <input type="text" placeholder="Enter Manifest weight" class="form-control" id="manWt" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="coLoader">Co-loader name</label>
                                 <input type="text" placeholder="Enter Co-loader name" value="{{forwording?.ColoaderName}}" class="form-control" id="coLoader" readonly>
                             </div>
                         </div>
+                        </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                          
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="coloaderNo">Co-loader no.</label>
                                 <input type="text" placeholder="Enter Coloader no" value="{{forwording?.ColoaderNumber}}" class="form-control" id="coloaderName" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                               <label for="advance">Advance</label>
                               <input type="text" placeholder="advance" value="{{forwording?.Advance}}" class="form-control" id="advance" readonly>
                           </div>
-                            <div class="col-sm-3">
+                          </div>
+                        </div>
+                        <div class="row">  
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="via">Via</label>
                                 <input type="text" placeholder="via" value="{{forwording?.Via}}" class="form-control" id="via" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                               <label for="origin">Origin</label>
                               <input type="text" placeholder="origin" value="{{forwording?.Origin}}" class="form-control" id="origin" readonly>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-sm-3">
+                    </div>
+                    <div class="row">
+                          <div class="col-sm-6">
+                            <div class="textOnInput">
                             <label for="destination">Destination</label>
                             <input type="text" placeholder="destination" value="{{forwording?.Destination}}" class="form-control" id="destination" readonly>
                           </div>
-                            <div class="col-sm-3">
+                          </div>                        
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="vehicle">Vehicle no.</label>
                                 <input type="text" placeholder="Enter Vehicle no." value="{{forwording?.VehicleNo}}" class="form-control" id="vehicle" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="driverName">Driver Name</label>
                                 <input type="text" placeholder="Enter driver Name " value="" class="form-control" id="driverName" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="driverNo">Driver No.</label>
                                 <input type="text" placeholder="Enter Driver No." value="{{forwording?.Driver}}" class="form-control" id="driverNo" readonly>
                             </div>
                         </div>
-
                     </div>
                   </div>
                 </div>
-                
-                <div class="card">
+                </div>
+                <div class="card accordion-card mt-0 mb-0">
                   <div class="card-header" id="headingThree">
                     <h2 class="mb-0">
                       <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -254,21 +240,26 @@
                   </div>
                   <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="inscandate">Inscan date</label>
                                 <input type="text" placeholder="Enter Inscan date" value="{{inscan?.InscanDate | date:'dd/MM/yyyy'}}" class="form-control" id="inscandate" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="remark">Remark</label>
                                 <input type="text" placeholder="Remark" value="{{inscan?.inscan_remark}}" class="form-control" id="remark" readonly>
                             </div>
+                          </div>
+
                         </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="card">
+                <div class="card accordion-card mt-0 mb-0">
                     <div class="card-header" id="heading4">
                       <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
@@ -278,39 +269,55 @@
                     </div>
                     <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
                       <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
+                        <div class="row mt-2">
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="runsheetNo">Runsheet No.</label>
                                 <input type="text" placeholder="Enter Runsheet No."value="{{Runsheet?.RunsheetNo}}" class="form-control" id="runsheetNo" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="RunsheetDt">Runsheet Date</label>
                                 <input type="text" placeholder="Enter Runsheet date"value="{{Runsheet?.RunsheetDate | date:'dd/MM/yyyy'}}" class="form-control" id="RunsheetDt" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                        </div>  
+                        <div class="row">
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="area">Area</label>
                                 <input type="text" placeholder="Enter Area" value="{{Runsheet?.Area}}" class="form-control" id="area" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="name">Name</label>
                                 <input type="text" placeholder="Enter Name" value="{{Runsheet?.Name}}" class="form-control" id="name" readonly>
                             </div>
                         </div>
+                        </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                          
+                          <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="mobile">Mobile no</label>
                                 <input type="text" placeholder="Mobile no"  value="{{Runsheet?.Mobile}}" class="form-control" id="mobile" readonly>
                             </div>
-                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="vehicle">Vehicle no</label>
                                 <input type="text" placeholder="Vehicle no"  value="{{Runsheet?.Vehicleno}}" class="form-control" id="vehicle" readonly>
                             </div>
+                          </div>
+
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div class="card">
+                  <div class="card accordion-card mt-0 mb-0">
                     <div class="card-header" id="heading5">
                       <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
@@ -320,20 +327,111 @@
                     </div>
                     <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
                       <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="invoiceNo">Invoice no</label>
                                 <input type="text" placeholder="Invoice no" value="{{Billing?.Invoiveno}}" class="form-control" id="invoiceNo" readonly>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                              <div class="textOnInput">
                                 <label for="invoiceDt">Invoice date</label>
                                 <input type="text" placeholder="Invoice date" value="{{Billing?.Invoicedate}}" class="form-control" id="invoiceDt" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
                   </div>
-               </div>
+              </div>
             </div>
         </div>
+         <div class="col-sm-6">
+           <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
+      <img src="./assets/images/NOdata.png" alt="">
+      </div>
+    <div class="row mt-2" *ngIf="showTable">
+  <div class="col-sm-12 tracking">
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered table-striped" style="border-collapse: collapse;
+  width: 100%; background-color: rgb(223 233 237 / 87%);">
+        <thead>
+          <tr style="background-color:#2e3f55;">
+            <th colspan="3" style="color: #d7dee7 !important;">Tracking Details</th>
+          </tr>
+          <tr style="background-color:#a3b8d4;">
+              <th>AwbNo</th>
+              <th>RefNo</th>
+              <th>Bookdate</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of QuerryTableData1">
+             <td>{{item.Awbno}}</td>
+            <td>{{item.RefNo}}</td>
+            <td>{{item.bookdate | date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#a3b8d4;">
+          <tr>
+            <th>Consignee</th>
+            <th>Destination</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of QuerryTableData1">
+              <td class="text-ellipsis" matTooltip="{{ item.consignee_name }}">{{item.consignee_name}}</td>
+              <td>{{item.destinationname}}</td>
+              <td>{{item.status}}</td>
+            </tr>
+        </tbody>
+        <thead style="background-color:#a3b8d4;">
+          <tr>
+              <th>Deliverydate</th>
+              <th>ReceiverName</th>
+              <th>PodImage</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of QuerryTableData1">
+               <td>{{item.deliverydate | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.Receivername}}</td>
+              <td>pod</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+
+</div>
+<div class="row mt-2" *ngIf="showTable">
+  <div class="col-sm-12">
+    <div class="table-responsive text-nowrap" style="height: 176px;">
+      <table class="table table-bordered table-striped" style="background-color: rgb(223 233 237 / 87%);">
+        <thead style="background-color:#a3b8d4;">
+           <tr style="background-color:#2e3f55;">
+            <th colspan="4" style="color: #d7dee7 !important;">Shipping History</th>
+          </tr>
+          <tr>
+              <th>StatusDate</th>
+              <th>Time</th>
+              <th>Location</th>
+              <th>ShipmentHistory</th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let item of QuerryTableData2">
+              <td >{{item.StatusDate | date:'dd/MM/yyyy'}}</td>
+              <td >{{item.deliverytime}}</td>
+              <td >{{item.destinationname}}</td>
+              <td class="text-ellipsis" matTooltip="{{ item.ShipmentHistory }}">{{item.ShipmentHistory }}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
 </div>
+</div>
+
+  </div>

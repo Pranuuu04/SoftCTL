@@ -75,7 +75,7 @@ length = 0;
     ? localStorage.getItem('originCode')
     : localStorage.getItem('selectedValue');
 
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((resp: any) => {
+    this.masterService.getCustomerData(this.sessionLocationCode).subscribe((resp: any) => {
       this.CustomerList = resp.Data;
     });
       this.AllService.getOriginData().subscribe((data) => {
@@ -91,7 +91,7 @@ length = 0;
       fromDate: [from, Validators.required ],
       toDate: [to, Validators.required ],
       Origin: ['', Validators.required],
-      Zone: [''],
+      Zone: ['', Validators.required],
       Mode: ['', Validators.required],
       product: [[], Validators.required],
       trainFlight: [''],
@@ -357,14 +357,46 @@ this.isExcelValid = false;
   else if (type === 'State') { expectedHeaders = ['State', 'Multiple', 'Lower Wt', 'Upper Wt', 'Rate']; }
   else if (type === 'Destination') { expectedHeaders = ['Destination', 'Multiple', 'Lower Wt', 'Upper Wt', 'Rate']; }
 }
+const headersSet = new Set(headers.map(h => h.toLowerCase()));
+const expectedSet = new Set(expectedHeaders.map(h => h.toLowerCase()));
 
-      const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+const missingHeaders = expectedHeaders.filter(h => !headersSet.has(h.toLowerCase()));
+const extraHeaders = headers.filter(
+  h =>
+    !expectedSet.has(h.toLowerCase()) &&
+    ['addition', 'addon', 'multiple'].includes(h.toLowerCase()) // unexpected RateMode column present
+);
 
-      if (missingHeaders.length > 0) {
-        this.openSnackBar(`Invalid Excel file.\nMissing column(s): ${missingHeaders.join(', ')}`, 'error-snackbar');
-        this.isExcelValid = false;
-        return;
-      }
+if (missingHeaders.length > 0 || extraHeaders.length > 0) {
+  const issues: string[] = [];
+  if (missingHeaders.length > 0) {
+    issues.push(`Missing column(s): ${missingHeaders.join(', ')}`);
+  }
+  if (extraHeaders.length > 0) {
+    issues.push(`Unexpected column(s): ${extraHeaders.join(', ')}`);
+  }
+
+  this.openSnackBar(`Invalid Excel file.\n${issues.join('\n')}`, 'error-snackbar');
+  this.isExcelValid = false;
+
+  // ✅ Clear file input
+  this.selectedFile = null;
+  if (this.fileInput) {
+    this.fileInput.nativeElement.value = '';
+  }
+  return;
+}
+      // const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+
+      // if (missingHeaders.length > 0) {
+      //   this.openSnackBar(`Invalid Excel file.\nMissing column(s): ${missingHeaders.join(', ')}`, 'error-snackbar');
+      //   this.isExcelValid = false;
+      //    this.selectedFile = null;
+      //     if (this.fileInput) {
+      //       this.fileInput.nativeElement.value = '';
+      //     }
+      //   return;
+      // }
       this.isExcelValid = true;
       const validJsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
@@ -380,8 +412,8 @@ this.isExcelValid = false;
           Lower_Wt: Number(row['Lower Wt'] || 0),
           Upper_Wt: Number(row['Upper Wt'] || 0),
           Rate: Number(row['Rate'] || 0),
-          Active_Date: '2025-12-31',
-          Closing_Date: '2025-12-31',
+          Active_Date: this.createForm.get('fromDate')?.value || '',
+          Closing_Date: this.createForm.get('toDate')?.value || '',
         };
 
         if (type === 'Zone') {
@@ -437,6 +469,10 @@ processExcelData(file: File) {
 
   if (!this.isExcelValid) {
     this.openSnackBar('Invalid or unverified Excel file.', 'error-snackbar');
+         this.selectedFile = null;
+          if (this.fileInput) {
+            this.fileInput.nativeElement.value = '';
+          }
     return;
   }
   if (this.createForm.invalid) {

@@ -70,7 +70,7 @@ export class RatePrintComponent implements OnInit {
       : localStorage.getItem('selectedValue');
       this.sessionLocationName = localStorage.getItem('originName');
 
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+    this.masterService.getCustomerData(this.sessionLocationCode).subscribe((data: any) => {
         this.customerList = data.Data;
     });
      this.filterForm = this.formBuilder.group({

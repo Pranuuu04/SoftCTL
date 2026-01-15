@@ -1,6 +1,6 @@
-<div class="container">
+<div style="max-height: 80vh; height: 80vh;">
     <form [formGroup]="createForm" (ngSubmit)="processExcelData(selectedFile)">
-      <div class="row">
+      <div class="row mainrow">
         <div class="col-sm-6">
             <div class="textOnSelect">
                 <label for="CustomerName"><span style="color: red;">*</span>Customer name :</label>
@@ -27,14 +27,14 @@
         <div class="col-sm-3">
           <div class="textOnInput">
             <label for="toDate">To :</label>
-            <input class="form-control" type="date" formControlName="toDate" [max]="getCurrentDate()" id="toDate">
+            <input class="form-control" type="date" formControlName="toDate" id="toDate">
         </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mainrow">
           <div class="col-sm-3">
             <div class="textOnSelect">
-                <label for="supplierName">Origin :</label>
+                <label for="supplierName"><span style="color: red;">*</span>Origin :</label>
                 <ng-select 
                     class="custom-select1"
                     [items]="originList"
@@ -48,7 +48,7 @@
         </div>
           <div class="col-sm-3">
             <div class="textOnSelect">
-                <label for="supplierName"> Origin zone :</label>
+                <label for="supplierName"> <span style="color: red;">*</span>Origin zone :</label>
                 <ng-select 
                   class="custom-select1"
                   [items]="zoneList"
@@ -102,7 +102,7 @@
           </div> -->
          
     </div>
-    <div class="row">
+    <div class="row mainrow">
           <div class="col-sm-3">
               <div class="textOnSelect">
                 <label for="rateAirline">Train/Airline Name :</label>
@@ -133,7 +133,7 @@
         </div>
          
     </div>
-    <div class="row"  style="border-bottom: 1px solid #d2d2d2;">
+    <div class="row mainrow"  style="border-bottom: 1px solid #d2d2d2;">
         <div class="col-sm-3">
             <div class="textOnInput">
                 <label for="MinAmt">Min Amount</label>
@@ -171,7 +171,7 @@
           </div>
       </div>
     </div>
-     <div class="row" style="border-bottom: 1px solid #d2d2d2;">
+     <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
       <div class="col-sm-12 d-flex form-group" style="justify-content: end;">
         <!-- <button type="button" class="btn btn-light other-button" [disabled]="createForm.invalid" 
   (click)="onSearch()">Search</button> -->

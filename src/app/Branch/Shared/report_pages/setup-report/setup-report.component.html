@@ -8,11 +8,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 report-setup-container">
          <form>
-        <div class="row"  style="max-height: 350px;
-    overflow: auto;">
-            <div class="col-sm-3" *ngFor="let key of reportSetup | keyvalue : keepOriginalOrder; trackBy: trackByKey">
+        <div class="row">
+            <div class="col-sm-3 reportSetup " *ngFor="let key of reportSetup | keyvalue : keepOriginalOrder; trackBy: trackByKey">
                 <mat-slide-toggle 
                 [checked]="key.value === 1"
                 (change)="toggleChanged(key.key, $event)">

@@ -10,6 +10,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { BillViewComponent } from './bill-view/bill-view.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BillingSharedModule } from 'app/Branch/billing/billing-shared.module';
 
 
 @NgModule({
@@ -25,9 +28,12 @@ import { BillViewComponent } from './bill-view/bill-view.component';
     MatTabsModule,
     MatTableModule,
     MatSortModule, 
+    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgSelectModule,
+    BillingSharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

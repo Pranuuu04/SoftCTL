@@ -70,6 +70,9 @@ export class SetupReportComponent implements OnInit {
   UserName: 'User Name',
   DeliveredRemark: 'Delivered Remark'
 };
+
+
+
 keepOriginalOrder = (a: any, b: any): number => {
   const keysOrder = Object.keys(this.columnMapping);
   return keysOrder.indexOf(a.key) - keysOrder.indexOf(b.key);
@@ -81,7 +84,7 @@ keepOriginalOrder = (a: any, b: any): number => {
 
   ngOnInit(): void {
      if (this.data.columnMapping) {
-      this.columnMapping = this.data.columnMapping;   // ✅ use mapping from parent
+      this.columnMapping = this.data.columnMapping; 
     }
   //  this.loadReportSetup();
    const inputName = this.data.inputName
@@ -91,9 +94,11 @@ keepOriginalOrder = (a: any, b: any): number => {
     }
   });
   }
+
 CloseDialog() {
     this._mdr.close(false);
   }
+
 trackByKey(index: number, item: any): string {
   return item.key;
 }
@@ -110,16 +115,43 @@ trackByKey(index: number, item: any): string {
     console.log(this.reportSetup);
   }
 
+// saveAndClose() {
+//   const saveApi = this.data.saveApi;
+//                   this.data.Manifest;
+//   this.AllService.saveReportSetup(saveApi, this.reportSetup).subscribe({
+//     next: () => {
+//       const selectedKeys = Object.keys(this.reportSetup).filter(k => this.reportSetup[k] === 1);
+//       this._mdr.close(selectedKeys);
+//     },
+//     error: () => {
+//       alert('Failed to save setup!');
+//     }
+//   });
+//  }
+
+
 saveAndClose() {
-  const saveApi = this.data.saveApi;
-  this.AllService.saveReportSetup(saveApi, this.reportSetup).subscribe({
+  const { saveRoot, saveApi } = this.data;
+
+  let apiCall;
+
+  if (saveRoot === 'Manifest') {
+    apiCall = this.AllService.saveManifestSetup(saveApi, this.reportSetup);
+  } else {
+    apiCall = this.AllService.saveReportSetup(saveApi, this.reportSetup);
+  }
+
+  apiCall.subscribe({
     next: () => {
-      const selectedKeys = Object.keys(this.reportSetup).filter(k => this.reportSetup[k] === 1);
-      this._mdr.close(selectedKeys);
+      const selectedKeys = Object.keys(this.reportSetup)
+        .filter(k => this.reportSetup[k] === 1);
+       this._mdr.close(selectedKeys);
     },
     error: () => {
       alert('Failed to save setup!');
     }
   });
 }
+
+
 }

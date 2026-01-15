@@ -9,6 +9,7 @@ import { RunSheetComponent } from './run-sheet.component';
 import { AddDrsComponent } from 'app/Branch/Shared/Runsheet-pages/add-drs/add-drs.component';
 import { DeleteDrsComponent } from 'app/Branch/Shared/Runsheet-pages/delete-drs/delete-drs.component';
 import { ImportDrsComponent } from './import-drs/import-drs.component';
+import { DirectRunsheetModule } from '../direct-runsheet/direct-runsheet.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ImportDrsComponent } from './import-drs/import-drs.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    DirectRunsheetModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

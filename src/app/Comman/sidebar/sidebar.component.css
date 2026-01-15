@@ -67,8 +67,10 @@
     list-style: none;
     background-color: white;
   }
-  .mat-nav button{
-   width:  168px;
+
+.mat-nav button{
+  cursor: pointer;
+  width:  168px;
   height: 49px;
   float: left;
   display: flex;
@@ -77,12 +79,15 @@
   line-height: 30px;
   font-size: 13px;
   }
+
   .menu-button{
     box-shadow: rgba(99, 99, 99, 0.2) 3px 6px 9px -1px;
   }
+
   .sidebtn{
     box-shadow:rgba(99, 99, 99, 0.2) 2px 4px 7px -1px;
   }
+
   .mat-menu-item{
     line-height: 43px;
       height: 44px;
@@ -233,6 +238,8 @@
 ::ng-deep mat-sidenav {
   transition: transform 0.3s ease-in-out;
 }
+
+
 /* === New styles for MatSidenav Sidebar support === */
 
 ::ng-deep mat-sidenav {
@@ -245,4 +252,25 @@
   ::ng-deep mat-sidenav {
     width: 259px !important;
   }
+}
+.mat-sidenav, .mat-drawer-container, .mat-nav {
+  overflow: visible !important;
+}
+
+/* ::ng-deep .sideMenu {
+  left: 180px !important;
+  right: auto !important;
+  margin-top: 0 !important;
+} */
+
+/* ::ng-deep .cdk-overlay-pane {
+  transform: translateX(180px) !important; 
+  transform: none;
+  margin-top: -5px !important;          
+} */
+
+
+
+::ng-deep .mat-drawer-inner-container {
+      height: auto !important;
 }

@@ -21,6 +21,9 @@ import { CustomerChargesModule } from '../master/customer-charges/customer-charg
 import { OtherModule } from '../master/other/other/other.module';
 import { TransportWayModule } from '../master/transport-Way/transport-way.module';
 import { AuditModule } from '../audit/audit.module';
+import { BillingSharedModule } from '../billing/billing-shared.module';
+
+
 
 
 
@@ -49,8 +52,8 @@ import { AuditModule } from '../audit/audit.module';
     CustomerChargesModule,
     OtherModule,
     TransportWayModule,
-    AuditModule
-
+    AuditModule,
+    BillingSharedModule
   ],  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })

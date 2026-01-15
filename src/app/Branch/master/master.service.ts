@@ -552,8 +552,8 @@ deleteVehicleType(vehicleCode: any) {
   customerMast(data: any) {
     return this.http.post(`${environment.apiUrl}Master/customerMast`, data);
   }
-   getCustomer(pageNumber: any, pageSize: any): Observable<any> {
-    return this.http.get(`${environment.apiUrl}Master/customerGetAndDelete?operation=getCustomer&customerCode=&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+   getCustomer(sessionLocationCode: string, Search:string, pageNumber: any, pageSize: any): Observable<any> {
+    return this.http.get(`${environment.apiUrl}Master/customerGetAndDelete?operation=getCustomer&sessionLocationCode=${sessionLocationCode}&Search=${Search}&customerCode=&pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
    getCustomerdataByCode(customerCode: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}Master/customerGetAndDelete?operation=getCustomer&customerCode=${customerCode}`);
@@ -564,11 +564,11 @@ deleteVehicleType(vehicleCode: any) {
    deleteCustomer(customerCode: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}Master/customerGetAndDelete?operation=deleteCustomer&customerCode=${customerCode}`);
   }
-   getRateMaster(pageNumber: number, pageSize: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}Master/rateMasterGetAndDelete?operation=getRateMaster&clubNo=&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+   getRateMaster(sessionLocationCode: string, Search:string, pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}Master/rateMasterGetAndDelete?operation=getRateMaster&clubNo=&sessionLocationCode=${sessionLocationCode}&Search=${Search}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
-    getAndDeleteShipperConsig(operation: string): Observable<any> {
-    return this.http.get(`${environment.apiUrl}Master/getAndDeleteShipperConsig?masterName=getShipperConsig&operation=${operation}&code=`);
+    getAndDeleteShipperConsig(operation: string, sessionLocationCode: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}Master/getAndDeleteShipperConsig?masterName=getShipperConsig&operation=${operation}&code=${sessionLocationCode}`);
   }
 DeleteShipperConsig(operation: string, code: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}Master/getAndDeleteShipperConsig?masterName=getShipperConsig&operation=${operation}&code=${code}`);
@@ -616,5 +616,9 @@ getCompany(companyCode: string): Observable<any> {
 
     importRate(payload: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}Master/importRate`, payload);
+  }
+
+  getCustomerData(code: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}Master/AllMasters?operation=getCustomer&masterName=Customer&code=${code}`);
   }
 }

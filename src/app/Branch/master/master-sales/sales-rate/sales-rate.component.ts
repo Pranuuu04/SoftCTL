@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SalesFormComponent } from 'app/Branch/Shared/master-model/sales-form/sales-form.component';
 import { MasterService } from '../../master.service';
 import { ConfirmationDialogComponent } from 'app/Comman/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sales-rate',
@@ -31,7 +32,8 @@ export class SalesRateComponent implements OnInit {
     'Customer_Name',  'Country_Name',  'State_Name',  'Destination_Name',  'Mode_Name',  'Product_Name',
   'OriginName',  'Zone_Name'];
   rateViewData: any[] = [];
-
+  searchSubject = new Subject<string>();
+  searchValue: string = '';
   constructor(public snackBar: MatSnackBar,
               public dialog: MatDialog,
               public masterService: MasterService
@@ -39,21 +41,34 @@ export class SalesRateComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<any>(this.rateViewData);
-    this.sessionLocationCode = localStorage.getItem('originCode');
+    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+    ? localStorage.getItem('originCode')
+    : localStorage.getItem('selectedValue');
+    this.searchSubject
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    )
+    .subscribe(searchTerm => {
+      this.searchValue = searchTerm;
+      this.pageIndex = 0;
+      this.rateData(1, this.pageSize, searchTerm);
+    });
+
   }
  refresh() {
     this.rateData(this.pageIndex + 1, this.pageSize);
   }
 
-  rateData(pageNumber: number, pageSize: number) {
-     this.masterService.getRateMaster(pageNumber, pageSize).subscribe((resp: any) => {
-       if (resp.status === 1) {
-         this.showTable = true;
-         this.rateViewData = resp.Data.rateMasterData;
-         this.dataSource.data = this.rateViewData;
-         this.length = resp.count;
-         this.calculatePageCount();
-       } else {
+  rateData(pageNumber: number, pageSize: number, Search: string = this.searchValue) {
+    this.masterService.getRateMaster(this.sessionLocationCode, Search, pageNumber, pageSize).subscribe((resp: any) => {
+      if (resp.status === 1) {
+        this.showTable = true;
+        this.rateViewData = resp.Data.rateMasterData;
+        this.dataSource.data = this.rateViewData;
+        this.length = resp.count;
+        this.calculatePageCount();
+      } else {
           this.showTable = false;
           this.rateViewData = [];
         }
@@ -67,6 +82,8 @@ export class SalesRateComponent implements OnInit {
   this.pageSize = e.pageSize;
   this.pageIndex = e.pageIndex;
   const pageNumber = this.pageIndex + 1;
+  const searchValue = (document.getElementById('Filter') as HTMLInputElement)?.value || '';
+
     this.calculatePageCount();
   this.rateData(pageNumber, this.pageSize);
 }
@@ -125,11 +142,11 @@ export class SalesRateComponent implements OnInit {
       this.rateData(this.pageIndex + 1, this.pageSize);
     });
   }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+ applyFilter(filterValue: string) {
+    const pageNumber = 1;
+  this.pageIndex = 0;
+  this.rateData(pageNumber, this.pageSize, filterValue.trim());
   }
+
 
 }

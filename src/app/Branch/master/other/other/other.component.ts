@@ -14,10 +14,15 @@ export class OtherComponent implements OnInit {
   CourierMastViewData: any;
   CompanyMastViewData: any;
    activeTab = 0
+  sessionLocationCode: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+         this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
+
   }
 
 onTabChange(index: number): void {
@@ -42,7 +47,7 @@ onTabChange(index: number): void {
   }
 
    getCourierboyData(): void {
-    this.http.get(`${environment.apiUrl}Master/EmployeeMast?masterName=Employee&operation=getEmployee`)
+    this.http.get(`${environment.apiUrl}Master/EmployeeMast?masterName=Employee&operation=getEmployee&locationCode=${this.sessionLocationCode}`)
     .subscribe(response => {
       this.courierBoyViewData = response;
     });

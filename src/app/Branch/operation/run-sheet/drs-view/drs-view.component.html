@@ -1,43 +1,49 @@
-<div class="col-lg-12 col-md-12" style="display: flex;
-justify-content: center;">
-    <div class="card">
-        <div class="card-body table-responsive">            
+<div>
+    <!-- <div class="card">
+        <div class="card-body table-responsive">             -->
               <form [formGroup]="DrsViewForm" (ngSubmit)="submit(DrsViewForm.value)">
-            <div class="row">
-              
-              <label for="fromDate" class="col-sm-1 form-label">From Date</label>
-              <div class="col-sm-2">
+            <div class="row mainrow">
+               <div class="col-sm-3">
+                <div class="textOnInput">
+                  <label for="fromDate">From Date :</label>
                   <input type="date" class="form-control" id="fromDate" formControlName="fromDate"  [max]="DrsViewForm.get('toDate')?.value">
+                </div>
               </div>
 
-              <label for="toDate" class="col-sm-1 form-label">To Date</label>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
+                <div class="textOnInput">
+                  <label for="toDate">To Date :</label>
                   <input type="date" class="form-control" id="date" formControlName="toDate" [max]="getCurrentDate()">
+                </div>
               </div>
 
-              <label for="floatingTextarea" class="col-sm-1 form-label">Delivery Boy</label>
-              <div class="col-sm-2">
-                <select id="userName" class="custom-select" formControlName="deliveryBoy">
+               <div class="col-sm-3">
+                <div class="textOnInput">
+                  <label for="deliveryBoy">Delivery Boy :</label>
+                   <select id="deliveryBoy" class="custom-select" formControlName="deliveryBoy">
                   <option value="{{item.employeeCode}}"  *ngFor="let item of nameList" >{{item.employeeName}}</option>
                 </select>
+                </div>
               </div>
 
-              <label id="DRSNo" for="DRSDate" class="col-sm-1 form-label">DRS No.</label>
-              <div class="col-sm-2">
+                 <div class="col-sm-3">
+                <div class="textOnInput">
+                  <label for="DRSDate">DRS No. :</label>
                   <input type="number" placeholder="Enter DRS No." value="" class="form-control" id="DRSNo" formControlName="DRS">
+                </div>
               </div>
 
             </div>
-            <div class="row" style="justify-content: right;">
-              <div class="col-sm-3 d-flex" style=" justify-content: right;">
-                <button type="submit" class="btn btn-light" style="margin-right: 37px; background-color: #2e3f55; color: white;">Search</button>
-                <button type="button" class="btn btn-warning">Download</button>
+            <div class="row mainrow" style="justify-content: right; border-bottom: 1px solid #d2d2d2;">
+              <div class="col-sm-3 d-flex mb-2" style=" justify-content: right;">
+                <button type="submit" class="btn btn-light other-button" style="margin-right: 37px; background-color: #2e3f55; color: white;">Search</button>
+                <button type="button" class="btn btn-light other-button" style="background-color: #2e3f55; color: white;">Download</button>
               </div>
             </div>
           </form>
-        </div>
+        <!-- </div>
     </div>
-</div>
+</div> -->
 <div *ngIf="showTable && dataSource.data.length > 0">
   <div class="table-responsive">
     <div class="row d-flex m-0" style="justify-content: right;" >
@@ -45,9 +51,9 @@ justify-content: center;">
         <button class="btn btn-secondary" type="button" style="z-index: 1001;
         position: absolute;
         background: none;
-        top: -4px;
+        top: -3px;
         width: 38px;
-        height: 32px;
+        height: 30px;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         background-color: #2e3f55;">
@@ -116,95 +122,4 @@ justify-content: center;">
 <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
   <img src="./../../../../../assets/images/NOdata.png" alt="">
   </div>
-
-<!-- pdf design  -->
-<!-- <div class="col-lg-9 col-md-9 p-0"  *ngIf="showPdfSection" style="display: flex; justify-content: center; background-color: white; left: 90px;">
-  <div class="row">
-    <div id="genPDF">
-      <div class="col-lg-12 col-md-12 p-0" style="background-color: white;">
-        <div class="card" style="margin: 0;" >
-            <div class="card-body table-responsive " style=" padding: 0.9375rem 10px;">
-                    <form style="background-color: white;  border: 1px solid black; border-radius: 2px;">
-                      <div class="row">
-                        <div class="col-sm-5">
-                          <img src="./../../../../../assets/images/logistic.jpg" style="height: 150px; width: 300px;" alt="">
-                        </div>
-                        <div class="col-sm-7 addDetails" style="text-align: center;">
-                          <h2 style="font-size: xx-large; font-weight: 700; ">Delivery Run Sheet</h2>
-                          <h4 style="    font-size: 25px; font-weight: 600;">Bhiwandi Hub</h4>
-                          <p style="    font-size: 15px; text-align: left;">
-                            Regd of : A/3 - 11 Harihar complex, Dapode Village,Mankoli Naka Bhiwandi-421302/02522-662806/07
-                            <br>
-                            www.24/7logistcs.com/sales@24/7 logistcs.com
-                          </p>
-                        
-                        </div>
-                      </div>
-                      <div class="row">
-                        <label for="DrsNo" class="col-sm-2 form-label">Drs No - </label>
-                        <div class="col-sm-2">
-                        </div>
-                        <label for="DrsDt" class="col-sm-2 form-label">Drs Dt - </label>
-                        <div class="col-sm-2">
-                        </div>
-                        <label for="EmpNo" class="col-sm-2 form-label">Emp No - </label>
-                        <div class="col-sm-2">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <label for="VehicleNo" class="col-sm-2 form-label">Vehicle No. - </label>
-                        <div class="col-sm-2">
-                        </div>
-                        <label for="VehicleOut " class="col-sm-2 form-label">Vehicle Out - </label>
-                        <div class="col-sm-2">
-                        </div>
-                        <label for="VehicleInTime" class="col-sm-2 form-label">Vehicle In Time. -</label>
-                        <div class="col-sm-2">
-                        </div>
-                      </div>
-                    </form>
-                    <div class="table-responsive text-nowrap mt-2" style="background-color: white;  border: 1px solid black; border-radius: 2px;">
-                      <table class="table table-bordered table-striped" style="background-color:white;">
-                        <thead style="background-color:#afdadf; color: white;">
-                          <tr>
-                              <th>SrNo</th>
-                              <th>AwbNo</th>
-                              <th>conginee Name</th>
-                              <th>Dst</th>
-                              <th>Pcs</th>
-                              <th>Charged</th>
-                              <th>ReceiverDetails</th>
-                              <th>Remark</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                            <td>abc</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                      <br>
-                      <br>
-                      <br>
-                      <br>
-                   <div class="footer pb-0" style="display: flex; justify-content: space-between; border-top: 1px solid black;">
-                    <p class="mb-0">SIGNATURE</p>
-                      <label class=" form-label mt-0">Branch: </label>
-                   </div>
-                    </div>
-            </div>
-        </div>
-      </div>
-      
-      
-      </div>
-  </div>
-</div> -->
+</div>

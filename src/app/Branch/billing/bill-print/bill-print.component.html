@@ -16,12 +16,6 @@
         <div class="col-sm-6">
           <div class="textOnSelect">
               <label for="Customer">Customer :</label>
-              <!-- <select id="Customer" class="custom-select" formControlName="Customer">
-                <option value="" selected disabled>Select Customer</option>
-                <option *ngFor="let item of customerData" [value]="item.customerCode">
-                  {{ item.customerName }} 
-                </option>
-              </select> -->
                <ng-select
                   class="custom-select1"
                   [items]="customerData"
@@ -139,9 +133,8 @@
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element">
                   <mat-icon matTooltip="PDF" class="custom-color" (click)="printPDF(element)">picture_as_pdf</mat-icon>
+                  <mat-icon matTooltip="XLS" class="custom-color" (click)="printXLS(element)">description</mat-icon>
                   <mat-icon matTooltip="Add" class="custom1-color" (click)="openviewadd(element)">add</mat-icon>
-                  <!-- <mat-icon matTooltip="Mail" class="custom1-color">mail</mat-icon> -->
-                  <!-- <mat-icon matTooltip="Edit" class="custom1-color" (click)="openviewedit(element)">edit</mat-icon> -->
                   <mat-icon matTooltip="Delete" class="custom2-color" (click)="openviewdelete(element)">delete</mat-icon> 
                 </td>
               </ng-container>

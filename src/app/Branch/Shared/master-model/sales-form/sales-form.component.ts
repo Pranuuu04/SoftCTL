@@ -118,7 +118,10 @@ isCompanySelected = false;
      this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
-      this.sessionLocationName = localStorage.getItem('originName');
+     this.sessionLocationName = localStorage.getItem('userType') !== 'Admin' ?
+     localStorage.getItem('originName')
+     : localStorage.getItem('selectedLocationName');
+      // this.sessionLocationName = localStorage.getItem('originName');
     const gstFlag = localStorage.getItem('GstVerify');
     this.isGstVerified = gstFlag === '1';
 const now = new Date();
@@ -128,7 +131,7 @@ this.currentDate1 = this.formatDateLocal(new Date(currentYear, currentMonth, 1))
 
 this.currentDate2 = this.formatDateLocal(new Date(currentYear, 11, 31));
 
-       this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+       this.masterService.getCustomerData(this.sessionLocationCode).subscribe((data: any) => {
       this.customerList = data.Data;
     });
     this.AllService.getOriginData().subscribe((data) => {
@@ -214,9 +217,6 @@ this.customerData();
 this.RateForm = this.formBuilder.group({
   fromDate: [this.currentDate1, Validators.required],
   toDate: [this.currentDate2, Validators.required],
-  // fromDate: [''],
-  // toDate: [''],
-  rateLocation: ['', Validators.required],
   rateCustomer: ['', Validators.required],
   RateOrigin: ['', Validators.required],
   Zone: [''],
@@ -481,7 +481,6 @@ if (rateDetails.Country_Codes?.length) {
         this.RateForm.patchValue({
           fromDate: this.parseDateString(rateDetails.Active_Date),
           toDate: this.parseDateString(rateDetails.Closing_Date),
-          rateLocation: rateDetails,
           rateCustomer: rateDetails.Cust_Code,
           RateOrigin: rateDetails.Orgin_Code,
           Zone: rateDetails.OrginZone_Code?.trim() || '',

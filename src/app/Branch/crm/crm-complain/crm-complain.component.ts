@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/service/http.service';
 import { environment } from 'environments/environment';
 
-
 @Component({
   selector: 'app-crm-complain',
   templateUrl: './crm-complain.component.html',
@@ -22,23 +21,22 @@ export class CrmComplainComponent implements OnInit{
    ComplainFORM: FormGroup;
   dataSource = new MatTableDataSource<any>(this.complainTableData);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  selectType= 'Awb';
+  selectType: string = 'Awb';
   awbNo: string;
   Complain:string;
   RefNo:string;
   showTable = false;
   showTable2 =false;
-  
+    displayedColumns: string[] = ['Date', 'AwbNo', 'RefNo', 'ComplainNo', 'Name', 'MobileNo', 'Type', 'Detail', 'Action', 'Status'];
+
   constructor(
     public httpService: HttpService,
     private formbuilder: FormBuilder,
      private snackBar: MatSnackBar,
   ) {
   }
-  displayedColumns: string[] = ['Date', 'AwbNo', 'RefNo', 'ComplainNo', 'Name', 'MobileNo', 'Type', 'Detail', 'Action', 'Status'];
 
   ngOnInit(): void {
-    this.currentDate = new Date().toISOString().split('T')[0];
     this.validationMessage = {
       awbNo:[
         {type: 'required', message: 'Please select AwbNo'}
@@ -65,6 +63,7 @@ export class CrmComplainComponent implements OnInit{
         {type: 'required', message: 'Please enter Action'}
       ]
     };
+        this.currentDate = new Date().toISOString().split('T')[0];
 
     this.ComplainFORM = this.formbuilder.group({
       awbNo: new FormControl('',Validators.compose([
@@ -88,87 +87,6 @@ export class CrmComplainComponent implements OnInit{
     })
   }
 
-  // checkAwbData(){
-  //     if(this.selectType === 'Awb'){
-  //       if (!this.awbNo) {
-  //         alert("Please enter AWB number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno=${this.awbNo} &RefNo&ComplainNo`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid AWB number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }else if(this.selectType === 'Complain'){
-  //       if (!this.Complain) {
-  //         alert("Please enter Complain number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno&RefNo&ComplainNo= ${this.Complain}`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid Complain number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }else{
-  //       if (!this.RefNo) {
-  //         alert("Please enter Reference number.");
-  //         return;
-  //       }
-  //       this.httpService.get(`${environment.apiUrl}crm/CrmTrackk?awbno&RefNo=${ this.RefNo} &ComplainNo`).then(resp=>{
-  //         this.complainTableData= resp.Data[1]
-  //         this.dataSource = new MatTableDataSource(this.complainTableData);
-  //         this.dataSource.paginator = this.paginator;
-  //         if(resp.status === 1){
-  //           alert(resp.message);
-  //           this.showTable = true;
-  //           this.complainTableData = resp.Data[1];
-  //           this.trackingTableData = resp.Data[0];
-  //           this.trackingTableData2 = resp.Data[2];
-  //           this.ComplainFORM.reset(); 
-  //           this.awbNo = '';
-  //         }else{
-  //           alert("Invalid Refrance number. Please check and try again.");
-  //           this.showTable = false;
-  //           this.complainTableData = [];
-  //           this.trackingTableData = [];
-  //           this.trackingTableData2 = [];
-  //           this.awbNo = '';
-  //         }
-  //       });
-  //     }
-  // }
     openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, 'Close', {
       duration: 3000,
@@ -262,13 +180,15 @@ formSubmit(formData: any){
       this.httpService.post(`${environment.apiUrl}Crm/GetComplain`,obj).then(resp=>{
         if(resp.status === 1){
           this.openSnackBar( resp.msg, 'custom-snackbar')
-          this.showTable = true;
-          this.showTable2 = true;
+          // this.showTable = true;
+          // this.showTable2 = true;
           this.ComplainFORM.reset();
-          this.complainTableData = [];
-          this.trackingTableData = [];
-          this.trackingTableData2 = [];
+          this.showTable = false;
+          // this.complainTableData = [];
+          // this.trackingTableData = [];
+          // this.trackingTableData2 = [];
           this.awbNo = ''; 
+          this.currentDate = new Date().toISOString().split('T')[0];
         }
         else{
           this.openSnackBar(resp.msg, 'error-snackbar')

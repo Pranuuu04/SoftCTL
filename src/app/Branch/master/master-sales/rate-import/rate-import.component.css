@@ -302,3 +302,7 @@ ng-select.ng-invalid.ng-touched, ng-select.ng-invalid.ng-dirty ,
 .invalid-checkbox-container {
   border: 1px solid red !important;
 }
+  .mainrow{
+      margin-left: 0;
+      margin-right: 0;
+    }

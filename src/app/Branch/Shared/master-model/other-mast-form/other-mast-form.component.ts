@@ -135,7 +135,7 @@ selectedStampFile: File | null = null;
      : localStorage.getItem('selectedValue');
  const gstFlag = localStorage.getItem('GstVerify');
     this.isGstVerified = gstFlag === '1';
-       this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+       this.masterService.getCustomerData(this.sessionLocationCode).subscribe((data: any) => {
       this.customerList = data.Data;
     });
       this.AllService.getDestinationDataa().subscribe((res: any) => {
@@ -450,11 +450,6 @@ shipperData() {
   this.masterService.DeleteShipperConsig('getByShipperCode', this.shipper_Code).subscribe((resp: any) => {
     if (resp) {
       const data = resp.Data[0];
-      // const city = this.cityList.find(item => item.destinationName === data.Destination_Name);
-      // const state = this.stateList.find(item => item.stateName === data.State_Name);
-      // const country = this.countryList.find(item => item.countryName === data.Country_Name);
-      // const Customer = this.customerList.find(item => item.customerName === data.Customer_Name);
-      // const Company = this.companyList.find(item => item.CompanyName === data.CompanyName);
 
         this.shipperForm.patchValue({
         shipperName: data.shipper_Name,
@@ -599,11 +594,6 @@ gstVerifyConsignee() {
   this.masterService.DeleteShipperConsig('getByConsigneeCode', this.Consignee_Code).subscribe((resp: any) => {
     if (resp) {
       const data = resp.Data[0];
-      // const city = this.cityList.find(item => item.destinationName === data.Destination_Name);
-      // const state = this.stateList.find(item => item.stateName === data.State_Name);
-      // const country = this.countryList.find(item => item.countryName === data.Country_Name);
-      // const Customer = this.customerList.find(item => item.customerName === data.Customer_Name);
-      // const Company = this.companyList.find(item => item.CompanyName === data.CompanyName);
 
         this.consigneeForm.patchValue({
           consigneeName: data.Consignee_Name,

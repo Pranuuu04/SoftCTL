@@ -40,4 +40,10 @@ export class BillingService {
     return this.http.get(`${environment.apiUrl}Billing/deleteBillData?sessionLocationCode=${sessionLocationCode}&BillNo=${BillNo}&AwbNo=${AwbNo}`)
   }
 
+   // Billing/billPrintData?sessionLocationCode=MUM&BillNo=16&CustomerCode=C019
+  billPrintData(sessionLocationCode: string, BillNo: string, CustomerCode: string) {
+    return this.http.get(`${environment.apiUrl}Billing/billPrintData?sessionLocationCode=${sessionLocationCode}&BillNo=${BillNo}&CustomerCode=${CustomerCode}`)
+  }
+ 
+
 }

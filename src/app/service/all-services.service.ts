@@ -1270,6 +1270,38 @@ saveReportSetup(apiName: string, data: any) {
   return this.http.post(`${environment.apiUrl}Reports/${apiName}`, data);
 }
 
+saveManifestSetup(apiName: string, data: any){
+  return this.http.post(`${environment.apiUrl}Manifest/${apiName}`, data);
+}
+
+getAllCustomer(masterName: string, code: any) {
+  return this.http.get(`${environment.apiUrl}Master/allMasters?operation=getCustomer&masterName=${masterName}&code=${code}`);
+}
+
+
+drsImageUpload(obj: any) {
+  return this.http.post(`${environment.apiUrl}runsheet/drsImageUpload`,obj);
+}
+
+
+// Reports/getImageReport?sessionLocationCode=MUM&input=DrsImageReport&status=All&fromDate=2025-08-14&toDate=2025-11-14&pageNumber=0&pageSize=10
+getDrsPodReport(sessionLocationCode:any,input:any,status:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any) {
+  return this.http.get(`${environment.apiUrl}Reports/getImageReport?sessionLocationCode=${sessionLocationCode}&input=${input}&status=${status}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+
+// Reports/getSalesRegisterReport?customerCode=All&clientType=All&sessionLocationCode=MUM&fromDate=2025-01-01&toDate=2025-12-31&pageNumber=1&pageSize=10
+getSalesRegisterReport(customerCode:any,clientType:any,sessionLocationCode:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any) {
+  return this.http.get(`${environment.apiUrl}Reports/getSalesRegisterReport?customerCode=${customerCode}&clientType=${clientType}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+
+
+// Reports/getCheckListReport?customerCode=All&modeCode=All&clientType=All&sessionLocationCode=MUM&fromDate=2025-01-01&toDate=2025-11-31&ReportType=ChecklistDetail&pageNumber=1&pageSize=1
+getCheckListReport(customerCode:any,modeCode:any,clientType:any ,sessionLocationCode:any,ReportType:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any) {
+  return this.http.get(`${environment.apiUrl}Reports/getSalesRegisterReport?customerCode=${customerCode}&modeCode=${modeCode}&clientType=${clientType}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&ReportType=${ReportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+
+
+
 
 }
 

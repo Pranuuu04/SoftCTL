@@ -23,8 +23,24 @@ export class AddManifestComponent implements OnInit {
               }
 
   ngOnInit(): void {
+
+    
     this.formRender();
+
+  if (this.loadManifestData) {
+    this.createditForm.patchValue({
+      Driver_Licence_No: this.loadManifestData.Driver_Licence_No,
+      Opening_Km: this.loadManifestData.Opening_Km,
+      Vehicle_diesel_No: this.loadManifestData.Vehicle_diesel_No,
+      Vehicle_diesel_Ltrs: this.loadManifestData.Vehicle_diesel_Ltrs,
+      Kata_Weight: this.loadManifestData.Kata_Weight,
+      Slip_No: this.loadManifestData.Slip_No,
+      Brocker_Name: this.loadManifestData.Brocker_Name,
+      Advance_Paid: this.loadManifestData.Advance_Paid,
+      Diesel_Amount: this.loadManifestData.Diesel_Amount,
+    });
   }
+}
 
   formRender(){
     this.createditForm=this.formbuilder.group({

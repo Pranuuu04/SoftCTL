@@ -204,3 +204,48 @@ input{
   margin-left: 0;
   margin-right: 0;
 }
+
+
+
+.download-buttons{
+  display: flex;
+  justify-content: center;
+  
+  }
+  
+.download-buttons button{
+  /* background-color: white;  */
+  background-color: #2e3f55;
+  height: 33px;
+  width: 33px;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  }
+  
+.download-buttons button .fa-file-pdf{
+  color: #e53935;
+   font-size: large;
+  }
+  
+.download-buttons button .text {
+  visibility: hidden;
+  border: 1px solid #d2d2d2;
+  border-radius: 6px;
+  width: 60px;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: -50%;
+  }
+  
+.download-buttons button:hover .text {
+  visibility: visible;
+  }
+  
+.download-buttons button .fa-table{
+  color: #4caf50;
+   font-size: large;
+  }

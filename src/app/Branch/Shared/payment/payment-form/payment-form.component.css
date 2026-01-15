@@ -219,6 +219,8 @@ input{
         outline: 0 !important;
         box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25) !important;
     }
+
+
     
     ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
         background-color: white !important;
@@ -240,7 +242,7 @@ input{
         border: 1px solid #d2d2d2 !important; 
       }
       ::ng-deep .ng-select {
-        height: 28px !important;
+        height: 31px !important;
       }
       
       ::ng-deep .ng-select .ng-arrow {
@@ -272,12 +274,20 @@ input{
       ::ng-deep .ng-select.ng-select-opened .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
         background-color: rgb(201, 214, 214) !important;
       }
+
+      ::ng-deep .ng-select .ng-input > input {
+        z-index: 1000;
+      }
+
     
       &.ng-select-opened {
           .ng-arrow {
               transform: rotate(180deg);
           }
       }
+
+
+
       ::ng-deep .custom-snackbar {
         color: white !important;
         background-color: #0a990a !important;
@@ -313,6 +323,8 @@ select.ng-invalid.ng-touched, select.ng-invalid.ng-dirty,
 ::ng-deep ng-select.ng-invalid.ng-touched, ::ng-deep ng-select.ng-invalid.ng-dirty  {
   border: 1px solid red !important;
 }
+
+
  .cashTopaytable{
       max-height: 270px;
       overflow: auto ; 
@@ -394,9 +406,9 @@ select.ng-invalid.ng-touched, select.ng-invalid.ng-dirty,
   box-sizing: border-box;
 }
 
-input::-webkit-calendar-picker-indicator {
+/* input::-webkit-calendar-picker-indicator {
   display: none !important;
-}
+} */
 
 datalist {
   max-height: 150px; 
@@ -418,4 +430,105 @@ table.equal-table input.form-control {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+input::-webkit-calendar-picker-indicator {
+  opacity: 1 !important;
+  display: block !important;
+}
+
+
+
+
+
+.cashTopaytable {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.cashTopaytable table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #e2e9f1;
+}
+
+.cashTopaytable thead tr {
+  background-color: #a3b8d4;
+  color: #000;
+  height: 34px;
+}
+
+.cashTopaytable thead th {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 8px;
+  border: 1px solid #dee2e6;
+}
+
+.cashTopaytable td {
+  font-size: 13px;
+  padding: 6px 8px;
+  border: 1px solid #dee2e6;
+}
+
+.cashTopaytable tbody tr:nth-of-type(odd) {
+  background-color: #f9fbfd;
+}
+
+
+@media (max-width: 768px) {
+  .mat-dialog-container {
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+  }
+
+  .cashTopaytable {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    overflow-x: hidden !important;
+  }
+
+  .cashTopaytable table,
+  .cashTopaytable tbody,
+  .cashTopaytable tr,
+  .cashTopaytable td {
+    display: block;
+    width: 100%;
+  }
+
+  .cashTopaytable thead {
+    display: none;
+  }
+
+  .cashTopaytable tr {
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  .cashTopaytable td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid #eee;
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  .cashTopaytable td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    flex-basis: 45%;
+  }
+
+  .cashTopaytable td:last-child {
+    border-bottom: none;
+  }
+}
+
 

@@ -5,7 +5,7 @@
           </div> 
           <!-- <label class="textOnInput"><span style="color: red;" *ngIf="this.userType === 'Admin' && !this.isBookingPage">*</span>Select Branch</label> -->
           <div class="navbar-wrapper" *ngIf="this.userType === 'Admin'">
-            <select  class="custom-select1" [(ngModel)]="branchType" (change)="onBranchTypeChange($event)"   style="font-size:12px; border-radius: 11px; box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; border: none;  height: 28px;width: 108px;     padding-left: 10px;" [disabled]="!isDropdownEnabled()">
+            <select class="custom-select1" name="branchType" [(ngModel)]="branchType" (change)="onBranchTypeChange($event)"   style="font-size:12px; border-radius: 11px; box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; border: none;  height: 28px;width: 108px;     padding-left: 10px;" [disabled]="!isDropdownEnabled()">
                 <option value="All" style="font-size: 14px;">All Brach</option>
                 <option *ngFor="let item of branchList"  [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</option>
              </select>   
@@ -20,15 +20,6 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
 
             <ul class="navbar-nav">
-                <!-- <li style="line-height: 39px;"  *ngIf="this.userType == 'Admin'">
-                    <div class="date-range-picker" style="padding: 9px 11px;">
-                        <label for="fromDate">Select Branch</label>
-                        <select class="custom-select1" [(ngModel)]="branchType" (change)="onBranchTypeChange($event)" style="font-size:12px; border-radius: 11px; padding-left: 10px;    box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 6px; border: none;  height: 28px;width: 108px;">
-                            <option value="All" style="font-size: 14px;" selected>All Brach</option>
-                            <option *ngFor="let item of branchList"  [value]="item.locationCode" style="font-size: 14px;">{{item.locationName}} &nbsp;({{item.locationCode}})</option>
-                         </select>                    
-                    </div>
-                </li> -->
                 <li style="line-height: 39px;">
                     <div class="date-range-picker" style="padding: 9px 8px;">
                         <label for="fromDate">From:</label>
@@ -41,10 +32,12 @@
                 <li>
                     <form class="navbar-form">
                         <div class="form-group has-search">
-                          <input type="text" class="form-control" placeholder="Track here.." id="Filter" [(ngModel)]="searchValue">
+                          <input type="text" class="form-control" placeholder="Track here.." id="Filter" name="searchValue" [(ngModel)]="searchValue">
+                          <button class="btn btn-light search" type="button" (click)="search(searchValue,'Awb')"></button>
+                          <!-- <input name="searchValue" type="text" class="form-control" placeholder="Track here.." id="Filter" [(ngModel)]="searchValue">
                           <button class="btn btn-light search" type="button" (click)="search(searchValue,'')">
                             <i class="fa fa-search" style="margin-top: -24px; font-size: 14px;"></i>
-                          </button>
+                          </button> -->
                           <button class="btn btn-light drop" type="button" [matMenuTriggerFor]="menu">
                             <mat-icon>keyboard_arrow_down</mat-icon>
                           </button>

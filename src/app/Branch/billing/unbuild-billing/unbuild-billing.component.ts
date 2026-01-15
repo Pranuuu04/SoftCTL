@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { AllServicesService } from 'app/service/all-services.service';
-import { environment } from 'environments/environment';
 import { BillingService } from '../billing.service';
 import { SharedService } from 'app/service/shared.service';
 import { combineLatest } from 'rxjs';

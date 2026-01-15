@@ -57,7 +57,7 @@ ul{
     font-size: large;
     border-radius: 8px;
     margin: 0;
-    mat-icon{
+    mat-icon {
         color: white;
       }
   }
@@ -65,7 +65,7 @@ ul{
   .error:focus
   {
     background-color: white;
-    mat-icon{
+    mat-icon {
       color: red;
     }
   }
@@ -155,7 +155,7 @@ ul{
   margin-left: 15px;
   margin-top: 0;
 
-  i{
+  i {
     color: white;
   }
 }
@@ -163,7 +163,7 @@ ul{
 .download:focus
 {
   background-color: white;
-  i{
+  i {
     color: green;
   }
 }

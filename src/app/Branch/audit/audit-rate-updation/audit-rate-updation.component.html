@@ -62,109 +62,87 @@
     <th mat-header-cell *matHeaderCellDef>Date</th>
     <td mat-cell *matCellDef="let element">{{ element.BookDate | date:'dd/MM/yyyy'  }}</td>
   </ng-container>
-<!-- 
-  <ng-container matColumnDef="Customer_Name">
-    <th mat-header-cell *matHeaderCellDef>Customer name</th>
-    <td mat-cell *matCellDef="let element">{{ element.Customer_Name }}</td>
-  </ng-container> -->
-
-  <!-- Chargeable Weight -->
+  
   <ng-container matColumnDef="ChargeableWt">
     <th mat-header-cell *matHeaderCellDef>Charge Wt</th>
     <td mat-cell *matCellDef="let element">{{ element.ChargeableWt }}</td>
   </ng-container>
 
-  <!-- Rate Per Kg -->
   <ng-container matColumnDef="RatePerKg">
     <th mat-header-cell *matHeaderCellDef>Rate/Kg</th>
     <td mat-cell *matCellDef="let element">{{ element.RatePerKg }}</td>
   </ng-container>
 
-  <!-- Rate -->
   <ng-container matColumnDef="Rate">
     <th mat-header-cell *matHeaderCellDef>Rate</th>
     <td mat-cell *matCellDef="let element">{{ element.Rate }}</td>
   </ng-container>
 
-  <!-- FOV Charge -->
   <ng-container matColumnDef="FOVCharge">
     <th mat-header-cell *matHeaderCellDef>FOV</th>
     <td mat-cell *matCellDef="let element">{{ element.FOVCharge }}</td>
   </ng-container>
 
-  <!-- Packing Charge -->
   <ng-container matColumnDef="PackingCharge">
     <th mat-header-cell *matHeaderCellDef>Packing</th>
     <td mat-cell *matCellDef="let element">{{ element.PackingCharge }}</td>
   </ng-container>
 
-  <!-- Docket Charge -->
   <ng-container matColumnDef="DocketCharge">
     <th mat-header-cell *matHeaderCellDef>Docket</th>
     <td mat-cell *matCellDef="let element">{{ element.DocketCharge }}</td>
   </ng-container>
 
-  <!-- ENS Charge -->
   <ng-container matColumnDef="ENSCharge">
     <th mat-header-cell *matHeaderCellDef>ENS</th>
     <td mat-cell *matCellDef="let element">{{ element.ENSCharge }}</td>
   </ng-container>
 
-  <!-- SC Charge -->
   <ng-container matColumnDef="SCCharge">
     <th mat-header-cell *matHeaderCellDef>SC Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.SCCharge }}</td>
   </ng-container>
 
-  <!-- Insurance Charge -->
   <ng-container matColumnDef="InsuranceCharge">
     <th mat-header-cell *matHeaderCellDef>Insurance</th>
     <td mat-cell *matCellDef="let element">{{ element.InsuranceCharge }}</td>
   </ng-container>
 
-  <!-- Fuel % -->
   <ng-container matColumnDef="FuelPer">
     <th mat-header-cell *matHeaderCellDef>Fuel %</th>
     <td mat-cell *matCellDef="let element">{{ element.FuelPer }}</td>
   </ng-container>
 
-  <!-- Fuel Charge -->
   <ng-container matColumnDef="FuelCharge">
     <th mat-header-cell *matHeaderCellDef>Fuel Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.FuelCharge }}</td>
   </ng-container>
 
-  <!-- ESS % -->
   <ng-container matColumnDef="ESSPer">
     <th mat-header-cell *matHeaderCellDef>ESS %</th>
     <td mat-cell *matCellDef="let element">{{ element.ESSPer }}</td>
   </ng-container>
 
-  <!-- ESS Charge -->
   <ng-container matColumnDef="ESSCharge">
     <th mat-header-cell *matHeaderCellDef>ESS Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.ESSCharge }}</td>
   </ng-container>
 
-  <!-- IDC % -->
   <ng-container matColumnDef="IDCPer">
     <th mat-header-cell *matHeaderCellDef>IDC %</th>
     <td mat-cell *matCellDef="let element">{{ element.IDCPer }}</td>
   </ng-container>
 
-  <!-- IDC Charge -->
   <ng-container matColumnDef="IDCCharge">
     <th mat-header-cell *matHeaderCellDef>IDC Charge</th>
     <td mat-cell *matCellDef="let element">{{ element.IDCCharge }}</td>
   </ng-container>
 
-  <!-- CAF % -->
   <ng-container matColumnDef="CAFPer">
     <th mat-header-cell *matHeaderCellDef>CAF %</th>
     <td mat-cell *matCellDef="let element">{{ element.CAFPer }}</td>
   </ng-container>
 
-  <!-- CAF Charge -->
   <ng-container matColumnDef="CAFCharge">
     <th mat-header-cell *matHeaderCellDef>CAF Charge</th>
     <td mat-cell *matCellDef="let element">{{ element.CAFCharge }}</td>
@@ -175,43 +153,36 @@
     <td mat-cell *matCellDef="let element">{{ element.IGST }}</td>
   </ng-container>
 
-  <!-- SGST Amt -->
   <ng-container matColumnDef="IGSTAmt">
     <th mat-header-cell *matHeaderCellDef>IGST Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.IGSTAmt }}</td>
   </ng-container>
 
-  <!-- SGST -->
   <ng-container matColumnDef="SGST">
     <th mat-header-cell *matHeaderCellDef>SGST %</th>
     <td mat-cell *matCellDef="let element">{{ element.SGST }}</td>
   </ng-container>
 
-  <!-- SGST Amt -->
   <ng-container matColumnDef="SGSTAmt">
     <th mat-header-cell *matHeaderCellDef>SGST Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.SGSTAmt }}</td>
   </ng-container>
 
-  <!-- IGST -->
   <ng-container matColumnDef="CGST">
     <th mat-header-cell *matHeaderCellDef>CGST %</th>
     <td mat-cell *matCellDef="let element">{{ element.CGST }}</td>
   </ng-container>
 
-  <!-- CGST Amt -->
   <ng-container matColumnDef="CGSTAmt">
     <th mat-header-cell *matHeaderCellDef>CGST Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.CGSTAmt }}</td>
   </ng-container>
 
-  <!-- Service Tax -->
   <ng-container matColumnDef="ServiceTax">
     <th mat-header-cell *matHeaderCellDef>Gst total</th>
     <td mat-cell *matCellDef="let element">{{ element.ServiceTax }}</td>
   </ng-container>
 
-  <!-- Total Amt -->
   <ng-container matColumnDef="TotalAmt">
     <th mat-header-cell *matHeaderCellDef>Total Amt</th>
     <td mat-cell *matCellDef="let element">{{ element.TotalAmt }}</td>
@@ -229,12 +200,6 @@
     [showFirstLastButtons]="true"
     (page)="handlePageEvent($event)">
   </mat-paginator>
-      <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions"
-      [pageSize]="pageSize"
-      [length]="totalPending"
-      (page)="loadPage($event)"
-      aria-label="Select page of pending DRS records">
-    </mat-paginator> -->
    </div>
   <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
     <img src="./assets/images/NOdata.png" alt="">

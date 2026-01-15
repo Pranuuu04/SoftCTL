@@ -17,10 +17,15 @@ export class AreaComponent implements OnInit {
   courierBoyViewData: object;
   prefixViewData: object;
   branchMastViewData: object;
+  sessionLocationCode: string;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getZoneData();
+         this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
+
   }
 
   onTabChange(event: MatTabChangeEvent): void {

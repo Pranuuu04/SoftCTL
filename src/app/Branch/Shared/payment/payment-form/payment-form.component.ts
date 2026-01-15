@@ -22,6 +22,7 @@ export class PaymentFormComponent implements OnInit {
   creditNoteForm: FormGroup;
   paymentEntryForm: FormGroup;
   WalletEntryForm: FormGroup;
+  paymentEntryBillForm: FormGroup;
   sessionLocationCode: string ;
   showTable = false;
   userType: any;
@@ -43,6 +44,10 @@ export class PaymentFormComponent implements OnInit {
   toDate:any
   customerCode:any
   cashToPayData:any
+  clientType:any;
+  cashToPayReportFlag:boolean = false
+  reportBranch: any;
+  PaymentEntryData:any[]=[];
 
   rateDetails: any[] = [];
 
@@ -114,8 +119,8 @@ bankList = [
   { name: 'India Post Payments Bank' },
   { name: 'FINO Payments Bank' }
 ];
-
-
+  
+ 
 
   constructor(private _mdr: MatDialogRef<PaymentFormComponent>,
               public dialog: MatDialog,
@@ -136,6 +141,9 @@ bankList = [
                 fromDate:any;
                 toDate:any
                 customerCode:any;
+                CashPayReport:any;
+                clientType:any
+                Branch:any;
 
               },
               public formBuilder: FormBuilder,
@@ -160,6 +168,9 @@ bankList = [
                   this.fromDate = data?.fromDate;
                   this.toDate = data?.toDate;
                   this.customerCode = data?.customerCode;
+                  this.clientType = data?.clientType;
+                  this.cashToPayReportFlag= data?.CashPayReport;
+                  this.reportBranch = data?.Branch
                   console.log("responseData>>>>>>",this.cashToPayData)
                 }
   }
@@ -168,21 +179,29 @@ bankList = [
    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
      ? localStorage.getItem('originCode')
      : localStorage.getItem('selectedValue');
-    this.AllService.getWalletConsigner(this.sessionLocationCode).subscribe((data: any) => {
-      this.customerList = data.Data;
-    });
+
+    // this.AllService.getWalletConsigner(this.sessionLocationCode).subscribe((data: any) => {
+    //   this.customerList = data.Data;
+    // });
+
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+            this.customerList = data.Data;      
+        });
+
+    
      this.paymentService.getByBankName().subscribe((data: any) => {
       this.BankList = data.Data;
     });
+
      this.currentDate = new Date().toISOString().split('T')[0];
 
      this.creditNoteForm  = this.formbuilder.group({
       // noteNo: [''],
-      Date: ['', Validators.required],
-      Customer: [''],
-      Particulars: [''],
+      Date: [this.currentDate, Validators.required],
+      Customer: ['',Validators.required],
+      Particulars: ['',Validators.required],
       Remark: [''],
-      Amount: ['']
+      Amount: ['',Validators.required]
     });
     this.getCreditNoteByCustomerCode();
 
@@ -191,8 +210,8 @@ bankList = [
       BankName: ['', Validators.required],
       paymentType: [''],
       receiptNo: ['', Validators.required],
-      receiptDt: ['', Validators.required],
-      receiveDt: ['', Validators.required],
+      receiptDt: [this.currentDate, Validators.required],
+      receiveDt: [this.currentDate, Validators.required],
       receiverName: ['', Validators.required],
       Amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       TDS: [''],
@@ -201,13 +220,29 @@ bankList = [
       DepositeBank: [''],
     });
 
+    this.paymentEntryBillForm = this.formbuilder.group({
+      CustomerBill: ['', Validators.required],
+      BankNameBill: ['', Validators.required],
+      billAmt:['',Validators.required],
+      paymentTypeBill: [''],
+      receiptNoBill: ['', Validators.required],
+      receiptDtBill: [this.currentDate, Validators.required],
+      receiveDtBill: [this.currentDate, Validators.required],
+      adjustAmount: ['', Validators.required],
+      AmountBill: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      TDSBill: [''],
+      outstandingAmt: [''],
+      remarkBill: [''],
+      DepositeBankBill: [''],
+    });
+
     this.getPaymentEntryByCustomerCode();
 
     this.WalletEntryForm  = this.formbuilder.group({
-      WalletDate: ['', Validators.required],
-      WalletCustomer: [''],
-      WalletAmount: [''],
-      paymentMode: [''],
+      WalletDate: [this.currentDate, Validators.required],
+      WalletCustomer: ['',Validators.required],
+      WalletAmount: ['',Validators.required],
+      paymentMode: ['',Validators.required],
       walletRemark: [''],
     });
 
@@ -219,8 +254,8 @@ bankList = [
       transactionID: ['', Validators.required],
       receivedBy: ['', Validators.required],
       depositedBank: ['', Validators.required],
-      receivedDate: ['', Validators.required],
-      totalAmt: ['', Validators.required],
+      receivedDate: [this.currentDate, Validators.required],
+      totalAmt: [this.cashToPayData?.PaymentOutstand, Validators.required],
       receivedAmt: [0, Validators.required],
       TDS: [0],
       debitNote: [0],
@@ -228,9 +263,15 @@ bankList = [
       Remark: ['']
     });
 
-    this.getCashToPayData();
+    if(this.cashToPayReportFlag){
+      this.getCashToPayReportData();
+    }else if(!this.cashToPayReportFlag){
+      this.getCashToPayData();
+    }
+       
 
-  }
+}
+
 
   refresh() {
 
@@ -273,7 +314,7 @@ addRateDetail() {
   if (this.tempRateDetailForm.invalid) return;
 
  const payload = {
-        awbNo:this.cashToPayData.AwbNo,
+        awbNo:this.cashToPayData?.AwbNo,
         paymentMode: this.tempRateDetailForm.get('paymentMode')?.value,
         transactionId: this.tempRateDetailForm.get('transactionID')?.value,  
         receivedBy: this.tempRateDetailForm.get('receivedBy')?.value,
@@ -291,7 +332,13 @@ addRateDetail() {
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
-        this.getCashToPayData();
+
+          if (payload.outstanding == 0) {
+            this.CloseDialog();
+            return;  
+          }
+
+         this.getCashToPayData();
            
           this.tempRateDetailForm.reset({
           totalAmt: this.tempRateDetailForm.get('totalAmt')?.value || 0,
@@ -307,49 +354,110 @@ addRateDetail() {
     });
 
   const newDetail = this.tempRateDetailForm.value;
-  this.rateDetails.unshift(newDetail);
-
+      // const newDetail = {
+      //   Payment_mode: this.tempRateDetailForm.value.paymentMode,
+      //   TransactionId: this.tempRateDetailForm.value.transactionID,
+      //   Received_by: this.tempRateDetailForm.value.receivedBy,
+      //   Desposited_bank: this.tempRateDetailForm.value.depositedBank,
+      //   Received_date: this.tempRateDetailForm.value.receivedDate,
+      //   Total_amt: this.tempRateDetailForm.value.totalAmt,
+      //   Received_amt: this.tempRateDetailForm.value.receivedAmt,
+      //   TDS: this.tempRateDetailForm.value.TDS,
+      //   Debit_note: this.tempRateDetailForm.value.debitNote,
+      //   Outstanding: this.tempRateDetailForm.value.outstandingAmt,
+      //   Remark: this.tempRateDetailForm.value.Remark,
+      //   id: 1
+      // };
+    this.rateDetails.unshift(newDetail);
+    // this.latestRecordTempId = 1;
 }
 
 latestRecordTempId: number | null = null;
 
 getCashToPayData(){
-   this.paymentService.getCashToPay(this.cashToPayData.AwbNo, this.customerCode, this.fromDate, this.toDate, 1, 10)
+
+   this.paymentService.getCashToPay(this.cashToPayData?.AwbNo, this.customerCode,this.clientType, this.fromDate, this.toDate, 1, 10)
     .subscribe((resp: any) => {
-      if (resp.status === 1) {
-        this.openSnackBar(resp.message, 'custom-snackbar');
+      // if (resp.status === 1) {
+      //   this.openSnackBar(resp.message, 'custom-snackbar');
+
+      //   this.rateDetails = (resp.getDetails || this.tempRateDetailForm.value).reverse();
+      //   if (this.rateDetails.length > 0) {
+      //     this.latestRecordTempId = this.rateDetails[0].id;
+      //   }
+      //   if (resp.getDetails?.length > 0) {
+      //     const last = resp.getDetails[0];
+      //     const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+      //     this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+      //   }
+      // } else {
+      //   this.openSnackBar(resp.message, 'error-snackbar');
+      // }
+
+       if (resp.status === 1) {
         
-      // Reverse to show newest on top (if API returns old-first)
-        this.rateDetails = (resp.getDetails || []).reverse();
+        if (resp.getDetails && resp.getDetails.length > 0) {
 
-        // Mark the latest record for delete button
-        if (this.rateDetails.length > 0) {
+          this.rateDetails = resp.getDetails.reverse();
           this.latestRecordTempId = this.rateDetails[0].id;
-        }
-
-        // Compute remaining total for form
-        if (resp.getDetails?.length > 0) {
           const last = resp.getDetails[0];
-          const remaining_total = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
-          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining_total);
+          const remaining = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining);
         }
+        else {
+          console.warn("API returned no data, keeping local rateDetails");
+        }
+      } else {
+        this.openSnackBar(resp.message, 'error-snackbar');
+      }
 
+    });
+}
+ 
+
+getCashToPayReportData(){
+    this.paymentService.cashToPayReport(this.reportBranch,this.cashToPayData?.AwbNo,'','','',this.clientType, this.fromDate, this.toDate,1,100)
+     .subscribe((resp: any) => {
+      if (resp.status === 1) {
+        
+        if (resp.getDetails && resp.getDetails.length > 0) {
+
+          this.rateDetails = resp.getDetails.reverse();
+          this.latestRecordTempId = this.rateDetails[0].id;
+          const last = resp.getDetails[0];
+          const remaining = last.Total_amt - (last.Received_amt + last.TDS + last.Debit_note);
+          this.tempRateDetailForm.get('totalAmt')?.setValue(remaining);
+        }
+        else {
+          console.warn("API returned no data, keeping local rateDetails");
+        }
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');
       }
     });
 }
- 
+
 
 calculateOutstandingAmt() {
   const totalAmt = Number(this.tempRateDetailForm.get('totalAmt')?.value) || 0;
-  const receivedAmt = Number(this.tempRateDetailForm.get('receivedAmt')?.value) || 0;
+  let receivedAmt = Number(this.tempRateDetailForm.get('receivedAmt')?.value) || 0;
   const tds = Number(this.tempRateDetailForm.get('TDS')?.value) || 0;
   const debitNote = Number(this.tempRateDetailForm.get('debitNote')?.value) || 0;
 
+  const totalEntered = receivedAmt + tds + debitNote;
+
+  if(totalEntered>totalAmt){
+    const allowedReceived = totalAmt - (tds + debitNote);
+    this.openSnackBar('Received amount cannot exceed Total Amount','error-snackbar');
+    this.tempRateDetailForm.get('receivedAmt')?.setValue(allowedReceived > 0 ? allowedReceived : 0);
+     receivedAmt = allowedReceived > 0 ? allowedReceived : 0;
+  }
+
   const outstandingAmt = totalAmt - (receivedAmt + tds + debitNote);
-  this.tempRateDetailForm.get('outstandingAmt')?.setValue(outstandingAmt);
+  this.tempRateDetailForm.get('outstandingAmt')?.setValue(parseFloat(outstandingAmt.toFixed(2)));
 }
+
+
 
 getLatestRecordId(): number | null {
   if (!this.rateDetails || this.rateDetails.length === 0) return null;
@@ -454,6 +562,25 @@ getCreditNoteByCustomerCode(): void {
       return;
     }
 
+    // const newDetail = this.paymentEntryForm.value;
+      // const newDetail = {
+      //   Customer_Name: this.paymentEntryForm.value.Customer,
+      //   Bank_Name: this.paymentEntryForm.value.BankName,
+      //   CheqDt: this.paymentEntryForm.value.receiptDt,
+      //   RecvDt: this.paymentEntryForm.value.receiveDt,
+      //   Amount_Type: this.paymentEntryForm.value.paymentType,
+      //   ChequeNo: this.paymentEntryForm.value.receiptNo,
+      //   Recv_Name: this.paymentEntryForm.value.receiverName,
+      //   TDS: this.paymentEntryForm.value.TDS,
+      //   Amount: this.paymentEntryForm.value.Amount,
+      //   Debit: this.paymentEntryForm.value.discount,
+      //   Remark: this.paymentEntryForm.value.remark,
+      //   Deposit_Bank: this.paymentEntryForm.value.DepositeBank,
+      // };
+
+      // const current = this.paymentEntryDataSource.data;
+      // this.paymentEntryDataSource.data = [...current, newDetail];
+
     const formValue = this.paymentEntryForm.value;
 
     const payload = {
@@ -477,7 +604,8 @@ getCreditNoteByCustomerCode(): void {
       next: (res: any) => {
         if (res.status === 1) {
           this.openSnackBar(res.message, 'custom-snackbar');
-          this.CloseDialog();
+          // this.CloseDialog();
+          this.paymentEntryForm.reset();
         } else {
           this.openSnackBar(res.message, 'error-snackbar');
         }
@@ -489,7 +617,7 @@ getCreditNoteByCustomerCode(): void {
     });
   }
 
-  getPaymentEntryByCustomerCode(): void {
+getPaymentEntryByCustomerCode(): void {
     if (!this.Ref_Club) { return; }
   this.paymentService
     .getByReceivedPayCode(this.Ref_Club)
@@ -524,6 +652,19 @@ getCreditNoteByCustomerCode(): void {
       }
     });
 }
+
+paymentEntryData(pageNumber: number, pageSize: number) {
+     this.paymentService.receivedPayNotes(pageNumber, pageSize).subscribe((resp: any) => {
+       if (resp.status === 1) {
+         this.showTable = true;
+         this.paymentEntryDataSource.data = resp.Data;
+        //  this.length = resp.count;
+        //  this.calculatePageCount();
+       } else {
+          this.showTable = false;
+        }
+     });
+  }
 
 
 SubmitWalletEntry() {
@@ -562,10 +703,12 @@ SubmitWalletEntry() {
 }
 
 
+CloseDialog() {
+ this._mdr.close(false);
+ }
 
-  CloseDialog() {
-this._mdr.close(false);
-}
+
+
 }
 
 

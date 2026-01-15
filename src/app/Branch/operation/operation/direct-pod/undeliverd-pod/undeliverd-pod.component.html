@@ -1,185 +1,236 @@
 <div class="container">
-  <form [formGroup]="undeliverdform">
-  <div class="row">
-    <div class="col-md-6">
-     <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group row mb-3">
-          <label for="inputEmail3" class="col-sm-3 col-form-label">Awb No.</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" (change)="getDeleiveredData()" [(ngModel)]="awbNo"  id="exampleFormControlInput1" placeholder="ENTER AIRWAYBILL NUMBER" formControlName="awb">
-            <div *ngFor="let validation of validationMessage.awb">
-              <div class="error-message"
-                *ngIf="undeliverdform.get('awb').hasError(validation.type) && (undeliverdform.get('awb').dirty ||undeliverdform.get('awb').touched)">
-                {{ validation.message }}
-              </div>
+    <form [formGroup]="undeliverdform">
+    <div class="row">
+      <div class="col-md-4 leftSide">
+       <div class="row">
+        <div class="col-sm-12">
+          <div class="textOnInput">
+          <label for="driverNumber">AWB Number :</label>
+          <input class="form-control" type="text" (change)="getDeleiveredData()" [(ngModel)]="awbNo"  id="exampleFormControlInput1" placeholder="Enter Airwaybill number." formControlName="awb">
+          <div *ngFor="let validation of validationMessage.awb">
+            <div class="error-message"
+              *ngIf="undeliverdform.get('awb').hasError(validation.type) && (undeliverdform.get('awb').dirty || undeliverdform.get('awb').touched)">
+              {{ validation.message }}
             </div>
           </div>
         </div>
-        <div class="form-group row mb-3">
-          <label for="inputEmail3" class="col-sm-3 col-form-label">Status</label>
-            <div class="col-sm-9">
-              <select class="selectpicker form-select custom-select" data-live-search="true" formControlName="status">
-                <option data-tokens="Undeliverd mustard" value="UnDelivered">UnDelivered</option>
+         <div class="textOnSelect">
+          <label for="status">Status :</label>
+          <select class="selectpicker form-select custom-select" data-live-search="true" formControlName="status">
+                  <option data-tokens="Undeliverd mustard" value="UnDelivered">UnDelivered</option>
+              </select>
+           <div *ngFor="let validation of validationMessage.status">
+                <div class="error-message"
+                  *ngIf="undeliverdform.get('status').hasError(validation.type) && (undeliverdform.get('status').dirty ||undeliverdform.get('status').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+      </div>
+       <div class="textOnInput">
+        <label for="Date">Date :</label>
+        <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date">
+          <div *ngFor="let validation of validationMessage.date">
+            <div class="error-message"
+              *ngIf="undeliverdform.get('date').hasError(validation.type) && (undeliverdform.get('date').dirty ||undeliverdform.get('date').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+      </div>
+       <div class="textOnInput">
+          <label for="Time">Time :</label>
+              <input type="Time" placeholder="Time" class="form-control" id="Time" formControlName="time" />
+              <div *ngFor="let validation of validationMessage.time">
+                <div class="error-message"
+                  *ngIf="undeliverdform.get('time').hasError(validation.type) && (undeliverdform.get('time').dirty ||undeliverdform.get('time').touched)">
+                  {{ validation.message }}
+                </div>
+              </div>
+        </div>
+         <div class="textOnSelect">
+      <label>Reason :</label>
+        <select id="userName" class="custom-select" formControlName="reason">
+              <option value="" selected disabled>Select Reason</option>
+              <option value="{{item.ReasonCode}}"  *ngFor="let item of reasonList" >{{item.ReasonName}}</option>
             </select>
-            <div *ngFor="let validation of validationMessage.status">
-              <div class="error-message"
-                *ngIf="undeliverdform.get('status').hasError(validation.type) && (undeliverdform.get('status').dirty ||undeliverdform.get('status').touched)">
-                {{ validation.message }}
-              </div>
-            </div>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-          <label for="Date" class="col-sm-3 col-form-label">Date</label>
-            <div class="col-sm-9">
-                <input type="date" placeholder="Password" class="form-control" id="Date" formControlName="date">
-            <div *ngFor="let validation of validationMessage.date">
-              <div class="error-message"
-                *ngIf="undeliverdform.get('date').hasError(validation.type) && (undeliverdform.get('date').dirty ||undeliverdform.get('date').touched)">
-                {{ validation.message }}
-              </div>
+          
+          <div *ngFor="let validation of validationMessage.reason">
+            <div class="error-message"
+              *ngIf="undeliverdform.get('reason').hasError(validation.type) && (undeliverdform.get('reason').dirty ||undeliverdform.get('reason').touched)">
+              {{ validation.message }}
             </div>
           </div>
-        </div>
-     
-     <div class="form-group row mb-3">
-      <label for="Time" class="col-sm-3 col-form-label">Time</label>
-        <div class="col-sm-9">
-            <input type="Time" placeholder="Time" class="form-control" id="Time" formControlName="time" />
-            <div *ngFor="let validation of validationMessage.time">
-              <div class="error-message"
-                *ngIf="undeliverdform.get('time').hasError(validation.type) && (undeliverdform.get('time').dirty ||undeliverdform.get('time').touched)">
-                {{ validation.message }}
-              </div>
-            </div>
-        </div>
+  </div>
+  
+         <div class="textOnInput">
+      <label for="remark">Remark :</label>
+      <input  type="text" placeholder="remark" class="form-control" id="remark" formControlName="remark" />
     </div>
-
-    <div class="form-group row mb-3">
-      <label for="Time" class="col-sm-3 col-form-label">Reason</label>
-        <div class="col-sm-9">
-          <select id="userName" class="custom-select" formControlName="reason">
-            <option value="" selected disabled>Select Reason</option>
-            <option value="{{item.ReasonCode}}"  *ngFor="let item of reasonList" >{{item.ReasonName}}</option>
-          </select>
-        
-        <div *ngFor="let validation of validationMessage.reason">
+ <div class="textOnInput">
+      <label for="image">Upload image :</label>
+      <input type="file" placeholder="Upload image here" class="form-control"   (change)="fileChangeEvent($event)" id="image" formControlName="image" />
+      <div *ngFor="let validation of validationMessage.image">
           <div class="error-message"
-            *ngIf="undeliverdform.get('reason').hasError(validation.type) && (undeliverdform.get('reason').dirty ||undeliverdform.get('reason').touched)">
+            *ngIf="deliverdform.get('image').hasError(validation.type) && (deliverdform.get('image').dirty || deliverdform.get('image').touched)">
             {{ validation.message }}
-          </div>
+        </div>
+      </div>
+    </div>
+        <div class="col-sm-12 d-flex mb-2" style="justify-content: space-around;" >
+          <button type="button" class="btn btn-light other-button" 
+     (click)="formSubmit(undeliverdform.value)" [disabled]="buttonDisabled">Submit</button>
+          <button type="button" class="btn btn-light other-button">Cancel</button>
         </div>
         </div>
-    </div>
-    <div class="form-group row mb-3">
-      <label for="remark" class="col-sm-3 col-form-label">Remark</label>
-        <div class="col-sm-9">
-          <textarea name="remark" id="remark" cols="30" rows="3" class="form-control" formControlName="remark" ></textarea>
-          <div *ngFor="let validation of validationMessage.remark">
-            <div class="error-message"
-              *ngIf="undeliverdform.get('remark').hasError(validation.type) && (undeliverdform.get('remark').dirty ||undeliverdform.get('remark').touched)">
-              {{ validation.message }}
-            </div>
-          </div>
+       </div>
+      </div>
+      <div class="col-md-8 rightSide" style="border-left: 1px solid #d2d2d2;">
+        <div class="row">
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Awb no. :</label>
+          <input type="text" class="form-control" placeholder="Awb No." value="{{itemData?.awbNo}}" readonly>
         </div>
-    </div>
-    <div class="form-group row mb-3">
-      <label for="image" class="col-sm-3 col-form-label">Upload image</label>
-        <div class="col-sm-9">
-            <input type="file" placeholder="Upload image here" class="form-control"   (change)="fileChangeEvent($event)" id="image" formControlName="image" />
-          <div *ngFor="let validation of validationMessage.image">
-            <div class="error-message"
-              *ngIf="deliverdform.get('image').hasError(validation.type) && (deliverdform.get('image').dirty || deliverdform.get('image').touched)">
-              {{ validation.message }}
-            </div>
-          </div>
         </div>
-    </div>
-
-    <div class="col-sm-11 d-flex submitbtn" style="justify-content: right;">
-      <button type="button" class="btn btn-info" (click)="formSubmit(undeliverdform.value)" [disabled]="buttonDisabled">Submit</button>
-      <button type="reset" class="btn btn-warning">Cancel</button>
-    </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+          <label>Actual Wt :</label>
+          <input type="text" class="form-control" placeholder="Actual Wt" value="{{itemData?.actualWt}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Booking Dt :</label>
+          <input type="text" class="form-control" placeholder="Booking Dt" value="{{itemData?.bookDate}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Vol. Wt :</label>
+          <input type="text" class="form-control" placeholder="Vol. Wt" value="{{itemData?.volumetricWt}}" readonly>
+        </div>
+        </div>            
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Consignor :</label>
+          <input type="text" class="form-control" placeholder="Consignor" value="{{itemData?.consignor}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Charge Wt :</label>
+          <input type="text" class="form-control" placeholder="Charge Wt" value="{{itemData?.chargeWt}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Shipper :</label>
+          <input type="text" class="form-control" placeholder="Shipper" value="{{itemData?.shipper}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Co-Loader Name :</label>
+          <input type="text" class="form-control" placeholder="Co-Loader Name" value="{{itemData?.CoLoaderName}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Consignee :</label>
+          <input type="text" class="form-control" placeholder="Consignee" value="{{itemData?.consigneeNname}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Co-Loader Awb No. :</label>
+          <input type="text" class="form-control" placeholder="Co-Loader Awb No." value="{{itemData?.vendorAwbNo1}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Pin Code :</label>
+          <input type="text" class="form-control" placeholder="Pin Code" value="{{itemData?.consigneePin}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Manifest No. :</label>
+          <input type="text" class="form-control" placeholder="Manifest No" value="{{itemData?.manifestNo}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Ph No. :</label>
+          <input type="text" class="form-control" placeholder="Ph No." value="{{itemData?.consigneeTel}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Manifest Dt :</label>
+          <input type="text" class="form-control" placeholder="Manifest Dt" value="{{itemData?.manifestDt}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Type Of Cust :</label>
+          <input type="text" class="form-control" placeholder="Type Of Cust	" value="{{itemData?.tFlag}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Runsheet No :</label>
+          <input type="text" class="form-control" placeholder="Runsheet No" value="{{itemData?.drsno}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Package Type :</label>
+          <input type="text" class="form-control" placeholder="Package Type	" value="{{itemData?.packageType}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Runsheet Dt :</label>
+          <input type="text" class="form-control" placeholder="Runsheet Dt" value="{{itemData?.drsdt}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Mode :</label>
+          <input type="text" class="form-control" placeholder="Mode" value="{{itemData?.modeName}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+              <label>Delivery Boy :</label>
+          <input type="text" class="form-control" placeholder="Delivery Boy" value="{{itemData?.deliveryBoy}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Origin :</label>
+          <input type="text" class="form-control" placeholder="Origin" value="{{itemData?.Origin_name}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Invoice No :</label>
+          <input type="text" class="form-control" placeholder="Invoice No" value="{{itemData?.invoiceNo}}" readonly>
+        </div>
+        </div>
+           <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Dest :</label>
+            <input type="text" class="form-control" placeholder="Dest" value="{{itemData?.destinationName}}" readonly>
+        </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="textOnInput">
+            <label>Invoice Dt :</label>
+          <input type="text" class="form-control" placeholder="Invoice Dt" value="{{itemData?.invoiceDt}}" readonly>
+        </div>
+        </div>
       </div>
      </div>
     </div>
-    <div class="col-md-6">
-      <div class="row right-side">
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Awb No." value="Awb No. : {{itemData?.awbNo}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Actual Wt" value="Actual Wt : {{itemData?.actualWt}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Booking Dt" value="Booking Dt : {{itemData?.bookDate}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Vol. Wt" value="Vol. Wt : {{itemData?.volumetricWt}}" readonly>
-      </div>            
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Consignor" value="Consignor : {{itemData?.consignor}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Charge Wt" value="Charge Wt : {{itemData?.chargeWt}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Shipper" value="Shipper : {{itemData?.shipper}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Co-Loader Name" value="Co-Loader Name : {{itemData?.CoLoaderName}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Consignee" value="Consignee : {{itemData?.consigneeNname}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Co-Loader Awb No." value="Co-Loader Awb No. : {{itemData?.vendorAwbNo1}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Pin Code" value="Pin Code : {{itemData?.consigneePin}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Manifest No" value="Manifest No : {{itemData?.manifestNo}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Ph No." value="Ph No. : {{itemData?.consigneeTel}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Manifest Dt" value="Manifest Dt : {{itemData?.manifestDt}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Type Of Cust	" value="Type Of Cust : {{itemData?.tFlag}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Runsheet No" value="Runsheet No : {{itemData?.drsno}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Package Type	" value="Package Type : {{itemData?.packageType}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Runsheet Dt" value="Runsheet Dt : {{itemData?.drsdt}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Mode" value="Mode : {{itemData?.modeName}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Delivery Boy" value="Delivery Boy : {{itemData?.deliveryBoy}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Origin" value="Origin : {{itemData?.Origin_name}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Invoice No" value="Invoice No : {{itemData?.invoiceNo}}" readonly>
-      </div>
-         <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Dest" value="Dest : {{itemData?.destinationName}}" readonly>
-      </div>
-      <div class="col-sm-6 mb-3">
-        <input type="text" class="form-control" id="Status" placeholder="Invoice Dt" value="Invoice Dt : {{itemData?.invoiceDt}}" readonly>
-      </div>
-    </div>
-   </div>
+  </form>
   </div>
-</form>
-</div>

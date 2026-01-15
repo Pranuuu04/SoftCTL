@@ -1,7 +1,9 @@
 <div>
   <form [formGroup]="createForm" (ngSubmit)="generateManifest(createForm.value)">
+
     <div class="row mainrow">
-      <div class="col-sm-3">
+
+      <div class="col-sm-3">  
         <div class="textOnInput" *ngIf=" this.userType === 'Admin'">
           <label for="origin">From :</label>
           <input class="form-control" type="text" id="origin"  value="{{destinationName}}"
@@ -13,12 +15,14 @@
           [(ngModel)]="originName" readonly>
         </div>
        </div>
+
        <div class="col-sm-3">
-            <div class="textOnInput">
+        <div class="textOnInput">
             <label for="ManfDate"><span style="color: red;">*</span>Manifest date :</label>
             <input class="form-control" type="date" formControlName="ManfDate">
         </div>
        </div>
+
       <div class="col-sm-3">
         <div class="textOnSelect">
             <label for="destination"><span style="color: red;">*</span>destination :</label>
@@ -36,6 +40,7 @@
             </div>
         </div>
       </div>
+
       <div class="col-sm-3">
         <div class="textOnSelect">
           <label for="via">Via :</label>
@@ -48,7 +53,9 @@
         </div>
       </div>
     </div>
+
     <div class="row mainrow">
+
        <div class="col-sm-3">
         <div class="textOnSelect">
           <label for="Mode"><span style="color: red;">*</span>Mode :</label>
@@ -66,28 +73,32 @@
           </div>
         </div>
       </div>
+
       <div class="col-sm-3">
        <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-9">
           <div class="textOnSelect">
             <label for="Transporttype">Transport Type :</label>
             <select id="Transporttype" class="custom-select" formControlName="Transporttype" (change)="onTransportTypeChange($event)">
               <option value="Self" selected>Self</option>
               <option value="Hired">Hired</option>
             </select>
+         </div>
         </div>
-        </div>
-        <div class="col-sm-4"  style="display: flex; justify-content: right;">
+
+        <div class="col-sm-3"  style="display: flex; justify-content: right;">
           <button matTooltip="Add" type="button" class="btn btn-light form-icon" width="auto" (click)="openaddmanifest()">
             <i class="fa-solid fa-plus"></i>
           </button>
         </div>
+
        </div>
       </div>
+
       <!-- <div *ngIf="selectedType !== 'Self'"> -->
         <div class="col-sm-3">
-          <div class="row">
-            <div class="col-sm-6">
+          <!-- <div class="row">
+            <div class="col-sm-6"> -->
               <div class="textOnSelect">
                 <label for="VehicleType">Vehicle Type :</label>
                 <select id="VehicleType" class="custom-select" formControlName="VehicleType">
@@ -96,13 +107,15 @@
                 </select>
               </div>
             </div>
-            <div class="col-sm-6" *ngIf="selectedType !== 'Self'">
+
+            <div class="col-sm-3" *ngIf="selectedType !== 'Self'">
               <div class="textOnInput">
                 <label for="VehicleNo">Vehicle No. :</label>
                 <input class="form-control" type="text" id="VehicleNo" formControlName="VehicleNo"  placeholder="vehicle number">
+             </div>
             </div>
-            </div>
-            <div class="col-sm-6" *ngIf="selectedType === 'Self'">
+
+            <div class="col-sm-3" *ngIf="selectedType === 'Self'">
               <div class="textOnInput">
                 <label for="VehicleNo">Vehicle No. :</label>
                 <select id="VehicleNo" class="custom-select" formControlName="VehicleNo" >
@@ -110,10 +123,37 @@
               </select>
             </div>
             </div>
-          </div>
+
+          <!-- </div>
          
+        </div> -->
+
+        <!-- <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
+          <div class="textOnInput">
+              <label for="Drivername">Driver Name :</label>
+              <input class="form-control" type="text" id="Drivername" formControlName="Drivername"  placeholder="enter Driver name"> 
+          </div>
         </div>
-        <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
+    
+      <div class="col-sm-3"  *ngIf="selectedType === 'Self'">
+        <div class="textOnSelect">
+            <label for="Drivername">Driver Name :</label>
+            <select id="Drivername" class="custom-select" formControlName="Drivername" (change)="onDriverNameChange($event)">
+              <option selected disabled>Select Driver Name</option>
+              <option *ngFor="let item of DriverName" value="{{item.driverCode}}">
+                {{ item.driverName }} 
+              </option>
+            </select>
+        </div>
+      </div> -->
+  
+    
+    </div>
+
+    <div class="row mainrow">
+
+
+       <div class="col-sm-3"  *ngIf="selectedType !== 'Self'">
           <div class="textOnInput">
               <label for="Drivername">Driver Name :</label>
               <input class="form-control" type="text" id="Drivername" formControlName="Drivername"  placeholder="enter Driver name"> 
@@ -131,16 +171,14 @@
             </select>
         </div>
       </div>
-  
-    
-    </div>
-    <div class="row mainrow">
+
         <div class="col-sm-3">
         <div class="textOnInput">
             <label for="DriverNo">Driver Number :</label>
             <input class="form-control" type="text" id="DriverNo" formControlName="DriverNo"  placeholder="enter Driver Number"  [value]="driverNumber">
         </div>
       </div>
+
       <div class="col-sm-3">
         <div class="textOnSelect">
             <label for="ColoaderName">Coloader Name :</label>
@@ -152,12 +190,30 @@
             </select>
         </div>
       </div>
-      <div class="col-sm-3">
+
+       <div class="col-sm-3">
         <div class="textOnInput">
           <label for="ColoaderNumber">Coloader Number :</label>
           <input class="form-control" type="number" id="ColoaderNumber" formControlName="ColoaderNumber"  placeholder="enter Coloader Number">
       </div>
       </div>
+
+      <!--<div class="col-sm-3">
+        <div class="textOnSelect">
+            <label for="Route">Route :</label>
+            <select id="Route" class="custom-select" formControlName="Route" >
+              <option selected disabled>Select Route</option>
+              <option *ngFor="let item of inputRouteName" value="{{item.routeName}}">
+                {{ item.routeName }} 
+              </option>
+            </select>
+        </div>
+      </div> -->
+
+    </div>
+
+    <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+
       <div class="col-sm-3">
         <div class="textOnSelect">
             <label for="Route">Route :</label>
@@ -169,14 +225,20 @@
             </select>
         </div>
       </div>
-    </div>
-    <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
+
       <div class="col-sm-3">
         <div class="textOnInput">
           <label for="Remark">Remark :</label>
           <input class="form-control" type="text" id="Remark" formControlName="Remark"  placeholder="enter Remark">
         </div>
       </div>
+
+      <!-- <div class="col-sm-3"  style="display: flex; justify-content: right;">
+          <button matTooltip="Add" type="button" class="btn btn-light form-icon" width="auto" (click)="openaddmanifest()">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div> -->
+
     </div>
 
     <div class="row mainrow mt-3"  style="border-bottom: 1px solid #d2d2d2;">
@@ -257,7 +319,7 @@
       </div>
   </div>
   <div *ngIf="!showTable" class="d-flex" style="justify-content: center;">
-    <img src="./assets/images/NOdata.png" alt="" style="height: 290px;">
+    <img src="./assets/images/NOdata.png" alt="" style="height: 220px;">
   </div>
 </div>
 </div>

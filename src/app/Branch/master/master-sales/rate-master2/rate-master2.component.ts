@@ -6,6 +6,7 @@ import { SalesFormComponent } from 'app/Branch/Shared/master-model/sales-form/sa
 import { MasterService } from '../../master.service';
 import { ConfirmationDialogComponent } from 'app/Comman/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-rate-master2',
@@ -31,6 +32,8 @@ export class RateMaster2Component implements OnInit {
     'Customer_Name',  'Country_Name',  'State_Name',  'Destination_Name',  'Mode_Name',  'Product_Name',
   'OriginName',  'Zone_Name'];
   rateViewData: any[] = [];
+  searchSubject = new Subject<string>();
+  searchValue: string = '';
 
   constructor(public snackBar: MatSnackBar,
               public dialog: MatDialog,
@@ -39,7 +42,19 @@ export class RateMaster2Component implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<any>(this.rateViewData);
-    this.sessionLocationCode = localStorage.getItem('originCode');
+    this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+    ? localStorage.getItem('originCode')
+    : localStorage.getItem('selectedValue');
+     this.searchSubject
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    )
+    .subscribe(searchTerm => {
+      this.searchValue = searchTerm;
+      this.pageIndex = 0;
+      this.rateData(1, this.pageSize, searchTerm);
+    });
   }
  refresh() {
     this.rateData(this.pageIndex + 1, this.pageSize);
@@ -55,8 +70,8 @@ calculatePageCount() {
     this.calculatePageCount();
   this.rateData(pageNumber, this.pageSize);
 }
-  rateData(pageNumber: number, pageSize: number) {
-     this.masterService.getRateMaster(pageNumber, pageSize).subscribe((resp: any) => {
+  rateData(pageNumber: number, pageSize: number, Search: string = this.searchValue) {
+     this.masterService.getRateMaster(this.sessionLocationCode, Search, pageNumber, pageSize).subscribe((resp: any) => {
        if (resp.status === 1) {
          this.showTable = true;
          this.rateViewData = resp.Data.rateMasterData;
@@ -119,10 +134,9 @@ calculatePageCount() {
     });
   }
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+      const pageNumber = 1;
+  this.pageIndex = 0;
+  this.rateData(pageNumber, this.pageSize, filterValue.trim());
   }
 
 }

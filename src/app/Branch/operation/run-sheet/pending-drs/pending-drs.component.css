@@ -1,48 +1,6 @@
-input{
-  border: 1px solid #d2d2d2;
-  border-radius: 0.25rem;
-  padding-left: 10px; 
-  padding-top: 10px; 
-  font-family: auto;
-  height: 26px;
-}
-table {
-  width: 100%;
-}
-th.mat-header-cell {
-  text-align: center;
-  padding: 0 11px;
-}
-table ,th {
-  color: black;
-}
-table th{ 
-  font-size: 15px;
-  font-weight: 600;
-}
-th.mat-header-cell:first-of-type,td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
-  padding-left: 0;
-}
-th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
-  padding-right: 0;
-}
-table , td ,th {
-  border: 1px Solid #9b9898;
-}
-.mat-cell {
-  font-size: 13px;
-  text-align: center;
-  font-weight: 400;
-}
-tr.mat-row {
-  height: 26px;
-}
 tr.mat-header-row {
-  height: 30px;
-  color: black;
-  font-weight: 600;
-  background-color: #afdadf;
-}
-.mat-paginator-range-label {
-  margin: 0 9px 0 12px;
-}
+    height: 30px;
+    color: black;
+    font-weight: 600;
+    background-color: #a3b8d4;
+  }

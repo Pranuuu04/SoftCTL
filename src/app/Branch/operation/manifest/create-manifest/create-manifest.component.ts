@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from 'app/service/shared.service';
 import { AllServicesService } from 'app/service/all-services.service';
+import { SetupReportComponent } from 'app/Branch/Shared/report_pages/setup-report/setup-report.component';
 
 @Component({
   selector: 'app-create-manifest',
@@ -31,6 +32,7 @@ export class CreateManifestComponent implements OnInit {
   validationMessage: any = [];
 
   displayedColumns: string[] = ['AwbNo', 'Date', 'Consigner', 'Consignee', 'FromDest', 'ToDest', 'PCs', 'Weight', 'InvoiceValue', 'eWayBillNo'];
+
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -281,6 +283,7 @@ getVehicleNumbers() {
     }
 
   }
+
   generateManifest(formData: any) {
     if (
       !this.createForm.value.destination ||
@@ -298,7 +301,7 @@ getVehicleNumbers() {
      Remark: formData.Remark || '',
      Vehicletype: formData.Vehicletype || '',
      VehicleNo: formData.VehicleNo || '',
-     via: formData.destination,
+     via: formData.via || '',
      route: formData.Route || '',
      AwbNo: this.AwbNoDatalist || '',
      VendorCode: formData.ColoaderName || '',
@@ -329,6 +332,16 @@ getVehicleNumbers() {
         this.listData = [];
         this.showTable = false;
         this.AwbNoDatalist = [];
+
+          this.Driver_Licence_No = '';
+          this.Opening_Km = '';
+          this.Vehicle_diesel_No = '';
+          this.Vehicle_diesel_Ltrs = '';
+          this.Kata_Weight = '';
+          this.Slip_No = '';
+          this.Brocker_Name = '';
+          this.Advance_Paid = '';
+          this.Diesel_Amount = '';
       } else {
         this.openSnackBar(resp.message, 'error-snackbar')
       }
@@ -338,22 +351,25 @@ getVehicleNumbers() {
   openaddmanifest() {
     const dialogRef = this.dialog.open(AddManifestComponent, {
       data: {
-        Driver_Licence_No: this.Driver_Licence_No,
-        Opening_Km: this.Opening_Km,
-        Vehicle_diesel_No: this.Vehicle_diesel_No,
-        Vehicle_diesel_Ltrs: this.Vehicle_diesel_Ltrs,
-        Kata_Weight: this.Kata_Weight,
-        Slip_No: this.Slip_No,
-        Brocker_Name: this.Brocker_Name,
-        Advance_Paid: this.Advance_Paid,
-        Diesel_Amount: this.Diesel_Amount
+        loadManifestData: {
+          Driver_Licence_No: this.Driver_Licence_No,
+          Opening_Km: this.Opening_Km,
+          Vehicle_diesel_No: this.Vehicle_diesel_No,
+          Vehicle_diesel_Ltrs: this.Vehicle_diesel_Ltrs,
+          Kata_Weight: this.Kata_Weight,
+          Slip_No: this.Slip_No,
+          Brocker_Name: this.Brocker_Name,
+          Advance_Paid: this.Advance_Paid,
+          Diesel_Amount: this.Diesel_Amount
+        } 
       },
-      width: '65rem',
+      width: '55rem',
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
+        console.log("Res>>>>>",res)
         this.Driver_Licence_No = res.Driver_Licence_No;
         this.Opening_Km = res.Opening_Km;
         this.Vehicle_diesel_No = res.Vehicle_diesel_No;
@@ -484,5 +500,6 @@ getVehicleNumbers() {
         this.ColoaderName = resp.Data;
       });
   }
+
 
 }

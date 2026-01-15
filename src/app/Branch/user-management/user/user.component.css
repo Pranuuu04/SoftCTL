@@ -132,7 +132,7 @@
     font-size: large;
     border-radius: 8px;
     margin-left: 15px;
-    mat-icon{
+    mat-icon {
       color: white;
     }
   }
@@ -142,7 +142,7 @@
     background-color: white;
     border: 1px solid rgb(214, 175, 175);
 
-    mat-icon{
+    mat-icon {
       color: red;
     }
   }
@@ -159,7 +159,7 @@ background: #f0f1f5;
     margin: 0 18px;
     margin-top: -19px;
     border-radius: 10px ;
-    h3{
+    h3 {
       color: #b2bcff;
       text-align: center; 
       font-size: 18px;
@@ -178,7 +178,7 @@ margin: 0 14px;
 background-color: #c4caf1;
 border: 1px solid #b2bcff;
 margin-top: -19px;
-h3{
+h3 {
   font-size: 14px;
   color: #2e3f55 ;
   line-height: 16px;

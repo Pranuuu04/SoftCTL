@@ -89,8 +89,8 @@ getByReceivedPayCode(refClub: string ): Observable<any> {
     return this.http.get(url);
   }
 
-    getCashToPay(awb: number, customerCode: string,fromDate:any,toDate:any,pageNumber: number, pageSize: number): Observable<any> {
-    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  getCashToPay(awb: number, customerCode: string,clientType:string,fromDate:any,toDate:any,pageNumber: number, pageSize: number): Observable<any> {
+    const url = `${environment.apiUrl}Payment/GetCashTopPay?awbno=${awb || ''}&customerCode=${customerCode}&ClientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get(url);
   }
 
@@ -103,5 +103,36 @@ createCashToPay(obj:any): Observable<any> {
     const url = `${environment.apiUrl}Payment/deleteCashTopay?Id=${id}`;
     return this.http.get(url);
   }
+
+
+  //Payment Report Api
+ 
+  walletReport(customerCode:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/WalletReport?customerCode=${customerCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+cashToPayReport(sessionLocationCode:any,AwbNo:any,customerCode:any,shipperName:any,consigneeName:any,clientType:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/CashTopPayReport?customerCode=${customerCode || ''}&AwbNo=${AwbNo}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&ClientType=${clientType}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+  creditNotReport(sessionLocationCode:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/CreditNoteReport?customerCode=${customerCode || ''}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+  PaymentEntryReport(sessionLocationCode:any,customerCode:any,shipperName:any,consigneeName:any,fromDate:any,toDate:any,pageNumber:any,pageSize:any): Observable<any> {
+    const url = `${environment.apiUrl}Payment/PaymentEntryReport?customerCode=${customerCode || ''}&shipperName=${shipperName || ''}&consigneeName=${consigneeName || ''}&sessionLocationCode=${sessionLocationCode}&fromDate=${fromDate}&toDate=${toDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get(url);
+  }
+
+PaymentCreditNotePrint(noteNo: any): Observable<Blob> {
+  const url = `${environment.apiUrl}Payment/creditNotePrint?NoteNo=${noteNo}`;
+  return this.http.get(url, {responseType: 'blob'});
+}
+
+
+
 
 }

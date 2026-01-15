@@ -2125,7 +2125,7 @@ compareWeights() {
             this.invoiceNo = resp.Data.data.InvoiceNo;
             this.invoiceValue = resp.Data.data.InvValue;
             this.eWayBill = resp.Data.data.EwayBill;
-            this.freightAmt = resp.Data.data.Rate;
+            // this.freightAmt = resp.Data.data.Rate;
             this.discountAmt = resp.Data.data.Discount;
             this.gstAmount = resp.Data.data.ServiceTax;
             this.expectedDeliveryDate = resp.Data.data.dispatchDate;
@@ -2388,7 +2388,7 @@ compareWeights() {
         ensCharges: this.bluedartChargeCache.encCharges,
         scCharges: this.bluedartChargeCache.scCharges,
         hdpCharges: this.bluedartChargeCache.hdpCharges,
-        Rate: this.freightAmt || this.newFreightAmt || this.bookingForm.value.freightAmt || 0 ,
+        Rate: this.bookingForm.value.freightAmt || this.newFreightAmt || 0 ,
         FuelPer: 0,
         ServiceTax:  this.gstAmount || 0,
         // KYCimage: 'dddrfs',

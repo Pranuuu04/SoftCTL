@@ -1,61 +1,68 @@
- <div class="col-lg-12 col-md-12" style="display: flex;
-justify-content: center;">
-    <div class="card">
-        <div class="card-body table-responsive">
-                <div class="row">
+ <div>
+                <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;">
                     <div class="col-sm-5">
                         <p (click)="openPendingAWBModal()">Pending Scan: {{totalPending}} </p>&nbsp;&nbsp;
                           <p (click)="DoneAWBModal()">Done Scan: {{totalDone}}</p>
                     </div>
                 </div>  
                     <form [formGroup]="awbform" (ngSubmit)="formSubmit(awbform.value)">
-                  <div class="row">
-                    <label for="inputEmail3" class="col-sm-1 col-form-label">date</label>
-                    <div class="col-sm-3">
-                      <input class="form-control" type="date" formControlName="inscanDate">
-                      <!-- <input type="date" placeholder="date" value="{{currentDate}}"  class="form-control" id="inputCity" [(ngModel)]="currentDate" readonly/> -->
+                  <div class="row mainrow mt-3">
+                      <div class="col-sm-2">
+                        <div class="textOnInput">
+                            <label for="date">Date :</label>
+                            <input class="form-control" type="date" formControlName="inscanDate">
+                        </div>
                       </div>
-
-                    <label for="status" class="col-sm-1 col-form-label">Status</label>
-                    <div class="col-sm-3">
-                      <input type="text" placeholder="status" [(ngModel)]="Status"  class="form-control" id="" value="Arrived" readonly/>
-                    </div>
-
-                    <label for="remark" class="col-sm-1 col-form-label">Remark</label>
-                    <div class="col-sm-3">
+                        <div class="col-sm-3">
+                        <div class="textOnInput">
+                            <label for="Status">Status :</label>
+                           <input type="text" placeholder="status" [(ngModel)]="Status"  class="form-control" id="" value="Arrived" readonly/>
+                        </div>
+                      </div>
+                        <div class="col-sm-3">
+                        <div class="textOnInput">
+                            <label for="remark">Remark :</label>
                       <input type="text" placeholder="remarks" formControlName="remark"  class="form-control" id="remark" />
-                    </div>
-                
-                </div>
-                  <div class="row">
-                    <label for="AWB" class="col-sm-1 col-form-label">Awb</label>
-                    <div class="col-sm-3">
-                      <input type="text" placeholder="Enter Awb no." formControlName="AWB" class="form-control" id="AWB" [(ngModel)]="Awbno" />
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-8">
+                        <div class="textOnInput">
+                            <label for="AWB">Awb :</label>
+                             <input type="text" placeholder="Enter Awb no." formControlName="AWB" class="form-control" id="AWB" [(ngModel)]="Awbno" />
                       <div *ngFor="let validation of validationMessage.AWB">
                         <div class="error-message"
                           *ngIf="awbform.get('AWB').hasError(validation.type) && (awbform.get('AWB').dirty || awbform.get('AWB').touched)">
                           {{ validation.message }}
                         </div>
                       </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4"  style="display: flex; justify-content: right;">
+                        <button type="button" class="btn btn-light form-icon" (click)="findAwbNo(awbform.value) "matTooltip="Find" [disabled]="!awbform.get('AWB').value">                      
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
-                  <div class="col-sm-6 d-flex">
-                    <button type="button" class="btn btn-info" (click)="findAwbNo(awbform.value)" [disabled]="!awbform.get('AWB').value">Find</button>
+                        </div>
+                      </div>
+                
+                </div>
+                  <div class="row mainrow" style="border-bottom: 1px solid #d2d2d2;justify-content: right;">
+
+                  <div class="col-sm-4 d-flex submitbtn">
+                    <button type="submit" class="btn btn-light">Inscan</button>
                     <button type="button" class="btn btn-warning" (click)="openAwbBulkModal()">Bulk</button>
-                  </div>
-                  <div class="col-sm-2 d-flex submitbtn">
-                    <button type="submit" class="btn btn-info">Inscan</button>
                   </div>
               </div>
             </form>
-        </div>
-    </div>
 </div>   
 
 
 <div *ngIf="showTable && listData.length > 0">
   <div class="table-responsive text-nowrap">
-    <table class="table table-bordered table-striped"  style="background-color: rgb(223 233 237 / 87%);">
-      <thead style="background-color:#afdadf; color: black;">
+    <table class="table table-bordered table-striped"  style="background-color: #e2e9f1;">
+      <thead style="background-color:#a3b8d4; color: black;">
         <tr>
             <th>Awb no.</th>
             <th>Booking Date</th>

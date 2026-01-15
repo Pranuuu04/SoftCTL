@@ -51,8 +51,6 @@ private destroy$ = new Subject<void>();
    ) { }
 
   ngOnInit(): void {
-    // this.sessionLocationCode = localStorage.getItem('originCode');
-    // this.selectedValue = this.sharedService.getSelectedValue();
      this.sessionLocationCode = (localStorage.getItem('userType') === 'Admin')
     ? localStorage.getItem('selectedValue')
     : localStorage.getItem('originCode');
@@ -100,19 +98,9 @@ private destroy$ = new Subject<void>();
     this.AllService.getDestinationData().subscribe((data) => {
       this.destinationList = data.Data;
     });
-    // this.billingService.getCustomer(this.sessionLocationCode).subscribe((data) => {
-    //   this.customerList = data.Data;
-    // });
     this.billingService.getLocation(this.sessionLocationCode).subscribe((data: any) => {
       this.LocationList = data.Data;
     });
-    // this.billingform.get('Location')?.valueChanges.subscribe((selectedLocation: string) => {
-    //   if (selectedLocation) {
-    //       this.billingService.getCustomer(selectedLocation).subscribe((data) => {
-    //       this.customerList = data.Data;
-    //     });
-    //   }
-    // });
      this.billingform.get('Location')?.valueChanges
     .pipe(
       startWith(this.billingform.get('Location')?.value),
@@ -127,23 +115,32 @@ private destroy$ = new Subject<void>();
       }
     });
 
-    
     }
 
 
-  onConsignorChange(customerCode: string): void {
-    this.selectedCustomerCode = customerCode;
+  onConsignorChange(value:any): void {
+    // this.selectedCustomerCode = customerCode;
+    this.selectedCustomerCode = typeof value === 'object' ? value.customerCode : value;
+      let branchCode ;
+      if(this.userType === 'Admin'){
+        branchCode = this.sessionLocationCode
+       }else{
+        branchCode =  this.billingform.get('Location')?.value;
+       }
+       if (!branchCode) return;
 
-    this.billingService.getConsignee(this.sessionLocationCode, this.selectedCustomerCode)
-      .subscribe((data: any) => {
-        this.consigneeList = data.Data;
-      });
+        this.billingService.getConsignee(branchCode, this.selectedCustomerCode)
+          .subscribe((data: any) => {
+            this.consigneeList = data.Data;
+          });
 
-    this.billingService.getShipper(this.sessionLocationCode, this.selectedCustomerCode)
-      .subscribe((data: any) => {
-        this.shipperList = data.Data;
-      });
-  }
+        this.billingService.getShipper(branchCode, this.selectedCustomerCode)
+          .subscribe((data: any) => {
+            this.shipperList = data.Data;
+          });  
+   }
+
+
   onConsignorTypeChange(type: string): void {
     this.selectedConsignorType = type;
     this.invoiceNoEnable = type === 'Single';
@@ -192,7 +189,6 @@ private destroy$ = new Subject<void>();
   }
   onSubmit(formValues: any): void {
     if (this.billingform.valid) {
-      // const sessionLocationCode = this.userType !== 'Admin' ? this.sessionLocationCode : this.selectedValue;
 
       const payload = {
         sessionLocationCode: formValues.Location,

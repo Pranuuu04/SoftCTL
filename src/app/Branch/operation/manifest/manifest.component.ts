@@ -4,6 +4,7 @@ import { PendingManifestComponent } from './pending-manifest/pending-manifest.co
 import { CreateManifestComponent } from './create-manifest/create-manifest.component';
 import { ViewManifestComponent } from './view-manifest/view-manifest.component';
 
+
 @Component({
   selector: 'app-manifest',
   templateUrl: './manifest.component.html',

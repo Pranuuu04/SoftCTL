@@ -34,6 +34,7 @@ displayedColumns: string[] = [
   'State_Name',
   'Customer_Code'
 ];
+  sessionLocationCode: any;
 
 
   constructor(private dialog: MatDialog,private snackBar:MatSnackBar,
@@ -41,6 +42,10 @@ displayedColumns: string[] = [
   ) { }
 
   ngOnInit(): void {
+         this.sessionLocationCode = localStorage.getItem('userType') !== 'Admin'
+     ? localStorage.getItem('originCode')
+     : localStorage.getItem('selectedValue');
+
   this.dataSource = new MatTableDataSource<any>(this.shipperViewData);
   this.getShipper();
   }
@@ -104,7 +109,7 @@ displayedColumns: string[] = [
 
 
  getShipper() {
-     this.masterService.getAndDeleteShipperConsig('getShipper').subscribe((resp: any) => {
+     this.masterService.getAndDeleteShipperConsig('getShipper', this.sessionLocationCode).subscribe((resp: any) => {
        if (resp.status === 1) {
          this.showTable = true;
          this.shipperViewData = resp.Data;

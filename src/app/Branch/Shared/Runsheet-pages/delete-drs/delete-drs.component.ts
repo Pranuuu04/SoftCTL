@@ -102,7 +102,7 @@ formSubmit(reason: string): void {
       this.openSnackBar( 'AWB field cannot be empty.', 'error-snackbar');
       return;
     }
-    this.http.get(`${environment.apiUrl}runsheet/deleteDrsByAwbNo?sessionLocationCode=${this.Location}&awbNo=${obj.awbNo}&Reason=${reason}&userName=${this.username}`).then(resp => {
+    this.http.get(`${environment.apiUrl}runsheet/deleteRunsheet?inputName=deleteDrsByAwbNo&sessionLocationCode=${this.Location}&AwbNo=${obj.awbNo}&Reason=${reason}&userName=${this.username}`).then(resp => {
       if (resp.status === 1) {
         this.openSnackBar( resp.message, 'custom-snackbar');
         this.CloseDialog();
@@ -111,7 +111,7 @@ formSubmit(reason: string): void {
       }
     });
   } else {
-    this.http.get(`${environment.apiUrl}runsheet/deleteDrsByDrsNo?sessionLocationCode=${this.sessionLocationCode}&drsNo=${obj.DrsNo}&Reason=${reason}&userName=${this.username}`).then(resp => {
+    this.http.get(`${environment.apiUrl}runsheet/deleteRunsheet?inputName=deleteDrsByDrsNo&sessionLocationCode=${this.Location}&drsNo=${obj.DrsNo}&Reason=${reason}&userName=${this.username}`).then(resp => {
       if (resp.status === 1) {
         this.openSnackBar( resp.message, 'custom-snackbar');
         this.CloseDialog();

@@ -7,7 +7,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span">Awb Type</label>
-              <ng-select [clearable]="false" [(ngModel)]="awbType" formControlName="awbType" (change)="saveAwbType()" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" [(ngModel)]="awbType" formControlName="awbType" (change)="saveAwbType()" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option value="Auto" style="font-size: 14px;">Auto</ng-option>
                 <ng-option value="Manual" style="font-size: 14px;">Manual</ng-option>
               </ng-select>
@@ -96,7 +96,23 @@
           <div class="col-sm-8">
           <div class="textOnSelect">
             <label class="span">Shipper</label>
-            <input
+                 <ng-select
+              [items]="shipperNameList"
+              bindLabel="shipperName"
+              bindValue="shipperName"
+              formControlName="shipperName"
+              (change)="onShipperSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
+              style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.shipperName }} | {{ item.shipperCode }}
+              </ng-template>
+            </ng-select>
+            <!-- <input
               list="shipperNameList"
               class="form-control"
               formControlName="shipperName"
@@ -106,30 +122,10 @@
             />
             <datalist id="shipperNameList">
               <option *ngFor="let item of shipperNameList" [value]="item.shipperName">
-            </datalist>
+            </datalist> -->
           </div>
         </div>
-          <!-- <div class="col-sm-8">
-            <div class="textOnSelect" *ngIf="!isInputField">
-             <label class="span">Shipper</label>
-          <input
-            list="shipperNameList"
-            formControlName="shipperName"
-            class="form-control"
-            style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
-            (input)="onShipperSelected()"
-          />
-          <datalist id="shipperNameList">
-            <option *ngFor="let item of shipperNameList" [value]="item.shipperName + ' (' + item.shipperCode + ')'"></option>
-          </datalist>
-
-            </div>
-            <div class="textOnInput" *ngIf="isInputField" style="margin-top: 6px; margin-bottom: 20px;">
-              <label for="inputText">Shipper</label>
-              <input class="form-control" type="text" placeholder="Enter Consignee Name."  [value]="shipperName" formControlName="shipperName" >
-            </div> 
-          </div> -->
-          <div class="col-sm-4">
+        <div class="col-sm-4">
             <div class="row btn-row" style="justify-content: space-around; margin-top: 6px; ">
               <button tabindex="-1"  matTooltip="Add Shipper" type="button" class="btn btn-dark form-icon" width="auto" (click)="openShipperModal(consignerCode)"
               >
@@ -148,18 +144,23 @@
           <div class="col-sm-12">
             <div class="textOnSelect">
               <label for="inputText">Consignee</label>
-              <input
-              list="consigneeList"
-              id="consigneeInput"
-              class="form-control"
+              <ng-select
+              id="consigneeSelect"
+              [items]="consigneeList"
+              bindLabel="ConsigneeName"
+              bindValue="ConsigneeName"
               formControlName="consigneeName"
-              (input)="onConsigneeSelected()"
-    [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              (change)="onConsigneeSelected($event)"
+              [addTag]="true"
+              [clearable]="true"
+              [ngStyle]="{'background-color': isConsigneeChecked ? 'inherit' : '#e9ecef'}"
+              class="custom-select1"
               style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;"
-            />
-            <datalist id="consigneeList">
-              <option *ngFor="let item of consigneeList" [value]="item.ConsigneeName">
-            </datalist>
+            >
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.ConsigneeName }} | {{ item.ConsigneeCode }}
+              </ng-template>
+            </ng-select>
             </div>
           </div>
 
@@ -200,7 +201,7 @@
           <div class="col-sm-6">
             <div class="textOnInput">
               <label for="inputText">Pincode</label>
-              <input class="form-control" type="text" [(ngModel)]="pinCode" (change)="getPinCode($event)" placeholder="Enter Pincode"  formControlName="pinCode" [value]="consigneePincode" [attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}" >
+              <input class="form-control" type="text" [(ngModel)]="pinCode" maxlength="6" (keyup)="getPinCode($event)" placeholder="Enter Pincode"  formControlName="pinCode" [value]="consigneePincode" [attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}" >
             </div>
           </div>
 
@@ -236,7 +237,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span">State</label>
-              <ng-select [clearable]="false" [(ngModel)]="stateName" formControlName="stateName" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" [(ngModel)]="stateName" formControlName="stateName" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option  *ngFor="let item of stateList" [value]="item.stateCode" style="font-size: 14px;" >{{item.stateName}} &nbsp;({{item.stateCode}})</ng-option>
               </ng-select>
             </div>
@@ -254,7 +255,7 @@
                 class="custom-select1"
                style="border: 1px solid #d2d2d2; border-radius: 4px; height: 30px; margin-top: 4px; padding-left: 16px;">
               </ng-select>
-              <!-- <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="countryName" formControlName="countryName" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;"[attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}">
+              <!-- <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="countryName" formControlName="countryName"[attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}">
                 <ng-option *ngFor="let item of countryList" [value]="item.countryCode" style="font-size: 14px;"[attr.disabled]="isAddressChecked ? null : false" [ngStyle]="{'background-color': isAddressChecked ? 'inherit' : '#e9ecef'}">{{item.countryName}}&nbsp;({{item.countryCode}})</ng-option>
              </ng-select> -->
             </div>
@@ -310,7 +311,7 @@
           <div class="col-sm-9 col-md-10">
             <div class="textOnSelect">
               <label class="span">Bill Party</label>
-              <ng-select [clearable]="false" [(ngModel)]="billParty" formControlName="billParty" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" [(ngModel)]="billParty" formControlName="billParty" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option value="consignor" style="font-size: 14px;">CONSIGNOR</ng-option>
                 <ng-option value="consignee" style="font-size: 14px;">CONSIGNEE</ng-option>
                 <ng-option value="shipper" style="font-size: 14px;" >SHIPPER</ng-option>
@@ -374,7 +375,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span"><span style="color: red;">*</span>Mode</label>
-              <ng-select [clearable]="false" formControlName="modeName" [(ngModel)]="selectedMode" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" formControlName="modeName" [(ngModel)]="selectedMode" class="custom-select1">
                 <ng-option *ngFor="let item of modeList" [value]="item.Mode_code" style="font-size: 14px;">{{item.Mode_name}} &nbsp;({{item.Mode_code}})</ng-option>
              </ng-select>
              <div *ngFor="let validation of validationMessage.modeName">
@@ -388,7 +389,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span"><span style="color: red;">*</span>Product</label>
-              <ng-select [clearable]="false" formControlName="productmode" [(ngModel)]="selectedProduct" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" formControlName="productmode" [(ngModel)]="selectedProduct" class="custom-select1">
                 <ng-option *ngFor="let item of productList" [value]="item.productCode" style="font-size: 14px;">{{item.productName}} &nbsp;({{item.productCode}})</ng-option>
              </ng-select>
              <div *ngFor="let validation of validationMessage.productmode">
@@ -405,7 +406,7 @@
           <div class="col-sm-12">
             <div class="textOnSelect">
               <label class="span"><span style="color: red;">*</span>Origin</label>
-              <ng-select [clearable]="false"  [(ngModel)]="selectedOrigin" formControlName="origin" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false"  [(ngModel)]="selectedOrigin" formControlName="origin" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option *ngFor="let item of originList" [value]="item.originCode" style="font-size: 14px;" >{{item.originName}} &nbsp;({{item.originCode}})</ng-option>
               </ng-select>
              <div *ngFor="let validation of validationMessage.origin">
@@ -422,7 +423,7 @@
           <div class="col-sm-12">
             <div class="textOnSelect">
               <label class="span"><span style="color: red;">*</span>Destination</label>
-              <!-- <ng-select [clearable]="false" [(ngModel)]="cityName" formControlName="destination" (change)="fetchViaData($event)" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <!-- <ng-select [clearable]="false" [(ngModel)]="cityName" formControlName="destination" (change)="fetchViaData($event)" class="custom-select1">
                 <ng-option *ngFor="let item of destinationList" [value]="item.destinationCode" style="font-size: 14px;">{{item.destinationName}} &nbsp;({{item.destinationCode}})</ng-option>
              </ng-select> -->
              
@@ -471,7 +472,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span">{{lebelSet3}}</label>
-              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="deliveryType" formControlName="deliveryType" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;" [ngStyle]="{'background-color': isDelvTypeChecked ? 'inherit' : '#e9ecef'}">
+              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="deliveryType" formControlName="deliveryType" [ngStyle]="{'background-color': isDelvTypeChecked ? 'inherit' : '#e9ecef'}">
                 <ng-option *ngFor="let item of deliveryTypeList" [value]="item.deliverTypeCode" style="font-size: 14px;">{{item.deliverTypeName}}&nbsp;({{item.deliverTypeCode}})</ng-option>
              </ng-select>
             </div>
@@ -480,7 +481,7 @@
           <div class="col-sm-6">
             <div class="textOnSelect">
               <label class="span">{{lebelSet4}}</label>
-              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="packageType" formControlName="packageType" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;" [ngStyle]="{'background-color': isPkgTypeChecked ? 'inherit' : '#e9ecef'}">
+              <ng-select [clearable]="false" class="custom-select1" [(ngModel)]="packageType" formControlName="packageType" [ngStyle]="{'background-color': isPkgTypeChecked ? 'inherit' : '#e9ecef'}">
                 <ng-option *ngFor="let item of packageTypeList" [value]="item.packageTypeCode" style="font-size: 14px;">{{item.packageTypeName}}&nbsp;({{item.packageTypeCode}})</ng-option>
              </ng-select>
             </div>
@@ -591,7 +592,7 @@
           <div class="col-sm-6" style="margin-top: -4px;">
             <div class="textOnSelect">
               <label class="span">Actual Wt</label>
-              <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1" style="border: 1px solid #d2d2d2;border-radius: 4px;height: 30px; margin-top: 4px; padding-left: 16px;">
+              <ng-select [clearable]="false" [(ngModel)]="actaulWeightType" formControlName="actaulWeightType" bindLabel="name" bindValue="name" class="custom-select1">
                 <ng-option value="fixed" style="font-size: 14px;">Fixed</ng-option>
                 <ng-option value="weight" style="font-size: 14px;">Weight</ng-option>
               </ng-select>

@@ -1,0 +1,83 @@
+<div class="container-fluid">
+
+  <div class="pending-count mt-1" style=" border-bottom: 1px solid #d2d2d2;">
+    <span>Pending Drs <strong>:</strong></span>
+    <span class="count">{{ pendingDrsCount }}</span>
+  </div>
+
+<form [formGroup]="drsForm" (ngSubmit)="onSubmit()" class="drs-form">
+
+  <div class="row ">
+    <div class="col-sm-4 mt-1">
+        <div class="custom-field">
+           <label for="drsNumber">DRS Number:</label>
+         <input type="text" id="drsNumber" formControlName="drsNumber" required placeholder="Enter Drs Number"/>
+        </div>
+    </div>
+
+    <!-- <div class="col-sm-6">
+        <div class="custom-field">
+         <input type="date" id="drsDate" formControlName="drsDate" required placeholder=" "/>
+         <label for="drsDate">DRS Date</label>
+        </div>
+    </div> -->
+
+<div class="col-sm-4 mt-3 d-flex justify-content-start" style="padding-left: 20px;">
+  <div class="file-upload w-100">
+    <label for="drsNumber">DRS Image:</label>
+    <div class="custom-file-box">
+      <input type="text" class="file-display-box" [value]="selectedFileName" placeholder="Upload Image or PDF" readonly (click)="fileInput.click()"/>
+      <button class="upload-icon-btn" (click)="fileInput.click()" type="button">
+        <i class="fa fa-upload"></i>
+      </button>
+      <input type="file" #fileInput accept="image/png, image/jpeg, application/pdf" (change)="onFileSelected($event)" hidden/>
+    </div>
+  </div>
+</div>
+
+  <!-- <div class="col-sm-4 mt-3 d-flex justify-content-start" style="padding-left: 20px;">
+    <div class="file-upload w-100">
+      <label for="drsNumber">DRS Image:</label>
+      <button mat-stroked-button color="primary" (click)="fileInput.click()" type="button">
+        <mat-icon>upload</mat-icon>DRS Upload (Image)
+      </button>
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+    </div>
+   </div> -->
+
+   <div class="col-sm-4 mt-3 d-flex justify-content-end align-items-center">
+    <button mat-raised-button  type="submit" class="submit-btn" style="background-color: #2e3f55;color: #ffff;">
+      Submit
+    </button>
+  </div>
+
+</div>
+
+ <div class="row mt-4">
+   <div class="col-sm-12 w-100">
+    <!-- <div class="file-upload">
+      <label class="upload-label">DRS Upload (Image)</label>
+      <button mat-stroked-button color="primary" (click)="fileInput.click()" type="button">
+        <mat-icon>upload</mat-icon> Choose File
+      </button>
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+      <div *ngIf="previewImage" class="preview">
+        <img [src]="previewImage" alt="Preview" />
+      </div>
+    </div> -->
+     <!-- <div *ngIf="previewImage" style="border: 1px solid #ccc; padding: 5px;" >
+       <img [src]="previewImage" alt="Preview" style="width: 100%; height: 55vh;" />
+     </div> -->
+    <div *ngIf="previewImage"style="border:1px solid #ccc; width:100%; height:calc(100vh - 290px); overflow:hidden; padding:0;">
+      <img [src]="previewImage" style="width:100%; height:100%; object-fit:contain;" />
+    </div>
+
+   </div> 
+
+  </div>
+
+ </form>
+</div>
+
+
+

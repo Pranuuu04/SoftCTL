@@ -1,16 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewaddComponent } from 'app/Branch/Shared/manifest pages/viewadd/viewadd.component';
 import { ViewdeleteComponent } from 'app/Branch/Shared/manifest pages/viewdelete/viewdelete.component';
 import { VieweditComponent } from 'app/Branch/Shared/manifest pages/viewedit/viewedit.component';
+import { SetupReportComponent } from 'app/Branch/Shared/report_pages/setup-report/setup-report.component';
 import { AllServicesService } from 'app/service/all-services.service';
 import { SharedService } from 'app/service/shared.service';
 import { environment } from 'environments/environment.prod';
+import * as XLSX from 'xlsx';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import { HttpService } from 'app/service/http.service';
+import { ProgressBarComponent } from 'app/Comman/progress-bar/progress-bar.component';
+
 
 
 @Component({
@@ -36,10 +42,77 @@ export class ViewManifestComponent implements OnInit {
   destination: any = '';
   selectedManifestData: any;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageSize: number ;
+  // pageSize: number ;
   pageNumber = 1;
+  formData:any;
+
+
+    length: any;
+    pageSize = 10;
+    pageIndex = 0;
+    showPageSizeOptions = false;
+    showFirstLastButtons = true;
+    hidePageSize = false;
+    disabled = false;
+    customerName: any = 'All';
+    custType: any = 'All';
+    isHidden: boolean = true;
+
   displayedColumns: any[] = ['shipment', 'manifestNo', 'manifestDt', 'todest', 'mode', 'SumQty', 'sumActualWt', 'vehicleNo', 'driverName', 'Action'];
+//   displayedColumns: any[] = ['Action','index'];
+  displayedColumnsManifest = {
+      Action:'Action',
+      index: 'SR NO',
+      shipment: 'Shipment',
+      manifestNo: 'Manifest No',
+      manifestDt: 'Manifest Date',
+      todest: 'To Destination',
+      mode: 'Mode',
+      SumQty: 'Total Qty',
+      sumActualWt: 'Actual Weight',
+      vehicleNo: 'Vehicle No',
+      driverName: 'Driver Name',
+      DestCode: 'To Code',
+      fromDestCode: 'From Code',
+      fromdest: 'From Name',
+      via: 'Via Code',
+      viaName: 'Via Name',
+      VehicleType: 'Vehicle Type',
+      driverMobile: 'Driver Mobile',
+      vendorcode: 'Vendor Code',
+      vendorName: 'Vendor Name',
+      route: 'Route',
+      Remark: 'Remark'
+  }
+
+//   masterColumnOrder = [
+//     'Action',
+//     'index',                   
+//     'manifestNo',     
+//     'manifestDt',     
+//     'fromDestCode',   
+//     'fromdest',        
+//     'DestCode',       
+//     'todest',        
+//     'via',            
+//     'viaName',        
+//     'route',          
+//     'mode',           
+//     'shipment',      
+//     'SumQty',        
+//     'sumActualWt',    
+//     'VehicleType',    
+//     'vehicleNo',      
+//     'driverName',     
+//     'driverMobile',   
+//     'vendorcode',     
+//     'vendorName',    
+//     'Remark' 
+// ];
+
+
   dataSource = new MatTableDataSource<any>();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   DestinationName: any;
   loadPrintDataAPI: any;
@@ -76,6 +149,7 @@ export class ViewManifestComponent implements OnInit {
   ClientName: any;
   selectedValue: string;
   userType: any;
+  pageEvent: PageEvent;
 
 
   constructor( public dialog: MatDialog,
@@ -115,7 +189,11 @@ export class ViewManifestComponent implements OnInit {
         Validators.required
       ])),
     });
-    }
+
+    //  this.getReportSetupKey();
+
+  }
+
     refresh() {
     }
     getDefaultDate(): string {
@@ -153,6 +231,8 @@ openSnackBar(message: string, panelClass: string) {
   });
 }
 formSubmit(formData: any) {
+  this.formData = formData;
+  // this.getReportSetupKey();
   if (this.userType === 'Admin') {
     if (formData.manifestNo) {
       this.httpService.viewFromManifestNo(this.selectedValue, formData.manifestNo, this.pageNumber).subscribe((resp: any) => {
@@ -344,4 +424,153 @@ printPDF(element) {
   }
 }
 
-  }
+
+
+// getReportSetupKey() {
+//   this.httpService.getReportSetup('getManifestSetup').subscribe((setupResp: any) => {
+//     if (setupResp.status === 1 && setupResp.Data.length) {
+//       const setup = setupResp.Data[0];
+//       this.displayedColumns = this.masterColumnOrder.filter(col => {
+//         if (col === 'index') return true;      
+//         if (setup[col] === 1) return true;     
+//         if (setup[col] === 0) return false;    
+//         return true; 
+//       });
+//     }
+//   });
+// }
+
+  openSetup(){
+      const dialogRef = this.dialog.open(SetupReportComponent, {
+        data: {
+            action: 'add',
+            inputName: 'getManifestSetup',
+            columnMapping: this.displayedColumnsManifest,
+            saveApi: 'ManifestPrintSetup',
+            saveRoot: 'Manifest', 
+          },
+            width: '85rem',
+            disableClose: true
+          });
+        dialogRef.afterClosed().subscribe((selectedKeys: string[]) => {
+          if (selectedKeys && selectedKeys.length) {
+            // this.displayedColumns = ['index', ...selectedKeys];
+           }
+            //  this.getReportSetupKey();
+            // this.formSubmit(this.formData)
+        }); 
+     }
+
+
+// getManifestApiCall() {
+//   const fd = this.formData;
+
+//   if (this.userType === 'Admin') {
+//     if (fd.manifestNo) {
+//       return this.httpService.viewFromManifestNo(this.selectedValue, fd.manifestNo, this.pageNumber);
+//     }
+//     if (fd.destination) {
+//       return this.httpService.viewFromDestManifest(this.selectedValue, fd.destination, fd.fromDate, fd.toDate, this.pageNumber);
+//     }
+//     return this.httpService.viewFromManifestDate(this.selectedValue, fd.fromDate, fd.toDate, this.pageNumber);
+//   }
+
+//   if (fd.manifestNo) {
+//     return this.httpService.viewFromManifestNo(this.sessionLocationCode, fd.manifestNo, this.pageNumber);
+//   }
+//   if (fd.destination) {
+//     return this.httpService.viewFromDestManifest(this.sessionLocationCode, fd.destination, fd.fromDate, fd.toDate, this.pageNumber);
+//   }
+//   return this.httpService.viewFromManifestDate(this.sessionLocationCode, fd.fromDate, fd.toDate, this.pageNumber);
+// }
+
+
+
+// downloadSample() {
+//   const isConfirmed = window.confirm('Do you want to download the Excel file?');
+//     if (!isConfirmed) return;
+  
+//     const progressBar = this.openprogressbar();
+
+//     const apiCall = this.getManifestApiCall();  
+  
+//   apiCall
+//     .subscribe({
+//       next: (response: any) => {
+//         try {
+//           if (response?.status === 1 && Array.isArray(response.Data)) {
+//             const mapping = this.displayedColumnsManifest || {};
+//             const dataForExcel = response.Data.map((element: any, index: number) => {
+//               const row: any = {};
+//               const cols = (this.displayedColumns && this.displayedColumns.length) ? this.displayedColumns : Object.keys(mapping);
+//               cols.forEach(colKey => {
+//                 const header = mapping[colKey] || colKey;
+//                 if (colKey === 'index' || colKey === 'srNo') {
+//                   row[header] = index + 1;
+//                   return;
+//                 }
+//                if (colKey === 'Action') {
+//                     return; 
+//                  }
+//                 row[header] = (element && element[colKey] !== null && element[colKey] !== undefined) ? element[colKey] : '';
+//               });
+//               return row;
+//             });
+//             const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExcel);
+//             const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//             XLSX.utils.book_append_sheet(wb, ws, 'Manifest Data');
+//             XLSX.writeFile(wb, 'ManifestDetails.xlsx');
+  
+//           } else {
+//             this.openSnackBar(response?.message || 'No data to export', 'error-snackbar');
+//           }
+//         } catch (err) {
+//           console.error('Export error', err);
+//           this.openSnackBar('Error while preparing export', 'error-snackbar');
+//         } finally {
+//           progressBar.close();
+//         }
+//       },
+//       error: (err) => {
+//         console.error(err);
+//         progressBar.close();
+//         this.openSnackBar('Something went wrong!', 'error-snackbar');
+//       }
+//     });
+//   }
+
+
+downloadSample() {
+
+}
+
+  pageCount: number = 1;
+  calculatePageCount() {
+      this.pageCount = Math.ceil(this.length / this.pageSize);
+      console.log(this.pageCount,'pageCount');
+    }
+  
+    handlePageEvent(e: PageEvent) {
+      this.pageEvent = e;
+      this.length = e.length;
+      this.pageSize = e.pageSize;
+      this.pageIndex = e.pageIndex;
+      this.calculatePageCount();
+      this.formSubmit(this.formData);
+    }
+
+
+
+     openprogressbar(): MatDialogRef<ProgressBarComponent> {
+        const dialogRef = this.dialog.open(ProgressBarComponent, {
+          data: {
+              action: 'add',
+          },
+            width: '30rem',
+            disableClose: true,
+          });
+          return dialogRef;
+      }
+
+
+}

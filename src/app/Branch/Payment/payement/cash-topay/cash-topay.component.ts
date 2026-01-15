@@ -17,7 +17,7 @@ import { PaymentService } from '../../payment.service';
 export class CashTopayComponent implements OnInit {
 
   sessionLocationCode: any;
-  pageSizeOptions: number[] = [15, 50, 100, 1000];
+  pageSizeOptions: number[] = [10,15, 50, 100, 1000];
   totalountPages: any;
   totalPending: number;
   showTable = false;
@@ -33,8 +33,8 @@ export class CashTopayComponent implements OnInit {
   showPageSizeOptions = false;
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];
-  displayedColumns: string[] = ['action','AwbNo','BookDate','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
+  // displayedColumns: string[] = ['action', 'AwbNo', 'BookDate', 'CGSTAmt', 'ServiceTax', 'TotalAmt'];'SubTotal',
+  displayedColumns: string[] = ['action','AwbNo','BookDate','OriginName','DestinationName','DestinationManifest','ClientType','SubTotal','SGSTAmt', 'TotalAmt','ReceivedAmt','Outstanding','Remark'];
 
   userType: any;
   selectedValue = 'All';
@@ -49,6 +49,7 @@ export class CashTopayComponent implements OnInit {
   rateViewData: any;
   selectedCustomerCode: any;
   AwbNo:any;
+  destinationList: any;
 
   //  allData = [
   //   {AwbNo: 'AWB1001',BookDate: '2025-10-01',SubTotal: 1200,CGSTAmt: 60,TotalAmt: 1320,ReceivedAmt: 1000,Outstanding: 320,Remark: 'Delivered'},
@@ -69,7 +70,7 @@ export class CashTopayComponent implements OnInit {
                 this.toDate = this.getCurrentDate();
               }
 
-  ngOnInit(): void {
+ngOnInit(): void {
 
     this.userType = localStorage.getItem('userType');
       this.currentDate1 = new Date().toISOString().split('T')[0];
@@ -79,25 +80,39 @@ export class CashTopayComponent implements OnInit {
      : localStorage.getItem('selectedValue');
       this.sessionLocationName = localStorage.getItem('originName');
 
-    this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
-      const allCust = { customerName: 'All', customerCode: 'All' };
-            this.customerList = [allCust, ...data.Data];
+      console.log(">>>>>>",this.sessionLocationCode)
+
+    // this.AllService.getConsignerData(this.sessionLocationCode).subscribe((data: any) => {
+    //   const allCust = { customerName: 'All', customerCode: 'All' };
+    //         this.customerList = [allCust, ...data.Data];
+    //       this.filterForm.patchValue({ CustomerName: 'All' });
+    // });
+
+      this.AllService.getAllCustomer('Customer',this.sessionLocationCode).subscribe((data: any) => {
+          const allCust = { customerName: 'All', customerCode: 'All' };
+          this.customerList = [allCust, ...data.Data];
           this.filterForm.patchValue({ CustomerName: 'All' });
-    });
+      });
+
+      this.AllService.getDestinationDataa().subscribe((data) => {
+        const allDest = { destinationName: 'All', destinationCode: 'All' };
+        this.destinationList = [allDest,...data.Data];
+        this.filterForm.patchValue({ destination: 'All' }); 
+      });
 
      this.filterForm = this.formBuilder.group({
-    rateCustomer: ['All', Validators.required],
-    fromDate: [this.currentDate1, Validators.required],
-    toDate: [this.currentDate2, Validators.required],
-    AwbNo:['']
-  });
-
-     // this.RateUpdationTable(1, this.pageSize);
-    // this.dataSource = new MatTableDataSource<any>(this.rateViewData);
+      rateCustomer: ['All', Validators.required],
+      clientType: ['All'],
+      fromDate: [this.currentDate1, Validators.required],
+      toDate: [this.currentDate2, Validators.required],
+      AwbNo:['']
+    });
 
   }
 
-  refresh() {}
+refresh() {
+
+  }
 
   getDefaultDate(): string {
     const today = new Date();
@@ -136,56 +151,33 @@ calculatePageCount() {
     this.pageIndex = e.pageIndex;
     this.pageNumber = this.pageIndex + 1;
       this.calculatePageCount();
-    // this.RateUpdationTable(pageNumber, this.pageSize);
-  }
-
-// RateUpdationTable(pageNumber: number, pageSize: number) {
-//   const sessionLocationCode = this.sessionLocationCode;
-//   const customerCode = this.filterForm.get('rateCustomer')?.value;
-//   const fromDate = this.filterForm.get('fromDate')?.value;
-//   const toDate = this.filterForm.get('toDate')?.value;
-//   this.auditService.RateUpdation(sessionLocationCode, customerCode, fromDate, toDate, pageNumber, pageSize)
-//     .subscribe((resp: any) => {
-//       if (resp.status === 1) {
-//         this.openSnackBar(resp.message, 'custom-snackbar');
-//         this.showTable = true;
-//         this.rateViewData = resp.data;
-//         this.dataSource.data = this.rateViewData;
-//         this.length = resp.count;
-//         this.calculatePageCount();
-//       } else {
-//         this.openSnackBar(resp.message, 'error-snackbar');
-//         this.showTable = false;
-//         this.rateViewData = [];
-//       }
-//     });
-// }
+    this.onFilterSubmit();
+ }
 
 onFilterSubmit(): void {
 if (this.filterForm.valid) {
-    // this.RateUpdationTable(1, this.pageSize);
-
+       const pageNumber = this.pageNumber;
+       const pageSize = this.pageSize;
       const sessionLocationCode = this.sessionLocationCode;
       const customerCode = this.filterForm.get('rateCustomer')?.value;
       const fromDate = this.filterForm.get('fromDate')?.value;
       const toDate = this.filterForm.get('toDate')?.value;
       const AwbNo = this.filterForm.get('AwbNo')?.value;
+      const clientType = this.filterForm.get('clientType')?.value;
       // const AwbNoValue = this.filterForm.get('AwbNo')?.value;
       // const AwbNo = AwbNoValue && AwbNoValue.trim() !== '' ? AwbNoValue.trim() : '';
       console.log("AwbNo>>>",AwbNo);
-  this.paymentService.getCashToPay(AwbNo, customerCode, fromDate, toDate, this.pageNumber, this.pageSize)
+  this.paymentService.getCashToPay(AwbNo, customerCode,clientType, fromDate, toDate, pageNumber, pageSize)
     .subscribe((resp: any) => {
       if (resp.status === 1) {
         this.openSnackBar(resp.message, 'custom-snackbar');
-        // this.showTable = true;
-        // this.rateViewData = resp.data;
+        this.showTable = true;
         this.dataSource = resp.Data;
         this.length = resp.count;
         this.calculatePageCount();
       } else {
         this.openSnackBar(resp.message, 'error-snackbar');
-        // this.showTable = false;
-        // this.rateViewData = [];
+        this.showTable = false;
       }
     });
 
@@ -194,7 +186,6 @@ if (this.filterForm.valid) {
      this.openSnackBar('Please fill out all required fields.', 'error-snackbar');
   }
 }
-
 
 
 openCashTopayForm(action: 'add' | 'edit', element?: any) {
@@ -206,25 +197,31 @@ openCashTopayForm(action: 'add' | 'edit', element?: any) {
       responseData: element,
       fromDate: this.fromDate,
       toDate: this.toDate,
-      customerCode:this.filterForm.get('rateCustomer')?.value
+      customerCode:this.filterForm.get('rateCustomer')?.value,
+      clientType:this.filterForm.get('clientType')?.value,
+      CashPayReport:false
     },
-    width: '95rem',
+    // width: '95rem',
+    width: '95vw',
+    maxWidth: '95vw',
+    panelClass: 'cashTopay-dialog' ,
     disableClose: true
   });
 
   dialogRef.afterClosed().subscribe(res => {
-    if (res) {
+    // if (res) {
       this.onFilterSubmit();
-    }
+    // }
   });
 }
  
 
-  applyFilter(filterValue: string) {
+applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+
   
 }

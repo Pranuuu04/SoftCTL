@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,12 +32,15 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
+
+  @Output() closeMenu = new EventEmitter<void>();
   menuItems: RouteInfo[] = [];
   userType: any;
   ClientLogo: any;
   customerMenuItems: any;
   booking: any;
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
+  @ViewChildren(MatMenuTrigger) allTriggers: QueryList<MatMenuTrigger>;
   captionName: any;
   groupName: string;
   captionType: string;
@@ -52,6 +55,10 @@ export class SidebarComponent implements OnInit {
   dynamicMenus: any[] = [];
   storedValue: string;
 
+  openedTriggers: MatMenuTrigger[] = [];
+
+
+
 FrenchiseeMenuItems = [
   { path: '/dashboard', title: 'Frenchisee Dashboard',  icon: 'dashboard', class: '' },
   { path: '/user-profile', title: 'Shipping Status',  icon: 'person', class: '' },
@@ -61,6 +68,7 @@ FrenchiseeMenuItems = [
   { path: '/table-list', title: 'MIS',  icon: 'content_paste', class: '' },
   { path: '/user-profile', title: 'Logout',  icon: 'person', class: '' },
 ]
+  adminMaster: string;
 
 constructor(
             public httpService: HttpService,
@@ -78,17 +86,80 @@ constructor(
     this.groupName = localStorage.getItem('groupName');
     this.captionType = localStorage.getItem('captionType');
     this.ClientLogo = localStorage.getItem('ClientLogo');
+    this.adminMaster = localStorage.getItem('AdminMaster');
+
+     this.dynamicMenus = JSON.parse(localStorage.getItem('responseData')) || [];
+
+     this.filterMenus();
   }
 
-    navigateTo(path: string) {
-      this.router.navigate([path]);
+
+
+filterMenus() {
+  if (this.userType === 'Admin' && this.adminMaster === '0') {
+    this.dynamicMenus = this.dynamicMenus.filter(menu =>
+      menu.captionName !== 'Sales' && menu.captionName !== 'CustomerCharges'
+    );
+  }
+}
+
+hasSubMenu(parentName: string): boolean {
+  return this.dynamicMenus.some(
+    item => item.captionType === 'Sub_Menu' && item.groupName === parentName
+  );
+}
+
+isParentActive(parentName: string): boolean {
+  const currentRoute = this.router.url;
+
+  return this.dynamicMenus.some(
+    item =>
+      item.captionType === 'Sub_Menu' &&
+      item.groupName === parentName &&
+      currentRoute.endsWith(item.Routing)
+
+  );
+}
+
+closeSidebarOnMobile(route?: string) {
+  if (route && this.router.url === route) {
+      this.openSnackBar('You are already on this page.', 'info-snackbar');
+    } else if (route) {
+      this.router.navigate([route]);
     }
-    isMobileMenu() {
+  if (this.isMobileMenu()) {
+    this.closeMenu.emit();
+  }
+}
+ isMobileMenu() {
         if ($(window).width() > 991) {
             return false;
         }
         return true;
     };
+    navigateTo(path: string) {
+      if (!path) return;
+      this.router.navigate([path]);
+    }
+
+  onMenuOpened(menu: any) {
+      // When submenu opens → DO NOT close sidebar (mobile or desktop)
+      if (this.hasSubMenu(menu.captionName)) {
+        return;  // Prevent any sidebar closing
+      }
+    }
+
+  // onMenuOpened(opened: MatMenuTrigger) {
+  //     this.allTriggers.forEach(trigger => {
+  //       if (trigger !== opened) {
+  //         try {
+  //           trigger.closeMenu();
+  //         } catch (e) {}
+  //       }
+  //     });
+  //   }
+
+
     preventLogout(event: Event): void {
       event.preventDefault();
       event.stopPropagation();
